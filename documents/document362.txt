@@ -1,0 +1,2 @@
+int snd info check reserved words const char  str  
+

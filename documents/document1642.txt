@@ -1,0 +1,11 @@
+  
+   access 16bit words to the code or data regions of the dsp's memory 
+   index addresses 16bit words 
+   
+static u16 snd m3 assp read struct snd m3  chip  u16 region  u16 index 
+{
+	snd m3 outw chip  region   MEMTYPE MASK  DSP PORT MEMORY TYPE  
+	snd m3 outw chip  index  DSP PORT MEMORY INDEX  
+	return snd m3 inw chip  DSP PORT MEMORY DATA  
+}
+

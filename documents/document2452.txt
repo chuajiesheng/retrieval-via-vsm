@@ -1,0 +1,9 @@
+   
+   tfrc rx hist loss prev   entry with highest received seqno before loss was detected
+   
+static inline struct tfrc rx hist entry  
+			tfrc rx hist loss prev const struct tfrc rx hist  h 
+{
+	return h ring h loss start  
+}
+

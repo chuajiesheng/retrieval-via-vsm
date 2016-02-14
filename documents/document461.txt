@@ -1,0 +1,8 @@
+static int loopback resume struct platform device  pdev 
+{
+	struct snd card  card = platform get drvdata pdev  
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

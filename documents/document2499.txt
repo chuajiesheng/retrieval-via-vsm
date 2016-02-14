@@ -1,0 +1,20 @@
+static void   init runtime code page mkexec void 
+{
+	efi memory desc t  md 
+	void  p 
+	u64 addr  npages 
+
+	   Make EFI runtime service code area executable   
+	for  p = memmap map  p   memmap map end  p += memmap desc size  {
+		md = p 
+
+		if  md type  = EFI RUNTIME SERVICES CODE 
+			continue 
+
+		addr = md virt addr 
+		npages = md num pages 
+		memrange efi to native  addr   npages  
+		set memory x addr  npages  
+	}
+}
+

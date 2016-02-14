@@ -1,0 +1,13 @@
+   free the coherent DMA pages   
+static void snd free dev pages struct device  dev  size t size  void  ptr 
+			       dma addr t dma 
+{
+	int pg 
+
+	if  ptr == NULL 
+		return 
+	pg = get order size  
+	dec snd pages pg  
+	dma free coherent dev  PAGE SIZE    pg  ptr  dma  
+}
+

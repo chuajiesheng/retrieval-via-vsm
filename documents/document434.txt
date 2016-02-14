@@ -1,0 +1,22 @@
+static int loopback close struct snd pcm substream  substream 
+{
+	struct loopback  loopback = substream private data 
+	struct loopback pcm  dpcm = substream runtime private data 
+	struct loopback cable  cable 
+	int dev = get cable index substream  
+
+	loopback timer stop dpcm  
+	mutex lock  loopback cable lock  
+	cable = loopback cables substream number  dev  
+	if  cable streams  substream stream   {
+		   other stream is still alive   
+		cable streams substream stream  = NULL 
+	} else {
+		   free the cable   
+		loopback cables substream number  dev  = NULL 
+		kfree cable  
+	}
+	mutex unlock  loopback cable lock  
+	return 0 
+}
+

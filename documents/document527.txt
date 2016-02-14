@@ -1,0 +1,28 @@
+                                                                      
+   parport stuff
+                                                                       
+static void snd mts64 interrupt void  private 
+{
+	struct mts64  mts =   struct snd card  private  private data 
+	u16 ret 
+	u8 status  data 
+	struct snd rawmidi substream  substream 
+
+	spin lock  mts lock  
+	ret = mts64 read mts pardev port  
+	data = ret   0x00ff 
+	status = ret    8 
+
+	if  status   MTS64 STAT PORT  {
+		mts current midi input port = mts64 map midi input data  
+	} else {
+		if  mts current midi input port ==  1  
+			goto   out 
+		substream = mts midi input substream mts current midi input port  
+		if  mts mode substream number    MTS64 MODE INPUT TRIGGERED 
+			snd rawmidi receive substream   data  1  
+	}
+  out 
+	spin unlock  mts lock  
+}
+

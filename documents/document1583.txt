@@ -1,0 +1,28 @@
+snd rme96 dac volume put struct snd kcontrol  kcontrol  struct snd ctl elem value  u 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+        int change = 0 
+	unsigned int vol  maxvol 
+
+
+	if   RME96 HAS ANALOG OUT rme96  
+		return  EINVAL 
+	maxvol = RME96 185X MAX OUT rme96  
+	spin lock irq  rme96 lock  
+	vol = u value integer value 0  
+	if  vol  = rme96 vol 0     vol  = maxvol  {
+		rme96 vol 0  = vol 
+		change = 1 
+	}
+	vol = u value integer value 1  
+	if  vol  = rme96 vol 1     vol  = maxvol  {
+		rme96 vol 1  = vol 
+		change = 1 
+	}
+	if  change 
+		snd rme96 apply dac volume rme96  
+	spin unlock irq  rme96 lock  
+
+        return change 
+}
+

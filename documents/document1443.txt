@@ -1,0 +1,7 @@
+static int chainiv init common struct crypto tfm  tfm 
+{
+	tfm crt ablkcipher reqsize = sizeof struct ablkcipher request  
+
+	return skcipher geniv init tfm  
+}
+

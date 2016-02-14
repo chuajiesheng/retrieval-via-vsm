@@ -1,0 +1,18 @@
+   
+   test and set bit   Set a bit and return its old value
+   @nr  Bit to set
+   @addr  Address to count from
+  
+   This operation is atomic and cannot be reordered 
+   It also implies a memory barrier 
+   
+static inline int test and set bit int nr  volatile unsigned long  addr 
+{
+	int oldbit 
+
+	asm volatile LOCK PREFIX  bts  2  1\n\t 
+		      sbb  0  0     =r   oldbit   ADDR    Ir   nr     memory   
+
+	return oldbit 
+}
+

@@ -1,0 +1,2 @@
+static void mts64 smpte stop struct parport  p  
+

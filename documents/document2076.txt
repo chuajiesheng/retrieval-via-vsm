@@ -1,0 +1,11 @@
+  
+   the period ack   update the substream 
+   
+static void snd atiixp update dma struct atiixp modem  chip 
+				  struct atiixp dma  dma 
+{
+	if    dma substream ||   dma running 
+		return 
+	snd pcm period elapsed dma substream  
+}
+

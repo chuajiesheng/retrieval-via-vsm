@@ -1,0 +1,39 @@
+static int snd info entry release struct inode  inode  struct file  file 
+{
+	struct snd info entry  entry 
+	struct snd info private data  data 
+	int mode 
+
+	mode = file f flags   O ACCMODE 
+	data = file private data 
+	entry = data entry 
+	switch  entry content  {
+	case SNDRV INFO CONTENT TEXT 
+		if  data rbuffer  {
+			kfree data rbuffer buffer  
+			kfree data rbuffer  
+		}
+		if  data wbuffer  {
+			if  entry c text write  {
+				entry c text write entry  data wbuffer  
+				if  data wbuffer error  {
+					snd printk KERN WARNING  data write error to  s   i \n  
+						entry name 
+						data wbuffer error  
+				}
+			}
+			kfree data wbuffer buffer  
+			kfree data wbuffer  
+		}
+		break 
+	case SNDRV INFO CONTENT DATA 
+		if  entry c ops release 
+			entry c ops release entry  mode 
+					      data file private data  
+		break 
+	}
+	module put entry module  
+	kfree data  
+	return 0 
+}
+

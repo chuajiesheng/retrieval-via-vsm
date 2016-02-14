@@ -1,0 +1,12 @@
+static int snd mts64 ctl smpte fps get struct snd kcontrol  kctl 
+				       struct snd ctl elem value  uctl 
+{
+	struct mts64  mts = snd kcontrol chip kctl  
+
+	spin lock irq  mts lock  
+	uctl value enumerated item 0  = mts fps 
+	spin unlock irq  mts lock  
+
+	return 0 
+}
+

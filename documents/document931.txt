@@ -1,0 +1,21 @@
+static int snd sonicvibes get double struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct sonicvibes  sonic = snd kcontrol chip kcontrol  
+	int left reg = kcontrol private value   0xff 
+	int right reg =  kcontrol private value    8    0xff 
+	int shift left =  kcontrol private value    16    0x07 
+	int shift right =  kcontrol private value    19    0x07 
+	int mask =  kcontrol private value    24    0xff 
+	int invert =  kcontrol private value    22    1 
+	
+	spin lock irq  sonic reg lock  
+	ucontrol value integer value 0  =  snd sonicvibes in1 sonic  left reg     shift left    mask 
+	ucontrol value integer value 1  =  snd sonicvibes in1 sonic  right reg     shift right    mask 
+	spin unlock irq  sonic reg lock  
+	if  invert  {
+		ucontrol value integer value 0  = mask   ucontrol value integer value 0  
+		ucontrol value integer value 1  = mask   ucontrol value integer value 1  
+	}
+	return 0 
+}
+

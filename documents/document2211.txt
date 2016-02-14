@@ -1,0 +1,11 @@
+snd ad1889 playback open struct snd pcm substream  ss 
+{
+	struct snd ad1889  chip = snd pcm substream chip ss  
+	struct snd pcm runtime  rt = ss runtime 
+
+	chip psubs = ss 
+	rt hw = snd ad1889 playback hw 
+
+	return 0 
+}
+

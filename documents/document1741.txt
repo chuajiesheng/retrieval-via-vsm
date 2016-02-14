@@ -1,0 +1,44 @@
+static int reset prng context struct prng context  ctx 
+			      unsigned char  key  size t klen 
+			      unsigned char  V  unsigned char  DT 
+{
+	int ret 
+	unsigned char  prng key 
+
+	spin lock bh  ctx prng lock  
+	ctx flags |= PRNG NEED RESET 
+
+	prng key =  key  = NULL  ? key    unsigned char   DEFAULT PRNG KEY 
+
+	if   key 
+		klen = DEFAULT PRNG KSZ 
+
+	if  V 
+		memcpy ctx V  V  DEFAULT BLK SZ  
+	else
+		memcpy ctx V  DEFAULT V SEED  DEFAULT BLK SZ  
+
+	if  DT 
+		memcpy ctx DT  DT  DEFAULT BLK SZ  
+	else
+		memset ctx DT  0  DEFAULT BLK SZ  
+
+	memset ctx rand data  0  DEFAULT BLK SZ  
+	memset ctx last rand data  0  DEFAULT BLK SZ  
+
+	ctx rand data valid = DEFAULT BLK SZ 
+
+	ret = crypto cipher setkey ctx tfm  prng key  klen  
+	if  ret  {
+		dbgprint KERN CRIT  PRNG  setkey   failed flags= x\n  
+			crypto cipher get flags ctx tfm   
+		goto out 
+	}
+
+	ret = 0 
+	ctx flags  = ~PRNG NEED RESET 
+out 
+	spin unlock bh  ctx prng lock  
+	return ret 
+}
+

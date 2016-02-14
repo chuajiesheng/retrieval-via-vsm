@@ -1,0 +1,8 @@
+static void   devinit snd via82xx proc init struct via82xx  chip 
+{
+	struct snd info entry  entry 
+
+	if    snd card proc new chip card   via82xx    entry  
+		snd info set text ops entry  chip  snd via82xx proc read  
+}
+

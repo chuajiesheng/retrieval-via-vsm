@@ -1,0 +1,91 @@
+static void   devinit es1968 measure clock struct es1968  chip 
+{
+	int i  apu 
+	unsigned int pa  offset  t 
+	struct esm memory  memory 
+	struct timeval start time  stop time 
+
+	if  chip clock == 0 
+		chip clock = 48000     default clock value   
+
+	   search 2 APUs  although one apu is enough    
+	if   apu = snd es1968 alloc apu pair chip  ESM APU PCM PLAY     0  {
+		snd printk KERN ERR  Hmm  cannot find empty APU pair ?\n   
+		return 
+	}
+	if   memory = snd es1968 new memory chip  CLOCK MEASURE BUFSIZE   == NULL  {
+		snd printk KERN ERR  cannot allocate dma buffer   using default clock  d\n   chip clock  
+		snd es1968 free apu pair chip  apu  
+		return 
+	}
+
+	memset memory buf area  0  CLOCK MEASURE BUFSIZE  
+
+	wave set register chip  apu    3   memory buf addr   0x10    0xfff8  
+
+	pa =  unsigned int   memory buf addr   chip dma addr     1  
+	pa |= 0x00400000 	   System RAM  Bit 22    
+
+	   initialize apu   
+	for  i = 0  i   16  i++ 
+		apu set register chip  apu  i  0x0000  
+
+	apu set register chip  apu  0  0x400f  
+	apu set register chip  apu  4    pa    16    0xff     8  
+	apu set register chip  apu  5  pa   0xffff  
+	apu set register chip  apu  6   pa + CLOCK MEASURE BUFSIZE 2    0xffff  
+	apu set register chip  apu  7  CLOCK MEASURE BUFSIZE 2  
+	apu set register chip  apu  8  0x0000  
+	apu set register chip  apu  9  0xD000  
+	apu set register chip  apu  10  0x8F08  
+	apu set register chip  apu  11  0x0000  
+	spin lock irq  chip reg lock  
+	outw 1  chip io port + 0x04      clear WP interrupts   
+	outw inw chip io port + ESM PORT HOST IRQ  | ESM HIRQ DSIE  chip io port + ESM PORT HOST IRQ      enable WP ints   
+	spin unlock irq  chip reg lock  
+
+	snd es1968 apu set freq chip  apu    unsigned int 48000    16    chip clock      48000 Hz   
+
+	chip in measurement = 1 
+	chip measure apu = apu 
+	spin lock irq  chip reg lock  
+	snd es1968 bob inc chip  ESM BOB FREQ  
+	  apu set register chip  apu  5  pa   0xffff  
+	snd es1968 trigger apu chip  apu  ESM APU 16BITLINEAR  
+	do gettimeofday  start time  
+	spin unlock irq  chip reg lock  
+	msleep 50  
+	spin lock irq  chip reg lock  
+	offset =   apu get register chip  apu  5  
+	do gettimeofday  stop time  
+	snd es1968 trigger apu chip  apu  0      stop   
+	snd es1968 bob dec chip  
+	chip in measurement = 0 
+	spin unlock irq  chip reg lock  
+
+	   check the current position   
+	offset  =  pa   0xffff  
+	offset  = 0xfffe 
+	offset += chip measure count    CLOCK MEASURE BUFSIZE 2  
+
+	t = stop time tv sec   start time tv sec 
+	t  = 1000000 
+	if  stop time tv usec   start time tv usec 
+		t  = start time tv usec   stop time tv usec 
+	else
+		t += stop time tv usec   start time tv usec 
+	if  t == 0  {
+		snd printk KERN ERR  ?? calculation error  \n   
+	} else {
+		offset  = 1000 
+		offset =  offset   t    1000 +   offset   t    1000    t 
+		if  offset   47500 || offset   48500  {
+			if  offset  = 40000    offset  = 50000 
+				chip clock =  chip clock   offset    48000 
+		}
+		printk KERN INFO  es1968  clocking to  d\n   chip clock  
+	}
+	snd es1968 free memory chip  memory  
+	snd es1968 free apu pair chip  apu  
+}
+

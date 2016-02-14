@@ -1,0 +1,24 @@
+snd m3 pcm struct snd m3   chip  int device 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	err = snd pcm new chip card  chip card driver  device 
+			  MAX PLAYBACKS  MAX CAPTURES   pcm  
+	if  err   0 
+		return err 
+
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd m3 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd m3 capture ops  
+
+	pcm private data = chip 
+	pcm info flags = 0 
+	strcpy pcm name  chip card driver  
+	chip pcm = pcm 
+	
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data chip pci   64 1024  64 1024  
+
+	return 0 
+}
+

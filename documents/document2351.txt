@@ -1,0 +1,6 @@
+static void snd intel8x0 mixer free ac97 struct snd ac97  ac97 
+{
+	struct intel8x0m  chip = ac97 private data 
+	chip ac97 = NULL 
+}
+

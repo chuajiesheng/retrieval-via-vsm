@@ -1,0 +1,53 @@
+static ssize t snd info entry write struct file  file  const char   user  buffer 
+				    size t count  loff t   offset 
+{
+	struct snd info private data  data 
+	struct snd info entry  entry 
+	struct snd info buffer  buf 
+	ssize t size = 0 
+	loff t pos 
+
+	data = file private data 
+	if  snd BUG ON  data  
+		return  ENXIO 
+	entry = data entry 
+	pos =  offset 
+	if  pos   0 ||  long  pos  = pos ||  ssize t  count   0 
+		return  EIO 
+	if   unsigned long  pos +  unsigned long  count    unsigned long  pos 
+		return  EIO 
+	switch  entry content  {
+	case SNDRV INFO CONTENT TEXT 
+		buf = data wbuffer 
+		if  buf == NULL 
+			return  EIO 
+		mutex lock  entry access  
+		if  pos + count  = buf len  {
+			if  resize info buffer buf  pos + count   {
+				mutex unlock  entry access  
+				return  ENOMEM 
+			}
+		}
+		if  copy from user buf buffer + pos  buffer  count   {
+			mutex unlock  entry access  
+			return  EFAULT 
+		}
+		buf size = pos + count 
+		mutex unlock  entry access  
+		size = count 
+		break 
+	case SNDRV INFO CONTENT DATA 
+		if  entry c ops write    count   0  {
+			size t maxsize = entry size   pos 
+			count = min count  maxsize  
+			size = entry c ops write entry 
+						   data file private data 
+						   file  buffer  count  pos  
+		}
+		break 
+	}
+	if   ssize t  size   0 
+		 offset = pos + size 
+	return size 
+}
+

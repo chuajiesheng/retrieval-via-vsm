@@ -1,0 +1,10 @@
+static void gf128mul x8 bbe be128  x 
+{
+	u64 a = be64 to cpu x a  
+	u64 b = be64 to cpu x b  
+	u64  tt = gf128mul table bbe a    56  
+
+	x a = cpu to be64  a    8  |  b    56   
+	x b = cpu to be64  b    8  ^  tt  
+}
+

@@ -1,0 +1,5 @@
+static inline void gameport register port struct gameport  gameport 
+{
+	  gameport register port gameport  THIS MODULE  
+}
+

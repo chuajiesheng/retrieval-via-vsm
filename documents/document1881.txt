@@ -1,0 +1,3 @@
+const struct pci device id  pci match id const struct pci device id  ids 
+					 struct pci dev  dev  
+

@@ -1,0 +1,5 @@
+static inline int ac97 can spdif struct snd ac97   ac97 
+{
+	return  ac97 ext id   AC97 EI SPDIF   = 0 
+}
+

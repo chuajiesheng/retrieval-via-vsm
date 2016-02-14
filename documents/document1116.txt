@@ -1,0 +1,65 @@
+snd azf3328 gameport cooked read struct gameport  gameport 
+				 int  axes 
+				 int  buttons
+ 
+{
+	struct snd azf3328  chip = gameport get port data gameport  
+	int i 
+	u8 val 
+	unsigned long flags 
+
+	if  snd BUG ON  chip  
+		return 0 
+
+	spin lock irqsave  chip reg lock  flags  
+	val = snd azf3328 game inb chip  IDX GAME LEGACY COMPATIBLE  
+	 buttons =  ~ val     4    0xf 
+
+	   ok  this one is a bit dirty  cooked read is being polled by a timer 
+	   thus we're atomic and cannot actively wait in here
+	    which would be useful for us since it probably would be better
+	   to trigger a measurement in here  then wait a short amount of
+	   time until it's finished  then read values of  this  measurement  
+	  
+	   Thus we simply resort to reading values if they're available already
+	   and trigger the next measurement 
+	   
+
+	val = snd azf3328 game inb chip  IDX GAME AXES CONFIG  
+	if  val   GAME AXES SAMPLING READY  {
+		for  i = 0  i   ARRAY SIZE chip axes   ++i  {
+			   configure the axis to read   
+			val =  i    4  | 0x0f 
+			snd azf3328 game outb chip  IDX GAME AXES CONFIG  val  
+
+			chip axes i  = snd azf3328 game inw 
+						chip  IDX GAME AXIS VALUE
+					  
+		}
+	}
+
+	   trigger next sampling of axes  to be evaluated the next time we
+	   enter this function   
+
+	   for some very  very strange reason we cannot enable
+	   Measurement Ready monitoring for all axes here 
+	   at least not when only one joystick connected   
+	val = 0x03     we're able to monitor axes 1 and 2 only   
+	snd azf3328 game outb chip  IDX GAME AXES CONFIG  val  
+
+	snd azf3328 game outw chip  IDX GAME AXIS VALUE  0xffff  
+	spin unlock irqrestore  chip reg lock  flags  
+
+	for  i = 0  i   ARRAY SIZE chip axes   i++  {
+		axes i  = chip axes i  
+		if  axes i  == 0xffff 
+			axes i  =  1 
+	}
+
+	snd azf3328 dbggame  cooked read  axes  d  d  d  d buttons  d\n  
+		axes 0   axes 1   axes 2   axes 3    buttons
+	  
+
+	return 0 
+}
+

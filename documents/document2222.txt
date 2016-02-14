@@ -1,0 +1,41 @@
+snd ad1889 pcm init struct snd ad1889  chip  int device  struct snd pcm   rpcm 
+{
+	int err 
+	struct snd pcm  pcm 
+
+	if  rpcm 
+		 rpcm = NULL 
+
+	err = snd pcm new chip card  chip card driver  device  1  1   pcm  
+	if  err   0 
+		return err 
+
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK  
+			 snd ad1889 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE 
+			 snd ad1889 capture ops  
+
+	pcm private data = chip 
+	pcm info flags = 0 
+	strcpy pcm name  chip card shortname  
+	
+	chip pcm = pcm 
+	chip psubs = NULL 
+	chip csubs = NULL 
+
+	err = snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+						snd dma pci data chip pci  
+						BUFFER BYTES MAX   2 
+						BUFFER BYTES MAX  
+
+	if  err   0  {
+		snd printk KERN ERR PFX  buffer allocation error   d\n   err  
+		return err 
+	}
+	
+	if  rpcm 
+		 rpcm = pcm 
+	
+	return 0 
+}
+

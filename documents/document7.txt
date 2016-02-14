@@ -1,0 +1,2 @@
+void  snd lookup oss minor data unsigned int minor  int type  
+

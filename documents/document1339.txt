@@ -1,0 +1,8 @@
+static void snd es1968 apu set freq struct es1968  chip  int apu  int freq 
+{
+	apu set register chip  apu  2 
+			    apu get register chip  apu  2    0x00FF  |
+			     freq   0xff     8  | 0x10  
+	apu set register chip  apu  3  freq    8  
+}
+

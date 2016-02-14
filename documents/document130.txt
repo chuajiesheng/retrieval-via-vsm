@@ -1,0 +1,88 @@
+static ssize t snd mem proc write struct file  file  const char   user   buffer 
+				  size t count  loff t   ppos 
+{
+	char buf 128  
+	char  token   p 
+
+	if  count   sizeof buf    1 
+		return  EINVAL 
+	if  copy from user buf  buffer  count  
+		return  EFAULT 
+	buf count  = '\0' 
+
+	p = buf 
+	token = gettoken  p  
+	if    token ||  token == '#' 
+		return count 
+	if  strcmp token   add   == 0  {
+		char  endp 
+		int vendor  device  size  buffers 
+		long mask 
+		int i  alloced 
+		struct pci dev  pci 
+
+		if   token = gettoken  p   == NULL ||
+		     vendor = simple strtol token  NULL  0    = 0 ||
+		     token = gettoken  p   == NULL ||
+		     device = simple strtol token  NULL  0    = 0 ||
+		     token = gettoken  p   == NULL ||
+		     mask = simple strtol token  NULL  0     0 ||
+		     token = gettoken  p   == NULL ||
+		     size = memparse token   endp     64 1024 ||
+		    size   16 1024 1024    too big    ||
+		     token = gettoken  p   == NULL ||
+		     buffers = simple strtol token  NULL  0    = 0 ||
+		    buffers   4  {
+			printk KERN ERR  snd page alloc  invalid proc write format\n   
+			return count 
+		}
+		vendor  = 0xffff 
+		device  = 0xffff 
+
+		alloced = 0 
+		pci = NULL 
+		while   pci = pci get device vendor  device  pci    = NULL  {
+			if  mask   0    mask   0xffffffff  {
+				if  pci set dma mask pci  mask    0 ||
+				    pci set consistent dma mask pci  mask    0  {
+					printk KERN ERR  snd page alloc  cannot set DMA mask  lx for pci  04x  04x\n   mask  vendor  device  
+					pci dev put pci  
+					return count 
+				}
+			}
+			for  i = 0  i   buffers  i++  {
+				struct snd dma buffer dmab 
+				memset  dmab  0  sizeof dmab   
+				if  snd dma alloc pages SNDRV DMA TYPE DEV  snd dma pci data pci  
+							size   dmab    0  {
+					printk KERN ERR  snd page alloc  cannot allocate buffer pages  size =  d \n   size  
+					pci dev put pci  
+					return count 
+				}
+				snd dma reserve buf  dmab  snd dma pci buf id pci   
+			}
+			alloced++ 
+		}
+		if    alloced  {
+			for  i = 0  i   buffers  i++  {
+				struct snd dma buffer dmab 
+				memset  dmab  0  sizeof dmab   
+				   FIXME  We can allocate only in ZONE DMA
+				   without a device pointer 
+				   
+				if  snd dma alloc pages SNDRV DMA TYPE DEV  NULL 
+							size   dmab    0  {
+					printk KERN ERR  snd page alloc  cannot allocate buffer pages  size =  d \n   size  
+					break 
+				}
+				snd dma reserve buf  dmab   unsigned int   vendor    16  | device   
+			}
+		}
+	} else if  strcmp token   erase   == 0 
+		   FIXME  need for releasing each buffer chunk?   
+		free all reserved pages   
+	else
+		printk KERN ERR  snd page alloc  invalid proc cmd\n   
+	return count 
+}
+

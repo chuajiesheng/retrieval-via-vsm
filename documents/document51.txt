@@ -1,0 +1,21 @@
+   
+   snd info free entry   release the info entry
+   @entry  the info entry
+  
+   Releases the info entry   Don't call this after registered 
+   
+void snd info free entry struct snd info entry   entry 
+{
+	if  entry == NULL 
+		return 
+	if  entry p  {
+		mutex lock  info mutex  
+		snd info disconnect entry  
+		mutex unlock  info mutex  
+	}
+	kfree entry name  
+	if  entry private free 
+		entry private free entry  
+	kfree entry  
+}
+

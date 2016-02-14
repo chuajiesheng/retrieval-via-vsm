@@ -1,0 +1,15 @@
+static int snd rme32 control spdif put struct snd kcontrol  kcontrol 
+				       struct snd ctl elem value  ucontrol 
+{
+	struct rme32  rme32 = snd kcontrol chip kcontrol  
+	int change 
+	u32 val 
+
+	val = snd rme32 convert from aes  ucontrol value iec958  
+	spin lock irq  rme32 lock  
+	change = val  = rme32 wcreg spdif 
+	rme32 wcreg spdif = val 
+	spin unlock irq  rme32 lock  
+	return change 
+}
+

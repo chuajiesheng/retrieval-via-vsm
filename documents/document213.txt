@@ -1,0 +1,2 @@
+int snd dma reserve buf struct snd dma buffer  dmab  unsigned int id  
+

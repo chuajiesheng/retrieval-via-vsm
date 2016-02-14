@@ -1,0 +1,8 @@
+extern struct drm mm node  drm mm search free in range 
+						const struct drm mm  mm 
+						unsigned long size 
+						unsigned alignment 
+						unsigned long start 
+						unsigned long end 
+						int best match  
+

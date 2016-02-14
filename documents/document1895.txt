@@ -1,0 +1,18 @@
+static unsigned short snd intel8x0 ali codec read struct snd ac97  ac97  unsigned short reg 
+{
+	struct intel8x0  chip = ac97 private data 
+	unsigned short data = 0xffff 
+
+	if  snd intel8x0 ali codec semaphore chip  
+		goto   err 
+	reg |= ALI CPR ADDR READ 
+	if  ac97 num 
+		reg |= ALI CPR ADDR SECONDARY 
+	iputword chip  ICHREG ALI CPR ADDR   reg  
+	if  snd intel8x0 ali codec ready chip  ALI CSPSR READ OK  
+		goto   err 
+	data = igetword chip  ICHREG ALI SPR   
+   err 
+	return data 
+}
+

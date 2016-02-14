@@ -1,0 +1,10 @@
+static void wave set register struct es1968  chip  u16 reg  u16 value 
+{
+	unsigned long flags 
+
+	spin lock irqsave  chip reg lock  flags  
+	outw reg  chip io port + WC INDEX  
+	outw value  chip io port + WC DATA  
+	spin unlock irqrestore  chip reg lock  flags  
+}
+

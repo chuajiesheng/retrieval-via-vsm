@@ -1,0 +1,15 @@
+static snd pcm uframes t snd cs4281 pointer struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct cs4281 dma  dma = runtime private data 
+	struct cs4281  chip = snd pcm substream chip substream  
+
+	  
+	printk KERN DEBUG  DCC = 0x x  buffer size = 0x x  jiffies =  li\n  
+	       snd cs4281 peekBA0 chip  dma regDCC   runtime buffer size 
+	       jiffies  
+	  
+	return runtime buffer size  
+	       snd cs4281 peekBA0 chip  dma regDCC    1 
+}
+

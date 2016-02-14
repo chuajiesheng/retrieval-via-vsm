@@ -1,0 +1,9 @@
+  
+    common I O routines
+   
+static inline void snd cs4281 pokeBA0 struct cs4281  chip  unsigned long offset 
+				      unsigned int val 
+{
+        writel val  chip ba0 + offset  
+}
+

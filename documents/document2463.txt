@@ -1,0 +1,13 @@
+void tfrc lh cleanup struct tfrc loss hist  lh 
+{
+	if   tfrc lh is initialised lh  
+		return 
+
+	for  lh counter = 0  lh counter   LIH SIZE  lh counter++ 
+		if  lh ring LIH INDEX lh counter    = NULL  {
+			kmem cache free tfrc lh slab 
+					lh ring LIH INDEX lh counter    
+			lh ring LIH INDEX lh counter   = NULL 
+		}
+}
+

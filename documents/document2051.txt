@@ -1,0 +1,2 @@
+int snd pcm format unsigned snd pcm format t format  
+

@@ -1,0 +1,35 @@
+  
+   trigger callback
+   
+static int snd via82xx pcm trigger struct snd pcm substream  substream  int cmd 
+{
+	struct via82xx modem  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	unsigned char val = 0 
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER SUSPEND 
+		val |= VIA REG CTRL START 
+		viadev running = 1 
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		val = VIA REG CTRL TERMINATE 
+		viadev running = 0 
+		break 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+		val |= VIA REG CTRL PAUSE 
+		viadev running = 0 
+		break 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+		viadev running = 1 
+		break 
+	default 
+		return  EINVAL 
+	}
+	outb val  VIADEV REG viadev  OFFSET CONTROL   
+	if  cmd == SNDRV PCM TRIGGER STOP 
+		snd via82xx channel reset chip  viadev  
+	return 0 
+}
+

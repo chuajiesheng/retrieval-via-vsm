@@ -1,0 +1,9 @@
+void gf128mul free 64k struct gf128mul 64k  t 
+{
+	int i 
+
+	for  i = 0  i   16  i++ 
+		kfree t t i   
+	kfree t  
+}
+

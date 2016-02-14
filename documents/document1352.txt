@@ -1,0 +1,18 @@
+   Because the Maestro can only take addresses relative to the PCM base address
+   register      
+static int calc available memory size struct es1968  chip 
+{
+	int max size = 0 
+	struct esm memory  buf 
+
+	mutex lock  chip memory mutex  
+	list for each entry buf   chip buf list  list  {
+		if  buf empty    buf buf bytes   max size 
+			max size = buf buf bytes 
+	}
+	mutex unlock  chip memory mutex  
+	if  max size  = 128 1024 
+		max size = 127 1024 
+	return max size 
+}
+

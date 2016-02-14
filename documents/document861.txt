@@ -1,0 +1,13 @@
+  
+   proc interface for register dump
+   
+static void snd atiixp proc read struct snd info entry  entry 
+				 struct snd info buffer  buffer 
+{
+	struct atiixp  chip = entry private data 
+	int i 
+
+	for  i = 0  i   256  i += 4 
+		snd iprintf buffer    02x   08x\n   i  readl chip remap addr + i   
+}
+

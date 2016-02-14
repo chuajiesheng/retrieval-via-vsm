@@ -1,0 +1,6 @@
+static void loopback runtime free struct snd pcm runtime  runtime 
+{
+	struct loopback pcm  dpcm = runtime private data 
+	kfree dpcm  
+}
+

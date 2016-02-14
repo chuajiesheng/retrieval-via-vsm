@@ -1,0 +1,3 @@
+extern int drm debugfs create files struct drm info list  files  int count 
+				    struct dentry  root  struct drm minor  minor  
+

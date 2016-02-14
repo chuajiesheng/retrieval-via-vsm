@@ -1,0 +1,15 @@
+static int snd via82xx codec ready struct via82xx modem  chip  int secondary 
+{
+	unsigned int timeout = 1000 	   1ms   
+	unsigned int val 
+	
+	while  timeout     0  {
+		udelay 1  
+		if     val = snd via82xx codec xread chip     VIA REG AC97 BUSY  
+			return val   0xffff 
+	}
+	snd printk KERN ERR  codec ready  codec  i is not ready  0x x \n  
+		   secondary  snd via82xx codec xread chip   
+	return  EIO 
+}
+

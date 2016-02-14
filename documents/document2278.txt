@@ -1,0 +1,43 @@
+static int snd rme32 playback spdif open struct snd pcm substream  substream 
+{
+	int rate  dummy 
+	struct rme32  rme32 = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	snd pcm set sync substream  
+
+	spin lock irq  rme32 lock  
+	if  rme32 playback substream  = NULL  {
+		spin unlock irq  rme32 lock  
+		return  EBUSY 
+	}
+	rme32 wcreg  = ~RME32 WCR ADAT 
+	writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	rme32 playback substream = substream 
+	spin unlock irq  rme32 lock  
+
+	if  rme32 fullduplex mode 
+		runtime hw = snd rme32 spdif fd info 
+	else
+		runtime hw = snd rme32 spdif info 
+	if  rme32 pci device == PCI DEVICE ID RME DIGI32 PRO  {
+		runtime hw rates |= SNDRV PCM RATE 64000 | SNDRV PCM RATE 88200 | SNDRV PCM RATE 96000 
+		runtime hw rate max = 96000 
+	}
+	if   rme32 rcreg   RME32 RCR KMODE    
+	     rate = snd rme32 capture getrate rme32   dummy     0  {
+		   AutoSync   
+		runtime hw rates = snd pcm rate to rate bit rate  
+		runtime hw rate min = rate 
+		runtime hw rate max = rate 
+	}       
+
+	snd rme32 set buffer constraint rme32  runtime  
+
+	rme32 wcreg spdif stream = rme32 wcreg spdif 
+	rme32 spdif ctl vd 0  access  = ~SNDRV CTL ELEM ACCESS INACTIVE 
+	snd ctl notify rme32 card  SNDRV CTL EVENT MASK VALUE |
+		       SNDRV CTL EVENT MASK INFO   rme32 spdif ctl id  
+	return 0 
+}
+

@@ -1,0 +1,23 @@
+static int snd ak4531 put single struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct snd ak4531  ak4531 = snd kcontrol chip kcontrol  
+	int reg = kcontrol private value   0xff 
+	int shift =  kcontrol private value    16    0x07 
+	int mask =  kcontrol private value    24    0xff 
+	int invert =  kcontrol private value    22    1 
+	int change 
+	int val 
+
+	val = ucontrol value integer value 0    mask 
+	if  invert  {
+		val = mask   val 
+	}
+	val   = shift 
+	mutex lock  ak4531 reg mutex  
+	val =  ak4531 regs reg    ~ mask    shift   | val 
+	change = val  = ak4531 regs reg  
+	ak4531 write ak4531  reg  ak4531 regs reg  = val  
+	mutex unlock  ak4531 reg mutex  
+	return change 
+}
+

@@ -1,0 +1,11 @@
+static int wp256 final struct shash desc  desc  u8  out 
+{
+	u8 D 64  
+
+	wp512 final desc  D  
+	memcpy  out  D  WP256 DIGEST SIZE  
+	memset  D  0  WP512 DIGEST SIZE  
+
+	return 0 
+}
+

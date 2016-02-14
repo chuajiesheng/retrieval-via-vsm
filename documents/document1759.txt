@@ -1,0 +1,16 @@
+   
+   ieee80211 get response rate   get basic rate for a given rate
+  
+   @sband  the band to look for rates in
+   @basic rates  bitmap of basic rates
+   @bitrate  the bitrate for which to find the basic rate
+  
+   This function returns the basic rate corresponding to a given
+   bitrate  that is the next lower bitrate contained in the basic
+   rate map  which is  for this function  given as a bitmap of
+   indices of rates in the band's bitrate table 
+   
+struct ieee80211 rate  
+ieee80211 get response rate struct ieee80211 supported band  sband 
+			    u32 basic rates  int bitrate  
+

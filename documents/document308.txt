@@ -1,0 +1,2 @@
+extern void	mISDN clock update struct mISDNclock    int  struct timeval    
+

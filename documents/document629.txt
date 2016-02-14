@@ -1,0 +1,8 @@
+void ib ud header init int		    payload bytes 
+		       int		    lrh present 
+		       int		    eth present 
+		       int		    vlan present 
+		       int		    grh present 
+		       int		    immediate present 
+		       struct ib ud header  header  
+

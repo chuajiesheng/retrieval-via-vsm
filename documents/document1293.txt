@@ -1,0 +1,8 @@
+static   inline   int drm device is pcie struct drm device  dev 
+{
+	if  drm core check feature dev  DRIVER USE PLATFORM DEVICE  
+		return 0 
+	else
+		return pci find capability dev pdev  PCI CAP ID EXP  
+}
+

@@ -1,0 +1,2 @@
+extern int drm agp info struct drm device  dev  struct drm agp info  info  
+

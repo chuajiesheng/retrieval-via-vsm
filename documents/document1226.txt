@@ -1,0 +1,21 @@
+static int   devinit snd als4000 pcm struct snd sb  chip  int device 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	err = snd pcm new chip card   ALS4000 DSP   device  1  1   pcm  
+	if  err   0 
+		return err 
+	pcm private data = chip 
+	pcm info flags = SNDRV PCM INFO JOINT DUPLEX 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd als4000 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd als4000 capture ops  
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV  snd dma pci data chip pci  
+					      64 1024  64 1024  
+
+	chip pcm = pcm 
+
+	return 0 
+}
+

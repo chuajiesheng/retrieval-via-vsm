@@ -1,0 +1,45 @@
+static void snd cs4281 ac97 write struct snd ac97  ac97 
+				  unsigned short reg  unsigned short val 
+{
+	  
+	    1  Write ACCAD = Command Address Register = 46Ch for AC97 register address
+	    2  Write ACCDA = Command Data Register = 470h    for data to write to AC97
+	    3  Write ACCTL = Control Register = 460h for initiating the write
+	    4  Read ACCTL = 460h  DCV should be reset by now and 460h = 07h
+	    5  if DCV not cleared  break and return error
+	   
+	struct cs4281  chip = ac97 private data 
+	int count 
+
+	  
+	    Setup the AC97 control registers on the CS461x to send the
+	    appropriate command to the AC97 to perform the read 
+	    ACCAD = Command Address Register = 46Ch
+	    ACCDA = Command Data Register = 470h
+	    ACCTL = Control Register = 460h
+	    set DCV   will clear when process completed
+	    reset CRW   Write command
+	    set VFRM   valid frame enabled
+	    set ESYN   ASYNC generation enabled
+	    set RSTN   ARST# inactive  AC97 codec not reset
+           
+	snd cs4281 pokeBA0 chip  BA0 ACCAD  reg  
+	snd cs4281 pokeBA0 chip  BA0 ACCDA  val  
+	snd cs4281 pokeBA0 chip  BA0 ACCTL  BA0 ACCTL DCV | BA0 ACCTL VFRM |
+				            BA0 ACCTL ESYN |  ac97 num ? BA0 ACCTL TC   0   
+	for  count = 0  count   2000  count++  {
+		  
+		    First  we want to wait for a short time 
+		   
+		udelay 10  
+		  
+		    Now  check to see if the write has completed 
+		    ACCTL = 460h  DCV should be reset by now and 460h = 07h
+		   
+		if    snd cs4281 peekBA0 chip  BA0 ACCTL    BA0 ACCTL DCV   {
+			return 
+		}
+	}
+	snd printk KERN ERR  AC'97 write problem  reg = 0x x  val = 0x x\n   reg  val  
+}
+

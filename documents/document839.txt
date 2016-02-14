@@ -1,0 +1,12 @@
+   start stop SPDIF OUT DMA   
+static void atiixp spdif enable transfer struct atiixp  chip  int on 
+{
+	unsigned int data 
+	data = atiixp read chip  CMD  
+	if  on 
+		data |= ATI REG CMD SPDF OUT EN 
+	else
+		data  = ~ATI REG CMD SPDF OUT EN 
+	atiixp write chip  CMD  data  
+}
+

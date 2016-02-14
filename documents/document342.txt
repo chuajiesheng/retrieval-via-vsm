@@ -1,0 +1,39 @@
+card id store attr struct device  dev  struct device attribute  attr 
+		   const char  buf  size t count 
+{
+	struct snd card  card = dev get drvdata dev  
+	char buf1 sizeof card id   
+	size t copy = count   sizeof card id    1 ?
+					sizeof card id    1   count 
+	size t idx 
+	int c 
+
+	for  idx = 0  idx   copy  idx++  {
+		c = buf idx  
+		if   isalnum c     c  = ' '    c  = ' ' 
+			return  EINVAL 
+	}
+	memcpy buf1  buf  copy  
+	buf1 copy  = '\0' 
+	mutex lock  snd card mutex  
+	if   snd info check reserved words buf1   {
+	       exist 
+		mutex unlock  snd card mutex  
+		return  EEXIST 
+	}
+	for  idx = 0  idx   snd ecards limit  idx++  {
+		if  snd cards idx      strcmp snd cards idx  id  buf1   {
+			if  card == snd cards idx  
+				goto   ok 
+			else
+				goto   exist 
+		}
+	}
+	strcpy card id  buf1  
+	snd info card id change card  
+  ok 
+	mutex unlock  snd card mutex  
+
+	return count 
+}
+

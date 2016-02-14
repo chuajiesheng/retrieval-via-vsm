@@ -1,0 +1,83 @@
+  
+    Read MIDI byte from port
+    Attempt to read input byte from specified hardware input port  0    
+    Return  1 if no data
+   
+static int portman read midi struct portman  pm  int port 
+{
+	unsigned char midi data = 0 
+	unsigned char cmdout 	   Saved address+IE bit    
+
+	   Make sure clocking edge is down before starting      
+	portman write data pm  0  	   Make sure edge is down    
+
+	   Set destination address to PCP    
+	cmdout =  port    1  | INT EN 	   Address + IE + No Strobe    
+	portman write command pm  cmdout  
+
+	while   portman read status pm    ESTB  == ESTB 
+		cpu relax   	   Wait for strobe echo    
+
+	   After the address lines settle  check multiplexed RxAvail signal 
+	   If data is available  read it 
+	   
+	if   portman read status pm    RXAVAIL  == 0 
+		return  1 	   No data    
+
+	   Set the Strobe signal to enable the Rx clocking circuitry    
+	portman write command pm  cmdout | STROBE  	   Write address+IE+Strobe    
+
+	while   portman read status pm    ESTB  == 0 
+		cpu relax       Wait for strobe echo    
+
+	   The first data bit  msb  is already sitting on the input line    
+	midi data =  portman read status pm    128  
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 6    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     1    64 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 5    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     2    32 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 4    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     3    16 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 3    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     4    8 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 2    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     5    4 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 1    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     6    2 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+
+	   Data bit 0    
+	portman write data pm  0  	   Cause falling edge while data settles    
+	midi data |=  portman read status pm     7    1 
+	portman write data pm  1  	   Cause rising edge  which shifts data    
+	portman write data pm  0  	   Return data clock low    
+
+
+	   De assert Strobe and return data    
+	portman write command pm  cmdout  	   Output saved address+IE    
+
+	   Wait for strobe echo    
+	while   portman read status pm    ESTB  == ESTB 
+		cpu relax   
+
+	return  midi data   255  	   Shift back and return value    
+}
+

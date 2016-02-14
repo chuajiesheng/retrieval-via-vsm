@@ -1,0 +1,27 @@
+static unsigned short snd atiixp codec read struct atiixp  chip  unsigned short codec  unsigned short reg 
+{
+	unsigned int data 
+	int timeout 
+
+	if  snd atiixp acquire codec chip    0 
+		return 0xffff 
+	data =  reg    ATI REG PHYS OUT ADDR SHIFT  |
+		ATI REG PHYS OUT ADDR EN |
+		ATI REG PHYS OUT RW |
+		codec 
+	atiixp write chip  PHYS OUT ADDR  data  
+	if  snd atiixp acquire codec chip    0 
+		return 0xffff 
+	timeout = 1000 
+	do {
+		data = atiixp read chip  PHYS IN ADDR  
+		if  data   ATI REG PHYS IN READ FLAG 
+			return data    ATI REG PHYS IN DATA SHIFT 
+		udelay 1  
+	} while    timeout  
+	   time out may happen during reset   
+	if  reg   0x7c 
+		snd printk KERN WARNING  atiixp  codec read timeout  reg  x \n   reg  
+	return 0xffff 
+}
+

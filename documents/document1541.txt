@@ -1,0 +1,30 @@
+snd rme96 playback adat open struct snd pcm substream  substream 
+{
+        int rate  dummy 
+	struct rme96  rme96 = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime         
+	
+	spin lock irq  rme96 lock  	
+        if  rme96 playback substream  = NULL  {
+		spin unlock irq  rme96 lock  
+                return  EBUSY 
+        }
+	rme96 wcreg |= RME96 WCR ADAT 
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	rme96 playback substream = substream 
+	spin unlock irq  rme96 lock  
+	
+	runtime hw = snd rme96 playback adat info 
+	if    rme96 wcreg   RME96 WCR MASTER    
+            snd rme96 getinputtype rme96   = RME96 INPUT ANALOG   
+	     rate = snd rme96 capture getrate rme96   dummy     0 
+	{
+                   slave clock   
+                runtime hw rates = snd pcm rate to rate bit rate  
+                runtime hw rate min = rate 
+                runtime hw rate max = rate 
+	}        
+	rme96 set buffer size constraint rme96  runtime  
+	return 0 
+}
+

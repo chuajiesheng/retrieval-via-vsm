@@ -1,0 +1,38 @@
+static int set dac channels struct cmipci  cm  struct cmipci pcm  rec  int channels 
+{
+	if  channels   2  {
+		if   cm can multi ch ||  rec ch 
+			return  EINVAL 
+		if  rec fmt  = 0x03     stereo 16bit only   
+			return  EINVAL 
+	}
+
+	if  cm can multi ch  {
+		spin lock irq  cm reg lock  
+		if  channels   2  {
+			snd cmipci set bit cm  CM REG LEGACY CTRL  CM NXCHG  
+			snd cmipci set bit cm  CM REG MISC CTRL  CM XCHGDAC  
+		} else {
+			snd cmipci clear bit cm  CM REG LEGACY CTRL  CM NXCHG  
+			snd cmipci clear bit cm  CM REG MISC CTRL  CM XCHGDAC  
+		}
+		if  channels == 8 
+			snd cmipci set bit cm  CM REG EXT MISC  CM CHB3D8C  
+		else
+			snd cmipci clear bit cm  CM REG EXT MISC  CM CHB3D8C  
+		if  channels == 6  {
+			snd cmipci set bit cm  CM REG CHFORMAT  CM CHB3D5C  
+			snd cmipci set bit cm  CM REG LEGACY CTRL  CM CHB3D6C  
+		} else {
+			snd cmipci clear bit cm  CM REG CHFORMAT  CM CHB3D5C  
+			snd cmipci clear bit cm  CM REG LEGACY CTRL  CM CHB3D6C  
+		}
+		if  channels == 4 
+			snd cmipci set bit cm  CM REG CHFORMAT  CM CHB3D  
+		else
+			snd cmipci clear bit cm  CM REG CHFORMAT  CM CHB3D  
+		spin unlock irq  cm reg lock  
+	}
+	return 0 
+}
+

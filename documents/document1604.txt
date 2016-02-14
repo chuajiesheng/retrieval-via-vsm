@@ -1,0 +1,6 @@
+static int snd als300 dev free struct snd device  device 
+{
+	struct snd als300  chip = device device data 
+	return snd als300 free chip  
+}
+

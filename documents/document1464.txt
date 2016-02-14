@@ -1,0 +1,6 @@
+ttm flag masked uint32 t  old  uint32 t new  uint32 t mask 
+{
+	 old ^=   old ^ new    mask 
+	return  old 
+}
+

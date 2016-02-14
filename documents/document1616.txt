@@ -1,0 +1,14 @@
+static int snd als300 playback close struct snd pcm substream  substream 
+{
+	struct snd als300  chip = snd pcm substream chip substream  
+	struct snd als300 substream data  data 
+
+	data = substream runtime private data 
+	snd als300 dbgcallenter   
+	kfree data  
+	chip playback substream = NULL 
+	snd pcm lib free pages substream  
+	snd als300 dbgcallleave   
+	return 0 
+}
+

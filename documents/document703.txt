@@ -1,0 +1,16 @@
+  
+   
+static void snd mtpav free struct snd card  card 
+{
+	struct mtpav  crd = card private data 
+	unsigned long flags 
+
+	spin lock irqsave  crd spinlock  flags  
+	if  crd istimer   0 
+		snd mtpav remove output timer crd  
+	spin unlock irqrestore  crd spinlock  flags  
+	if  crd irq  = 0 
+		free irq crd irq   void   crd  
+	release and free resource crd res port  
+}
+

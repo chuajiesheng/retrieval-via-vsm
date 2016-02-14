@@ -1,0 +1,8 @@
+static void pcrypt free struct crypto instance  inst 
+{
+	struct pcrypt instance ctx  ctx = crypto instance ctx inst  
+
+	crypto drop spawn  ctx spawn  
+	kfree inst  
+}
+

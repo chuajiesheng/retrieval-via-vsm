@@ -1,0 +1,50 @@
+  
+    Flushes any input
+   
+static void portman flush input struct portman  pm  unsigned char port 
+{
+	   Local variable for counting things   
+	unsigned int i = 0 
+	unsigned char command = 0 
+
+	switch  port  {
+	case 0 
+		command = RXDATA0 
+		break 
+	case 1 
+		command = RXDATA1 
+		break 
+	default 
+		snd printk KERN WARNING
+			    portman flush input   Won't flush port  i\n  
+			   port  
+		return 
+	}
+
+	   Set address for specified channel in port and allow to settle    
+	portman write command pm  command  
+
+	   Assert the Strobe and wait for echo back    
+	portman write command pm  command | STROBE  
+
+	   Wait for ESTB   
+	while   portman read status pm    ESTB  == 0 
+		cpu relax   
+
+	   Output clock cycles to the Rx circuitry    
+	portman write data pm  0  
+
+	   Flush 250 bits      
+	for  i = 0  i   250  i++  {
+		portman write data pm  1  
+		portman write data pm  0  
+	}
+
+	   Deassert the Strobe signal of the port and wait for it to settle    
+	portman write command pm  command | INT EN  
+
+	   Wait for settling   
+	while   portman read status pm    ESTB  == ESTB 
+		cpu relax   
+}
+

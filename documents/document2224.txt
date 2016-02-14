@@ -1,0 +1,8 @@
+snd ad1889 proc init struct snd ad1889  chip 
+{
+	struct snd info entry  entry 
+
+	if   snd card proc new chip card  chip card driver   entry  
+		snd info set text ops entry  chip  snd ad1889 proc read  
+}
+

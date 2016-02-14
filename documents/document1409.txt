@@ -1,0 +1,9 @@
+   spin lock held   
+static inline void snd es1968 trigger apu struct es1968  esm  int apu  int mode 
+{
+	   set the APU mode   
+	  apu set register esm  apu  0 
+			      apu get register esm  apu  0    0xff0f  |
+			    mode    4   
+}
+

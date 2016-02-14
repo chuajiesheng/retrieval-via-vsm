@@ -1,0 +1,15 @@
+static int snd fm801 capture open struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	chip capture substream = substream 
+	runtime hw = snd fm801 capture 
+	snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM RATE 
+				    hw constraints rates  
+	if   err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+	return 0 
+}
+

@@ -1,0 +1,27 @@
+  
+   pointer callback simplly reads XXX DMA DT CUR register as the current
+   position   when SG buffer is implemented  the offset must be calculated
+   correctly   
+   
+static snd pcm uframes t snd atiixp pcm pointer struct snd pcm substream  substream 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct atiixp dma  dma = runtime private data 
+	unsigned int curptr 
+	int timeout = 1000 
+
+	while  timeout    {
+		curptr = readl chip remap addr + dma ops dt cur  
+		if  curptr   dma buf addr 
+			continue 
+		curptr  = dma buf addr 
+		if  curptr  = dma buf bytes 
+			continue 
+		return bytes to frames runtime  curptr  
+	}
+	snd printd  atiixp modem  invalid DMA pointer read 0x x  buf= x \n  
+		   readl chip remap addr + dma ops dt cur   dma buf addr  
+	return 0 
+}
+

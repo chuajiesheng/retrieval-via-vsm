@@ -1,0 +1,10 @@
+snd azf3328 timer precise resolution struct snd timer  timer 
+					       unsigned long  num  unsigned long  den 
+{
+	snd azf3328 dbgcallenter   
+	 num = 1 
+	 den = 1024000   seqtimer scaling 
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

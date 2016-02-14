@@ -1,0 +1,6 @@
+   Standard handler for SIOCSIWSPY   
+extern int iw handler set spy struct net device  	dev 
+			      struct iw request info  	info 
+			      union iwreq data  	wrqu 
+			      char  			extra  
+

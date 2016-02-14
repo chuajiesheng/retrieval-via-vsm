@@ -1,0 +1,23 @@
+static int snd rawmidi ioctl params compat struct snd rawmidi file  rfile 
+					   struct snd rawmidi params32   user  src 
+{
+	struct snd rawmidi params params 
+	unsigned int val 
+
+	if  rfile output == NULL 
+		return  EINVAL 
+	if  get user params stream   src stream  ||
+	    get user params buffer size   src buffer size  ||
+	    get user params avail min   src avail min  ||
+	    get user val   src no active sensing  
+		return  EFAULT 
+	params no active sensing = val 
+	switch  params stream  {
+	case SNDRV RAWMIDI STREAM OUTPUT 
+		return snd rawmidi output params rfile output   params  
+	case SNDRV RAWMIDI STREAM INPUT 
+		return snd rawmidi input params rfile input   params  
+	}
+	return  EINVAL 
+}
+

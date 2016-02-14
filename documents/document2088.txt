@@ -1,0 +1,10 @@
+static int snd atiixp pcm hw free struct snd pcm substream  substream 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	struct atiixp dma  dma = substream runtime private data 
+
+	atiixp clear dma packets chip  dma  substream  
+	snd pcm lib free pages substream  
+	return 0 
+}
+

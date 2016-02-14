@@ -1,0 +1,2 @@
+extern int ttm mem global init struct ttm mem global  glob  
+

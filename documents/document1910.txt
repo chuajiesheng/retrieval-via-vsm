@@ -1,0 +1,34 @@
+static int snd intel8x0 playback open struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	err = snd intel8x0 pcm open substream   chip ichd ICHD PCMOUT   
+	if  err   0 
+		return err 
+
+	if  chip multi8  {
+		runtime hw channels max = 8 
+		snd pcm hw constraint list runtime  0 
+						SNDRV PCM HW PARAM CHANNELS 
+						 hw constraints channels8  
+	} else if  chip multi6  {
+		runtime hw channels max = 6 
+		snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM CHANNELS 
+					    hw constraints channels6  
+	} else if  chip multi4  {
+		runtime hw channels max = 4 
+		snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM CHANNELS 
+					    hw constraints channels4  
+	}
+	if  chip dra  {
+		snd ac97 pcm double rate rules runtime  
+	}
+	if  chip smp20bit  {
+		runtime hw formats |= SNDRV PCM FMTBIT S32 LE 
+		snd pcm hw constraint msbits runtime  0  32  20  
+	}
+	return 0 
+}
+

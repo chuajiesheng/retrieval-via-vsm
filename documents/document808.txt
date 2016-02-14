@@ -1,0 +1,18 @@
+  
+   update the bits of the given register 
+   return 1 if the bits changed 
+   
+static int snd atiixp update bits struct atiixp  chip  unsigned int reg 
+				 unsigned int mask  unsigned int value 
+{
+	void   iomem  addr = chip remap addr + reg 
+	unsigned int data  old data 
+	old data = data = readl addr  
+	data  = ~mask 
+	data |= value 
+	if  old data == data 
+		return 0 
+	writel data  addr  
+	return 1 
+}
+

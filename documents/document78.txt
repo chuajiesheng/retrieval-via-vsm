@@ -1,0 +1,2 @@
+extern int hrtimer get res const clockid t which clock  struct timespec  tp  
+

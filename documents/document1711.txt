@@ -1,0 +1,7 @@
+   
+   wiphy rfkill set hw state   notify cfg80211 about hw block state
+   @wiphy  the wiphy
+   @blocked  block status
+   
+void wiphy rfkill set hw state struct wiphy  wiphy  bool blocked  
+

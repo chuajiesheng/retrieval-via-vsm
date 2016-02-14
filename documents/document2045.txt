@@ -1,0 +1,47 @@
+static int cs4281 suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct cs4281  chip = card private data 
+	u32 ulCLK 
+	unsigned int i 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	snd pcm suspend all chip pcm  
+
+	snd ac97 suspend chip ac97  
+	snd ac97 suspend chip ac97 secondary  
+
+	ulCLK = snd cs4281 peekBA0 chip  BA0 CLKCR1  
+	ulCLK |= CLKCR1 CKRA 
+	snd cs4281 pokeBA0 chip  BA0 CLKCR1  ulCLK  
+
+	   Disable interrupts    
+	snd cs4281 pokeBA0 chip  BA0 HICR  BA0 HICR CHGM  
+
+	   remember the status registers   
+	for  i = 0  i   ARRAY SIZE saved regs   i++ 
+		if  saved regs i  
+			chip suspend regs i  = snd cs4281 peekBA0 chip  saved regs i   
+
+	   Turn off the serial ports    
+	snd cs4281 pokeBA0 chip  BA0 SERMC  0  
+
+	   Power off FM  Joystick  AC link    
+	snd cs4281 pokeBA0 chip  BA0 SSPM  0  
+
+	   DLL off    
+	snd cs4281 pokeBA0 chip  BA0 CLKCR1  0  
+
+	   AC link off    
+	snd cs4281 pokeBA0 chip  BA0 SPMC  0  
+
+	ulCLK = snd cs4281 peekBA0 chip  BA0 CLKCR1  
+	ulCLK  = ~CLKCR1 CKRA 
+	snd cs4281 pokeBA0 chip  BA0 CLKCR1  ulCLK  
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

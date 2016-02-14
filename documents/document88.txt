@@ -1,0 +1,5 @@
+static inline u32 crypto aead get flags struct crypto aead  tfm 
+{
+	return crypto tfm get flags crypto aead tfm tfm   
+}
+

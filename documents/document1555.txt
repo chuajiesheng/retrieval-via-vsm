@@ -1,0 +1,6 @@
+static inline int drm mtrr del int handle  unsigned long offset 
+			       unsigned long size  unsigned int flags 
+{
+	return mtrr del handle  offset  size  
+}
+

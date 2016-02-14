@@ -1,0 +1,23 @@
+static int snd es1968 free struct es1968  chip 
+{
+#ifdef CONFIG SND ES1968 INPUT
+	if  chip input dev 
+		input unregister device chip input dev  
+#endif
+
+	if  chip io port  {
+		if  chip irq  = 0 
+			synchronize irq chip irq  
+		outw 1  chip io port + 0x04      clear WP interrupts   
+		outw 0  chip io port + ESM PORT HOST IRQ      disable IRQ   
+	}
+
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	snd es1968 free gameport chip  
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

@@ -1,0 +1,11 @@
+static inline unsigned int frac pos struct loopback pcm  dpcm  unsigned int x 
+{
+	if  dpcm pcm rate shift == NO PITCH  {	   no pitch   
+		return x   HZ 
+	} else {
+		x = div u64 dpcm pcm rate shift    unsigned long long x   HZ 
+			    NO PITCH  
+	}
+	return x 
+}
+

@@ -1,0 +1,3 @@
+   Devicetype specific user data  This is per device type  not per device    
+void ssb set devtypedata struct ssb device  dev  void  data  
+

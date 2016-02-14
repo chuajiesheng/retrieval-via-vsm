@@ -1,0 +1,15 @@
+static int   devinit loopback proc new struct loopback  loopback  int cidx 
+{
+	char name 32  
+	struct snd info entry  entry 
+	int err 
+
+	snprintf name  sizeof name    cable# d   cidx  
+	err = snd card proc new loopback card  name   entry  
+	if  err   0 
+		return err 
+
+	snd info set text ops entry  loopback  print cable info  
+	return 0 
+}
+

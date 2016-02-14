@@ -1,0 +1,14 @@
+static void snd uart16550 input trigger struct snd rawmidi substream  substream 
+					int up 
+{
+	unsigned long flags 
+	struct snd uart16550  uart = substream rmidi private data 
+
+	spin lock irqsave  uart open lock  flags  
+	if  up 
+		uart filemode |= SERIAL MODE INPUT TRIGGERED 
+	else
+		uart filemode  = ~SERIAL MODE INPUT TRIGGERED 
+	spin unlock irqrestore  uart open lock  flags  
+}
+

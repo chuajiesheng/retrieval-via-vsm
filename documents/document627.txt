@@ -1,0 +1,7 @@
+static int dummy pcm prepare struct snd pcm substream  substream 
+{
+	struct snd dummy  dummy = snd pcm substream chip substream  
+
+	return dummy timer ops prepare substream  
+}
+

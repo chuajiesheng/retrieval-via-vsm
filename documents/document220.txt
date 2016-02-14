@@ -1,0 +1,23 @@
+static int snd sndstat show strings struct snd info buffer  buf  char  id  int dev 
+{
+	int idx  ok =  1 
+	char  str 
+
+	snd iprintf buf   \n s    id  
+	mutex lock  strings  
+	for  idx = 0  idx   SNDRV CARDS  idx++  {
+		str = snd sndstat strings idx  dev  
+		if  str  {
+			if  ok   0  {
+				snd iprintf buf   \n   
+				ok++ 
+			}
+			snd iprintf buf    i   s\n   idx  str  
+		}
+	}
+	mutex unlock  strings  
+	if  ok   0 
+		snd iprintf buf    NOT ENABLED IN CONFIG\n   
+	return ok 
+}
+

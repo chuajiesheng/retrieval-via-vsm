@@ -1,0 +1,8 @@
+static void   exit snd mem exit void 
+{
+	remove proc entry SND MEM PROC FILE  NULL  
+	free all reserved pages   
+	if  snd allocated pages   0 
+		printk KERN ERR  snd malloc  Memory leak?  pages not freed =  li\n   snd allocated pages  
+}
+

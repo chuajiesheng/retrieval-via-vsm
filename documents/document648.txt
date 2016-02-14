@@ -1,0 +1,5 @@
+static int   init crypto ecb module init void 
+{
+	return crypto register template  crypto ecb tmpl  
+}
+

@@ -1,0 +1,39 @@
+static int loopback prepare struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct loopback pcm  dpcm = runtime private data 
+	struct loopback cable  cable = dpcm cable 
+	int bps  salign 
+
+	salign =  snd pcm format width runtime format   
+						runtime channels    8 
+	bps = salign   runtime rate 
+	if  bps  = 0 || salign  = 0 
+		return  EINVAL 
+
+	dpcm buf pos = 0 
+	dpcm pcm buffer size = frames to bytes runtime  runtime buffer size  
+	if  substream stream == SNDRV PCM STREAM CAPTURE  {
+		   clear capture buffer   
+		dpcm silent size = dpcm pcm buffer size 
+		snd pcm format set silence runtime format  runtime dma area 
+					   runtime buffer size   runtime channels  
+	}
+
+	dpcm irq pos = 0 
+	dpcm period update pending = 0 
+	dpcm pcm bps = bps 
+	dpcm pcm salign = salign 
+	dpcm pcm period size = frames to bytes runtime  runtime period size  
+
+	mutex lock  dpcm loopback cable lock  
+	if    cable valid   ~ 1    substream stream   ||
+             get setup dpcm  notify   
+	     substream stream == SNDRV PCM STREAM PLAYBACK  
+		params change substream  
+	cable valid |= 1    substream stream 
+	mutex unlock  dpcm loopback cable lock  
+
+	return 0 
+}
+

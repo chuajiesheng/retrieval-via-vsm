@@ -1,0 +1,10 @@
+void gf128mul x ble be128  r  const be128  x 
+{
+	u64 a = le64 to cpu x a  
+	u64 b = le64 to cpu x b  
+	u64  tt = gf128mul table bbe b    63  
+
+	r a = cpu to le64  a    1  ^  tt  
+	r b = cpu to le64  b    1  |  a    63   
+}
+

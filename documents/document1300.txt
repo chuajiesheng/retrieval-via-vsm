@@ -1,0 +1,10 @@
+   no spinlock   
+static u16   maestro read struct es1968  chip  u16 reg 
+{
+	if  READABLE MAP    1    reg   {
+		outw reg  chip io port + ESM INDEX  
+		chip maestro map reg  = inw chip io port + ESM DATA  
+	}
+	return chip maestro map reg  
+}
+

@@ -1,0 +1,8 @@
+static int snd intel8x0 capture2 close struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+
+	chip ichd ICHD PCM2IN  substream = NULL 
+	return 0 
+}
+

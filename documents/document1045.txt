@@ -1,0 +1,13 @@
+static void snd ensoniq free gameport struct ensoniq  ensoniq 
+{
+	if  ensoniq gameport  {
+		int port = ensoniq gameport io 
+
+		gameport unregister port ensoniq gameport  
+		ensoniq gameport = NULL 
+		ensoniq ctrl  = ~ES JYSTK EN 
+		outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+		release region port  8  
+	}
+}
+

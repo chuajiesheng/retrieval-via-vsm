@@ -1,0 +1,68 @@
+static int xcbc create struct crypto template  tmpl  struct rtattr   tb 
+{
+	struct shash instance  inst 
+	struct crypto alg  alg 
+	unsigned long alignmask 
+	int err 
+
+	err = crypto check attr type tb  CRYPTO ALG TYPE SHASH  
+	if  err 
+		return err 
+
+	alg = crypto get attr alg tb  CRYPTO ALG TYPE CIPHER 
+				  CRYPTO ALG TYPE MASK  
+	if  IS ERR alg  
+		return PTR ERR alg  
+
+	switch alg cra blocksize  {
+	case 16 
+		break 
+	default 
+		goto out put alg 
+	}
+
+	inst = shash alloc instance  xcbc   alg  
+	err = PTR ERR inst  
+	if  IS ERR inst  
+		goto out put alg 
+
+	err = crypto init spawn shash instance ctx inst   alg 
+				shash crypto instance inst  
+				CRYPTO ALG TYPE MASK  
+	if  err 
+		goto out free inst 
+
+	alignmask = alg cra alignmask | 3 
+	inst alg base cra alignmask = alignmask 
+	inst alg base cra priority = alg cra priority 
+	inst alg base cra blocksize = alg cra blocksize 
+
+	inst alg digestsize = alg cra blocksize 
+	inst alg descsize = ALIGN sizeof struct xcbc desc ctx  
+				   crypto tfm ctx alignment    +
+			      alignmask  
+			      ~ crypto tfm ctx alignment     1   +
+			     alg cra blocksize   2 
+
+	inst alg base cra ctxsize = ALIGN sizeof struct xcbc tfm ctx  
+					   alignmask + 1  +
+				     alg cra blocksize   2 
+	inst alg base cra init = xcbc init tfm 
+	inst alg base cra exit = xcbc exit tfm 
+
+	inst alg init = crypto xcbc digest init 
+	inst alg update = crypto xcbc digest update 
+	inst alg final = crypto xcbc digest final 
+	inst alg setkey = crypto xcbc digest setkey 
+
+	err = shash register instance tmpl  inst  
+	if  err  {
+out free inst 
+		shash free instance shash crypto instance inst   
+	}
+
+out put alg 
+	crypto mod put alg  
+	return err 
+}
+

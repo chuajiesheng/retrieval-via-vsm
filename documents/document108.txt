@@ -1,0 +1,17 @@
+   
+   snd pcm format width   return the bit width of the format
+   @format  the format to check
+  
+   Returns the bit width of the format  or a negative error code
+   if unknown format 
+   
+int snd pcm format width snd pcm format t format 
+{
+	int val 
+	if  format   0 || format   SNDRV PCM FORMAT LAST 
+		return  EINVAL 
+	if   val = pcm formats format  width  == 0 
+		return  EINVAL 
+	return val 
+}
+

@@ -1,0 +1,56 @@
+static int   devinit snd via82xx probe struct pci dev  pci 
+				       const struct pci device id  pci id 
+{
+	struct snd card  card 
+	struct via82xx modem  chip 
+	int chip type = 0  card type 
+	unsigned int i 
+	int err 
+
+	err = snd card create index  id  THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	card type = pci id driver data 
+	switch  card type  {
+	case TYPE CARD VIA82XX MODEM 
+		strcpy card driver   VIA82XX MODEM   
+		sprintf card shortname   VIA 82XX modem   
+		break 
+	default 
+		snd printk KERN ERR  invalid card type  d\n   card type  
+		err =  EINVAL 
+		goto   error 
+	}
+		
+	if   err = snd via82xx create card  pci  chip type  pci revision 
+				      ac97 clock   chip     0 
+		goto   error 
+	card private data = chip 
+	if   err = snd via82xx mixer new chip     0 
+		goto   error 
+
+	if   err = snd via686 pcm new chip     0  
+		goto   error 
+
+	   disable interrupts   
+	for  i = 0  i   chip num devs  i++ 
+		snd via82xx channel reset chip   chip devs i   
+
+	sprintf card longname    s at 0x lx  irq  d  
+		card shortname  chip port  chip irq  
+
+	snd via82xx proc init chip  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	return 0 
+
+   error 
+	snd card free card  
+	return err 
+}
+

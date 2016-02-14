@@ -1,0 +1,5 @@
+alsa ad1889 fini void 
+{
+	pci unregister driver  ad1889 pci driver  
+}
+

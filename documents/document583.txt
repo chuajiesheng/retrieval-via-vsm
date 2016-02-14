@@ -1,0 +1,14 @@
+static int crypto ecb decrypt struct blkcipher desc  desc 
+			      struct scatterlist  dst  struct scatterlist  src 
+			      unsigned int nbytes 
+{
+	struct blkcipher walk walk 
+	struct crypto blkcipher  tfm = desc tfm 
+	struct crypto ecb ctx  ctx = crypto blkcipher ctx tfm  
+	struct crypto cipher  child = ctx child 
+
+	blkcipher walk init  walk  dst  src  nbytes  
+	return crypto ecb crypt desc   walk  child 
+				crypto cipher alg child  cia decrypt  
+}
+

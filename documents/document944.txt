@@ -1,0 +1,32 @@
+static int crypto gcm decrypt struct aead request  req 
+{
+	struct crypto aead  aead = crypto aead reqtfm req  
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+	struct ablkcipher request  abreq =  pctx u abreq 
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+	unsigned int authsize = crypto aead authsize aead  
+	unsigned int cryptlen = req cryptlen 
+	int err 
+
+	if  cryptlen   authsize 
+		return  EINVAL 
+	cryptlen  = authsize 
+
+	gctx src = req src 
+	gctx cryptlen = cryptlen 
+	gctx complete = gcm dec hash done 
+
+	err = gcm hash req  pctx  
+	if  err 
+		return err 
+
+	ablkcipher request set callback abreq  aead request flags req  
+					gcm decrypt done  req  
+	crypto gcm init crypt abreq  req  cryptlen  
+	err = crypto ablkcipher decrypt abreq  
+	if  err 
+		return err 
+
+	return crypto gcm verify req  pctx  
+}
+

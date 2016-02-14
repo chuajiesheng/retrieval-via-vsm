@@ -1,0 +1,15 @@
+snd azf3328 ctrl reg 6AH update struct snd azf3328  chip 
+					unsigned bitmask 
+					bool enable
+ 
+{
+	bool do mask =  enable 
+	if  do mask 
+		chip shadow reg ctrl 6AH |= bitmask 
+	else
+		chip shadow reg ctrl 6AH  = ~bitmask 
+	snd azf3328 dbgcodec  6AH update mask 0x 04x do mask  d  val 0x 04x\n  
+			bitmask  do mask  chip shadow reg ctrl 6AH  
+	snd azf3328 ctrl outw chip  IDX IO 6AH  chip shadow reg ctrl 6AH  
+}
+

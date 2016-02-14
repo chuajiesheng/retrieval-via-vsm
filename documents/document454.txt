@@ -1,0 +1,8 @@
+   
+   ib rate to mult   Convert the IB rate enum to a multiple of the
+   base rate of 2 5 Gbit sec   For example  IB RATE 5 GBPS will be
+   converted to 2  since 5 Gbit sec is 2   2 5 Gbit sec 
+   @rate  rate to convert 
+   
+int ib rate to mult enum ib rate rate    attribute const   
+

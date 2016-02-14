@@ -1,0 +1,13 @@
+static int snd als300 free struct snd als300  chip 
+{
+	snd als300 dbgcallenter   
+	snd als300 set irq flag chip  IRQ DISABLE  
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	snd als300 dbgcallleave   
+	return 0 
+}
+

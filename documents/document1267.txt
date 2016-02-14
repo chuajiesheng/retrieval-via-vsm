@@ -1,0 +1,2 @@
+extern bool drm helper encoder in use struct drm encoder  encoder  
+

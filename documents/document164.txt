@@ -1,0 +1,8 @@
+static int snd hwdep mmap struct file   file  struct vm area struct   vma 
+{
+	struct snd hwdep  hw = file private data 
+	if  hw ops mmap 
+		return hw ops mmap hw  file  vma  
+	return  ENXIO 
+}
+

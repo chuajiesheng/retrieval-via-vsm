@@ -1,0 +1,10 @@
+static int snd bt87x capture volume info struct snd kcontrol  kcontrol 
+					 struct snd ctl elem info  info 
+{
+	info type = SNDRV CTL ELEM TYPE INTEGER 
+	info count = 1 
+	info value integer min = 0 
+	info value integer max = 15 
+	return 0 
+}
+

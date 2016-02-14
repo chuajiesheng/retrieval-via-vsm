@@ -1,0 +1,25 @@
+static int snd fm801 free struct fm801  chip 
+{
+	unsigned short cmdw 
+
+	if  chip irq   0 
+		goto   end hw 
+
+	   interrupt setup   mask everything   
+	cmdw = inw FM801 REG chip  IRQ MASK   
+	cmdw |= 0x00c3 
+	outw cmdw  FM801 REG chip  IRQ MASK   
+
+        end hw 
+#ifdef TEA575X RADIO
+	snd tea575x exit  chip tea  
+#endif
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	pci release regions chip pci  
+	pci disable device chip pci  
+
+	kfree chip  
+	return 0 
+}
+

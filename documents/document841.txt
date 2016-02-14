@@ -1,0 +1,27 @@
+   set up slots and formats for SPDIF OUT   
+static int snd atiixp spdif prepare struct snd pcm substream  substream 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+
+	spin lock irq  chip reg lock  
+	if  chip spdif over aclink  {
+		unsigned int data 
+		   enable slots 10 11   
+		atiixp update chip  CMD  ATI REG CMD SPDF CONFIG MASK 
+			      ATI REG CMD SPDF CONFIG 01  
+		data = atiixp read chip  OUT DMA SLOT    ~ATI REG OUT DMA SLOT MASK 
+		data |= ATI REG OUT DMA SLOT BIT 10  |
+			ATI REG OUT DMA SLOT BIT 11  
+		data |= 0x04    ATI REG OUT DMA THRESHOLD SHIFT 
+		atiixp write chip  OUT DMA SLOT  data  
+		atiixp update chip  CMD  ATI REG CMD INTERLEAVE OUT 
+			      substream runtime format == SNDRV PCM FORMAT S16 LE ?
+			      ATI REG CMD INTERLEAVE OUT   0  
+	} else {
+		atiixp update chip  CMD  ATI REG CMD SPDF CONFIG MASK  0  
+		atiixp update chip  CMD  ATI REG CMD INTERLEAVE SPDF  0  
+	}
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

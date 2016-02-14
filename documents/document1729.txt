@@ -1,0 +1,6 @@
+static inline void INIT LIST HEAD struct list head  list 
+{
+	list next = list 
+	list prev = list 
+}
+

@@ -1,0 +1,40 @@
+snd azf3328 put mixer struct snd kcontrol  kcontrol 
+		      struct snd ctl elem value  ucontrol 
+{
+	struct snd azf3328  chip = snd kcontrol chip kcontrol  
+	struct azf3328 mixer reg reg 
+	u16 oreg  nreg  val 
+
+	snd azf3328 dbgcallenter   
+	snd azf3328 mixer reg decode  reg  kcontrol private value  
+	oreg = snd azf3328 mixer inw chip  reg reg  
+	val = ucontrol value integer value 0    reg mask 
+	if  reg invert 
+		val = reg mask   val 
+	nreg = oreg   ~ reg mask    reg lchan shift  
+	nreg |=  val    reg lchan shift  
+	if  reg stereo  {
+		val = ucontrol value integer value 1    reg mask 
+		if  reg invert 
+			val = reg mask   val 
+		nreg  = ~ reg mask    reg rchan shift  
+		nreg |=  val    reg rchan shift  
+	}
+	if  reg mask  = 0x07     it's a volume control  so better take care   
+		snd azf3328 mixer write volume gradually 
+			chip  reg reg  nreg    8  nreg   0xff 
+			   just set both channels  doesn't matter   
+			SET CHAN LEFT|SET CHAN RIGHT 
+			0  
+	else
+        	snd azf3328 mixer outw chip  reg reg  nreg  
+
+	snd azf3328 dbgmixer  put   02x to  02lx| 02lx   
+			      oreg  04x  shift  02d| 02d   nreg  04x  after   04x\n  
+		reg reg  ucontrol value integer value 0   ucontrol value integer value 1  
+		oreg  reg lchan shift  reg rchan shift 
+		nreg  snd azf3328 mixer inw chip  reg reg   
+	snd azf3328 dbgcallleave   
+	return  nreg  = oreg  
+}
+

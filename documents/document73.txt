@@ -1,0 +1,12 @@
+static int snd hrtimer start struct snd timer  t 
+{
+	struct snd hrtimer  stime = t private data 
+
+	atomic set  stime running  0  
+	hrtimer cancel  stime hrt  
+	hrtimer start  stime hrt  ns to ktime t sticks   resolution  
+		      HRTIMER MODE REL  
+	atomic set  stime running  1  
+	return 0 
+}
+

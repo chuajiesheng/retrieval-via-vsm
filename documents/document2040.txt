@@ -1,0 +1,30 @@
+static void snd cs4281 midi output trigger struct snd rawmidi substream  substream  int up 
+{
+	unsigned long flags 
+	struct cs4281  chip = substream rmidi private data 
+	unsigned char byte 
+
+	spin lock irqsave  chip reg lock  flags  
+	if  up  {
+		if   chip midcr   BA0 MIDCR TIE  == 0  {
+			chip midcr |= BA0 MIDCR TIE 
+			   fill UART FIFO buffer at first  and turn Tx interrupts only if necessary   
+			while   chip midcr   BA0 MIDCR TIE    
+			        snd cs4281 peekBA0 chip  BA0 MIDSR    BA0 MIDSR TBF  == 0  {
+				if  snd rawmidi transmit substream   byte  1   = 1  {
+					chip midcr  = ~BA0 MIDCR TIE 
+				} else {
+					snd cs4281 pokeBA0 chip  BA0 MIDWP  byte  
+				}
+			}
+			snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr  
+		}
+	} else {
+		if  chip midcr   BA0 MIDCR TIE  {
+			chip midcr  = ~BA0 MIDCR TIE 
+			snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr  
+		}
+	}
+	spin unlock irqrestore  chip reg lock  flags  
+}
+

@@ -1,0 +1,12 @@
+   bit operations for byte register   
+static int snd cmipci set bit b struct cmipci  cm  unsigned int cmd  unsigned char flag 
+{
+	unsigned char val  oval 
+	val = oval = inb cm iobase + cmd  
+	val |= flag 
+	if  val == oval 
+		return 0 
+	outb val  cm iobase + cmd  
+	return 1 
+}
+

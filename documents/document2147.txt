@@ -1,0 +1,49 @@
+  
+   prepare callback for multi channel playback on via823x
+   
+static int snd via8233 multi prepare struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned int slots 
+	int fmt 
+
+	if  via lock rate  chip rates 0   runtime rate    0 
+		return  EINVAL 
+	snd ac97 set rate chip ac97  AC97 PCM FRONT DAC RATE  runtime rate  
+	snd ac97 set rate chip ac97  AC97 PCM SURR DAC RATE  runtime rate  
+	snd ac97 set rate chip ac97  AC97 PCM LFE DAC RATE  runtime rate  
+	snd ac97 set rate chip ac97  AC97 SPDIF  runtime rate  
+	snd via82xx channel reset chip  viadev  
+	snd via82xx set table ptr chip  viadev  
+
+	fmt =  runtime format == SNDRV PCM FORMAT S16 LE  ?
+		VIA REG MULTPLAY FMT 16BIT   VIA REG MULTPLAY FMT 8BIT 
+	fmt |= runtime channels    4 
+	outb fmt  VIADEV REG viadev  OFS MULTPLAY FORMAT   
+#if 0
+	if  chip revision == VIA REV 8233A 
+		slots = 0 
+	else
+#endif
+	{
+		   set sample number to slot 3  4  7  8  6  9  for VIA8233 C 8235    
+		   corresponding to FL  FR  RL  RR  C  LFE ??   
+		switch  runtime channels  {
+		case 1  slots =  1  0  |  1  4   break 
+		case 2  slots =  1  0  |  2  4   break 
+		case 3  slots =  1  0  |  2  4  |  5  8   break 
+		case 4  slots =  1  0  |  2  4  |  3  8  |  4  12   break 
+		case 5  slots =  1  0  |  2  4  |  3  8  |  4  12  |  5  16   break 
+		case 6  slots =  1  0  |  2  4  |  3  8  |  4  12  |  5  16  |  6  20   break 
+		default  slots = 0  break 
+		}
+	}
+	   STOP index is never reached   
+	outl 0xff000000 | slots  VIADEV REG viadev  OFFSET STOP IDX   
+	udelay 20  
+	snd via82xx codec ready chip  0  
+	return 0 
+}
+

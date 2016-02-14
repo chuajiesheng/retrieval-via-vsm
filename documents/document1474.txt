@@ -1,0 +1,13 @@
+   
+   ttm bo wait for cpu
+  
+   @bo  Pointer to a struct ttm buffer object 
+   @no wait  Don't sleep while waiting 
+  
+   Wait until a buffer object is no longer sync'ed for CPU access 
+   Returns 
+    EBUSY  Buffer object was sync'ed for CPU access   only if no wait == 1  
+    ERESTARTSYS  An interruptible sleep was interrupted by a signal 
+   
+extern int ttm bo wait cpu struct ttm buffer object  bo  bool no wait  
+

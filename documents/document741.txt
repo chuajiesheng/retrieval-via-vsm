@@ -1,0 +1,28 @@
+static int   devinit snd via82xx mixer new struct via82xx modem  chip 
+{
+	struct snd ac97 template ac97 
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd via82xx codec write 
+		 read = snd via82xx codec read 
+		 wait = snd via82xx codec wait 
+	} 
+
+	if   err = snd ac97 bus chip card  0   ops  chip   chip ac97 bus     0 
+		return err 
+	chip ac97 bus private free = snd via82xx mixer free ac97 bus 
+	chip ac97 bus clock = chip ac97 clock 
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	ac97 private free = snd via82xx mixer free ac97 
+	ac97 pci = chip pci 
+	ac97 scaps = AC97 SCAP SKIP AUDIO | AC97 SCAP POWER SAVE 
+	ac97 num = chip ac97 secondary 
+
+	if   err = snd ac97 mixer chip ac97 bus   ac97   chip ac97     0 
+		return err 
+
+	return 0 
+}
+

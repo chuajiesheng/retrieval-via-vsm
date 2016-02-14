@@ -1,0 +1,4 @@
+extern int ttm mem global alloc page struct ttm mem global  glob 
+				     struct page  page 
+				     bool no wait  bool interruptible  
+

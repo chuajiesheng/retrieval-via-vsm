@@ -1,0 +1,20 @@
+  
+    common I O routines
+   
+static int snd fm801 update bits struct fm801  chip  unsigned short reg 
+				 unsigned short mask  unsigned short value 
+{
+	int change 
+	unsigned long flags 
+	unsigned short old  new 
+
+	spin lock irqsave  chip reg lock  flags  
+	old = inw chip port + reg  
+	new =  old   ~mask  | value 
+	change = old  = new 
+	if  change 
+		outw new  chip port + reg  
+	spin unlock irqrestore  chip reg lock  flags  
+	return change 
+}
+

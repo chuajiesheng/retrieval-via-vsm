@@ -1,0 +1,7 @@
+   enable disable SPDIF OUT DMA   
+static void atiixp spdif enable dma struct atiixp  chip  int on 
+{
+	atiixp update chip  CMD  ATI REG CMD SPDF DMA EN 
+		      on ? ATI REG CMD SPDF DMA EN   0  
+}
+

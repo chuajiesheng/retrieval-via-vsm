@@ -1,0 +1,5 @@
+int snd pcm hw constraint ratdens struct snd pcm runtime  runtime  
+				  unsigned int cond 
+				  snd pcm hw param t var 
+				  struct snd pcm hw constraint ratdens  r  
+

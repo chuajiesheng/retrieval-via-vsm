@@ -1,0 +1,2 @@
+static int snd pcm dev register struct snd device  device  
+

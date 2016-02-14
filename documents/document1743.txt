@@ -1,0 +1,5 @@
+static void cprng exit struct crypto tfm  tfm 
+{
+	free prng context crypto tfm ctx tfm   
+}
+

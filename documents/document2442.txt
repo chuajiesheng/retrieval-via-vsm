@@ -1,0 +1,38 @@
+   
+    tfrc rx handle loss     Loss detection and further processing
+    @h 		    The non empty RX history object
+    @lh 	    Loss Intervals database to update
+    @skb 	    Currently received packet
+    @ndp 	    The NDP count belonging to @skb
+    @calc first li  Caller dependent computation of first loss interval in @lh
+    @sk 	    Used by @calc first li  see tfrc lh interval add 
+    Chooses action according to pending loss  updates LI database when a new
+    loss was detected  and does required post processing  Returns 1 when caller
+    should send feedback  0 otherwise 
+    Since it also takes care of reordering during loss detection and updates the
+    records accordingly  the caller should not perform any more RX history
+    operations when loss count is greater than 0 after calling this function 
+   
+int tfrc rx handle loss struct tfrc rx hist  h 
+			struct tfrc loss hist  lh 
+			struct sk buff  skb  const u64 ndp 
+			u32   calc first li  struct sock     struct sock  sk 
+{
+	int is new loss = 0 
+
+	if  h loss count == 0  {
+		  do track loss h  skb  ndp  
+	} else if  h loss count == 1  {
+		  one after loss h  skb  ndp  
+	} else if  h loss count  = 2  {
+		DCCP BUG  invalid loss count  d   h loss count  
+	} else if    two after loss h  skb  ndp   {
+		  
+		   Update Loss Interval database and recycle RX records
+		   
+		is new loss = tfrc lh interval add lh  h  calc first li  sk  
+		  three after loss h  
+	}
+	return is new loss 
+}
+

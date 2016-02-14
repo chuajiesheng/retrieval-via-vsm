@@ -1,0 +1,2 @@
+int snd device disconnect all struct snd card  card  
+

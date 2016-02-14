@@ -1,0 +1,8 @@
+void tfrc rx packet history exit void 
+{
+	if  tfrc rx hist slab  = NULL  {
+		kmem cache destroy tfrc rx hist slab  
+		tfrc rx hist slab = NULL 
+	}
+}
+

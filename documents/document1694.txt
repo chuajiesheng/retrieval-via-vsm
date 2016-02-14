@@ -1,0 +1,54 @@
+static int m3 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct snd m3  chip = card private data 
+	int i  dsp index 
+
+	if  chip suspend mem == NULL 
+		return 0 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  maestor3  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	   first lets just bring everything back     
+	snd m3 outw chip  0  0x54  
+	snd m3 outw chip  0  0x56  
+
+	snd m3 chip init chip  
+	snd m3 assp halt chip  
+	snd m3 ac97 reset chip  
+
+	   restore dsp image   
+	dsp index = 0 
+	for  i = REV B CODE MEMORY BEGIN  i  = REV B CODE MEMORY END  i++ 
+		snd m3 assp write chip  MEMTYPE INTERNAL CODE  i  
+				  chip suspend mem dsp index++   
+	for  i = REV B DATA MEMORY BEGIN   i  = REV B DATA MEMORY END  i++ 
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA  i  
+				  chip suspend mem dsp index++   
+
+	   tell the dma engine to restart itself   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA  
+			  KDATA DMA ACTIVE  0  
+
+           restore ac97 registers   
+	snd ac97 resume chip ac97  
+
+	snd m3 assp continue chip  
+	snd m3 enable ints chip  
+	snd m3 amp enable chip  1  
+
+	snd m3 hv init chip  
+
+	snd power change state card  SNDRV CTL POWER D0  
+	chip in suspend = 0 
+	return 0 
+}
+

@@ -1,0 +1,6 @@
+static inline void aead request set tfm struct aead request  req 
+					struct crypto aead  tfm 
+{
+	req base tfm = crypto aead tfm crypto aead crt tfm  base  
+}
+

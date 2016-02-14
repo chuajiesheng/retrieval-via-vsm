@@ -1,0 +1,55 @@
+static void snd intel8x0 setup pcm out struct intel8x0  chip 
+				       struct snd pcm runtime  runtime 
+{
+	unsigned int cnt 
+	int dbl = runtime rate   48000 
+
+	spin lock irq  chip reg lock  
+	switch  chip device type  {
+	case DEVICE ALI 
+		cnt = igetdword chip  ICHREG ALI SCR   
+		cnt  = ~ICH ALI SC PCM 246 MASK 
+		if  runtime channels == 4 || dbl 
+			cnt |= ICH ALI SC PCM 4 
+		else if  runtime channels == 6 
+			cnt |= ICH ALI SC PCM 6 
+		iputdword chip  ICHREG ALI SCR   cnt  
+		break 
+	case DEVICE SIS 
+		cnt = igetdword chip  ICHREG GLOB CNT   
+		cnt  = ~ICH SIS PCM 246 MASK 
+		if  runtime channels == 4 || dbl 
+			cnt |= ICH SIS PCM 4 
+		else if  runtime channels == 6 
+			cnt |= ICH SIS PCM 6 
+		iputdword chip  ICHREG GLOB CNT   cnt  
+		break 
+	default 
+		cnt = igetdword chip  ICHREG GLOB CNT   
+		cnt  = ~ ICH PCM 246 MASK | ICH PCM 20BIT  
+		if  runtime channels == 4 || dbl 
+			cnt |= ICH PCM 4 
+		else if  runtime channels == 6 
+			cnt |= ICH PCM 6 
+		else if  runtime channels == 8 
+			cnt |= ICH PCM 8 
+		if  chip device type == DEVICE NFORCE  {
+			   reset to 2ch once to keep the 6 channel data in alignment 
+			   to start from Front Left always
+			   
+			if  cnt   ICH PCM 246 MASK  {
+				iputdword chip  ICHREG GLOB CNT   cnt   ~ICH PCM 246 MASK  
+				spin unlock irq  chip reg lock  
+				msleep 50      grrr      
+				spin lock irq  chip reg lock  
+			}
+		} else if  chip device type == DEVICE INTEL ICH4  {
+			if  runtime sample bits   16 
+				cnt |= ICH PCM 20BIT 
+		}
+		iputdword chip  ICHREG GLOB CNT   cnt  
+		break 
+	}
+	spin unlock irq  chip reg lock  
+}
+

@@ -1,0 +1,14 @@
+static int snd es1373 line get struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	int val = 0 
+	
+	spin lock irq  ensoniq reg lock  
+	if   ensoniq ctrl   ES 1371 GPIO OUTM   = 4 
+	    	val = 1 
+	ucontrol value integer value 0  = val 
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

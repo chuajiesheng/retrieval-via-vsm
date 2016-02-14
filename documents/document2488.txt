@@ -1,0 +1,9 @@
+static void virt efi reset system int reset type 
+				  efi status t status 
+				  unsigned long data size 
+				  efi char16 t  data 
+{
+	efi call virt4 reset system  reset type  status 
+		       data size  data  
+}
+

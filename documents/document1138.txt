@@ -1,0 +1,26 @@
+snd azf3328 timer start struct snd timer  timer 
+{
+	struct snd azf3328  chip 
+	unsigned long flags 
+	unsigned int delay 
+
+	snd azf3328 dbgcallenter   
+	chip = snd timer chip timer  
+	delay =   timer sticks   seqtimer scaling    1    TIMER VALUE MASK 
+	if  delay   49  {
+		   uhoh  that's not good  since user space won't know about
+		   this timing tweak
+		    we need to do it to avoid a lockup  though    
+
+		snd azf3328 dbgtimer  delay was too low   d  \n   delay  
+		delay = 49     minimum time is 49 ticks   
+	}
+	snd azf3328 dbgtimer  setting timer countdown value  d\n   delay  
+	delay |= TIMER COUNTDOWN ENABLE | TIMER IRQ ENABLE 
+	spin lock irqsave  chip reg lock  flags  
+	snd azf3328 ctrl outl chip  IDX IO TIMER VALUE  delay  
+	spin unlock irqrestore  chip reg lock  flags  
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

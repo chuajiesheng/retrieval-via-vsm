@@ -1,0 +1,8 @@
+static inline void snd als4000 set capture dma struct snd sb  chip 
+					       dma addr t addr  unsigned size 
+{
+	   SPECS PAGE  40   
+	snd als4k gcr write chip  ALS4K GCRA2 FIFO2 PCIADDR  addr  
+	snd als4k gcr write chip  ALS4K GCRA3 FIFO2 COUNT   size 1   
+}
+

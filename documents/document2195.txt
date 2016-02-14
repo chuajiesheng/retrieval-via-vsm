@@ -1,0 +1,2 @@
+module param ac97 quirk  charp  0444  
+

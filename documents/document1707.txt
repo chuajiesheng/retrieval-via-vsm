@@ -1,0 +1,5 @@
+static inline u8 snd m3 inb struct snd m3  chip  unsigned long reg 
+{
+	return inb chip iobase + reg  
+}
+

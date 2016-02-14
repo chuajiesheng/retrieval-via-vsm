@@ -1,0 +1,15 @@
+  
+   midi interrupt for inputs
+   
+static void snd mtpav inmidi process struct mtpav  mcrd  u8 inbyte 
+{
+	struct mtpav port  portp 
+
+	if   int mcrd inmidiport   mcrd num ports   2 + MTPAV PIDX BROADCAST 
+		return 
+
+	portp =  mcrd ports mcrd inmidiport  
+	if  portp mode   MTPAV MODE INPUT TRIGGERED 
+		snd rawmidi receive portp input   inbyte  1  
+}
+

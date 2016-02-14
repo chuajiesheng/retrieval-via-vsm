@@ -1,0 +1,65 @@
+  
+   build packets ring for the given buffer size 
+  
+   IXP handles the buffer descriptors  which are connected as a linked
+   list   although we can change the list dynamically  in this version 
+   a static RING of buffer descriptors is used 
+  
+   the ring is built in this function  and is set up to the hardware  
+   
+static int atiixp build dma packets struct atiixp modem  chip 
+				    struct atiixp dma  dma 
+				    struct snd pcm substream  substream 
+				    unsigned int periods 
+				    unsigned int period bytes 
+{
+	unsigned int i 
+	u32 addr  desc addr 
+	unsigned long flags 
+
+	if  periods   ATI MAX DESCRIPTORS 
+		return  ENOMEM 
+
+	if  dma desc buf area == NULL  {
+		if  snd dma alloc pages SNDRV DMA TYPE DEV  snd dma pci data chip pci  
+					ATI DESC LIST SIZE   dma desc buf    0 
+			return  ENOMEM 
+		dma period bytes = dma periods = 0     clear   
+	}
+
+	if  dma periods == periods    dma period bytes == period bytes 
+		return 0 
+
+	   reset DMA before changing the descriptor table   
+	spin lock irqsave  chip reg lock  flags  
+	writel 0  chip remap addr + dma ops llp offset  
+	dma ops enable dma chip  0  
+	dma ops enable dma chip  1  
+	spin unlock irqrestore  chip reg lock  flags  
+
+	   fill the entries   
+	addr =  u32 substream runtime dma addr 
+	desc addr =  u32 dma desc buf addr 
+	for  i = 0  i   periods  i++  {
+		struct atiixp dma desc  desc 
+		desc =    struct atiixp dma desc   dma desc buf area  i  
+		desc addr = cpu to le32 addr  
+		desc status = 0 
+		desc size = period bytes    2     in dwords   
+		desc addr += sizeof struct atiixp dma desc  
+		if  i == periods   1 
+			desc next = cpu to le32  u32 dma desc buf addr  
+		else
+			desc next = cpu to le32 desc addr  
+		addr += period bytes 
+	}
+
+	writel  u32 dma desc buf addr | ATI REG LINKPTR EN 
+	       chip remap addr + dma ops llp offset  
+
+	dma period bytes = period bytes 
+	dma periods = periods 
+
+	return 0 
+}
+

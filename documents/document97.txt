@@ -1,0 +1,11 @@
+static int master get struct snd kcontrol  kcontrol 
+		      struct snd ctl elem value  ucontrol 
+{
+	struct link master  master = snd kcontrol chip kcontrol  
+	int err = master init master  
+	if  err   0 
+		return err 
+	ucontrol value integer value 0  = master val 
+	return 0 
+}
+

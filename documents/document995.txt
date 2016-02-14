@@ -1,0 +1,60 @@
+static int snd ensoniq trigger struct snd pcm substream  substream  int cmd 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+	{
+		unsigned int what = 0 
+		struct snd pcm substream  s 
+		snd pcm group for each entry s  substream  {
+			if  s == ensoniq playback1 substream  {
+				what |= ES P1 PAUSE 
+				snd pcm trigger done s  substream  
+			} else if  s == ensoniq playback2 substream  {
+				what |= ES P2 PAUSE 
+				snd pcm trigger done s  substream  
+			} else if  s == ensoniq capture substream 
+				return  EINVAL 
+		}
+		spin lock  ensoniq reg lock  
+		if  cmd == SNDRV PCM TRIGGER PAUSE PUSH 
+			ensoniq sctrl |= what 
+		else
+			ensoniq sctrl  = ~what 
+		outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+		spin unlock  ensoniq reg lock  
+		break 
+	}
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER STOP 
+	{
+		unsigned int what = 0 
+		struct snd pcm substream  s 
+		snd pcm group for each entry s  substream  {
+			if  s == ensoniq playback1 substream  {
+				what |= ES DAC1 EN 
+				snd pcm trigger done s  substream  
+			} else if  s == ensoniq playback2 substream  {
+				what |= ES DAC2 EN 
+				snd pcm trigger done s  substream  
+			} else if  s == ensoniq capture substream  {
+				what |= ES ADC EN 
+				snd pcm trigger done s  substream  
+			}
+		}
+		spin lock  ensoniq reg lock  
+		if  cmd == SNDRV PCM TRIGGER START 
+			ensoniq ctrl |= what 
+		else
+			ensoniq ctrl  = ~what 
+		outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+		spin unlock  ensoniq reg lock  
+		break 
+	}
+	default 
+		return  EINVAL 
+	}
+	return 0 
+}
+

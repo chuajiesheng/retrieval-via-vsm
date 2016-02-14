@@ -1,0 +1,3 @@
+extern int drm ati pcigart cleanup struct drm device  dev 
+				   struct drm ati pcigart info   gart info  
+

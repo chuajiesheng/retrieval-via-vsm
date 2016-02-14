@@ -1,0 +1,23 @@
+static int snd sonicvibes put mux struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct sonicvibes  sonic = snd kcontrol chip kcontrol  
+	unsigned short left  right  oval1  oval2 
+	int change 
+	
+	if  ucontrol value enumerated item 0   = 7 ||
+	    ucontrol value enumerated item 1   = 7 
+		return  EINVAL 
+	left =  ucontrol value enumerated item 0  + 1     5 
+	right =  ucontrol value enumerated item 1  + 1     5 
+	spin lock irq  sonic reg lock  
+	oval1 = snd sonicvibes in1 sonic  SV IREG LEFT ADC  
+	oval2 = snd sonicvibes in1 sonic  SV IREG RIGHT ADC  
+	left =  oval1   ~SV RECSRC OUT  | left 
+	right =  oval2   ~SV RECSRC OUT  | right 
+	change = left  = oval1 || right  = oval2 
+	snd sonicvibes out1 sonic  SV IREG LEFT ADC  left  
+	snd sonicvibes out1 sonic  SV IREG RIGHT ADC  right  
+	spin unlock irq  sonic reg lock  
+	return change 
+}
+

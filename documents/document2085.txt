@@ -1,0 +1,16 @@
+   set up slots and formats for analog OUT   
+static int snd atiixp playback prepare struct snd pcm substream  substream 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	unsigned int data 
+
+	spin lock irq  chip reg lock  
+	   set output threshold   
+	data = atiixp read chip  MODEM OUT FIFO  
+	data  = ~ATI REG MODEM OUT1 DMA THRESHOLD MASK 
+	data |= 0x04    ATI REG MODEM OUT1 DMA THRESHOLD SHIFT 
+	atiixp write chip  MODEM OUT FIFO  data  
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

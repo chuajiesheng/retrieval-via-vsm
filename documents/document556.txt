@@ -1,0 +1,91 @@
+static void snd uart16550 output write struct snd rawmidi substream  substream 
+{
+	unsigned long flags 
+	unsigned char midi byte  addr byte 
+	struct snd uart16550  uart = substream rmidi private data 
+	char first 
+	static unsigned long lasttime = 0 
+	
+	   Interrupts are disabled during the updating of the tx buff 
+	   since it is 'bad' to have two processes updating the same
+	   variables  ie buff in   buff out 
+	   
+
+	spin lock irqsave  uart open lock  flags  
+
+	if  uart irq   0 	   polling   
+		snd uart16550 io loop uart  
+
+	if  uart adaptor == SNDRV SERIAL MS124W MB  {
+		while  1  {
+			   buffer full?   
+			   in this mode we need two bytes of space   
+			if  uart buff in count   TX BUFF SIZE   2 
+				break 
+			if  snd rawmidi transmit substream   midi byte  1   = 1 
+				break 
+#ifdef SNDRV SERIAL MS124W MB NOCOMBO
+			   select exactly one of the four ports   
+			addr byte =  1     substream number + 4   | 0x08 
+#else
+			   select any combination of the four ports   
+			addr byte =  substream number    4  | 0x08 
+			      except none   
+			if  addr byte == 0x08 
+				addr byte = 0xf8 
+#endif
+			snd uart16550 output byte uart  substream  addr byte  
+			   send midi byte   
+			snd uart16550 output byte uart  substream  midi byte  
+		}
+	} else {
+		first = 0 
+		while  snd rawmidi transmit peek substream   midi byte  1  == 1  {
+			   Also send F5 after 3 seconds with no data
+			   to handle device disconnect   
+			if  first == 0   
+			     uart adaptor == SNDRV SERIAL SOUNDCANVAS ||
+			     uart adaptor == SNDRV SERIAL GENERIC    
+			     uart prev out  = substream number ||
+			     time after jiffies  lasttime + 3 HZ    {
+
+				if  snd uart16550 buffer can write uart  3   {
+					   Roland Soundcanvas part selection   
+					   If this substream of the data is
+					   different previous substream
+					   in this uart  send the change part
+					   event
+					   
+					uart prev out = substream number 
+					   change part   
+					snd uart16550 output byte uart  substream 
+								  0xf5  
+					   data   
+					snd uart16550 output byte uart  substream 
+								  uart prev out + 1  
+					   If midi byte is a data byte 
+					   send the previous status byte   
+					if  midi byte   0x80   
+					    uart adaptor == SNDRV SERIAL SOUNDCANVAS 
+						snd uart16550 output byte uart  substream  uart prev status uart prev out   
+				} else if   uart drop on full 
+					break 
+
+			}
+
+			   send midi byte   
+			if   snd uart16550 output byte uart  substream  midi byte    
+			     uart drop on full  
+				break 
+
+			if  midi byte  = 0x80    midi byte   0xf0 
+				uart prev status uart prev out  = midi byte 
+			first = 1 
+
+			snd rawmidi transmit ack  substream  1   
+		}
+		lasttime = jiffies 
+	}
+	spin unlock irqrestore  uart open lock  flags  
+}
+

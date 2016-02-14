@@ -1,0 +1,12 @@
+static int async chainiv init struct crypto tfm  tfm 
+{
+	struct async chainiv ctx  ctx = crypto tfm ctx tfm  
+
+	spin lock init  ctx lock  
+
+	crypto init queue  ctx queue  100  
+	INIT WORK  ctx postponed  async chainiv do postponed  
+
+	return chainiv init common tfm  
+}
+

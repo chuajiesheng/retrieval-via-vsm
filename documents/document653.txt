@@ -1,0 +1,26 @@
+static int snd dummy volume put struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct snd dummy  dummy = snd kcontrol chip kcontrol  
+	int change  addr = kcontrol private value 
+	int left  right 
+
+	left = ucontrol value integer value 0  
+	if  left    50 
+		left =  50 
+	if  left   100 
+		left = 100 
+	right = ucontrol value integer value 1  
+	if  right    50 
+		right =  50 
+	if  right   100 
+		right = 100 
+	spin lock irq  dummy mixer lock  
+	change = dummy mixer volume addr  0   = left ||
+	         dummy mixer volume addr  1   = right 
+	dummy mixer volume addr  0  = left 
+	dummy mixer volume addr  1  = right 
+	spin unlock irq  dummy mixer lock  
+	return change 
+}
+

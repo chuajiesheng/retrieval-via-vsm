@@ -1,0 +1,13 @@
+static int snd fm801 get mux struct snd kcontrol  kcontrol 
+			     struct snd ctl elem value  ucontrol 
+{
+	struct fm801  chip = snd kcontrol chip kcontrol  
+        unsigned short val 
+ 
+	val = inw FM801 REG chip  REC SRC     7 
+	if  val   4 
+		val = 4 
+        ucontrol value enumerated item 0  = val 
+        return 0 
+}
+

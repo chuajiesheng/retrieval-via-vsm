@@ -1,0 +1,25 @@
+  
+   release all the devices on the card 
+   called from init c
+   
+int snd device free all struct snd card  card  snd device cmd t cmd 
+{
+	struct snd device  dev 
+	int err 
+	unsigned int range low  range high 
+
+	if  snd BUG ON  card  
+		return  ENXIO 
+	range low = cmd   SNDRV DEV TYPE RANGE SIZE 
+	range high = range low + SNDRV DEV TYPE RANGE SIZE   1 
+        again 
+	list for each entry dev   card devices  list  {
+		if  dev type  = range low    dev type  = range high  {
+			if   err = snd device free card  dev device data     0 
+				return err 
+			goto   again 
+		}
+	}
+	return 0 
+}
+

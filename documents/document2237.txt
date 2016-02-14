@@ -1,0 +1,6 @@
+snd ad1889 remove struct pci dev  pci 
+{
+	snd card free pci get drvdata pci   
+	pci set drvdata pci  NULL  
+}
+

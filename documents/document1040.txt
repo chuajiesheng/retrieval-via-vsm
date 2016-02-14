@@ -1,0 +1,64 @@
+static int   devinit snd ensoniq 1371 mixer struct ensoniq  ensoniq 
+					    int has spdif  int has line 
+{
+	struct snd card  card = ensoniq card 
+	struct snd ac97 bus  pbus 
+	struct snd ac97 template ac97 
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd es1371 codec write 
+		 read = snd es1371 codec read 
+		 wait = snd es1371 codec wait 
+	} 
+
+	if   err = snd ac97 bus card  0   ops  NULL   pbus     0 
+		return err 
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = ensoniq 
+	ac97 private free = snd ensoniq mixer free ac97 
+	ac97 pci = ensoniq pci 
+	ac97 scaps = AC97 SCAP AUDIO 
+	if   err = snd ac97 mixer pbus   ac97   ensoniq u es1371 ac97     0 
+		return err 
+	if  has spdif   0 ||
+	      has spdif    es1371 quirk lookup ensoniq  es1371 spdif present    {
+		struct snd kcontrol  kctl 
+		int i  is spdif = 0 
+
+		ensoniq spdif default = ensoniq spdif stream =
+			SNDRV PCM DEFAULT CON SPDIF 
+		outl ensoniq spdif default  ES REG ensoniq  CHANNEL STATUS   
+
+		if  ensoniq u es1371 ac97 ext id   AC97 EI SPDIF 
+			is spdif++ 
+
+		for  i = 0  i   ARRAY SIZE snd es1371 mixer spdif   i++  {
+			kctl = snd ctl new1  snd es1371 mixer spdif i   ensoniq  
+			if   kctl 
+				return  ENOMEM 
+			kctl id index = is spdif 
+			err = snd ctl add card  kctl  
+			if  err   0 
+				return err 
+		}
+	}
+	if  ensoniq u es1371 ac97 ext id   AC97 EI SDAC  {
+		   mirror rear to front speakers   
+		ensoniq cssr  = ~ ES 1373 REAR BIT27|ES 1373 REAR BIT24  
+		ensoniq cssr |= ES 1373 REAR BIT26 
+		err = snd ctl add card  snd ctl new1  snd ens1373 rear  ensoniq   
+		if  err   0 
+			return err 
+	}
+	if  has line   0 ||
+	    snd pci quirk lookup ensoniq pci  ens1373 line quirk   {
+		 err = snd ctl add card  snd ctl new1  snd ens1373 line 
+						      ensoniq   
+		 if  err   0 
+			 return err 
+	}
+
+	return 0 
+}
+

@@ -1,0 +1,5 @@
+static const char  snd pcm tstamp mode name int mode 
+{
+	return snd pcm tstamp mode names mode  
+}
+

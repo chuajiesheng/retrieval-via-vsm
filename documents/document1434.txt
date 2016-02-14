@@ -1,0 +1,53 @@
+int   devinit snd ak4531 mixer struct snd card  card 
+			       struct snd ak4531   ak4531 
+			       struct snd ak4531   rak4531 
+{
+	unsigned int idx 
+	int err 
+	struct snd ak4531  ak4531 
+	static struct snd device ops ops = {
+		 dev free =	snd ak4531 dev free 
+	} 
+
+	if  snd BUG ON  card ||   ak4531  
+		return  EINVAL 
+	if  rak4531 
+		 rak4531 = NULL 
+	ak4531 = kzalloc sizeof  ak4531   GFP KERNEL  
+	if  ak4531 == NULL 
+		return  ENOMEM 
+	 ak4531 =   ak4531 
+	mutex init  ak4531 reg mutex  
+	if   err = snd component add card   AK4531      0  {
+		snd ak4531 free ak4531  
+		return err 
+	}
+	strcpy card mixername   Asahi Kasei AK4531   
+	ak4531 write ak4531  AK4531 RESET  0x03  	   no RST  PD   
+	udelay 100  
+	ak4531 write ak4531  AK4531 CLOCK  0x00  	   CODEC ADC and CODEC DAC use {LR B}CLK2 and run off LRCLK2 PLL   
+	for  idx = 0  idx  = 0x19  idx++  {
+		if  idx == AK4531 RESET || idx == AK4531 CLOCK 
+			continue 
+		ak4531 write ak4531  idx  ak4531 regs idx  = snd ak4531 initial map idx   	   recording source is mixer   
+	}
+	for  idx = 0  idx   ARRAY SIZE snd ak4531 controls   idx++  {
+		if   err = snd ctl add card  snd ctl new1  snd ak4531 controls idx   ak4531      0  {
+			snd ak4531 free ak4531  
+			return err 
+		}
+	}
+	snd ak4531 proc init card  ak4531  
+	if   err = snd device new card  SNDRV DEV CODEC  ak4531   ops     0  {
+		snd ak4531 free ak4531  
+		return err 
+	}
+
+#if 0
+	snd ak4531 dump ak4531  
+#endif
+	if  rak4531 
+		 rak4531 = ak4531 
+	return 0 
+}
+

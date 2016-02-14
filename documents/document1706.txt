@@ -1,0 +1,5 @@
+static inline void snd m3 outb struct snd m3  chip  u8 value  unsigned long reg 
+{
+	outb value  chip iobase + reg  
+}
+

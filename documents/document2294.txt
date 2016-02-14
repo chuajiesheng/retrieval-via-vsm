@@ -1,0 +1,6 @@
+snd rme32 free adat pcm struct snd pcm  pcm 
+{
+	struct rme32  rme32 =  struct rme32    pcm private data 
+	rme32 adat pcm = NULL 
+}
+

@@ -1,0 +1,5 @@
+                                                                      
+   Hardware specific functions
+                                                                       
+static void mts64 enable readout struct parport  p  
+

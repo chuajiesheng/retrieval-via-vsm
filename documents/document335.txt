@@ -1,0 +1,10 @@
+static void gf128mul x bbe be128  r  const be128  x 
+{
+	u64 a = be64 to cpu x a  
+	u64 b = be64 to cpu x b  
+	u64  tt = gf128mul table bbe a    63  
+
+	r a = cpu to be64  a    1  |  b    63   
+	r b = cpu to be64  b    1  ^  tt  
+}
+

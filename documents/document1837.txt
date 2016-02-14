@@ -1,0 +1,3 @@
+int snd ak4531 mixer struct snd card  card  struct snd ak4531   ak4531 
+		     struct snd ak4531   rak4531  
+

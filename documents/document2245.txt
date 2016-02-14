@@ -1,0 +1,8 @@
+ad1889 mute struct snd ad1889  chip 
+{
+	u16 st 
+	st = ad1889 readw chip  AD DS WADA  | AD DS WADA RWAM | AD DS WADA LWAM 
+	ad1889 writew chip  AD DS WADA  st  
+	ad1889 readw chip  AD DS WADA  
+}
+

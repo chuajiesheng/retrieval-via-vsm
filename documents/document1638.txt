@@ -1,0 +1,5 @@
+static int   init alsa card als300 init void 
+{
+	return pci register driver  driver  
+}
+

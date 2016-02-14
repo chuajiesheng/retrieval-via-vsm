@@ -1,0 +1,37 @@
+snd es1968 mixer struct es1968  chip 
+{
+	struct snd ac97 bus  pbus 
+	struct snd ac97 template ac97 
+#ifndef CONFIG SND ES1968 INPUT
+	struct snd ctl elem id elem id 
+#endif
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd es1968 ac97 write 
+		 read = snd es1968 ac97 read 
+	} 
+
+	if   err = snd ac97 bus chip card  0   ops  NULL   pbus     0 
+		return err 
+	pbus no vra = 1     ES1968 doesn't need VRA   
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	if   err = snd ac97 mixer pbus   ac97   chip ac97     0 
+		return err 
+
+#ifndef CONFIG SND ES1968 INPUT
+	   attach master switch   volumes for h w volume control   
+	memset  elem id  0  sizeof elem id   
+	elem id iface = SNDRV CTL ELEM IFACE MIXER 
+	strcpy elem id name   Master Playback Switch   
+	chip master switch = snd ctl find id chip card   elem id  
+	memset  elem id  0  sizeof elem id   
+	elem id iface = SNDRV CTL ELEM IFACE MIXER 
+	strcpy elem id name   Master Playback Volume   
+	chip master volume = snd ctl find id chip card   elem id  
+#endif
+
+	return 0 
+}
+

@@ -1,0 +1,7 @@
+   enable disable analog IN DMA   
+static void atiixp in enable dma struct atiixp modem  chip  int on 
+{
+	atiixp update chip  CMD  ATI REG CMD MODEM IN DMA EN 
+		      on ? ATI REG CMD MODEM IN DMA EN   0  
+}
+

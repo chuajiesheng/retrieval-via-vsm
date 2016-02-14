@@ -1,0 +1,34 @@
+static unsigned int snd es1371 src read struct ensoniq   ensoniq  unsigned short reg 
+{
+	unsigned int temp  i  orig  r 
+
+	   wait for ready   
+	temp = orig = snd es1371 wait src ready ensoniq  
+
+	   expose the SRC state bits   
+	r = temp    ES 1371 SRC DISABLE | ES 1371 DIS P1 |
+		    ES 1371 DIS P2 | ES 1371 DIS R1  
+	r |= ES 1371 SRC RAM ADDRO reg  | 0x10000 
+	outl r  ES REG ensoniq  1371 SMPRATE   
+
+	   now  wait for busy and the correct time to read   
+	temp = snd es1371 wait src ready ensoniq  
+	
+	if   temp   0x00870000   = 0x00010000  {
+		   wait for the right state   
+		for  i = 0  i   POLL COUNT  i++  {
+			temp = inl ES REG ensoniq  1371 SMPRATE   
+			if   temp   0x00870000  == 0x00010000 
+				break 
+		}
+	}
+
+	   hide the state bits   	
+	r = orig    ES 1371 SRC DISABLE | ES 1371 DIS P1 |
+		   ES 1371 DIS P2 | ES 1371 DIS R1  
+	r |= ES 1371 SRC RAM ADDRO reg  
+	outl r  ES REG ensoniq  1371 SMPRATE   
+	
+	return temp 
+}
+

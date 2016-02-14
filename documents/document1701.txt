@@ -1,0 +1,5 @@
+static void   exit alsa card m3 exit void 
+{
+	pci unregister driver  driver  
+}
+

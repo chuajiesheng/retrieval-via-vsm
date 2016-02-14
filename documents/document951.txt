@@ -1,0 +1,5 @@
+static int   init alsa card sonicvibes init void 
+{
+	return pci register driver  driver  
+}
+

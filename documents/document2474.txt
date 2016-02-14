@@ -1,0 +1,33 @@
+   save mixer setting and mute for AC3 playback   
+static int save mixer state struct cmipci  cm 
+{
+	if    cm mixer insensitive  {
+		struct snd ctl elem value  val 
+		unsigned int i 
+
+		val = kmalloc sizeof  val   GFP ATOMIC  
+		if   val 
+			return  ENOMEM 
+		for  i = 0  i   CM SAVED MIXERS  i++  {
+			struct snd kcontrol  ctl = cm mixer res ctl i  
+			if  ctl  {
+				int event 
+				memset val  0  sizeof  val   
+				ctl get ctl  val  
+				cm mixer res status i  = val value integer value 0  
+				val value integer value 0  = cm saved mixer i  toggle on 
+				event = SNDRV CTL EVENT MASK INFO 
+				if  cm mixer res status i   = val value integer value 0   {
+					ctl put ctl  val      toggle   
+					event |= SNDRV CTL EVENT MASK VALUE 
+				}
+				ctl vd 0  access |= SNDRV CTL ELEM ACCESS INACTIVE 
+				snd ctl notify cm card  event   ctl id  
+			}
+		}
+		kfree val  
+		cm mixer insensitive = 1 
+	}
+	return 0 
+}
+

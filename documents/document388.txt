@@ -1,0 +1,17 @@
+                                                                      
+   platform stuff
+                                                                       
+static void snd portman card private free struct snd card  card 
+{
+	struct portman  pm = card private data 
+	struct pardevice  pardev = pm pardev 
+
+	if  pardev  {
+		if  pm pardev claimed 
+			parport release pardev  
+		parport unregister device pardev  
+	}
+
+	portman free pm  
+}
+

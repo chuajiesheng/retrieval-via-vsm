@@ -1,0 +1,9 @@
+static int slave tlv cmd struct snd kcontrol  kcontrol 
+			 int op flag  unsigned int size 
+			 unsigned int   user  tlv 
+{
+	struct link slave  slave = snd kcontrol chip kcontrol  
+	   FIXME  this assumes that the max volume is 0 dB   
+	return slave slave tlv c  slave slave  op flag  size  tlv  
+}
+

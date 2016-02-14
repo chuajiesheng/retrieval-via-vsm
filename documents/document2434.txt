@@ -1,0 +1,9 @@
+void tfrc rx hist add packet struct tfrc rx hist  h 
+			     const struct sk buff  skb 
+			     const u64 ndp 
+{
+	struct tfrc rx hist entry  entry = tfrc rx hist last rcv h  
+
+	tfrc rx hist entry from skb entry  skb  ndp  
+}
+

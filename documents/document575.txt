@@ -1,0 +1,14 @@
+   This macro is only used in snd uart16550 io loop   
+static inline void snd uart16550 buffer output struct snd uart16550  uart 
+{
+	unsigned short buff out = uart buff out 
+	if  uart buff in count   0  {
+		outb uart tx buff buff out   uart base + UART TX  
+		uart fifo count++ 
+		buff out++ 
+		buff out  = TX BUFF MASK 
+		uart buff out = buff out 
+		uart buff in count   
+	}
+}
+

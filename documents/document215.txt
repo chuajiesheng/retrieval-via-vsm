@@ -1,0 +1,2 @@
+int snd info get line struct snd info buffer  buffer  char  line  int len  
+

@@ -1,0 +1,16 @@
+int   init snd minor info init void 
+{
+	struct snd info entry  entry 
+
+	entry = snd info create module entry THIS MODULE   devices   NULL  
+	if  entry  {
+		entry c text read = snd minor info read 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	snd minor info entry = entry 
+	return 0 
+}
+

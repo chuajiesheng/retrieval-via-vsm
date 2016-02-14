@@ -1,0 +1,16 @@
+   
+   snd pcm format size   return the byte size of samples on the given format
+   @format  the format to check
+   @samples  sampling rate
+  
+   Returns the byte size of the given samples for the format  or a
+   negative error code if unknown format 
+   
+ssize t snd pcm format size snd pcm format t format  size t samples 
+{
+	int phys width = snd pcm format physical width format  
+	if  phys width   0 
+		return  EINVAL 
+	return samples   phys width   8 
+}
+

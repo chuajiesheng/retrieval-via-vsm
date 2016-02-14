@@ -1,0 +1,31 @@
+   
+   snd info create entry   create an info entry
+   @name  the proc file name
+  
+   Creates an info entry with the given file name and initializes as
+   the default state 
+  
+   Usually called from other functions such as
+   snd info create card entry   
+  
+   Returns the pointer of the new instance  or NULL on failure 
+   
+static struct snd info entry  snd info create entry const char  name 
+{
+	struct snd info entry  entry 
+	entry = kzalloc sizeof  entry   GFP KERNEL  
+	if  entry == NULL 
+		return NULL 
+	entry name = kstrdup name  GFP KERNEL  
+	if  entry name == NULL  {
+		kfree entry  
+		return NULL 
+	}
+	entry mode = S IFREG | S IRUGO 
+	entry content = SNDRV INFO CONTENT TEXT 
+	mutex init  entry access  
+	INIT LIST HEAD  entry children  
+	INIT LIST HEAD  entry list  
+	return entry 
+}
+

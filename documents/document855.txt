@@ -1,0 +1,82 @@
+static int   devinit snd atiixp pcm new struct atiixp  chip 
+{
+	struct snd pcm  pcm 
+	struct snd ac97 bus  pbus = chip ac97 bus 
+	int err  i  num pcms 
+
+	   initialize constants   
+	chip dmas ATI DMA PLAYBACK  ops =  snd atiixp playback dma ops 
+	chip dmas ATI DMA CAPTURE  ops =  snd atiixp capture dma ops 
+	if    chip spdif over aclink 
+		chip dmas ATI DMA SPDIF  ops =  snd atiixp spdif dma ops 
+
+	   assign AC97 pcm   
+	if  chip spdif over aclink 
+		num pcms = 3 
+	else
+		num pcms = 2 
+	err = snd ac97 pcm assign pbus  num pcms  atiixp pcm defs  
+	if  err   0 
+		return err 
+	for  i = 0  i   num pcms  i++ 
+		chip pcms i  =  pbus pcms i  
+
+	chip max channels = 2 
+	if  pbus pcms ATI PCM OUT  r 0  slots    1    AC97 SLOT PCM SLEFT   {
+		if  pbus pcms ATI PCM OUT  r 0  slots    1    AC97 SLOT LFE  
+			chip max channels = 6 
+		else
+			chip max channels = 4 
+	}
+
+	   PCM #0  analog I O   
+	err = snd pcm new chip card   ATI IXP AC97  
+			  ATI PCMDEV ANALOG  1  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd atiixp playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd atiixp capture ops  
+	pcm private data = chip 
+	strcpy pcm name   ATI IXP AC97   
+	chip pcmdevs ATI PCMDEV ANALOG  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data chip pci  
+					      64 1024  128 1024  
+
+	   no SPDIF support on codec?   
+	if  chip pcms ATI PCM SPDIF       chip pcms ATI PCM SPDIF  rates 
+		return 0 
+		
+	   FIXME  non 48k sample rate doesn't work on my test machine with AD1888   
+	if  chip pcms ATI PCM SPDIF  
+		chip pcms ATI PCM SPDIF  rates = SNDRV PCM RATE 48000 
+
+	   PCM #1  spdif playback   
+	err = snd pcm new chip card   ATI IXP IEC958  
+			  ATI PCMDEV DIGITAL  1  0   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd atiixp spdif ops  
+	pcm private data = chip 
+	if  chip spdif over aclink 
+		strcpy pcm name   ATI IXP IEC958  AC97    
+	else
+		strcpy pcm name   ATI IXP IEC958  Direct    
+	chip pcmdevs ATI PCMDEV DIGITAL  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data chip pci  
+					      64 1024  128 1024  
+
+	   pre select AC97 SPDIF slots 10 11   
+	for  i = 0  i   NUM ATI CODECS  i++  {
+		if  chip ac97 i  
+			snd ac97 update bits chip ac97 i  
+					     AC97 EXTENDED STATUS 
+					     0x03    4  0x03    4  
+	}
+
+	return 0 
+}
+

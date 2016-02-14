@@ -1,0 +1,32 @@
+static void snd es1371 adc rate struct ensoniq   ensoniq  unsigned int rate 
+{
+	unsigned int n  truncm  freq  result 
+
+	mutex lock  ensoniq src mutex  
+	n = rate   3000 
+	if   1    n      1    15  |  1    13  |  1    11  |  1    9   
+		n   
+	truncm =  21   n   1  | 1 
+	freq =   48000UL    15    rate    n 
+	result =  48000UL    15     freq   n  
+	if  rate  = 24000  {
+		if  truncm   239 
+			truncm = 239 
+		snd es1371 src write ensoniq  ES SMPREG ADC + ES SMPREG TRUNC N 
+				   239   truncm     1     9  |  n    4   
+	} else {
+		if  truncm   119 
+			truncm = 119 
+		snd es1371 src write ensoniq  ES SMPREG ADC + ES SMPREG TRUNC N 
+				0x8000 |    119   truncm     1     9  |  n    4   
+	}
+	snd es1371 src write ensoniq  ES SMPREG ADC + ES SMPREG INT REGS 
+			      snd es1371 src read ensoniq  ES SMPREG ADC +
+						  ES SMPREG INT REGS    0x00ff  |
+			       freq    5    0xfc00   
+	snd es1371 src write ensoniq  ES SMPREG ADC + ES SMPREG VFREQ FRAC  freq   0x7fff  
+	snd es1371 src write ensoniq  ES SMPREG VOL ADC  n    8  
+	snd es1371 src write ensoniq  ES SMPREG VOL ADC + 1  n    8  
+	mutex unlock  ensoniq src mutex  
+}
+

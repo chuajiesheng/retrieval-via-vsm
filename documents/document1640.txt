@@ -1,0 +1,6 @@
+static inline u32 snd als300 gcr read unsigned long port  unsigned short reg 
+{
+	outb reg  port+GCR INDEX  
+	return inl port+GCR DATA  
+}
+

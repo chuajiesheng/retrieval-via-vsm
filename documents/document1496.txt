@@ -1,0 +1,27 @@
+snd rme96 setattenuation struct rme96  rme96 
+			 int attenuation 
+{
+	switch  attenuation  {
+	case 0 
+		rme96 wcreg =  rme96 wcreg   ~RME96 WCR GAIN 0   
+			~RME96 WCR GAIN 1 
+		break 
+	case 1 
+		rme96 wcreg =  rme96 wcreg | RME96 WCR GAIN 0   
+			~RME96 WCR GAIN 1 
+		break 
+	case 2 
+		rme96 wcreg =  rme96 wcreg   ~RME96 WCR GAIN 0  |
+			RME96 WCR GAIN 1 
+		break 
+	case 3 
+		rme96 wcreg =  rme96 wcreg | RME96 WCR GAIN 0  |
+			RME96 WCR GAIN 1 
+		break 
+	default 
+		return  EINVAL 
+	}
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	return 0 
+}
+

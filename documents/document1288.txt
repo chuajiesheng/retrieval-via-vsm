@@ -1,0 +1,2 @@
+extern void drm connector cleanup struct drm connector  connector  
+

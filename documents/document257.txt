@@ -1,0 +1,24 @@
+static void snd pcm free stream struct snd pcm str   pstr 
+{
+	struct snd pcm substream  substream   substream next 
+#if defined CONFIG SND PCM OSS  || defined CONFIG SND PCM OSS MODULE 
+	struct snd pcm oss setup  setup   setupn 
+#endif
+	substream = pstr substream 
+	while  substream  {
+		substream next = substream next 
+		snd pcm timer done substream  
+		snd pcm substream proc done substream  
+		kfree substream  
+		substream = substream next 
+	}
+	snd pcm stream proc done pstr  
+#if defined CONFIG SND PCM OSS  || defined CONFIG SND PCM OSS MODULE 
+	for  setup = pstr oss setup list  setup  setup = setupn  {
+		setupn = setup next 
+		kfree setup task name  
+		kfree setup  
+	}
+#endif
+}
+

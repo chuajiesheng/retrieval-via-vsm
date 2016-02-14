@@ -1,0 +1,41 @@
+  
+   power management
+   
+static int intel8x0 suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct intel8x0  chip = card private data 
+	int i 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	for  i = 0  i   chip pcm devs  i++ 
+		snd pcm suspend all chip pcm i   
+	   clear nocache   
+	if  chip fix nocache  {
+		for  i = 0  i   chip bdbars count  i++  {
+			struct ichdev  ichdev =  chip ichd i  
+			if  ichdev substream    ichdev page attr changed  {
+				struct snd pcm runtime  runtime = ichdev substream runtime 
+				if  runtime dma area 
+					fill nocache runtime dma area  runtime dma bytes  0  
+			}
+		}
+	}
+	for  i = 0  i   chip ncodecs  i++ 
+		snd ac97 suspend chip ac97 i   
+	if  chip device type == DEVICE INTEL ICH4 
+		chip sdm saved = igetbyte chip  ICHREG SDM   
+
+	if  chip irq  = 0  {
+		free irq chip irq  chip  
+		chip irq =  1 
+	}
+	pci disable device pci  
+	pci save state pci  
+	   The call below may disable built in speaker on some laptops
+	   after S2RAM   So  don't touch it 
+	   
+	   pci set power state pci  pci choose state pci  state      
+	return 0 
+}
+

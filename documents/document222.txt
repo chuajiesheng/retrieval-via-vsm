@@ -1,0 +1,16 @@
+int snd info minor register void 
+{
+	struct snd info entry  entry 
+
+	memset snd sndstat strings  0  sizeof snd sndstat strings   
+	if   entry = snd info create module entry THIS MODULE   sndstat   snd oss root    = NULL  {
+		entry c text read = snd sndstat proc read 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	snd sndstat proc entry = entry 
+	return 0 
+}
+

@@ -1,0 +1,5 @@
+static int snd mem proc open struct inode  inode  struct file  file 
+{
+	return single open file  snd mem proc read  NULL  
+}
+

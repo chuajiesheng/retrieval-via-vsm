@@ -1,0 +1,18 @@
+static int   devinit snd bt87x pcm struct snd bt87x  chip  int device  char  name 
+{
+	int err 
+	struct snd pcm  pcm 
+
+	err = snd pcm new chip card  name  device  0  1   pcm  
+	if  err   0 
+		return err 
+	pcm private data = chip 
+	strcpy pcm name  name  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd bt87x pcm ops  
+	return snd pcm lib preallocate pages for all pcm 
+						     SNDRV DMA TYPE DEV SG 
+						     snd dma pci data chip pci  
+							128   1024 
+							ALIGN 255   4092  1024   
+}
+

@@ -1,0 +1,23 @@
+  
+   hw params callback 
+   allocate the buffer and build up the buffer description table
+   
+static int snd via82xx hw params struct snd pcm substream  substream 
+				 struct snd pcm hw params  hw params 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	int err 
+
+	err = snd pcm lib malloc pages substream  params buffer bytes hw params   
+	if  err   0 
+		return err 
+	err = build via table viadev  substream  chip pci 
+			      params periods hw params  
+			      params period bytes hw params   
+	if  err   0 
+		return err 
+
+	return 0 
+}
+

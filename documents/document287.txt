@@ -1,0 +1,61 @@
+   
+   snd register device for dev   Register the ALSA device file for the card
+   @type  the device type  SNDRV DEVICE TYPE XXX
+   @card  the card instance
+   @dev  the device index
+   @f ops  the file operations
+   @private data  user pointer for f ops open  
+   @name  the device file name
+   @device  the  struct device to link this new device to
+  
+   Registers an ALSA device file for the given card 
+   The operators have to be set in reg parameter 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd register device for dev int type  struct snd card  card  int dev 
+				const struct file operations  f ops 
+				void  private data 
+				const char  name  struct device  device 
+{
+	int minor 
+	struct snd minor  preg 
+
+	if  snd BUG ON  name  
+		return  EINVAL 
+	preg = kmalloc sizeof  preg  GFP KERNEL  
+	if  preg == NULL 
+		return  ENOMEM 
+	preg type = type 
+	preg card = card ? card number    1 
+	preg device = dev 
+	preg f ops = f ops 
+	preg private data = private data 
+	mutex lock  sound mutex  
+#ifdef CONFIG SND DYNAMIC MINORS
+	minor = snd find free minor type  
+#else
+	minor = snd kernel minor type  card  dev  
+	if  minor  = 0    snd minors minor  
+		minor =  EBUSY 
+#endif
+	if  minor   0  {
+		mutex unlock  sound mutex  
+		kfree preg  
+		return minor 
+	}
+	snd minors minor  = preg 
+	preg dev = device create sound class  device  MKDEV major  minor  
+				  private data    s   name  
+	if  IS ERR preg dev   {
+		snd minors minor  = NULL 
+		mutex unlock  sound mutex  
+		minor = PTR ERR preg dev  
+		kfree preg  
+		return minor 
+	}
+
+	mutex unlock  sound mutex  
+	return 0 
+}
+

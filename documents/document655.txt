@@ -1,0 +1,17 @@
+static int snd dummy capsrc put struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct snd dummy  dummy = snd kcontrol chip kcontrol  
+	int change  addr = kcontrol private value 
+	int left  right 
+
+	left = ucontrol value integer value 0    1 
+	right = ucontrol value integer value 1    1 
+	spin lock irq  dummy mixer lock  
+	change = dummy capture source addr  0   = left   
+	         dummy capture source addr  1   = right 
+	dummy capture source addr  0  = left 
+	dummy capture source addr  1  = right 
+	spin unlock irq  dummy mixer lock  
+	return change 
+}
+

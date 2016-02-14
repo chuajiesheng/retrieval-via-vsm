@@ -1,0 +1,15 @@
+static int translate subdevice to hwport struct mtpav  chip  int subdev 
+{
+	if  subdev   0 
+		return 0x01     invalid   use port 0 as default   
+	else if  subdev   chip num ports 
+		return subdev + 1     single mtp port   
+	else if  subdev   chip num ports   2 
+		return subdev   chip num ports + 0x09     remote port   
+	else if  subdev == chip num ports   2 + MTPAV PIDX COMPUTER 
+		return 0x11     computer port   
+	else if  subdev == chip num ports + MTPAV PIDX ADAT 
+		return 0x63 		   ADAT   
+	return 0     all ports   
+}
+

@@ -1,0 +1,5 @@
+static void   exit alsa card ens137x exit void 
+{
+	pci unregister driver  driver  
+}
+

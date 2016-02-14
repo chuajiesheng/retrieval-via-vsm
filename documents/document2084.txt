@@ -1,0 +1,6 @@
+   flush FIFO of analog IN DMA   
+static void atiixp in flush dma struct atiixp modem  chip 
+{
+	atiixp write chip  MODEM FIFO FLUSH  ATI REG MODEM FIFO IN FLUSH  
+}
+

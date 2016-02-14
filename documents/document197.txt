@@ -1,0 +1,17 @@
+  
+   pre allocate the buffer and create a proc file for the substream
+   
+static int snd pcm lib preallocate pages1 struct snd pcm substream  substream 
+					  size t size  size t max 
+{
+
+	if  size   0    preallocate dma    substream number   maximum substreams 
+		preallocate pcm pages substream  size  
+
+	if  substream dma buffer bytes   0 
+		substream buffer bytes max = substream dma buffer bytes 
+	substream dma max = max 
+	preallocate info init substream  
+	return 0 
+}
+

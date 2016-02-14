@@ -1,0 +1,40 @@
+static int   devinit snd ensoniq pcm struct ensoniq   ensoniq  int device 
+				     struct snd pcm    rpcm 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	if  rpcm 
+		 rpcm = NULL 
+#ifdef CHIP1370
+	err = snd pcm new ensoniq card   ES1370 1   device  1  1   pcm  
+#else
+	err = snd pcm new ensoniq card   ES1371 1   device  1  1   pcm  
+#endif
+	if  err   0 
+		return err 
+
+#ifdef CHIP1370
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd ensoniq playback2 ops  
+#else
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd ensoniq playback1 ops  
+#endif
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd ensoniq capture ops  
+
+	pcm private data = ensoniq 
+	pcm info flags = 0 
+#ifdef CHIP1370
+	strcpy pcm name   ES1370 DAC2 ADC   
+#else
+	strcpy pcm name   ES1371 DAC2 ADC   
+#endif
+	ensoniq pcm1 = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data ensoniq pci   64 1024  128 1024  
+
+	if  rpcm 
+		 rpcm = pcm 
+	return 0 
+}
+

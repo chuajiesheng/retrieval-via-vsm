@@ -1,0 +1,18 @@
+static void snd rme32 pcm stop struct rme32   rme32  int to pause 
+{
+	  
+	   Check if there is an unconfirmed IRQ  if so confirm it  or else
+	   the hardware will not stop generating interrupts
+	   
+	rme32 rcreg = readl rme32 iobase + RME32 IO CONTROL REGISTER  
+	if  rme32 rcreg   RME32 RCR IRQ  {
+		writel 0  rme32 iobase + RME32 IO CONFIRM ACTION IRQ  
+	}
+	rme32 wcreg  = ~RME32 WCR START 
+	if  rme32 wcreg   RME32 WCR SEL 
+		rme32 wcreg |= RME32 WCR MUTE 
+	writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	if    to pause 
+		writel 0  rme32 iobase + RME32 IO RESET POS  
+}
+

@@ -1,0 +1,10 @@
+static void gcm enc copy hash struct aead request  req 
+			      struct crypto gcm req priv ctx  pctx 
+{
+	struct crypto aead  aead = crypto aead reqtfm req  
+	u8  auth tag = pctx auth tag 
+
+	scatterwalk map and copy auth tag  req dst  req cryptlen 
+				 crypto aead authsize aead   1  
+}
+

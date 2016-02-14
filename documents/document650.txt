@@ -1,0 +1,10 @@
+static int snd dummy volume info struct snd kcontrol  kcontrol 
+				 struct snd ctl elem info  uinfo 
+{
+	uinfo type = SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count = 2 
+	uinfo value integer min =  50 
+	uinfo value integer max = 100 
+	return 0 
+}
+

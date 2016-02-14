@@ -1,0 +1,5 @@
+static int snd intel8x0 hw free struct snd pcm substream  substream 
+{
+	return snd pcm lib free pages substream  
+}
+

@@ -1,0 +1,48 @@
+static int   devinit snd als300 probe struct pci dev  pci 
+                             const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct snd als300  chip 
+	int err  chip type 
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+
+	if  err   0 
+		return err 
+
+	chip type = pci id driver data 
+
+	if   err = snd als300 create card  pci  chip type   chip     0  {
+		snd card free card  
+		return err 
+	}
+	card private data = chip 
+
+	strcpy card driver   ALS300   
+	if  chip chip type == DEVICE ALS300 PLUS 
+		   don't know much about ALS300+ yet
+		   print revision number for now   
+		sprintf card shortname   ALS300+  Rev   d    chip revision  
+	else
+		sprintf card shortname   ALS300  Rev   c    'A' +
+							chip revision   1  
+	sprintf card longname    s at 0x lx irq  i  
+				card shortname  chip port  chip irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

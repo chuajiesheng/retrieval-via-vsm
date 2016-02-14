@@ -1,0 +1,38 @@
+  
+   reset AC link
+   
+static int snd atiixp aclink reset struct atiixp modem  chip 
+{
+	int timeout 
+
+	   reset powerdoewn   
+	if  atiixp update chip  CMD  ATI REG CMD POWERDOWN  0  
+		udelay 10  
+
+	   perform a software reset   
+	atiixp update chip  CMD  ATI REG CMD AC SOFT RESET  ATI REG CMD AC SOFT RESET  
+	atiixp read chip  CMD  
+	udelay 10  
+	atiixp update chip  CMD  ATI REG CMD AC SOFT RESET  0  
+    
+	timeout = 10 
+	while     atiixp read chip  CMD    ATI REG CMD ACLINK ACTIVE   {
+		   do a hard reset   
+		atiixp update chip  CMD  ATI REG CMD AC SYNC|ATI REG CMD AC RESET 
+			      ATI REG CMD AC SYNC  
+		atiixp read chip  CMD  
+		msleep 1  
+		atiixp update chip  CMD  ATI REG CMD AC RESET  ATI REG CMD AC RESET  
+		if    timeout  {
+			snd printk KERN ERR  atiixp modem  codec reset timeout\n   
+			break 
+		}
+	}
+
+	   deassert RESET and assert SYNC to make sure   
+	atiixp update chip  CMD  ATI REG CMD AC SYNC|ATI REG CMD AC RESET 
+		      ATI REG CMD AC SYNC|ATI REG CMD AC RESET  
+
+	return 0 
+}
+

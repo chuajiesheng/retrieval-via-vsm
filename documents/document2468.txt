@@ -1,0 +1,8 @@
+void tfrc li exit void 
+{
+	if  tfrc lh slab  = NULL  {
+		kmem cache destroy tfrc lh slab  
+		tfrc lh slab = NULL 
+	}
+}
+

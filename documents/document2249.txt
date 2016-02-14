@@ -1,0 +1,10 @@
+   
+   ieee80211 chswitch done   Complete channel switch process
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+   @success  make the channel switch successful or not
+  
+   Complete the channel switch post process  set the new operational channel
+   and wake up the suspended queues 
+   
+void ieee80211 chswitch done struct ieee80211 vif  vif  bool success  
+

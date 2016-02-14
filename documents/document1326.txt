@@ -1,0 +1,26 @@
+   
+   function ttm eu reserve buffers
+  
+   @list     thread private list of ttm validate buffer structs 
+  
+   Tries to reserve bos pointed to by the list entries for validation 
+   If the function returns 0  all buffers are marked as  unfenced  
+   taken off the lru lists and are not synced for write CPU usage 
+  
+   If the function detects a deadlock due to multiple threads trying to
+   reserve the same buffers in reverse order  all threads except one will
+   back off and retry  This function may sleep while waiting for
+   CPU write reservations to be cleared  and for other threads to
+   unreserve their buffers 
+  
+   This function may return  ERESTART or  EAGAIN if the calling process
+   receives a signal while waiting  In that case  no buffers on the list
+   will be reserved upon return 
+  
+   Buffers reserved by this function should be unreserved by
+   a call to either ttm eu backoff reservation   or
+   ttm eu fence buffer objects   when command submission is complete or
+   has failed 
+   
+extern int ttm eu reserve buffers struct list head  list  
+

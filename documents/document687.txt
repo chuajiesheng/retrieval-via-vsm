@@ -1,0 +1,22 @@
+  
+   timer interrupt for outputs
+   
+static void snd mtpav output timer unsigned long data 
+{
+	unsigned long flags 
+	struct mtpav  chip =  struct mtpav   data 
+	int p 
+
+	spin lock irqsave  chip spinlock  flags  
+	   reprogram timer   
+	chip timer expires = 1 + jiffies 
+	add timer  chip timer  
+	   process each port   
+	for  p = 0  p  = chip num ports   2 + MTPAV PIDX BROADCAST  p++  {
+		struct mtpav port  portp =  chip ports p  
+		if   portp mode   MTPAV MODE OUTPUT TRIGGERED     portp output 
+			snd mtpav output port write chip  portp  portp output  
+	}
+	spin unlock irqrestore  chip spinlock  flags  
+}
+

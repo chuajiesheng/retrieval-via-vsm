@@ -1,0 +1,15 @@
+snd azf3328 mixer set mute const struct snd azf3328  chip 
+			   unsigned reg  bool do mute
+ 
+{
+	unsigned long portbase = chip mixer io + reg + 1 
+	bool updated 
+
+	   the mute bit is on the  second   i e  right  register of a
+	   left right channel setting   
+	updated = snd azf3328 io reg setb portbase  AZF MUTE BIT  do mute  
+
+	   indicate whether it was muted before   
+	return  do mute  ?  updated   updated 
+}
+

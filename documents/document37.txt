@@ -1,0 +1,18 @@
+int   exit snd info done void 
+{
+	snd card info done   
+	snd minor info oss done   
+	snd minor info done   
+	snd info version done   
+	if  snd proc root  {
+#if defined CONFIG SND SEQUENCER  || defined CONFIG SND SEQUENCER MODULE 
+		snd info free entry snd seq root  
+#endif
+#ifdef CONFIG SND OSSEMUL
+		snd info free entry snd oss root  
+#endif
+		snd remove proc entry NULL  snd proc root  
+	}
+	return 0 
+}
+

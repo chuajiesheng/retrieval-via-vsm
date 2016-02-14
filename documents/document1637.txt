@@ -1,0 +1,5 @@
+static void chainiv module exit void 
+{
+	crypto unregister template  chainiv tmpl  
+}
+

@@ -1,0 +1,5 @@
+snd azf3328 mixer inw const struct snd azf3328  chip  unsigned reg 
+{
+	return inw chip mixer io + reg  
+}
+

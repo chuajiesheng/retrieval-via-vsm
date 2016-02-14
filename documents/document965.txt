@@ -1,0 +1,5 @@
+static inline void gameport set name struct gameport  gameport  const char  name 
+{
+	strlcpy gameport name  name  sizeof gameport name   
+}
+

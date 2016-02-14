@@ -1,0 +1,5 @@
+static inline void aead request complete struct aead request  req  int err 
+{
+	req base complete  req base  err  
+}
+

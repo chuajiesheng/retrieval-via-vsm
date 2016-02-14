@@ -1,0 +1,15 @@
+  
+   proc interface
+   
+static void snd via82xx proc read struct snd info entry  entry 
+				  struct snd info buffer  buffer 
+{
+	struct via82xx  chip = entry private data 
+	int i 
+	
+	snd iprintf buffer    s\n\n   chip card longname  
+	for  i = 0  i   0xa0  i += 4  {
+		snd iprintf buffer    02x   08x\n   i  inl chip port + i   
+	}
+}
+

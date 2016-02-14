@@ -1,0 +1,9 @@
+static ssize t snd hwdep read struct file   file  char   user  buf 
+			      size t count  loff t  offset 
+{
+	struct snd hwdep  hw = file private data 
+	if  hw ops read 
+		return hw ops read hw  buf  count  offset  
+	return  ENXIO 	
+}
+

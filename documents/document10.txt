@@ -1,0 +1,33 @@
+static int snd rawmidi ioctl status compat struct snd rawmidi file  rfile 
+					   struct snd rawmidi status32   user  src 
+{
+	int err 
+	struct snd rawmidi status status 
+
+	if  rfile output == NULL 
+		return  EINVAL 
+	if  get user status stream   src stream  
+		return  EFAULT 
+
+	switch  status stream  {
+	case SNDRV RAWMIDI STREAM OUTPUT 
+		err = snd rawmidi output status rfile output   status  
+		break 
+	case SNDRV RAWMIDI STREAM INPUT 
+		err = snd rawmidi input status rfile input   status  
+		break 
+	default 
+		return  EINVAL 
+	}
+	if  err   0 
+		return err 
+
+	if  put user status tstamp tv sec   src tstamp tv sec  ||
+	    put user status tstamp tv nsec   src tstamp tv nsec  ||
+	    put user status avail   src avail  ||
+	    put user status xruns   src xruns  
+		return  EFAULT 
+
+	return 0 
+}
+

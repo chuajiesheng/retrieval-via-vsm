@@ -1,0 +1,5 @@
+static int   init deflate mod init void 
+{
+	return crypto register alg  alg  
+}
+

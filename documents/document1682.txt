@@ -1,0 +1,20 @@
+   
+   hack  returns non zero on err 
+   
+static int snd m3 try read vendor struct snd m3  chip 
+{
+	u16 ret 
+
+	if  snd m3 ac97 wait chip  
+		return 1 
+
+	snd m3 outb chip  0x80 |  AC97 VENDOR ID1   0x7f   0x30  
+
+	if  snd m3 ac97 wait chip  
+		return 1 
+
+	ret = snd m3 inw chip  0x32  
+
+	return  ret == 0  ||  ret == 0xffff  
+}
+

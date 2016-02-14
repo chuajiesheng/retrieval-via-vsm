@@ -1,0 +1,7 @@
+static snd pcm uframes t dummy pcm pointer struct snd pcm substream  substream 
+{
+	struct snd dummy  dummy = snd pcm substream chip substream  
+
+	return dummy timer ops pointer substream  
+}
+

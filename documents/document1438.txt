@@ -1,0 +1,15 @@
+  
+    proc interface
+   
+static void snd ak4531 proc read struct snd info entry  entry  
+				 struct snd info buffer  buffer 
+{
+	struct snd ak4531  ak4531 = entry private data 
+
+	snd iprintf buffer   Asahi Kasei AK4531\n\n   
+	snd iprintf buffer   Recording source      s\n 
+		     MIC gain              s\n  
+		    ak4531 regs AK4531 AD IN    1 ?  external     mixer  
+		    ak4531 regs AK4531 MIC GAIN    1 ?  +30dB     +0dB   
+}
+

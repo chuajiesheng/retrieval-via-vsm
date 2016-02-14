@@ -1,0 +1,47 @@
+static inline unsigned int calc linear pos struct viadev  viadev  unsigned int idx 
+					   unsigned int count 
+{
+	unsigned int size  res 
+
+	size = viadev idx table idx  size 
+	res = viadev idx table idx  offset + size   count 
+
+	   check the validity of the calculated position   
+	if  size   count  {
+		snd printd KERN ERR  invalid via82xx cur ptr  size =  d  count =  d \n  
+			    int size   int count  
+		res = viadev lastpos 
+	} else if  check invalid pos viadev  res   {
+#ifdef POINTER DEBUG
+		printk KERN DEBUG  fail  idx =  i  i  lastpos = 0x x   
+		        bufsize2 = 0x x  offsize = 0x x  size = 0x x   
+		        count = 0x x\n   idx  viadev tbl entries  viadev lastpos 
+		       viadev bufsize2  viadev idx table idx  offset 
+		       viadev idx table idx  size  count  
+#endif
+		if  count    size   count  {
+			snd printd KERN ERR  invalid via82xx cur ptr   
+				    using last valid pointer\n   
+			res = viadev lastpos 
+		} else {
+			if    count 
+				   bogus count 0 on the DMA boundary?   
+				res = viadev idx table idx  offset 
+			else
+				   count register returns full size
+				   when end of buffer is reached
+				   
+				res = viadev idx table idx  offset + size 
+			if  check invalid pos viadev  res   {
+				snd printd KERN ERR  invalid via82xx cur ptr  2    
+					    using last valid pointer\n   
+				res = viadev lastpos 
+			}
+		}
+	}
+	viadev lastpos = res     remember the last position   
+	if  res  = viadev bufsize 
+		res  = viadev bufsize 
+	return res 
+}
+

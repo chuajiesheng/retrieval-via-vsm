@@ -1,0 +1,10 @@
+static int   devexit snd mts64 remove struct platform device  pdev 
+{
+	struct snd card  card = platform get drvdata pdev  
+
+	if  card 
+		snd card free card  
+
+	return 0 
+}
+

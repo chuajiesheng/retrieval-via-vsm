@@ -1,0 +1,13 @@
+   call with spinlock held   
+static void snd atiixp check bus busy struct atiixp  chip 
+{
+	unsigned int bus busy 
+	if  atiixp read chip  CMD     ATI REG CMD SEND EN |
+				      ATI REG CMD RECEIVE EN |
+				      ATI REG CMD SPDF OUT EN  
+		bus busy = ATI REG IER SET BUS BUSY 
+	else
+		bus busy = 0 
+	atiixp update chip  IER  ATI REG IER SET BUS BUSY  bus busy  
+}
+

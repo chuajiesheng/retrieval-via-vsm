@@ -1,0 +1,14 @@
+  
+   proc interface
+   
+static void print formats struct snd dummy  dummy 
+			  struct snd info buffer  buffer 
+{
+	int i 
+
+	for  i = 0  i   SNDRV PCM FORMAT LAST  i++  {
+		if  dummy pcm hw formats    1ULL    i  
+			snd iprintf buffer     s   snd pcm format name i   
+	}
+}
+

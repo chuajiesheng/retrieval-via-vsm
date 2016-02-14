@@ -1,0 +1,22 @@
+static inline int init info for card struct snd card  card 
+{
+	int err 
+	struct snd info entry  entry 
+
+	if   err = snd info card register card     0  {
+		snd printd  unable to create card info\n   
+		return err 
+	}
+	if   entry = snd info create card entry card   id   card proc root   == NULL  {
+		snd printd  unable to create card entry\n   
+		return err 
+	}
+	entry c text read = snd card id read 
+	if  snd info register entry    0  {
+		snd info free entry entry  
+		entry = NULL 
+	}
+	card proc id = entry 
+	return 0 
+}
+

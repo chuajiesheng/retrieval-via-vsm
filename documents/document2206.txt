@@ -1,0 +1,6 @@
+snd ad1889 ac97 read struct snd ac97  ac97  unsigned short reg 
+{
+	struct snd ad1889  chip = ac97 private data 
+	return ad1889 readw chip  AD AC97 BASE + reg  
+}
+

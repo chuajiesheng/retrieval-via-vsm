@@ -1,0 +1,12 @@
+static int snd intel8x0 ali codec semaphore struct intel8x0  chip 
+{
+	int time = 100 
+	if  chip buggy semaphore 
+		return 0     just ignore       
+	while    time     igetdword chip  ICHREG ALI CAS     ALI CAS SEM BUSY  
+		udelay 1  
+	if    time      chip in ac97 init 
+		snd printk KERN WARNING  ali codec semaphore timeout\n   
+	return snd intel8x0 ali codec ready chip  ALI CSPSR CODEC READY  
+}
+

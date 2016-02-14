@@ -1,0 +1,5 @@
+static void   exit alsa card bt87x exit void 
+{
+	pci unregister driver  driver  
+}
+

@@ -1,0 +1,16 @@
+snd pcm indirect playback pointer struct snd pcm substream  substream 
+				  struct snd pcm indirect  rec  unsigned int ptr 
+{
+	int bytes = ptr   rec hw io 
+	if  bytes   0 
+		bytes += rec hw buffer size 
+	rec hw io = ptr 
+	rec hw ready  = bytes 
+	rec sw io += bytes 
+	if  rec sw io  = rec sw buffer size 
+		rec sw io  = rec sw buffer size 
+	if  substream ops ack 
+		substream ops ack substream  
+	return bytes to frames substream runtime  rec sw io  
+}
+

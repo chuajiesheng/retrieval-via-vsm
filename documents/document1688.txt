@@ -1,0 +1,22 @@
+snd m3 hv init struct snd m3  chip 
+{
+	unsigned long io = chip iobase 
+	u16 val = GPI VOL DOWN | GPI VOL UP 
+
+	if   chip is omnibook 
+		return 
+
+	  
+	   Volume buttons on some HP OmniBook laptops
+	   require some GPIO magic to work correctly 
+	   
+	outw 0xffff  io + GPIO MASK  
+	outw 0x0000  io + GPIO DATA  
+
+	outw ~val  io + GPIO MASK  
+	outw inw io + GPIO DIRECTION    ~val  io + GPIO DIRECTION  
+	outw val  io + GPIO MASK  
+
+	outw 0xffff  io + GPIO MASK  
+}
+

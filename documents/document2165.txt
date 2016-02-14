@@ -1,0 +1,10 @@
+static int snd via8233 dxs volume info struct snd kcontrol  kcontrol 
+				       struct snd ctl elem info  uinfo 
+{
+	uinfo type = SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count = 2 
+	uinfo value integer min = 0 
+	uinfo value integer max = VIA DXS MAX VOLUME 
+	return 0 
+}
+

@@ -1,0 +1,59 @@
+   Create and initialize the rawmidi component   
+static int   devinit snd mts64 rawmidi create struct snd card  card 
+{
+	struct mts64  mts = card private data 
+	struct snd rawmidi  rmidi 
+	struct snd rawmidi substream  substream 
+	struct list head  list 
+	int err 
+	
+	err = snd rawmidi new card  CARD NAME  0  
+			      MTS64 NUM OUTPUT PORTS  
+			      MTS64 NUM INPUT PORTS  
+			       rmidi  
+	if  err   0  
+		return err 
+
+	rmidi private data = mts 
+	strcpy rmidi name  CARD NAME  
+	rmidi info flags = SNDRV RAWMIDI INFO OUTPUT |
+		            SNDRV RAWMIDI INFO INPUT |
+                            SNDRV RAWMIDI INFO DUPLEX 
+
+	mts rmidi = rmidi 
+
+	   register rawmidi ops   
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM OUTPUT  
+			     snd mts64 rawmidi output ops  
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM INPUT  
+			     snd mts64 rawmidi input ops  
+
+	   name substreams   
+	   output   
+	list for each list  
+		       rmidi streams SNDRV RAWMIDI STREAM OUTPUT  substreams  {
+		substream = list entry list  struct snd rawmidi substream  list  
+		sprintf substream name 
+			 Miditerminal  d   substream number+1  
+	}
+	   input   
+	list for each list  
+		       rmidi streams SNDRV RAWMIDI STREAM INPUT  substreams  {
+		substream = list entry list  struct snd rawmidi substream  list  
+		mts midi input substream substream number  = substream 
+		switch substream number  {
+		case MTS64 SMPTE SUBSTREAM 
+			strcpy substream name   Miditerminal SMPTE   
+			break 
+		default 
+			sprintf substream name 
+				 Miditerminal  d   substream number+1  
+		}
+	}
+
+	   controls   
+	err = snd mts64 ctl create card  mts  
+
+	return err 
+}
+

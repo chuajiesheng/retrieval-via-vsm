@@ -1,0 +1,57 @@
+   
+   snd ctl make virtual master   Create a virtual master control
+   @name  name string of the control element to create
+   @tlv  optional TLV int array for dB information
+  
+   Creates a virtual matster control with the given name string 
+   Returns the created control element  or NULL for errors  ENOMEM  
+  
+   After creating a vmaster element  you can add the slave controls
+   via snd ctl add slave   or snd ctl add slave uncached   
+  
+   The optional argument @tlv can be used to specify the TLV information
+   for dB scale of the master control   It should be a single element
+   with #SNDRV CTL TLVT DB SCALE  #SNDRV CTL TLV DB MINMAX or
+   #SNDRV CTL TLVT DB MINMAX MUTE type  and should be the max 0dB 
+   
+struct snd kcontrol  snd ctl make virtual master char  name 
+						 const unsigned int  tlv 
+{
+	struct link master  master 
+	struct snd kcontrol  kctl 
+	struct snd kcontrol new knew 
+
+	memset  knew  0  sizeof knew   
+	knew iface = SNDRV CTL ELEM IFACE MIXER 
+	knew name = name 
+	knew info = master info 
+
+	master = kzalloc sizeof  master   GFP KERNEL  
+	if   master 
+		return NULL 
+	INIT LIST HEAD  master slaves  
+
+	kctl = snd ctl new1  knew  master  
+	if   kctl  {
+		kfree master  
+		return NULL 
+	}
+	   override some callbacks   
+	kctl info = master info 
+	kctl get = master get 
+	kctl put = master put 
+	kctl private free = master free 
+
+	   additional  constant  TLV read   
+	if  tlv   
+	     tlv 0  == SNDRV CTL TLVT DB SCALE ||
+	     tlv 0  == SNDRV CTL TLVT DB MINMAX ||
+	     tlv 0  == SNDRV CTL TLVT DB MINMAX MUTE   {
+		kctl vd 0  access |= SNDRV CTL ELEM ACCESS TLV READ 
+		memcpy master tlv  tlv  sizeof master tlv   
+		kctl tlv p = master tlv 
+	}
+
+	return kctl 
+}
+

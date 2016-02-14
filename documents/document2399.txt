@@ -1,0 +1,13 @@
+   
+   wiphy to ieee80211 hw   return a mac80211 driver hw struct from a wiphy
+  
+   @wiphy  the  struct wiphy which we want to query
+  
+   mac80211 drivers can use this to get to their respective
+    struct ieee80211 hw  Drivers wishing to get to their own private
+   structure can then access it via hw priv  Note that mac802111 drivers should
+   not use wiphy priv   to try to get their private driver structure as this
+   is already used internally by mac80211 
+   
+struct ieee80211 hw  wiphy to ieee80211 hw struct wiphy  wiphy  
+

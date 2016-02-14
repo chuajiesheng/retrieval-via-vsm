@@ -1,0 +1,24 @@
+static int crypto rfc4106 init tfm struct crypto tfm  tfm 
+{
+	struct crypto instance  inst =  void   tfm   crt alg 
+	struct crypto aead spawn  spawn = crypto instance ctx inst  
+	struct crypto rfc4106 ctx  ctx = crypto tfm ctx tfm  
+	struct crypto aead  aead 
+	unsigned long align 
+
+	aead = crypto spawn aead spawn  
+	if  IS ERR aead  
+		return PTR ERR aead  
+
+	ctx child = aead 
+
+	align = crypto aead alignmask aead  
+	align  = ~ crypto tfm ctx alignment     1  
+	tfm crt aead reqsize = sizeof struct aead request  +
+				ALIGN crypto aead reqsize aead  
+				      crypto tfm ctx alignment    +
+				align + 16 
+
+	return 0 
+}
+

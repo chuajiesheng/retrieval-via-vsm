@@ -1,0 +1,77 @@
+static int   devinit snd fm801 create struct snd card  card 
+				      struct pci dev   pci 
+				      int tea575x tuner 
+				      struct fm801    rchip 
+{
+	struct fm801  chip 
+	int err 
+	static struct snd device ops ops = {
+		 dev free =	snd fm801 dev free 
+	} 
+
+	 rchip = NULL 
+	if   err = pci enable device pci     0 
+		return err 
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+	spin lock init  chip reg lock  
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+	chip tea575x tuner = tea575x tuner 
+	if   err = pci request regions pci   FM801      0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+	chip port = pci resource start pci  0  
+	if   tea575x tuner   TUNER ONLY  == 0  {
+		if  request irq pci irq  snd fm801 interrupt  IRQF SHARED 
+				 FM801   chip   {
+			snd printk KERN ERR  unable to grab IRQ  d\n   chip irq  
+			snd fm801 free chip  
+			return  EBUSY 
+		}
+		chip irq = pci irq 
+		pci set master pci  
+	}
+
+	if  pci revision  = 0xb1 	   FM801 AU   
+		chip multichannel = 1 
+
+	snd fm801 chip init chip  0  
+	   init might set tuner access method   
+	tea575x tuner = chip tea575x tuner 
+
+	if  chip irq  = 0     tea575x tuner   TUNER ONLY   {
+		pci clear master pci  
+		free irq chip irq  chip  
+		chip irq =  1 
+	}
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd fm801 free chip  
+		return err 
+	}
+
+	snd card set dev card   pci dev  
+
+#ifdef TEA575X RADIO
+	if   tea575x tuner   TUNER TYPE MASK    0   
+	     tea575x tuner   TUNER TYPE MASK    4  {
+		chip tea dev nr = tea575x tuner    16 
+		chip tea card = card 
+		chip tea freq fixup = 10700 
+		chip tea private data = chip 
+		chip tea ops =  snd fm801 tea ops  tea575x tuner   TUNER TYPE MASK    1  
+		snd tea575x init  chip tea  
+	}
+#endif
+
+	 rchip = chip 
+	return 0 
+}
+

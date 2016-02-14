@@ -1,0 +1,35 @@
+static int crypto xcbc digest final struct shash desc  pdesc  u8  out 
+{
+	struct crypto shash  parent = pdesc tfm 
+	unsigned long alignmask = crypto shash alignmask parent  
+	struct xcbc tfm ctx  tctx = crypto shash ctx parent  
+	struct xcbc desc ctx  ctx = shash desc ctx pdesc  
+	struct crypto cipher  tfm = tctx child 
+	int bs = crypto shash blocksize parent  
+	u8  consts = PTR ALIGN  tctx ctx 0   alignmask + 1  
+	u8  odds = PTR ALIGN  ctx ctx 0   alignmask + 1  
+	u8  prev = odds + bs 
+	unsigned int offset = 0 
+
+	if  ctx len  = bs  {
+		unsigned int rlen 
+		u8  p = odds + ctx len 
+
+		 p = 0x80 
+		p++ 
+
+		rlen = bs   ctx len  1 
+		if  rlen 
+			memset p  0  rlen  
+
+		offset += bs 
+	}
+
+	crypto xor prev  odds  bs  
+	crypto xor prev  consts + offset  bs  
+
+	crypto cipher encrypt one tfm  out  prev  
+
+	return 0 
+}
+

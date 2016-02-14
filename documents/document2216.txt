@@ -1,0 +1,46 @@
+snd ad1889 capture prepare struct snd pcm substream  ss 
+{
+	struct snd ad1889  chip = snd pcm substream chip ss  
+	struct snd pcm runtime  rt = ss runtime 
+	unsigned int size = snd pcm lib buffer bytes ss  
+	unsigned int count = snd pcm lib period bytes ss  
+	u16 reg 
+
+	ad1889 channel reset chip  AD CHAN ADC  
+	
+	reg = ad1889 readw chip  AD DS RAMC  
+
+	   Mask out 16 bit   Stereo   
+	reg  = ~ AD DS RAMC AD16 | AD DS RAMC ADST  
+
+	if  snd pcm format width rt format  == 16 
+		reg |= AD DS RAMC AD16 
+
+	if  rt channels   1 
+		reg |= AD DS RAMC ADST 
+
+	   let's make sure we don't clobber ourselves   
+	spin lock irq  chip lock  
+	
+	chip ramc size = size 
+	chip ramc reg = reg 
+	chip ramc addr = rt dma addr 
+
+	ad1889 writew chip  AD DS RAMC  chip ramc reg  
+
+	   Set up DMA   
+	ad1889 load adc buffer address chip  chip ramc addr  
+	ad1889 load adc buffer count chip  size  
+	ad1889 load adc interrupt count chip  count  
+
+	   writes flush   
+	ad1889 readw chip  AD DS RAMC  
+	
+	spin unlock irq  chip lock  
+	
+	ad1889 debug  prepare capture  addr = 0x x  count =  u   
+			 size =  u  reg = 0x x  rate =  u\n   chip ramc addr 
+			count  size  reg  rt rate  
+	return 0 
+}
+

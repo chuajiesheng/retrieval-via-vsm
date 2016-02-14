@@ -1,0 +1,5 @@
+static void mts64 smpte start struct parport  p 
+			      u8 hours  u8 minutes 
+			      u8 seconds  u8 frames 
+			      u8 idx  
+

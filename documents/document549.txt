@@ -1,0 +1,14 @@
+static int snd uart16550 output open struct snd rawmidi substream  substream 
+{
+	unsigned long flags 
+	struct snd uart16550  uart = substream rmidi private data 
+
+	spin lock irqsave  uart open lock  flags  
+	if  uart filemode == SERIAL MODE NOT OPENED 
+		snd uart16550 do open uart  
+	uart filemode |= SERIAL MODE OUTPUT OPEN 
+	uart midi output substream number  = substream 
+	spin unlock irqrestore  uart open lock  flags  
+	return 0 
+}
+

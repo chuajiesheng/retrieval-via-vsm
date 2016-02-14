@@ -1,0 +1,24 @@
+static int snd ak4531 get double struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct snd ak4531  ak4531 = snd kcontrol chip kcontrol  
+	int left reg = kcontrol private value   0xff 
+	int right reg =  kcontrol private value    8    0xff 
+	int left shift =  kcontrol private value    16    0x07 
+	int right shift =  kcontrol private value    19    0x07 
+	int mask =  kcontrol private value    24    0xff 
+	int invert =  kcontrol private value    22    1 
+	int left  right 
+
+	mutex lock  ak4531 reg mutex  
+	left =  ak4531 regs left reg     left shift    mask 
+	right =  ak4531 regs right reg     right shift    mask 
+	mutex unlock  ak4531 reg mutex  
+	if  invert  {
+		left = mask   left 
+		right = mask   right 
+	}
+	ucontrol value integer value 0  = left 
+	ucontrol value integer value 1  = right 
+	return 0 
+}
+

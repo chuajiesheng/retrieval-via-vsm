@@ -1,0 +1,7 @@
+static int dummy pcm close struct snd pcm substream  substream 
+{
+	struct snd dummy  dummy = snd pcm substream chip substream  
+	dummy timer ops free substream  
+	return 0 
+}
+

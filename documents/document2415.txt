@@ -1,0 +1,17 @@
+static int snd cmipci spdif default put struct snd kcontrol  kcontrol 
+					 struct snd ctl elem value  ucontrol 
+{
+	struct cmipci  chip = snd kcontrol chip kcontrol  
+	int i  change 
+	unsigned int val 
+
+	val = 0 
+	spin lock irq  chip reg lock  
+	for  i = 0  i   4  i++ 
+		val |=  unsigned int ucontrol value iec958 status i      i   8  
+	change = val  = chip dig status 
+	chip dig status = val 
+	spin unlock irq  chip reg lock  
+	return change 
+}
+

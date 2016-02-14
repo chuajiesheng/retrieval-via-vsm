@@ -1,0 +1,13 @@
+static int slave get val struct link slave  slave 
+			 struct snd ctl elem value  ucontrol 
+{
+	int err  ch 
+
+	err = slave init slave  
+	if  err   0 
+		return err 
+	for  ch = 0  ch   slave info count  ch++ 
+		ucontrol value integer value ch  = slave vals ch  
+	return 0 
+}
+

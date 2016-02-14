@@ -1,0 +1,31 @@
+  
+
+   
+static int snd ensoniq free struct ensoniq  ensoniq 
+{
+	snd ensoniq free gameport ensoniq  
+	if  ensoniq irq   0 
+		goto   hw end 
+#ifdef CHIP1370
+	outl ES 1370 SERR DISABLE  ES REG ensoniq  CONTROL   	   switch everything off   
+	outl 0  ES REG ensoniq  SERIAL   	   clear serial interface   
+#else
+	outl 0  ES REG ensoniq  CONTROL   	   switch everything off   
+	outl 0  ES REG ensoniq  SERIAL   	   clear serial interface   
+#endif
+	if  ensoniq irq  = 0 
+		synchronize irq ensoniq irq  
+	pci set power state ensoniq pci  3  
+        hw end 
+#ifdef CHIP1370
+	if  ensoniq dma bug area 
+		snd dma free pages  ensoniq dma bug  
+#endif
+	if  ensoniq irq  = 0 
+		free irq ensoniq irq  ensoniq  
+	pci release regions ensoniq pci  
+	pci disable device ensoniq pci  
+	kfree ensoniq  
+	return 0 
+}
+

@@ -1,0 +1,3 @@
+   Power management related routines   
+int pci save state struct pci dev  dev  
+

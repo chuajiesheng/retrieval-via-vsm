@@ -1,0 +1,26 @@
+void snd pcm timer init struct snd pcm substream  substream 
+{
+	struct snd timer id tid 
+	struct snd timer  timer 
+	
+	tid dev sclass = SNDRV TIMER SCLASS NONE 
+	tid dev class = SNDRV TIMER CLASS PCM 
+	tid card = substream pcm card number 
+	tid device = substream pcm device 
+	tid subdevice =  substream number    1  |  substream stream   1  
+	if  snd timer new substream pcm card   PCM    tid   timer    0 
+		return 
+	sprintf timer name   PCM  s  i  i  i  
+			substream stream == SNDRV PCM STREAM CAPTURE ?
+				 capture     playback  
+			tid card  tid device  tid subdevice  
+	timer hw = snd pcm timer 
+	if  snd device register timer card  timer    0  {
+		snd device free timer card  timer  
+		return 
+	}
+	timer private data = substream 
+	timer private free = snd pcm timer free 
+	substream timer = timer 
+}
+

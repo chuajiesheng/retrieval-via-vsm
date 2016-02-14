@@ -1,0 +1,5 @@
+static inline void ssb write16 struct ssb device  dev  u16 offset  u16 value 
+{
+	dev ops write16 dev  offset  value  
+}
+

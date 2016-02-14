@@ -1,0 +1,13 @@
+static int snd pcm stream proc done struct snd pcm str  pstr 
+{
+#ifdef CONFIG SND PCM XRUN DEBUG
+	snd info free entry pstr proc xrun debug entry  
+	pstr proc xrun debug entry = NULL 
+#endif
+	snd info free entry pstr proc info entry  
+	pstr proc info entry = NULL 
+	snd info free entry pstr proc root  
+	pstr proc root = NULL 
+	return 0 
+}
+

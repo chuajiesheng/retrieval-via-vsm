@@ -1,0 +1,16 @@
+static int snd fm801 put single struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct fm801  chip = snd kcontrol chip kcontrol  
+	int reg = kcontrol private value   0xff 
+	int shift =  kcontrol private value    8    0xff 
+	int mask =  kcontrol private value    16    0xff 
+	int invert =  kcontrol private value    24    0xff 
+	unsigned short val 
+
+	val =  ucontrol value integer value 0    mask  
+	if  invert 
+		val = mask   val 
+	return snd fm801 update bits chip  reg  mask    shift  val    shift  
+}
+

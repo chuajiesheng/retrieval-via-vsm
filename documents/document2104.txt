@@ -1,0 +1,8 @@
+static void   devinit snd atiixp proc init struct atiixp modem  chip 
+{
+	struct snd info entry  entry 
+
+	if    snd card proc new chip card   atiixp modem    entry  
+		snd info set text ops entry  chip  snd atiixp proc read  
+}
+

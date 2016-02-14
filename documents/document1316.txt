@@ -1,0 +1,14 @@
+   call with substream spinlock   
+static void snd es1968 bob inc struct es1968  chip  int freq 
+{
+	chip bobclient++ 
+	if  chip bobclient == 1  {
+		chip bob freq = freq 
+		snd es1968 bob start chip  
+	} else if  chip bob freq   freq  {
+		snd es1968 bob stop chip  
+		chip bob freq = freq 
+		snd es1968 bob start chip  
+	}
+}
+

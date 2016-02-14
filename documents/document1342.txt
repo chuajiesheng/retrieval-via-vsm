@@ -1,0 +1,10 @@
+static inline void aead request set callback struct aead request  req 
+					     u32 flags 
+					     crypto completion t complete 
+					     void  data 
+{
+	req base complete = complete 
+	req base data = data 
+	req base flags = flags 
+}
+

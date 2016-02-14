@@ -1,0 +1,41 @@
+  
+   hw params   allocate the buffer and set up buffer descriptors
+   
+static int snd atiixp pcm hw params struct snd pcm substream  substream 
+				    struct snd pcm hw params  hw params 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+	struct atiixp dma  dma = substream runtime private data 
+	int err 
+
+	err = snd pcm lib malloc pages substream  params buffer bytes hw params   
+	if  err   0 
+		return err 
+	dma buf addr = substream runtime dma addr 
+	dma buf bytes = params buffer bytes hw params  
+
+	err = atiixp build dma packets chip  dma  substream 
+				       params periods hw params  
+				       params period bytes hw params   
+	if  err   0 
+		return err 
+
+	if  dma ac97 pcm type  = 0  {
+		struct ac97 pcm  pcm = chip pcms dma ac97 pcm type  
+		   PCM is bound to AC97 codec s 
+		   set up the AC97 codecs
+		   
+		if  dma pcm open flag  {
+			snd ac97 pcm close pcm  
+			dma pcm open flag = 0 
+		}
+		err = snd ac97 pcm open pcm  params rate hw params  
+					params channels hw params  
+					pcm r 0  slots  
+		if  err  = 0 
+			dma pcm open flag = 1 
+	}
+
+	return err 
+}
+

@@ -1,0 +1,4 @@
+struct snd info entry  snd info create card entry struct snd card  card 
+					     const char  name 
+					     struct snd info entry  parent  
+

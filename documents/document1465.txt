@@ -1,0 +1,9 @@
+   
+   ttm bo unmap virtual
+  
+   @bo  tear down the virtual mappings for this BO
+  
+   The caller must take ttm mem io lock before calling this function 
+   
+extern void ttm bo unmap virtual locked struct ttm buffer object  bo  
+

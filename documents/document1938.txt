@@ -1,0 +1,39 @@
+static int snd intel8x0 free struct intel8x0  chip 
+{
+	unsigned int i 
+
+	if  chip irq   0 
+		goto   hw end 
+	   disable interrupts   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputbyte chip  ICH REG OFF CR + chip ichd i  reg offset  0x00  
+	   reset channels   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputbyte chip  ICH REG OFF CR + chip ichd i  reg offset  ICH RESETREGS  
+	if  chip device type == DEVICE NFORCE     spdif aclink  {
+		   stop the spdif interrupt   
+		unsigned int val 
+		pci read config dword chip pci  0x4c   val  
+		val  = ~0x1000000 
+		pci write config dword chip pci  0x4c  val  
+	}
+	         
+
+        hw end 
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	if  chip bdbars area  {
+		if  chip fix nocache 
+			fill nocache chip bdbars area  chip bdbars bytes  0  
+		snd dma free pages  chip bdbars  
+	}
+	if  chip addr 
+		pci iounmap chip pci  chip addr  
+	if  chip bmaddr 
+		pci iounmap chip pci  chip bmaddr  
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

@@ -1,0 +1,12 @@
+static int snd m3 pcm hw free struct snd pcm substream  substream 
+{
+	struct m3 dma  s 
+	
+	if  substream runtime private data == NULL 
+		return 0 
+	s = substream runtime private data 
+	snd pcm lib free pages substream  
+	s buffer addr = 0 
+	return 0 
+}
+

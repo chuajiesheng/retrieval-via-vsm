@@ -1,0 +1,12 @@
+static int dummy pcm hw params struct snd pcm substream  substream 
+			       struct snd pcm hw params  hw params 
+{
+	if  fake buffer  {
+		   runtime dma bytes has to be set manually to allow mmap   
+		substream runtime dma bytes = params buffer bytes hw params  
+		return 0 
+	}
+	return snd pcm lib malloc pages substream 
+					params buffer bytes hw params   
+}
+

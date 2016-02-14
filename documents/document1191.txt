@@ -1,0 +1,11 @@
+snd azf3328 gameport legacy address enable struct snd azf3328  chip 
+					   bool enable
+ 
+{
+	snd azf3328 io reg setb 
+		chip game io+IDX GAME HWCONFIG 
+		GAME HWCFG LEGACY ADDRESS ENABLE 
+		enable
+	  
+}
+

@@ -1,0 +1,13 @@
+snd rme96 playback silence struct snd pcm substream  substream 
+			   int channel     not used  interleaved data    
+			   snd pcm uframes t pos 
+			   snd pcm uframes t count 
+{
+	struct rme96  rme96 = snd pcm substream chip substream  
+	count   = rme96 playback frlog 
+	pos   = rme96 playback frlog 
+	memset io rme96 iobase + RME96 IO PLAY BUFFER + pos 
+		  0  count  
+	return 0 
+}
+

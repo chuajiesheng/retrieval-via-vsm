@@ -1,0 +1,16 @@
+static int snd via8233 playback close struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	unsigned int stream 
+
+	stream = viadev reg offset   0x10 
+	if  chip dxs controls stream   {
+		chip dxs controls stream  vd 0  access |=
+			SNDRV CTL ELEM ACCESS INACTIVE 
+		snd ctl notify chip card  SNDRV CTL EVENT MASK INFO 
+			        chip dxs controls stream  id  
+	}
+	return snd via82xx pcm close substream  
+}
+

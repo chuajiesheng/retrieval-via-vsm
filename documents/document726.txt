@@ -1,0 +1,34 @@
+  
+    Interrupt handler
+   
+static irqreturn t snd via82xx interrupt int irq  void  dev id 
+{
+	struct via82xx modem  chip = dev id 
+	unsigned int status 
+	unsigned int i 
+
+	status = inl VIAREG chip  SGD SHADOW   
+	if     status   chip intr mask   {
+		return IRQ NONE 
+	}
+    skip sgd 
+
+	   check status for each stream   
+	spin lock  chip reg lock  
+	for  i = 0  i   chip num devs  i++  {
+		struct viadev  viadev =  chip devs i  
+		unsigned char c status = inb VIADEV REG viadev  OFFSET STATUS   
+		c status  =  VIA REG STAT EOL|VIA REG STAT FLAG|VIA REG STAT STOPPED  
+		if    c status 
+			continue 
+		if  viadev substream    viadev running  {
+			spin unlock  chip reg lock  
+			snd pcm period elapsed viadev substream  
+			spin lock  chip reg lock  
+		}
+		outb c status  VIADEV REG viadev  OFFSET STATUS       ack   
+	}
+	spin unlock  chip reg lock  
+	return IRQ HANDLED 
+}
+

@@ -1,0 +1,9 @@
+   
+   ttm bo unreserve
+  
+   @bo  A pointer to a struct ttm buffer object 
+  
+   Unreserve a previous reservation of @bo 
+   
+extern void ttm bo unreserve struct ttm buffer object  bo  
+

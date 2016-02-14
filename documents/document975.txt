@@ -1,0 +1,9 @@
+int snd mpu401 uart new struct snd card  card 
+			int device 
+			unsigned short hardware 
+			unsigned long port 
+			unsigned int info flags 
+			int irq 
+			int irq flags 
+			struct snd rawmidi    rrawmidi  
+

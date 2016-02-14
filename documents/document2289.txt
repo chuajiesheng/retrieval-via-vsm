@@ -1,0 +1,8 @@
+static int snd rme32 capture fd ack struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	snd pcm indirect capture transfer substream   rme32 capture pcm 
+					  snd rme32 cp trans copy  
+	return 0 
+}
+

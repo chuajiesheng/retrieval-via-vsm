@@ -1,0 +1,9 @@
+static int snd bt87x hw free struct snd pcm substream  substream 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+
+	snd bt87x free risc chip  
+	snd pcm lib free pages substream  
+	return 0 
+}
+

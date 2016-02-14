@@ -1,0 +1,26 @@
+static void clear capture buf struct loopback pcm  dpcm  unsigned int bytes 
+{
+	struct snd pcm runtime  runtime = dpcm substream runtime 
+	char  dst = runtime dma area 
+	unsigned int dst off = dpcm buf pos 
+
+	if  dpcm silent size  = dpcm pcm buffer size 
+		return 
+	if  dpcm silent size + bytes   dpcm pcm buffer size 
+		bytes = dpcm pcm buffer size   dpcm silent size 
+
+	for      {
+		unsigned int size = bytes 
+		if  dst off + size   dpcm pcm buffer size 
+			size = dpcm pcm buffer size   dst off 
+		snd pcm format set silence runtime format  dst + dst off 
+					   bytes to frames runtime  size   
+					   	runtime channels  
+		dpcm silent size += size 
+		bytes  = size 
+		if   bytes 
+			break 
+		dst off = 0 
+	}
+}
+

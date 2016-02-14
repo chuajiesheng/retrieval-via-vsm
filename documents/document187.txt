@@ -1,0 +1,33 @@
+  
+   try to allocate as the large pages as possible 
+   stores the resultant memory size in  res size 
+  
+   the minimum size is snd minimum buffer   it should be power of 2 
+   
+static int preallocate pcm pages struct snd pcm substream  substream  size t size 
+{
+	struct snd dma buffer  dmab =  substream dma buffer 
+	int err 
+
+	   already reserved?   
+	if  snd dma get reserved buf dmab  substream dma buf id    0  {
+		if  dmab bytes  = size 
+			return 0     yes   
+		   no  free the reserved block   
+		snd dma free pages dmab  
+		dmab bytes = 0 
+	}
+
+	do {
+		if   err = snd dma alloc pages dmab dev type  dmab dev dev 
+					       size  dmab     0  {
+			if  err  =  ENOMEM 
+				return err     fatal error   
+		} else
+			return 0 
+		size   = 1 
+	} while  size  = snd minimum buffer  
+	dmab bytes = 0     tell error   
+	return 0 
+}
+

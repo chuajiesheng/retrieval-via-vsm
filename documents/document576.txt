@@ -1,0 +1,9 @@
+static inline int snd uart16550 buffer can write struct snd uart16550  uart 
+						 int Num 
+{
+	if  uart buff in count + Num   TX BUFF SIZE 
+		return 1 
+	else
+		return 0 
+}
+

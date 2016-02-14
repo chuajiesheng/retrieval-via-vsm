@@ -1,0 +1,8 @@
+  
+   release APU pair
+   
+static void snd es1968 free apu pair struct es1968  chip  int apu 
+{
+	chip apu apu  = chip apu apu + 1  = ESM APU FREE 
+}
+

@@ -1,0 +1,74 @@
+static int snd cs4281 chip init struct cs4281  chip      defined below   
+static int   devinit snd cs4281 create struct snd card  card 
+				       struct pci dev  pci 
+				       struct cs4281    rchip 
+				       int dual codec 
+{
+	struct cs4281  chip 
+	unsigned int tmp 
+	int err 
+	static struct snd device ops ops = {
+		 dev free =	snd cs4281 dev free 
+	} 
+
+	 rchip = NULL 
+	if   err = pci enable device pci     0 
+		return err 
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+	spin lock init  chip reg lock  
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+	pci set master pci  
+	if  dual codec   0 || dual codec   3  {
+		snd printk KERN ERR  invalid dual codec option  d\n   dual codec  
+		dual codec = 0 
+	}
+	chip dual codec = dual codec 
+
+	if   err = pci request regions pci   CS4281      0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+	chip ba0 addr = pci resource start pci  0  
+	chip ba1 addr = pci resource start pci  1  
+
+	chip ba0 = pci ioremap bar pci  0  
+	chip ba1 = pci ioremap bar pci  1  
+	if   chip ba0 ||  chip ba1  {
+		snd cs4281 free chip  
+		return  ENOMEM 
+	}
+	
+	if  request irq pci irq  snd cs4281 interrupt  IRQF SHARED 
+			 CS4281   chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd cs4281 free chip  
+		return  ENOMEM 
+	}
+	chip irq = pci irq 
+
+	tmp = snd cs4281 chip init chip  
+	if  tmp  {
+		snd cs4281 free chip  
+		return tmp 
+	}
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd cs4281 free chip  
+		return err 
+	}
+
+	snd cs4281 proc init chip  
+
+	snd card set dev card   pci dev  
+
+	 rchip = chip 
+	return 0 
+}
+

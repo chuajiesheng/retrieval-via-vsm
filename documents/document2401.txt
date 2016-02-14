@@ -1,0 +1,17 @@
+static int snd cmipci playback2 hw params struct snd pcm substream  substream 
+					  struct snd pcm hw params  hw params 
+{
+	struct cmipci  cm = snd pcm substream chip substream  
+	if  params channels hw params    2  {
+		mutex lock  cm open mutex  
+		if  cm opened CM CH PLAY   {
+			mutex unlock  cm open mutex  
+			return  EBUSY 
+		}
+		   reserve the channel A   
+		cm opened CM CH PLAY  = CM OPEN PLAYBACK MULTI 
+		mutex unlock  cm open mutex  
+	}
+	return snd pcm lib malloc pages substream  params buffer bytes hw params   
+}
+

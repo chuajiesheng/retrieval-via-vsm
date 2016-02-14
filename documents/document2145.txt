@@ -1,0 +1,20 @@
+  
+   lock the current rate
+   
+static int via lock rate struct via rate lock  rec  int rate 
+{
+	int changed = 0 
+
+	spin lock irq  rec lock  
+	if  rec rate  = rate  {
+		if  rec rate    rec used   1     already set   
+			changed =  EINVAL 
+		else {
+			rec rate = rate 
+			changed = 1 
+		}
+	}
+	spin unlock irq  rec lock  
+	return changed 
+}
+

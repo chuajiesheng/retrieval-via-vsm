@@ -1,0 +1,15 @@
+static int snd sonicvibes free struct sonicvibes  sonic 
+{
+	snd sonicvibes free gameport sonic  
+	pci write config dword sonic pci  0x40  sonic dmaa port  
+	pci write config dword sonic pci  0x48  sonic dmac port  
+	if  sonic irq  = 0 
+		free irq sonic irq  sonic  
+	release and free resource sonic res dmaa  
+	release and free resource sonic res dmac  
+	pci release regions sonic pci  
+	pci disable device sonic pci  
+	kfree sonic  
+	return 0 
+}
+

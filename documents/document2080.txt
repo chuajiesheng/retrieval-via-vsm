@@ -1,0 +1,15 @@
+   enable disable analog OUT DMA   
+static void atiixp out enable dma struct atiixp modem  chip  int on 
+{
+	unsigned int data 
+	data = atiixp read chip  CMD  
+	if  on  {
+		if  data   ATI REG CMD MODEM OUT DMA1 EN 
+			return 
+		atiixp out flush dma chip  
+		data |= ATI REG CMD MODEM OUT DMA1 EN 
+	} else
+		data  = ~ATI REG CMD MODEM OUT DMA1 EN 
+	atiixp write chip  CMD  data  
+}
+

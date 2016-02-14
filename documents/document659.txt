@@ -1,0 +1,22 @@
+static void dummy proc read struct snd info entry  entry 
+			    struct snd info buffer  buffer 
+{
+	struct snd dummy  dummy = entry private data 
+	int i 
+
+	for  i = 0  i   ARRAY SIZE fields   i++  {
+		snd iprintf buffer    s    fields i  name  
+		if  fields i  size == sizeof int  
+			snd iprintf buffer  fields i  format 
+				 get dummy int ptr dummy  fields i  offset   
+		else
+			snd iprintf buffer  fields i  format 
+				 get dummy ll ptr dummy  fields i  offset   
+		if   strcmp fields i  name   formats   
+			print formats dummy  buffer  
+		else if   strcmp fields i  name   rates   
+			print rates dummy  buffer  
+		snd iprintf buffer   \n   
+	}
+}
+

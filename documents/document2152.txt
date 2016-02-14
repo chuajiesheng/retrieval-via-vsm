@@ -1,0 +1,30 @@
+  
+   open callback for playback on via823x multi channel
+   
+static int snd via8233 multi open struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev =  chip devs chip multi devno  
+	int err 
+	   channels constraint for VIA8233A
+	   3 and 5 channels are not supported
+	   
+	static unsigned int channels   = {
+		1  2  4  6
+	} 
+	static struct snd pcm hw constraint list hw constraints channels = {
+		 count = ARRAY SIZE channels  
+		 list = channels 
+		 mask = 0 
+	} 
+
+	if   err = snd via82xx pcm open chip  viadev  substream     0 
+		return err 
+	substream runtime hw channels max = 6 
+	if  chip revision == VIA REV 8233A 
+		snd pcm hw constraint list substream runtime  0 
+					   SNDRV PCM HW PARAM CHANNELS 
+					    hw constraints channels  
+	return 0 
+}
+

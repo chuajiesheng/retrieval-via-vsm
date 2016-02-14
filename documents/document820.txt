@@ -1,0 +1,10 @@
+static int snd atiixp aclink down struct atiixp  chip 
+{
+	   if  atiixp read chip  MODEM MIRROR    0x1     modem running  too?   
+	  	return  EBUSY 
+	atiixp update chip  CMD 
+		     ATI REG CMD POWERDOWN | ATI REG CMD AC RESET 
+		     ATI REG CMD POWERDOWN  
+	return 0 
+}
+

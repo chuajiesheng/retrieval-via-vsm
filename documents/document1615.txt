@@ -1,0 +1,8 @@
+  
+   Radio Switch state reporting 
+  
+   enum wimax rf state is declared in linux wimax h so the exports
+   to user space can use it 
+   
+extern void wimax report rfkill hw struct wimax dev    enum wimax rf state  
+

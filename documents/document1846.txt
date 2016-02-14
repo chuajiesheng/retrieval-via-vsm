@@ -1,0 +1,19 @@
+static int snd bt87x set analog hw struct snd bt87x  chip  struct snd pcm runtime  runtime 
+{
+	static struct snd ratnum analog clock = {
+		 num = ANALOG CLOCK 
+		 den min = CLOCK DIV MIN 
+		 den max = CLOCK DIV MAX 
+		 den step = 1
+	} 
+	static struct snd pcm hw constraint ratnums constraint rates = {
+		 nrats = 1 
+		 rats =  analog clock
+	} 
+
+	chip reg control  = ~ CTL DA IOM DA | CTL A PWRDN  
+	runtime hw = snd bt87x analog hw 
+	return snd pcm hw constraint ratnums runtime  0  SNDRV PCM HW PARAM RATE 
+					      constraint rates  
+}
+

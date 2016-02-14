@@ -1,0 +1,3 @@
+long snd rawmidi kernel write struct snd rawmidi substream  substream 
+			      const unsigned char  buf  long count  
+

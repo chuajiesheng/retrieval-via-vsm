@@ -1,0 +1,22 @@
+static void snd sndstat proc read struct snd info entry  entry 
+				  struct snd info buffer  buffer 
+{
+	snd iprintf buffer   Sound Driver 3 8 1a 980706  ALSA v  CONFIG SND VERSION   emulation code \n   
+	snd iprintf buffer   Kernel   s  s  s  s  s\n  
+		    init utsname   sysname 
+		    init utsname   nodename 
+		    init utsname   release 
+		    init utsname   version 
+		    init utsname   machine  
+	snd iprintf buffer   Config options  0\n   
+	snd iprintf buffer   \nInstalled drivers  \n   
+	snd iprintf buffer   Type 10  ALSA emulation\n   
+	snd iprintf buffer   \nCard config  \n   
+	snd card info read oss buffer  
+	snd sndstat show strings buffer   Audio devices   SNDRV OSS INFO DEV AUDIO  
+	snd sndstat show strings buffer   Synth devices   SNDRV OSS INFO DEV SYNTH  
+	snd sndstat show strings buffer   Midi devices   SNDRV OSS INFO DEV MIDI  
+	snd sndstat show strings buffer   Timers   SNDRV OSS INFO DEV TIMERS  
+	snd sndstat show strings buffer   Mixers   SNDRV OSS INFO DEV MIXERS  
+}
+

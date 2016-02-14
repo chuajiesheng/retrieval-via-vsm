@@ -1,0 +1,6 @@
+static int snd bt87x dev free struct snd device  device 
+{
+	struct snd bt87x  chip = device device data 
+	return snd bt87x free chip  
+}
+

@@ -1,0 +1,33 @@
+  
+
+   
+static void snd sonicvibes proc read struct snd info entry  entry  
+				     struct snd info buffer  buffer 
+{
+	struct sonicvibes  sonic = entry private data 
+	unsigned char tmp 
+
+	tmp = sonic srs space   0x0f 
+	snd iprintf buffer   SRS 3D              s\n  
+		    sonic srs space   0x80 ?  off     on   
+	snd iprintf buffer   SRS Space           s\n  
+		    tmp == 0x00 ?  100    
+		    tmp == 0x01 ?  75    
+		    tmp == 0x02 ?  50    
+		    tmp == 0x03 ?  25      0    
+	tmp = sonic srs center   0x0f 
+	snd iprintf buffer   SRS Center          s\n  
+		    tmp == 0x00 ?  100    
+		    tmp == 0x01 ?  75    
+		    tmp == 0x02 ?  50    
+		    tmp == 0x03 ?  25      0    
+	tmp = sonic wave source   0x03 
+	snd iprintf buffer   WaveTable Source    s\n  
+		    tmp == 0x00 ?  on board ROM   
+		    tmp == 0x01 ?  PCI bus     on board ROM + PCI bus   
+	tmp = sonic mpu switch 
+	snd iprintf buffer   Onboard synth       s\n   tmp   0x01 ?  on     off   
+	snd iprintf buffer   Ext  Rx to synth    s\n   tmp   0x02 ?  on     off   
+	snd iprintf buffer   MIDI to ext  Tx     s\n   tmp   0x04 ?  on     off   
+}
+

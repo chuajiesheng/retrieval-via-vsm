@@ -1,0 +1,6 @@
+static int snd atiixp capture close struct snd pcm substream  substream 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	return snd atiixp pcm close substream   chip dmas ATI DMA CAPTURE   
+}
+

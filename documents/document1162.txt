@@ -1,0 +1,26 @@
+   
+   ttm bo move accel cleanup 
+  
+   @bo  A pointer to a struct ttm buffer object 
+   @sync obj  A sync object that signals when moving is complete 
+   @sync obj arg  An argument to pass to the sync object idle   wait
+   functions 
+   @evict  This is an evict move  Don't return until the buffer is idle 
+   @no wait reserve  Return immediately if other buffers are busy 
+   @no wait gpu  Return immediately if the GPU is busy 
+   @new mem  struct ttm mem reg indicating where to move 
+  
+   Accelerated move function to be called when an accelerated move
+   has been scheduled  The function will create a new temporary buffer object
+   representing the old placement  and put the sync object on both buffer
+   objects  After that the newly created buffer object is unref'd to be
+   destroyed when the move is complete  This will help pipeline
+   buffer moves 
+   
+extern int ttm bo move accel cleanup struct ttm buffer object  bo 
+				     void  sync obj 
+				     void  sync obj arg 
+				     bool evict  bool no wait reserve 
+				     bool no wait gpu 
+				     struct ttm mem reg  new mem  
+

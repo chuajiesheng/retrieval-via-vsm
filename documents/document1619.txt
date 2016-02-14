@@ -1,0 +1,7 @@
+static int snd als300 pcm hw params struct snd pcm substream  substream 
+				    struct snd pcm hw params  hw params 
+{
+	return snd pcm lib malloc pages substream 
+					params buffer bytes hw params   
+}
+

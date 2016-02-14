@@ -1,0 +1,22 @@
+static int snd atiixp codec detect struct atiixp modem  chip 
+{
+	int timeout 
+
+	chip codec not ready bits = 0 
+	atiixp write chip  IER  CODEC CHECK BITS  
+	   wait for the interrupts   
+	timeout = 50 
+	while  timeout     0  {
+		msleep 1  
+		if  chip codec not ready bits 
+			break 
+	}
+	atiixp write chip  IER  0      disable irqs   
+
+	if   chip codec not ready bits   ALL CODEC NOT READY  == ALL CODEC NOT READY  {
+		snd printk KERN ERR  atiixp modem  no codec detected \n   
+		return  ENXIO 
+	}
+	return 0 
+}
+

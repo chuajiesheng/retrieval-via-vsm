@@ -1,0 +1,36 @@
+snd ad1889 playback trigger struct snd pcm substream  ss  int cmd 
+{
+	u16 wsmc 
+	struct snd ad1889  chip = snd pcm substream chip ss  
+	
+	wsmc = ad1889 readw chip  AD DS WSMC  
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		   enable DMA loop   interrupts   
+		ad1889 writew chip  AD DMA WAV  AD DMA LOOP | AD DMA IM CNT  
+		wsmc |= AD DS WSMC WAEN 
+		   1 to clear CHSS bit   
+		ad1889 writel chip  AD DMA CHSS  AD DMA CHSS WAVS  
+		ad1889 unmute chip  
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		ad1889 mute chip  
+		wsmc  = ~AD DS WSMC WAEN 
+		break 
+	default 
+		snd BUG   
+		return  EINVAL 
+	}
+	
+	chip wave reg = wsmc 
+	ad1889 writew chip  AD DS WSMC  wsmc  	
+	ad1889 readw chip  AD DS WSMC  	   flush   
+
+	   reset the chip when STOP   will disable IRQs   
+	if  cmd == SNDRV PCM TRIGGER STOP 
+		ad1889 channel reset chip  AD CHAN WAV  
+
+	return 0 
+}
+

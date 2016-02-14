@@ -1,0 +1,7 @@
+int snd info minor unregister void 
+{
+	snd info free entry snd sndstat proc entry  
+	snd sndstat proc entry = NULL 
+	return 0 
+}
+

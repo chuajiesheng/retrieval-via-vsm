@@ -1,0 +1,5 @@
+static inline void snd via82xx codec xwrite struct via82xx  chip  unsigned int val 
+{
+	outl val  VIAREG chip  AC97   
+}
+

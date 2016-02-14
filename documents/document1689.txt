@@ -1,0 +1,56 @@
+snd m3 chip init struct snd m3  chip 
+{
+	struct pci dev  pcidev = chip pci 
+	unsigned long io = chip iobase 
+	u32 n 
+	u16 w 
+	u8 t     makes as much sense as 'n'  no?   
+
+	pci read config word pcidev  PCI LEGACY AUDIO CTRL   w  
+	w  = ~ SOUND BLASTER ENABLE|FM SYNTHESIS ENABLE|
+	       MPU401 IO ENABLE|MPU401 IRQ ENABLE|ALIAS 10BIT IO|
+	       DISABLE LEGACY  
+	pci write config word pcidev  PCI LEGACY AUDIO CTRL  w  
+
+	pci read config dword pcidev  PCI ALLEGRO CONFIG   n  
+	n  = ~ HV CTRL ENABLE | REDUCED DEBOUNCE | HV BUTTON FROM GD  
+	n |= chip hv config 
+	   For some reason we must always use reduced debounce    
+	n |= REDUCED DEBOUNCE 
+	n |= PM CTRL ENABLE | CLK DIV BY 49 | USE PCI TIMING 
+	pci write config dword pcidev  PCI ALLEGRO CONFIG  n  
+
+	outb RESET ASSP  chip iobase + ASSP CONTROL B  
+	pci read config dword pcidev  PCI ALLEGRO CONFIG   n  
+	n  = ~INT CLK SELECT 
+	if   chip allegro flag  {
+		n  = ~INT CLK MULT ENABLE  
+		n |= INT CLK SRC NOT PCI 
+	}
+	n  =  ~  CLK MULT MODE SELECT | CLK MULT MODE SELECT 2   
+	pci write config dword pcidev  PCI ALLEGRO CONFIG  n  
+
+	if  chip allegro flag  {
+		pci read config dword pcidev  PCI USER CONFIG   n  
+		n |= IN CLK 12MHZ SELECT 
+		pci write config dword pcidev  PCI USER CONFIG  n  
+	}
+
+	t = inb chip iobase + ASSP CONTROL A  
+	t  = ~  DSP CLK 36MHZ SELECT  | ASSP CLK 49MHZ SELECT  
+	t |= ASSP CLK 49MHZ SELECT 
+	t |= ASSP 0 WS ENABLE  
+	outb t  chip iobase + ASSP CONTROL A  
+
+	snd m3 assp init chip      download DSP code before starting ASSP below   
+	outb RUN ASSP  chip iobase + ASSP CONTROL B   
+
+	outb 0x00  io + HARDWARE VOL CTRL  
+	outb 0x88  io + SHADOW MIX REG VOICE  
+	outb 0x88  io + HW VOL COUNTER VOICE  
+	outb 0x88  io + SHADOW MIX REG MASTER  
+	outb 0x88  io + HW VOL COUNTER MASTER  
+
+	return 0 
+}
+

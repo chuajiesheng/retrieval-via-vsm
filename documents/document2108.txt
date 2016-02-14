@@ -1,0 +1,44 @@
+static int   devinit snd atiixp probe struct pci dev  pci 
+				      const struct pci device id  pci id 
+{
+	struct snd card  card 
+	struct atiixp modem  chip 
+	int err 
+
+	err = snd card create index  id  THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	strcpy card driver   ATIIXP MODEM   
+	strcpy card shortname   ATI IXP Modem   
+	if   err = snd atiixp create card  pci   chip     0 
+		goto   error 
+	card private data = chip 
+
+	if   err = snd atiixp aclink reset chip     0 
+		goto   error 
+
+	if   err = snd atiixp mixer new chip  ac97 clock     0 
+		goto   error 
+
+	if   err = snd atiixp pcm new chip     0 
+		goto   error 
+	
+	snd atiixp proc init chip  
+
+	snd atiixp chip start chip  
+
+	sprintf card longname    s rev  x at 0x lx  irq  i  
+		card shortname  pci revision  chip addr  chip irq  
+
+	if   err = snd card register card     0 
+		goto   error 
+
+	pci set drvdata pci  card  
+	return 0 
+
+   error 
+	snd card free card  
+	return err 
+}
+

@@ -1,0 +1,19 @@
+int snd card free when closed struct snd card  card 
+{
+	int free now = 0 
+	int ret = snd card disconnect card  
+	if  ret 
+		return ret 
+
+	spin lock  card files lock  
+	if  list empty  card files list  
+		free now = 1 
+	else
+		card free on last close = 1 
+	spin unlock  card files lock  
+
+	if  free now 
+		snd card do free card  
+	return 0 
+}
+

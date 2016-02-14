@@ -1,0 +1,3 @@
+int mlx4 buf alloc struct mlx4 dev  dev  int size  int max direct 
+		   struct mlx4 buf  buf  
+

@@ -1,0 +1,13 @@
+static int rule rate struct snd pcm hw params  params 
+		     struct snd pcm hw rule  rule 
+{
+	struct snd pcm hardware  hw = rule private 
+	struct snd interval t 
+
+        t min = hw rate min 
+        t max = hw rate max 
+        t openmin = t openmax = 0 
+        t integer = 0 
+	return snd interval refine hw param interval params  rule var    t  
+}
+

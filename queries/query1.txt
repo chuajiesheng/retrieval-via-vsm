@@ -1,0 +1,9 @@
+TASK DELAY ACCT
+Enable per-task delay accounting (EXPERIMENTAL)
+Collect information on time spent by a task waiting for system
+resources like cpu, synchronous block I/O completion and swapping
+in pages. Such statistics can help in setting a task's priorities
+relative to other tasks for cpu, io, rss limits etc.
+
+Say N if unsure.
+

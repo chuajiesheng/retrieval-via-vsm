@@ -1,0 +1,18 @@
+static void   init print efi memmap void 
+{
+	efi memory desc t  md 
+	void  p 
+	int i 
+
+	for  p = memmap map  i = 0 
+	     p   memmap map end 
+	     p += memmap desc size  i++  {
+		md = p 
+		printk KERN INFO PFX  mem 02u  type= u  attr=0x llx   
+			 range= 0x 016llx 0x 016llx    lluMB \n  
+			i  md type  md attribute  md phys addr 
+			md phys addr +  md num pages    EFI PAGE SHIFT  
+			 md num pages     20   EFI PAGE SHIFT    
+	}
+}
+

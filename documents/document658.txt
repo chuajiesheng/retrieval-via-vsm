@@ -1,0 +1,18 @@
+static void print rates struct snd dummy  dummy 
+			struct snd info buffer  buffer 
+{
+	static int rates   = {
+		5512  8000  11025  16000  22050  32000  44100  48000 
+		64000  88200  96000  176400  192000 
+	} 
+	int i 
+
+	if  dummy pcm hw rates   SNDRV PCM RATE CONTINUOUS 
+		snd iprintf buffer    continuous   
+	if  dummy pcm hw rates   SNDRV PCM RATE KNOT 
+		snd iprintf buffer    knot   
+	for  i = 0  i   ARRAY SIZE rates   i++ 
+		if  dummy pcm hw rates    1    i  
+			snd iprintf buffer     d   rates i   
+}
+

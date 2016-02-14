@@ -1,0 +1,3 @@
+extern void ttm bo mem put struct ttm buffer object  bo 
+			   struct ttm mem reg  mem  
+

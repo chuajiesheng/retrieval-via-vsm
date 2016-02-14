@@ -1,0 +1,38 @@
+static void snd mtpav read bytes struct mtpav  mcrd 
+{
+	u8 clrread  setread 
+	u8 mtp read byte 
+	u8 sr  cbyt 
+	int i 
+
+	u8 sbyt = snd mtpav getreg mcrd  SREG  
+
+	   printk KERN DEBUG  snd mtpav read bytes   sbyt  0x x\n   sbyt     
+
+	if    sbyt   SIGS BYTE  
+		return 
+
+	cbyt = snd mtpav getreg mcrd  CREG  
+	clrread = cbyt    SIGC READ ^ 0xff  
+	setread = cbyt | SIGC READ 
+
+	do {
+
+		mtp read byte = 0 
+		for  i = 0  i   4  i++  {
+			snd mtpav mputreg mcrd  CREG  setread  
+			sr = snd mtpav getreg mcrd  SREG  
+			snd mtpav mputreg mcrd  CREG  clrread  
+
+			sr  = SIGS IN0 | SIGS IN1 
+			sr   = 4 
+			mtp read byte |= sr     i   2  
+		}
+
+		snd mtpav inmidi h mcrd  mtp read byte  
+
+		sbyt = snd mtpav getreg mcrd  SREG  
+
+	} while  sbyt   SIGS BYTE  
+}
+

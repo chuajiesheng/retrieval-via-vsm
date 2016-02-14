@@ -1,0 +1,5 @@
+static int   init crypto xcbc module init void 
+{
+	return crypto register template  crypto xcbc tmpl  
+}
+

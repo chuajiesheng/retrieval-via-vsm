@@ -1,0 +1,4 @@
+   print ssid   is intended to be used in debug  and possibly error 
+   messages  It should never be used for passing ssid to user space    
+const char  print ssid char  buf  const char  ssid  u8 ssid len  
+

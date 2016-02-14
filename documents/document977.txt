@@ -1,0 +1,9 @@
+static void crypto gcm free struct crypto instance  inst 
+{
+	struct gcm instance ctx  ctx = crypto instance ctx inst  
+
+	crypto drop skcipher  ctx ctr  
+	crypto drop ahash  ctx ghash  
+	kfree inst  
+}
+

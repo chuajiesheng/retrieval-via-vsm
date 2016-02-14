@@ -1,0 +1,6 @@
+static inline unsigned int snd sonicvibes getdmac struct sonicvibes   sonic 
+{
+	   note  dmac is working in word mode      
+	return   inl sonic dmac port + SV DMA COUNT0    0xffffff  + 1     1 
+}
+

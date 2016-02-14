@@ -1,0 +1,7 @@
+static inline void snd als300 gcr write unsigned long port 
+						unsigned short reg  u32 val 
+{
+	outb reg  port+GCR INDEX  
+	outl val  port+GCR DATA  
+}
+

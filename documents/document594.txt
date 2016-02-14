@@ -1,0 +1,7 @@
+static void dummy systimer rearm struct dummy systimer pcm  dpcm 
+{
+	dpcm timer expires = jiffies +
+		 dpcm frac period rest + dpcm rate   1    dpcm rate 
+	add timer  dpcm timer  
+}
+

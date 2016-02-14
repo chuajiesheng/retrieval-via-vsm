@@ -1,0 +1,5 @@
+static void   exit alsa card virmidi exit void 
+{
+	snd virmidi unregister all   
+}
+

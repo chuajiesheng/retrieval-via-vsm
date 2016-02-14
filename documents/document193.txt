@@ -1,0 +1,12 @@
+  
+   read callback for prealloc proc file
+  
+   prints the current allocated size in kB 
+   
+static void snd pcm lib preallocate proc read struct snd info entry  entry 
+					      struct snd info buffer  buffer 
+{
+	struct snd pcm substream  substream = entry private data 
+	snd iprintf buffer    lu\n    unsigned long  substream dma buffer bytes   1024  
+}
+

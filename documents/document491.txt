@@ -1,0 +1,2 @@
+extern void srp release transport struct scsi transport template    
+

@@ -1,0 +1,14 @@
+   
+   Put linked list of pages to pool 
+  
+   @pages  list of pages to free 
+   @page count  number of pages in the list  Zero can be passed for unknown
+   count 
+   @flags  ttm flags for page allocation 
+   @cstate  ttm caching state 
+   
+void ttm put pages struct list head  pages 
+		   unsigned page count 
+		   int flags 
+		   enum ttm caching state cstate  
+

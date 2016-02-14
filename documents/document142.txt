@@ -1,0 +1,5 @@
+static inline int pci set dma mask struct pci dev  dev  u64 mask 
+{
+	return dma set mask  dev dev  mask  
+}
+

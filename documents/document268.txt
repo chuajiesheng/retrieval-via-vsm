@@ -1,0 +1,7 @@
+static void   exit alsa pcm exit void 
+{
+	snd ctl unregister ioctl snd pcm control ioctl  
+	snd ctl unregister ioctl compat snd pcm control ioctl  
+	snd pcm proc done   
+}
+

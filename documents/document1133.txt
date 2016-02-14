@@ -1,0 +1,8 @@
+   
+   ttm bo unlock delayed workqueue
+  
+   Allows the delayed workqueue to run 
+   
+extern void ttm bo unlock delayed workqueue struct ttm bo device  bdev 
+					    int resched  
+

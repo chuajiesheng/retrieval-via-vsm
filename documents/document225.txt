@@ -1,0 +1,2 @@
+static int snd pcm free struct snd pcm  pcm  
+

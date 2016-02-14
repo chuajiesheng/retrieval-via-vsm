@@ -1,0 +1,26 @@
+static unsigned int snd info entry poll struct file  file  poll table   wait 
+{
+	struct snd info private data  data 
+	struct snd info entry  entry 
+	unsigned int mask 
+
+	data = file private data 
+	if  data == NULL 
+		return 0 
+	entry = data entry 
+	mask = 0 
+	switch  entry content  {
+	case SNDRV INFO CONTENT DATA 
+		if  entry c ops poll 
+			return entry c ops poll entry 
+						  data file private data 
+						  file  wait  
+		if  entry c ops read 
+			mask |= POLLIN | POLLRDNORM 
+		if  entry c ops write 
+			mask |= POLLOUT | POLLWRNORM 
+		break 
+	}
+	return mask 
+}
+

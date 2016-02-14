@@ -1,0 +1,2 @@
+pci power t pci choose state struct pci dev  dev  pm message t state  
+

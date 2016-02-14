@@ -1,0 +1,7 @@
+static int slave get struct snd kcontrol  kcontrol 
+		     struct snd ctl elem value  ucontrol 
+{
+	struct link slave  slave = snd kcontrol chip kcontrol  
+	return slave get val slave  ucontrol  
+}
+

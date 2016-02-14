@@ -1,0 +1,33 @@
+static int m3 suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct snd m3  chip = card private data 
+	int i  dsp index 
+
+	if  chip suspend mem == NULL 
+		return 0 
+
+	chip in suspend = 1 
+	snd power change state card  SNDRV CTL POWER D3hot  
+	snd pcm suspend all chip pcm  
+	snd ac97 suspend chip ac97  
+
+	msleep 10      give the assp a chance to idle     
+
+	snd m3 assp halt chip  
+
+	   save dsp image   
+	dsp index = 0 
+	for  i = REV B CODE MEMORY BEGIN  i  = REV B CODE MEMORY END  i++ 
+		chip suspend mem dsp index++  =
+			snd m3 assp read chip  MEMTYPE INTERNAL CODE  i  
+	for  i = REV B DATA MEMORY BEGIN   i  = REV B DATA MEMORY END  i++ 
+		chip suspend mem dsp index++  =
+			snd m3 assp read chip  MEMTYPE INTERNAL DATA  i  
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

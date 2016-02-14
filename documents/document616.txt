@@ -1,0 +1,12 @@
+static enum hrtimer restart dummy hrtimer callback struct hrtimer  timer 
+{
+	struct dummy hrtimer pcm  dpcm 
+
+	dpcm = container of timer  struct dummy hrtimer pcm  timer  
+	if   atomic read  dpcm running  
+		return HRTIMER NORESTART 
+	tasklet schedule  dpcm tasklet  
+	hrtimer forward now timer  dpcm period time  
+	return HRTIMER RESTART 
+}
+

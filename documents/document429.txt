@@ -1,0 +1,8 @@
+static unsigned int get cable index struct snd pcm substream  substream 
+{
+	if   substream pcm device 
+		return substream stream 
+	else
+		return  substream stream 
+}
+

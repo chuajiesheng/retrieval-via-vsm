@@ -1,0 +1,40 @@
+snd pcm indirect playback transfer struct snd pcm substream  substream 
+				   struct snd pcm indirect  rec 
+				   snd pcm indirect copy t copy 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	snd pcm uframes t appl ptr = runtime control appl ptr 
+	snd pcm sframes t diff = appl ptr   rec appl ptr 
+	int qsize 
+
+	if  diff  {
+		if  diff     snd pcm sframes t   runtime boundary   2  
+			diff += runtime boundary 
+		rec sw ready +=  int frames to bytes runtime  diff  
+		rec appl ptr = appl ptr 
+	}
+	qsize = rec hw queue size ? rec hw queue size   rec hw buffer size 
+	while  rec hw ready   qsize    rec sw ready   0  {
+		unsigned int hw to end = rec hw buffer size   rec hw data 
+		unsigned int sw to end = rec sw buffer size   rec sw data 
+		unsigned int bytes = qsize   rec hw ready 
+		if  rec sw ready    int bytes 
+			bytes = rec sw ready 
+		if  hw to end   bytes 
+			bytes = hw to end 
+		if  sw to end   bytes 
+			bytes = sw to end 
+		if    bytes 
+			break 
+		copy substream  rec  bytes  
+		rec hw data += bytes 
+		if  rec hw data == rec hw buffer size 
+			rec hw data = 0 
+		rec sw data += bytes 
+		if  rec sw data == rec sw buffer size 
+			rec sw data = 0 
+		rec hw ready += bytes 
+		rec sw ready  = bytes 
+	}
+}
+

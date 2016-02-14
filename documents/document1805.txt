@@ -1,0 +1,6 @@
+static void snd fm801 mixer free ac97 bus struct snd ac97 bus  bus 
+{
+	struct fm801  chip = bus private data 
+	chip ac97 bus = NULL 
+}
+

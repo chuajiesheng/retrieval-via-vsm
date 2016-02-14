@@ -1,0 +1,15 @@
+static int loopback active get struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct loopback  loopback = snd kcontrol chip kcontrol  
+	struct loopback cable  cable = loopback cables
+			 kcontrol id subdevice  kcontrol id device ^ 1  
+	unsigned int val = 0 
+
+	if  cable  = NULL 
+		val =  cable running    1    SNDRV PCM STREAM PLAYBACK   ?
+									1   0 
+	ucontrol value integer value 0  = val 
+	return 0 
+}
+

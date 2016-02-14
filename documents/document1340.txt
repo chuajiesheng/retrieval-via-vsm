@@ -1,0 +1,2 @@
+bool drm fb helper initial config struct drm fb helper  fb helper  int bpp sel  
+

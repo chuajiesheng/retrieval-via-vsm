@@ -1,0 +1,69 @@
+snd m3 probe struct pci dev  pci  const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct snd m3  chip 
+	int err 
+
+	   don't pick up modems   
+	if    pci class    8    0xffff   = PCI CLASS MULTIMEDIA AUDIO 
+		return  ENODEV 
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	switch  pci device  {
+	case PCI DEVICE ID ESS ALLEGRO 
+	case PCI DEVICE ID ESS ALLEGRO 1 
+		strcpy card driver   Allegro   
+		break 
+	case PCI DEVICE ID ESS CANYON3D 2LE 
+	case PCI DEVICE ID ESS CANYON3D 2 
+		strcpy card driver   Canyon3D 2   
+		break 
+	default 
+		strcpy card driver   Maestro3   
+		break 
+	}
+
+	if   err = snd m3 create card  pci 
+				 external amp dev  
+				 amp gpio dev  
+				  chip     0  {
+		snd card free card  
+		return err 
+	}
+	card private data = chip 
+
+	sprintf card shortname   ESS  s PCI   card driver  
+	sprintf card longname    s at 0x lx  irq  d  
+		card shortname  chip iobase  chip irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+
+#if 0    TODO  not supported yet   
+	   TODO enable MIDI IRQ and I O   
+	err = snd mpu401 uart new chip card  0  MPU401 HW MPU401 
+				  chip iobase + MPU401 DATA PORT 
+				  MPU401 INFO INTEGRATED 
+				  chip irq  0   chip rmidi  
+	if  err   0 
+		printk KERN WARNING  maestro3  no MIDI support \n   
+#endif
+
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

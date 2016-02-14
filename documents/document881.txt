@@ -1,0 +1,3 @@
+const struct snd pci quirk  
+snd pci quirk lookup struct pci dev  pci  const struct snd pci quirk  list  
+

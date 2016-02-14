@@ -1,0 +1,26 @@
+   return the id of the card  or a negative value if it's blacklisted   
+static int   devinit snd bt87x detect card struct pci dev  pci 
+{
+	int i 
+	const struct pci device id  supported 
+
+	supported = pci match id snd bt87x ids  pci  
+	if  supported    supported driver data   0 
+		return supported driver data 
+
+	for  i = 0  i   ARRAY SIZE blacklist   ++i 
+		if  blacklist i  subvendor == pci subsystem vendor   
+		    blacklist i  subdevice == pci subsystem device  {
+			snd printdd KERN INFO  card  #04x  #04x  #04x has no audio\n  
+				    pci device  pci subsystem vendor  pci subsystem device  
+			return  EBUSY 
+		}
+
+	snd printk KERN INFO  unknown card  #04x  #04x  #04x\n  
+		   pci device  pci subsystem vendor  pci subsystem device  
+	snd printk KERN DEBUG  please mail id  board name  and   
+		    if it works  the correct digital rate option to  
+		     alsa devel@alsa project org \n   
+	return SND BT87X BOARD UNKNOWN 
+}
+

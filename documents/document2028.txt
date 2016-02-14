@@ -1,0 +1,27 @@
+static int   devinit snd cs4281 create gameport struct cs4281  chip 
+{
+	struct gameport  gp 
+
+	chip gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  cs4281  cannot allocate memory for gameport\n   
+		return  ENOMEM 
+	}
+
+	gameport set name gp   CS4281 Gameport   
+	gameport set phys gp   pci s gameport0   pci name chip pci   
+	gameport set dev parent gp   chip pci dev  
+	gp open = snd cs4281 gameport open 
+	gp read = snd cs4281 gameport read 
+	gp trigger = snd cs4281 gameport trigger 
+	gp cooked read = snd cs4281 gameport cooked read 
+	gameport set port data gp  chip  
+
+	snd cs4281 pokeBA0 chip  BA0 JSIO  0xFF      ?
+	snd cs4281 pokeBA0 chip  BA0 JSCTL  JSCTL SP MEDIUM SLOW  
+
+	gameport register port gp  
+
+	return 0 
+}
+

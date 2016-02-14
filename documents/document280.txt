@@ -1,0 +1,2 @@
+int b1pcmcia delcard unsigned int port  unsigned irq  
+

@@ -1,0 +1,29 @@
+snd rme96 playback getrate struct rme96  rme96 
+{
+	int rate  dummy 
+
+	if    rme96 wcreg   RME96 WCR MASTER    
+            snd rme96 getinputtype rme96   = RME96 INPUT ANALOG   
+	     rate = snd rme96 capture getrate rme96   dummy     0 
+	{
+	           slave clock   
+	        return rate 
+	}
+	rate =   rme96 wcreg    RME96 WCR BITPOS FREQ 0    1  +
+		   rme96 wcreg    RME96 WCR BITPOS FREQ 1    1     1  
+	switch  rate  {
+	case 1 
+		rate = 32000 
+		break 
+	case 2 
+		rate = 44100 
+		break 
+	case 3 
+		rate = 48000 
+		break 
+	default 
+		return  1 
+	}
+	return  rme96 wcreg   RME96 WCR DS  ? rate    1   rate 
+}
+

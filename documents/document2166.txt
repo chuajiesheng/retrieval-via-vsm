@@ -1,0 +1,11 @@
+static int snd via8233 dxs volume get struct snd kcontrol  kcontrol 
+				      struct snd ctl elem value  ucontrol 
+{
+	struct via82xx  chip = snd kcontrol chip kcontrol  
+	unsigned int idx = kcontrol id subdevice 
+
+	ucontrol value integer value 0  = VIA DXS MAX VOLUME   chip playback volume idx  0  
+	ucontrol value integer value 1  = VIA DXS MAX VOLUME   chip playback volume idx  1  
+	return 0 
+}
+

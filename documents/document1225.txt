@@ -1,0 +1,8 @@
+static inline struct crypto gcm req priv ctx  crypto gcm reqctx 
+	struct aead request  req 
+{
+	unsigned long align = crypto aead alignmask crypto aead reqtfm req   
+
+	return  void   PTR ALIGN  u8   aead request ctx req   align + 1  
+}
+

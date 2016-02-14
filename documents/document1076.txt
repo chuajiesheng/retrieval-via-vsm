@@ -1,0 +1,2 @@
+extern int drm agp acquire struct drm device  dev  
+

@@ -1,0 +1,7 @@
+card id show attr struct device  dev 
+		  struct device attribute  attr  char  buf 
+{
+	struct snd card  card = dev get drvdata dev  
+	return snprintf buf  PAGE SIZE    s\n   card ? card id     null    
+}
+

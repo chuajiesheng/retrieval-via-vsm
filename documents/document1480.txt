@@ -1,0 +1,8 @@
+static   inline void drm free large void  ptr 
+{
+	if   is vmalloc addr ptr  
+		return kfree ptr  
+
+	vfree ptr  
+}
+

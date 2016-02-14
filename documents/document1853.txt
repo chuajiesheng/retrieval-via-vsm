@@ -1,0 +1,11 @@
+static int snd bt87x stop struct snd bt87x  chip 
+{
+	spin lock  chip reg lock  
+	chip reg control  = ~ CTL FIFO ENABLE | CTL RISC ENABLE | CTL ACAP EN  
+	snd bt87x writel chip  REG GPIO DMA CTL  chip reg control  
+	snd bt87x writel chip  REG INT MASK  0  
+	snd bt87x writel chip  REG INT STAT  MY INTERRUPTS  
+	spin unlock  chip reg lock  
+	return 0 
+}
+

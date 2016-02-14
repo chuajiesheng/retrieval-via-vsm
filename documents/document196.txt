@@ -1,0 +1,47 @@
+  
+   write callback for prealloc proc file
+  
+   accepts the preallocation size in kB 
+   
+static void snd pcm lib preallocate proc write struct snd info entry  entry 
+					       struct snd info buffer  buffer 
+{
+	struct snd pcm substream  substream = entry private data 
+	char line 64   str 64  
+	size t size 
+	struct snd dma buffer new dmab 
+
+	if  substream runtime  {
+		buffer error =  EBUSY 
+		return 
+	}
+	if   snd info get line buffer  line  sizeof line    {
+		snd info get str str  line  sizeof str   
+		size = simple strtoul str  NULL  10    1024 
+		if   size  = 0    size   8192  || size   substream dma max  {
+			buffer error =  EINVAL 
+			return 
+		}
+		if  substream dma buffer bytes == size 
+			return 
+		memset  new dmab  0  sizeof new dmab   
+		new dmab dev = substream dma buffer dev 
+		if  size   0  {
+			if  snd dma alloc pages substream dma buffer dev type 
+						substream dma buffer dev dev 
+						size   new dmab    0  {
+				buffer error =  ENOMEM 
+				return 
+			}
+			substream buffer bytes max = size 
+		} else {
+			substream buffer bytes max = UINT MAX 
+		}
+		if  substream dma buffer area 
+			snd dma free pages  substream dma buffer  
+		substream dma buffer = new dmab 
+	} else {
+		buffer error =  EINVAL 
+	}
+}
+

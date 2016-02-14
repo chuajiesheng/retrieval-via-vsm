@@ -1,0 +1,26 @@
+static int   devinit snd als300 new pcm struct snd als300  chip 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	snd als300 dbgcallenter   
+	err = snd pcm new chip card   ALS300   0  1  1   pcm  
+	if  err   0 
+		return err 
+	pcm private data = chip 
+	strcpy pcm name   ALS300   
+	chip pcm = pcm 
+
+	   set operators   
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK 
+				 snd als300 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE 
+				 snd als300 capture ops  
+
+	   pre allocation of buffers   
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+	snd dma pci data chip pci   64 1024  64 1024  
+	snd als300 dbgcallleave   
+	return 0 
+}
+

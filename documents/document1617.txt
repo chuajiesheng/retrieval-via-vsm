@@ -1,0 +1,17 @@
+static int snd als300 capture open struct snd pcm substream  substream 
+{
+	struct snd als300  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct snd als300 substream data  data = kzalloc sizeof  data  
+								GFP KERNEL  
+
+	snd als300 dbgcallenter   
+	chip capture substream = substream 
+	runtime hw = snd als300 capture hw 
+	runtime private data = data 
+	data control register = RECORD CONTROL 
+	data block counter register = RECORD BLOCK COUNTER 
+	snd als300 dbgcallleave   
+	return 0 
+}
+

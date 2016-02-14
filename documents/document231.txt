@@ -1,0 +1,18 @@
+static int snd pcm add struct snd pcm  newpcm 
+{
+	struct snd pcm  pcm 
+
+	list for each entry pcm   snd pcm devices  list  {
+		if  pcm card == newpcm card    pcm device == newpcm device 
+			return  EBUSY 
+		if  pcm card number   newpcm card number ||
+				 pcm card == newpcm card   
+				pcm device   newpcm device   {
+			list add  newpcm list  pcm list prev  
+			return 0 
+		}
+	}
+	list add tail  newpcm list   snd pcm devices  
+	return 0 
+}
+

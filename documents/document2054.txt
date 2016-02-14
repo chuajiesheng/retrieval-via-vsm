@@ -1,0 +1,2 @@
+int snd pcm format big endian snd pcm format t format  
+

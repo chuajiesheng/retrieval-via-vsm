@@ -1,0 +1,5 @@
+snd azf3328 ctrl outl const struct snd azf3328  chip  unsigned reg  u32 value 
+{
+	outl value  chip ctrl io + reg  
+}
+

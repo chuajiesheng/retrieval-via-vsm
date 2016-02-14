@@ -1,0 +1,2 @@
+int snd pcm lib preallocate free for all struct snd pcm  pcm  
+

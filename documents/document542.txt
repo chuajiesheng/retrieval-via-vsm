@@ -1,0 +1,13 @@
+   When the polling mode  this function calls snd uart16550 io loop    
+static void snd uart16550 buffer timer unsigned long data 
+{
+	unsigned long flags 
+	struct snd uart16550  uart 
+
+	uart =  struct snd uart16550   data 
+	spin lock irqsave  uart open lock  flags  
+	snd uart16550 del timer uart  
+	snd uart16550 io loop uart  
+	spin unlock irqrestore  uart open lock  flags  
+}
+

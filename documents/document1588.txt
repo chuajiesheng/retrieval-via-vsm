@@ -1,0 +1,5 @@
+static void   exit alsa card rme96 exit void 
+{
+	pci unregister driver  driver  
+}
+

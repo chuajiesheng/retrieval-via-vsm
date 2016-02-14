@@ -1,0 +1,11 @@
+static int loopback rate get struct snd kcontrol  kcontrol 
+			     struct snd ctl elem value  ucontrol 
+{
+	struct loopback  loopback = snd kcontrol chip kcontrol  
+	
+	ucontrol value integer value 0  =
+		loopback setup kcontrol id subdevice 
+			        kcontrol id device  rate 
+	return 0 
+}
+

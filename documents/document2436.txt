@@ -1,0 +1,10 @@
+static void tfrc rx hist swap struct tfrc rx hist  h  const u8 a  const u8 b 
+{
+	const u8 idx a = tfrc rx hist index h  a  
+		 idx b = tfrc rx hist index h  b  
+	struct tfrc rx hist entry  tmp = h ring idx a  
+
+	h ring idx a  = h ring idx b  
+	h ring idx b  = tmp 
+}
+

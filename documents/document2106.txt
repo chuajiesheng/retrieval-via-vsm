@@ -1,0 +1,6 @@
+static int snd atiixp dev free struct snd device  device 
+{
+	struct atiixp modem  chip = device device data 
+	return snd atiixp free chip  
+}
+

@@ -1,0 +1,13 @@
+static u16 wave get register struct es1968  chip  u16 reg 
+{
+	unsigned long flags 
+	u16 value 
+
+	spin lock irqsave  chip reg lock  flags  
+	outw reg  chip io port + WC INDEX  
+	value = inw chip io port + WC DATA  
+	spin unlock irqrestore  chip reg lock  flags  
+
+	return value 
+}
+

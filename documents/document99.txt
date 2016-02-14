@@ -1,0 +1,10 @@
+static void master free struct snd kcontrol  kcontrol 
+{
+	struct link master  master = snd kcontrol chip kcontrol  
+	struct link slave  slave 
+
+	list for each entry slave   master slaves  list 
+		slave master = NULL 
+	kfree master  
+}
+

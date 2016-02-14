@@ -1,0 +1,19 @@
+static int gcm hash len struct aead request  req 
+			struct crypto gcm req priv ctx  pctx 
+{
+	struct ahash request  ahreq =  pctx u ahreq 
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+	u128 lengths 
+
+	lengths a = cpu to be64 req assoclen   8  
+	lengths b = cpu to be64 gctx cryptlen   8  
+	memcpy pctx iauth tag   lengths  16  
+	sg init one pctx src  pctx iauth tag  16  
+	ahash request set callback ahreq  aead request flags req  
+				   gcm hash len done  req  
+	ahash request set crypt ahreq  pctx src 
+				NULL  sizeof lengths   
+
+	return crypto ahash update ahreq  
+}
+

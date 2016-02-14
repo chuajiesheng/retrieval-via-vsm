@@ -1,0 +1,8 @@
+snd m3 capture close struct snd pcm substream  subs 
+{
+	struct snd m3  chip = snd pcm substream chip subs  
+
+	snd m3 substream close chip  subs  
+	return 0 
+}
+

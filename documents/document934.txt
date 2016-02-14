@@ -1,0 +1,23 @@
+static int   devinit snd sonicvibes mixer struct sonicvibes   sonic 
+{
+	struct snd card  card 
+	struct snd kcontrol  kctl 
+	unsigned int idx 
+	int err 
+
+	if  snd BUG ON  sonic ||  sonic card  
+		return  EINVAL 
+	card = sonic card 
+	strcpy card mixername   S3 SonicVibes   
+
+	for  idx = 0  idx   ARRAY SIZE snd sonicvibes controls   idx++  {
+		if   err = snd ctl add card  kctl = snd ctl new1  snd sonicvibes controls idx   sonic      0 
+			return err 
+		switch  idx  {
+		case 0 
+		case 1  kctl private free = snd sonicvibes master free  break 
+		}
+	}
+	return 0 
+}
+

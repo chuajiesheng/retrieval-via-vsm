@@ -1,0 +1,11 @@
+static struct snd pcm  snd pcm get struct snd card  card  int device 
+{
+	struct snd pcm  pcm 
+
+	list for each entry pcm   snd pcm devices  list  {
+		if  pcm card == card    pcm device == device 
+			return pcm 
+	}
+	return NULL 
+}
+

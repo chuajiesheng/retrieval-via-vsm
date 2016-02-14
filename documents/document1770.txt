@@ -1,0 +1,14 @@
+  
+    Sample rate routines
+   
+static unsigned short snd fm801 rate bits unsigned int rate 
+{
+	unsigned int idx 
+
+	for  idx = 0  idx   ARRAY SIZE rates   idx++ 
+		if  rates idx  == rate 
+			return idx 
+	snd BUG   
+	return ARRAY SIZE rates    1 
+}
+

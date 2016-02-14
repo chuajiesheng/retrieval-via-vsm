@@ -1,0 +1,22 @@
+                                                                    
+static void snd als4000 set addr unsigned long iobase 
+					unsigned int sb io 
+					unsigned int mpu io 
+					unsigned int opl io 
+					unsigned int game io 
+{
+	u32 cfg1 = 0 
+	u32 cfg2 = 0 
+
+	if  mpu io   0 
+		cfg2 |=  mpu io | 1     16 
+	if  sb io   0 
+		cfg2 |=  sb io | 1  
+	if  game io   0 
+		cfg1 |=  game io | 1     16 
+	if  opl io   0 
+		cfg1 |=  opl io | 1  
+	snd als4k gcr write addr iobase  ALS4K GCRA8 LEGACY CFG1  cfg1  
+	snd als4k gcr write addr iobase  ALS4K GCRA9 LEGACY CFG2  cfg2  
+}
+

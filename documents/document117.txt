@@ -1,0 +1,25 @@
+   
+   snd malloc pages   allocate pages with the given size
+   @size  the size to allocate in bytes
+   @gfp flags  the allocation conditions  GFP XXX
+  
+   Allocates the physically contiguous pages with the given size 
+  
+   Returns the pointer of the buffer  or NULL if no enoguh memory 
+   
+void  snd malloc pages size t size  gfp t gfp flags 
+{
+	int pg 
+	void  res 
+
+	if  WARN ON  size  
+		return NULL 
+	if  WARN ON  gfp flags  
+		return NULL 
+	gfp flags |=   GFP COMP 	   compound page lets parts be mapped   
+	pg = get order size  
+	if   res =  void      get free pages gfp flags  pg    = NULL 
+		inc snd pages pg  
+	return res 
+}
+

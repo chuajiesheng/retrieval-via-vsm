@@ -1,0 +1,10 @@
+static inline u32 dfixed ceil fixed20 12 A 
+{
+	u32 non frac = dfixed trunc A  
+
+	if  A full   dfixed const non frac  
+		return dfixed const non frac + 1  
+	else
+		return dfixed const non frac  
+}
+

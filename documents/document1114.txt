@@ -1,0 +1,10 @@
+snd azf3328 gameport close struct gameport  gameport 
+{
+	struct snd azf3328  chip = gameport get port data gameport  
+
+	snd azf3328 dbggame  gameport close\n   
+	snd azf3328 gameport set counter frequency chip 
+				GAME HWCFG ADC COUNTER FREQ 1 200  
+	snd azf3328 gameport axis circuit enable chip  0  
+}
+

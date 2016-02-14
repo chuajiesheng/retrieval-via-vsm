@@ -1,0 +1,16 @@
+   
+   dccp loss count   Approximate the number of lost data packets in a burst loss
+   @s1   last known sequence number before the loss  'hole' 
+   @s2   first sequence number seen after the 'hole'
+   @ndp  NDP count on packet with sequence number @s2
+   
+static inline u64 dccp loss count const u64 s1  const u64 s2  const u64 ndp 
+{
+	s64 delta = dccp delta seqno s1  s2  
+
+	WARN ON delta   0  
+	delta  = ndp + 1 
+
+	return delta   0 ? delta   0 
+}
+

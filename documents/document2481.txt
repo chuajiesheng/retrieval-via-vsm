@@ -1,0 +1,48 @@
+   spinlock held    
+static void setup ac3 struct cmipci  cm  struct snd pcm substream  subs  int do ac3  int rate 
+{
+	if  do ac3  {
+		   AC3EN for 037   
+		snd cmipci set bit cm  CM REG CHFORMAT  CM AC3EN1  
+		   AC3EN for 039   
+		snd cmipci set bit cm  CM REG MISC CTRL  CM AC3EN2  
+	
+		if  cm can ac3 hw  {
+			   SPD24SEL for 037  0x02   
+			   SPD24SEL for 039  0x20  but cannot be set   
+			snd cmipci set bit cm  CM REG CHFORMAT  CM SPD24SEL  
+			snd cmipci clear bit cm  CM REG MISC CTRL  CM SPD32SEL  
+		} else {    can ac3 sw   
+			   SPD32SEL for 037   039  0x20   
+			snd cmipci set bit cm  CM REG MISC CTRL  CM SPD32SEL  
+			   set 176K sample rate to fix 033 HW bug   
+			if  cm chip version == 33  {
+				if  rate  = 48000  {
+					snd cmipci set bit cm  CM REG CHFORMAT  CM PLAYBACK SRATE 176K  
+				} else {
+					snd cmipci clear bit cm  CM REG CHFORMAT  CM PLAYBACK SRATE 176K  
+				}
+			}
+		}
+
+	} else {
+		snd cmipci clear bit cm  CM REG CHFORMAT  CM AC3EN1  
+		snd cmipci clear bit cm  CM REG MISC CTRL  CM AC3EN2  
+
+		if  cm can ac3 hw  {
+			   chip model  = 37   
+			if  snd pcm format width subs runtime format    16  {
+				snd cmipci set bit cm  CM REG MISC CTRL  CM SPD32SEL  
+				snd cmipci set bit cm  CM REG CHFORMAT  CM SPD24SEL  
+			} else {
+				snd cmipci clear bit cm  CM REG MISC CTRL  CM SPD32SEL  
+				snd cmipci clear bit cm  CM REG CHFORMAT  CM SPD24SEL  
+			}
+		} else {
+			snd cmipci clear bit cm  CM REG MISC CTRL  CM SPD32SEL  
+			snd cmipci clear bit cm  CM REG CHFORMAT  CM SPD24SEL  
+			snd cmipci clear bit cm  CM REG CHFORMAT  CM PLAYBACK SRATE 176K  
+		}
+	}
+}
+

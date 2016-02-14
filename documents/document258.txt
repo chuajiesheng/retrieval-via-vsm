@@ -1,0 +1,120 @@
+int snd pcm attach substream struct snd pcm  pcm  int stream 
+			     struct file  file 
+			     struct snd pcm substream   rsubstream 
+{
+	struct snd pcm str   pstr 
+	struct snd pcm substream  substream 
+	struct snd pcm runtime  runtime 
+	struct snd ctl file  kctl 
+	struct snd card  card 
+	int prefer subdevice =  1 
+	size t size 
+
+	if  snd BUG ON  pcm ||  rsubstream  
+		return  ENXIO 
+	 rsubstream = NULL 
+	pstr =  pcm streams stream  
+	if  pstr substream == NULL || pstr substream count == 0 
+		return  ENODEV 
+
+	card = pcm card 
+	read lock  card ctl files rwlock  
+	list for each entry kctl   card ctl files  list  {
+		if  kctl pid == task pid current   {
+			prefer subdevice = kctl prefer pcm subdevice 
+			if  prefer subdevice  =  1 
+				break 
+		}
+	}
+	read unlock  card ctl files rwlock  
+
+	switch  stream  {
+	case SNDRV PCM STREAM PLAYBACK 
+		if  pcm info flags   SNDRV PCM INFO HALF DUPLEX  {
+			for  substream = pcm streams SNDRV PCM STREAM CAPTURE  substream  substream  substream = substream next  {
+				if  SUBSTREAM BUSY substream  
+					return  EAGAIN 
+			}
+		}
+		break 
+	case SNDRV PCM STREAM CAPTURE 
+		if  pcm info flags   SNDRV PCM INFO HALF DUPLEX  {
+			for  substream = pcm streams SNDRV PCM STREAM PLAYBACK  substream  substream  substream = substream next  {
+				if  SUBSTREAM BUSY substream  
+					return  EAGAIN 
+			}
+		}
+		break 
+	default 
+		return  EINVAL 
+	}
+
+	if  file f flags   O APPEND  {
+		if  prefer subdevice   0  {
+			if  pstr substream count   1 
+				return  EINVAL     must be unique   
+			substream = pstr substream 
+		} else {
+			for  substream = pstr substream  substream 
+			     substream = substream next 
+				if  substream number == prefer subdevice 
+					break 
+		}
+		if    substream 
+			return  ENODEV 
+		if    SUBSTREAM BUSY substream  
+			return  EBADFD 
+		substream ref count++ 
+		 rsubstream = substream 
+		return 0 
+	}
+
+	if  prefer subdevice  = 0  {
+		for  substream = pstr substream  substream  substream = substream next 
+			if   SUBSTREAM BUSY substream     substream number == prefer subdevice 
+				goto   ok 
+	}
+	for  substream = pstr substream  substream  substream = substream next 
+		if   SUBSTREAM BUSY substream  
+			break 
+        ok 
+	if  substream == NULL 
+		return  EAGAIN 
+
+	runtime = kzalloc sizeof  runtime   GFP KERNEL  
+	if  runtime == NULL 
+		return  ENOMEM 
+
+	size = PAGE ALIGN sizeof struct snd pcm mmap status   
+	runtime status = snd malloc pages size  GFP KERNEL  
+	if  runtime status == NULL  {
+		kfree runtime  
+		return  ENOMEM 
+	}
+	memset  void  runtime status  0  size  
+
+	size = PAGE ALIGN sizeof struct snd pcm mmap control   
+	runtime control = snd malloc pages size  GFP KERNEL  
+	if  runtime control == NULL  {
+		snd free pages  void  runtime status 
+			       PAGE ALIGN sizeof struct snd pcm mmap status    
+		kfree runtime  
+		return  ENOMEM 
+	}
+	memset  void  runtime control  0  size  
+
+	init waitqueue head  runtime sleep  
+	init waitqueue head  runtime tsleep  
+
+	runtime status state = SNDRV PCM STATE OPEN 
+
+	substream runtime = runtime 
+	substream private data = pcm private data 
+	substream ref count = 1 
+	substream f flags = file f flags 
+	substream pid = get pid task pid current   
+	pstr substream opened++ 
+	 rsubstream = substream 
+	return 0 
+}
+

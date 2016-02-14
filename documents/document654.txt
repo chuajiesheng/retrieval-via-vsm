@@ -1,0 +1,13 @@
+static int snd dummy capsrc get struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct snd dummy  dummy = snd kcontrol chip kcontrol  
+	int addr = kcontrol private value 
+
+	spin lock irq  dummy mixer lock  
+	ucontrol value integer value 0  = dummy capture source addr  0  
+	ucontrol value integer value 1  = dummy capture source addr  1  
+	spin unlock irq  dummy mixer lock  
+	return 0 
+}
+

@@ -1,0 +1,6 @@
+extern int drm calc vbltimestamp from scanoutpos struct drm device  dev 
+						 int crtc  int  max error 
+						 struct timeval  vblank time 
+						 unsigned flags 
+						 struct drm crtc  refcrtc  
+

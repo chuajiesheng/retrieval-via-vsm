@@ -1,0 +1,18 @@
+   
+   snd pcm sgbuf ops page   get the page struct at the given offset
+   @substream  the pcm substream instance
+   @offset  the buffer offset
+  
+   Returns the page struct at the given buffer offset 
+   Used as the page callback of PCM ops 
+   
+struct page  snd pcm sgbuf ops page struct snd pcm substream  substream  unsigned long offset 
+{
+	struct snd sg buf  sgbuf = snd pcm substream sgbuf substream  
+
+	unsigned int idx = offset    PAGE SHIFT 
+	if  idx  =  unsigned int sgbuf pages 
+		return NULL 
+	return sgbuf page table idx  
+}
+

@@ -1,0 +1,7 @@
+static inline struct skcipher givcrypt request  skcipher dequeue givcrypt 
+	struct crypto queue  queue 
+{
+	return   crypto dequeue request 
+		queue  offsetof struct skcipher givcrypt request  creq base   
+}
+

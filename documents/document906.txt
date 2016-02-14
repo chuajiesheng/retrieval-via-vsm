@@ -1,0 +1,22 @@
+static int snd sonicvibes trigger struct sonicvibes   sonic  int what  int cmd 
+{
+	int result = 0 
+
+	spin lock  sonic reg lock  
+	if  cmd == SNDRV PCM TRIGGER START  {
+		if    sonic enable   what   {
+			sonic enable |= what 
+			snd sonicvibes out1 sonic  SV IREG PC ENABLE  sonic enable  
+		}
+	} else if  cmd == SNDRV PCM TRIGGER STOP  {
+		if  sonic enable   what  {
+			sonic enable  = ~what 
+			snd sonicvibes out1 sonic  SV IREG PC ENABLE  sonic enable  
+		}
+	} else {
+		result =  EINVAL 
+	}
+	spin unlock  sonic reg lock  
+	return result 
+}
+

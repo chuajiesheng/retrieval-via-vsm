@@ -1,0 +1,2 @@
+unsigned char snd sbmixer read struct snd sb  chip  unsigned char reg  
+

@@ -1,0 +1,103 @@
+  
+   Returns DEFAULT BLK SZ bytes of random data per call
+   returns 0 if generation succeded   0 if something went wrong
+   
+static int  get more prng bytes struct prng context  ctx  int cont test 
+{
+	int i 
+	unsigned char tmp DEFAULT BLK SZ  
+	unsigned char  output = NULL 
+
+
+	dbgprint KERN CRIT  Calling  get more prng bytes for context  p\n  
+		ctx  
+
+	hexdump  Input DT     ctx DT  DEFAULT BLK SZ  
+	hexdump  Input I     ctx I  DEFAULT BLK SZ  
+	hexdump  Input V     ctx V  DEFAULT BLK SZ  
+
+	  
+	   This algorithm is a 3 stage state machine
+	   
+	for  i = 0  i   3  i++  {
+
+		switch  i  {
+		case 0 
+			  
+			   Start by encrypting the counter value
+			   This gives us an intermediate value I
+			   
+			memcpy tmp  ctx DT  DEFAULT BLK SZ  
+			output = ctx I 
+			hexdump  tmp stage 0     tmp  DEFAULT BLK SZ  
+			break 
+		case 1 
+
+			  
+			   Next xor I with our secret vector V
+			   encrypt that result to obtain our
+			   pseudo random data which we output
+			   
+			xor vectors ctx I  ctx V  tmp  DEFAULT BLK SZ  
+			hexdump  tmp stage 1     tmp  DEFAULT BLK SZ  
+			output = ctx rand data 
+			break 
+		case 2 
+			  
+			   First check that we didn't produce the same
+			   random data that we did last time around through this
+			   
+			if   memcmp ctx rand data  ctx last rand data 
+					DEFAULT BLK SZ   {
+				if  cont test  {
+					panic  cprng  p Failed repetition check \n  
+						ctx  
+				}
+
+				printk KERN ERR
+					 ctx  p Failed repetition check \n  
+					ctx  
+
+				ctx flags |= PRNG NEED RESET 
+				return  EINVAL 
+			}
+			memcpy ctx last rand data  ctx rand data 
+				DEFAULT BLK SZ  
+
+			  
+			   Lastly xor the random data with I
+			   and encrypt that to obtain a new secret vector V
+			   
+			xor vectors ctx rand data  ctx I  tmp 
+				DEFAULT BLK SZ  
+			output = ctx V 
+			hexdump  tmp stage 2     tmp  DEFAULT BLK SZ  
+			break 
+		}
+
+
+		   do the encryption   
+		crypto cipher encrypt one ctx tfm  output  tmp  
+
+	}
+
+	  
+	   Now update our DT value
+	   
+	for  i = DEFAULT BLK SZ   1  i  = 0  i    {
+		ctx DT i  += 1 
+		if  ctx DT i   = 0 
+			break 
+	}
+
+	dbgprint  Returning new block for context  p\n   ctx  
+	ctx rand data valid = 0 
+
+	hexdump  Output DT     ctx DT  DEFAULT BLK SZ  
+	hexdump  Output I     ctx I  DEFAULT BLK SZ  
+	hexdump  Output V     ctx V  DEFAULT BLK SZ  
+	hexdump  New Random Data     ctx rand data  DEFAULT BLK SZ  
+
+	return 0 
+}
+

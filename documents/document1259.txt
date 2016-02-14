@@ -1,0 +1,8 @@
+static inline u32 snd als4k gcr read addr unsigned long iobase 
+						 enum als4k gcr t reg 
+{
+	   SPECS PAGE  37 38   
+	snd als4k iobase writeb iobase  ALS4K IOB 0C GCR INDEX  reg  
+	return snd als4k iobase readl iobase  ALS4K IOD 08 GCR DATA  
+}
+

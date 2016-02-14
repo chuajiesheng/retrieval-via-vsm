@@ -1,0 +1,2 @@
+void snd info card id change struct snd card  card  
+

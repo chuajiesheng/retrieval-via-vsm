@@ -1,0 +1,13 @@
+snd ad1889 init struct snd ad1889  chip  
+{
+	ad1889 writew chip  AD DS CCS  AD DS CCS CLKEN      turn on clock   
+	ad1889 readw chip  AD DS CCS  	   flush posted write   
+
+	mdelay 10  
+
+	   enable Master and Target abort interrupts   
+	ad1889 writel chip  AD DMA DISR  AD DMA DISR PMAE | AD DMA DISR PTAE  
+
+	return 0 
+}
+

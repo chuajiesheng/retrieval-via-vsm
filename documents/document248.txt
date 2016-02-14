@@ -1,0 +1,7 @@
+static void snd pcm xrun debug read struct snd info entry  entry 
+				    struct snd info buffer  buffer 
+{
+	struct snd pcm str  pstr = entry private data 
+	snd iprintf buffer    d\n   pstr xrun debug  
+}
+

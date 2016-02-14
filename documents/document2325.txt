@@ -1,0 +1,29 @@
+static int pcrypt do parallel struct padata priv  padata  unsigned int  cb cpu 
+			      struct padata pcrypt  pcrypt 
+{
+	unsigned int cpu index  cpu  i 
+	struct pcrypt cpumask  cpumask 
+
+	cpu =  cb cpu 
+
+	rcu read lock bh   
+	cpumask = rcu dereference pcrypt cb cpumask  
+	if  cpumask test cpu cpu  cpumask mask  
+			goto out 
+
+	if   cpumask weight cpumask mask  
+			goto out 
+
+	cpu index = cpu   cpumask weight cpumask mask  
+
+	cpu = cpumask first cpumask mask  
+	for  i = 0  i   cpu index  i++ 
+		cpu = cpumask next cpu  cpumask mask  
+
+	 cb cpu = cpu 
+
+out 
+	rcu read unlock bh   
+	return padata do parallel pcrypt pinst  padata  cpu  
+}
+

@@ -1,0 +1,17 @@
+static int dummy hrtimer create struct snd pcm substream  substream 
+{
+	struct dummy hrtimer pcm  dpcm 
+
+	dpcm = kzalloc sizeof  dpcm   GFP KERNEL  
+	if   dpcm 
+		return  ENOMEM 
+	substream runtime private data = dpcm 
+	hrtimer init  dpcm timer  CLOCK MONOTONIC  HRTIMER MODE REL  
+	dpcm timer function = dummy hrtimer callback 
+	dpcm substream = substream 
+	atomic set  dpcm running  0  
+	tasklet init  dpcm tasklet  dummy hrtimer pcm elapsed 
+		      unsigned long dpcm  
+	return 0 
+}
+

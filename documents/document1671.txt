@@ -1,0 +1,21 @@
+snd m3 substream close struct snd m3  chip  struct snd pcm substream  subs 
+{
+	struct m3 dma  s = subs runtime private data 
+
+	if  s == NULL 
+		return     not opened properly   
+
+	spin lock irq  chip reg lock  
+	if  s substream    s running 
+		snd m3 pcm stop chip  s  s substream      does this happen?   
+	if  s in lists  {
+		snd m3 remove list chip  s index list 0   s index 0   
+		snd m3 remove list chip  s index list 1   s index 1   
+		snd m3 remove list chip  s index list 2   s index 2   
+		s in lists = 0 
+	}
+	s running = 0 
+	s opened = 0 
+	spin unlock irq  chip reg lock  
+}
+

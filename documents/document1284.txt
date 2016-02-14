@@ -1,0 +1,4 @@
+struct crypto alg  crypto find alg const char  alg name 
+				   const struct crypto type  frontend 
+				   u32 type  u32 mask  
+

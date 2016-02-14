@@ -1,0 +1,8 @@
+snd azf3328 hw free struct snd pcm substream  substream 
+{
+	snd azf3328 dbgcallenter   
+	snd pcm lib free pages substream  
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

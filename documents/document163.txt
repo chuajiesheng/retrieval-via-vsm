@@ -1,0 +1,2 @@
+extern int memcmp const void   const void     kernel size t  
+

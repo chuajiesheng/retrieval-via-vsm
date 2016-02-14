@@ -1,0 +1,9 @@
+  
+   Processes a SKB with VLAN HW acceleration support
+   
+void lro vlan hwaccel receive skb struct net lro mgr  lro mgr 
+				  struct sk buff  skb 
+				  struct vlan group  vgrp 
+				  u16 vlan tag 
+				  void  priv  
+

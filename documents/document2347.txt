@@ -1,0 +1,39 @@
+static int   devinit snd intel8x0 pcm1 struct intel8x0m  chip  int device 
+				       struct ich pcm table  rec 
+{
+	struct snd pcm  pcm 
+	int err 
+	char name 32  
+
+	if  rec suffix 
+		sprintf name   Intel ICH    s   rec suffix  
+	else
+		strcpy name   Intel ICH   
+	err = snd pcm new chip card  name  device 
+			  rec playback ops ? 1   0 
+			  rec capture ops ? 1   0   pcm  
+	if  err   0 
+		return err 
+
+	if  rec playback ops 
+		snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK  rec playback ops  
+	if  rec capture ops 
+		snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE  rec capture ops  
+
+	pcm private data = chip 
+	pcm info flags = 0 
+	pcm dev class = SNDRV PCM CLASS MODEM 
+	if  rec suffix 
+		sprintf pcm name    s    s   chip card shortname  rec suffix  
+	else
+		strcpy pcm name  chip card shortname  
+	chip pcm device  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data chip pci  
+					      rec prealloc size 
+					      rec prealloc max size  
+
+	return 0 
+}
+

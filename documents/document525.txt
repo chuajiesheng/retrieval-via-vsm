@@ -1,0 +1,15 @@
+static void snd mts64 rawmidi input trigger struct snd rawmidi substream  substream 
+					    int up 
+{
+	struct mts64  mts = substream rmidi private data 
+	unsigned long flags 
+
+	spin lock irqsave  mts lock  flags  
+	if  up 
+		mts mode substream number  |= MTS64 MODE INPUT TRIGGERED 
+	else
+ 		mts mode substream number   = ~MTS64 MODE INPUT TRIGGERED 
+	
+	spin unlock irqrestore  mts lock  flags  
+}
+

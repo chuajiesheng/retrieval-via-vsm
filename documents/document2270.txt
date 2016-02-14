@@ -1,0 +1,16 @@
+static int snd rme32 setformat struct rme32   rme32  int format 
+{
+	switch  format  {
+	case SNDRV PCM FORMAT S16 LE 
+		rme32 wcreg  = ~RME32 WCR MODE24 
+		break 
+	case SNDRV PCM FORMAT S32 LE 
+		rme32 wcreg |= RME32 WCR MODE24 
+		break 
+	default 
+		return  EINVAL 
+	}
+	writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	return 0 
+}
+

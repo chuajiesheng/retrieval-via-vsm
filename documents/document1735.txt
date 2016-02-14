@@ -1,0 +1,10 @@
+static void hexdump char  note  unsigned char  buf  unsigned int len 
+{
+	if  dbg  {
+		printk KERN CRIT   s   note  
+		print hex dump KERN CONT      DUMP PREFIX OFFSET 
+				16  1 
+				buf  len  false  
+	}
+}
+

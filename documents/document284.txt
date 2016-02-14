@@ -1,0 +1,18 @@
+static struct snd minor  autoload device unsigned int minor 
+{
+	int dev 
+	mutex unlock  sound mutex      release lock temporarily   
+	dev = SNDRV MINOR DEVICE minor  
+	if  dev == SNDRV MINOR CONTROL  {
+		    dev aloadC?   
+		int card = SNDRV MINOR CARD minor  
+		if  snd cards card  == NULL 
+			snd request card card  
+	} else if  dev == SNDRV MINOR GLOBAL  {
+		    dev aloadSEQ   
+		snd request other minor  
+	}
+	mutex lock  sound mutex      reacuire lock   
+	return snd minors minor  
+}
+

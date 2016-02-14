@@ -1,0 +1,9 @@
+static inline struct ieee80211 rate  
+ieee80211 get alt retry rate const struct ieee80211 hw  hw 
+			     const struct ieee80211 tx info  c  int idx 
+{
+	if  c control rates idx + 1  idx   0 
+		return NULL 
+	return  hw wiphy bands c band  bitrates c control rates idx + 1  idx  
+}
+

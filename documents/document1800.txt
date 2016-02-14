@@ -1,0 +1,22 @@
+static int snd fm801 put double struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct fm801  chip = snd kcontrol chip kcontrol  
+	int reg = kcontrol private value   0xff 
+	int shift left =  kcontrol private value    8    0x0f 
+	int shift right =  kcontrol private value    12    0x0f 
+	int mask =  kcontrol private value    16    0xff 
+	int invert =  kcontrol private value    24    0xff 
+	unsigned short val1  val2 
+ 
+	val1 = ucontrol value integer value 0    mask 
+	val2 = ucontrol value integer value 1    mask 
+	if  invert  {
+		val1 = mask   val1 
+		val2 = mask   val2 
+	}
+	return snd fm801 update bits chip  reg 
+				      mask    shift left  |  mask    shift right  
+				      val1    shift left   |  val2    shift right   
+}
+

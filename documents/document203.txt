@@ -1,0 +1,53 @@
+   
+   snd pcm lib malloc pages   allocate the DMA buffer
+   @substream  the substream to allocate the DMA buffer to
+   @size  the requested buffer size in bytes
+  
+   Allocates the DMA buffer on the BUS type given earlier to
+   snd pcm lib preallocate xxx pages   
+  
+   Returns 1 if the buffer is changed  0 if not changed  or a negative
+   code on failure 
+   
+int snd pcm lib malloc pages struct snd pcm substream  substream  size t size 
+{
+	struct snd pcm runtime  runtime 
+	struct snd dma buffer  dmab = NULL 
+
+	if  PCM RUNTIME CHECK substream  
+		return  EINVAL 
+	if  snd BUG ON substream dma buffer dev type ==
+		       SNDRV DMA TYPE UNKNOWN  
+		return  EINVAL 
+	runtime = substream runtime 
+
+	if  runtime dma buffer p  {
+		   perphaps  we might free the large DMA memory region
+		   to save some space here  but the actual solution
+		   costs us less time   
+		if  runtime dma buffer p bytes  = size  {
+			runtime dma bytes = size 
+			return 0 	   ok  do not change   
+		}
+		snd pcm lib free pages substream  
+	}
+	if  substream dma buffer area  = NULL   
+	    substream dma buffer bytes  = size  {
+		dmab =  substream dma buffer     use the pre allocated buffer   
+	} else {
+		dmab = kzalloc sizeof  dmab   GFP KERNEL  
+		if    dmab 
+			return  ENOMEM 
+		dmab dev = substream dma buffer dev 
+		if  snd dma alloc pages substream dma buffer dev type 
+					substream dma buffer dev dev 
+					size  dmab    0  {
+			kfree dmab  
+			return  ENOMEM 
+		}
+	}
+	snd pcm set runtime buffer substream  dmab  
+	runtime dma bytes = size 
+	return 1 			   area was changed   
+}
+

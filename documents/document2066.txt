@@ -1,0 +1,8 @@
+static unsigned short snd atiixp ac97 read struct snd ac97  ac97 
+					   unsigned short reg 
+{
+	struct atiixp modem  chip = ac97 private data 
+	return snd atiixp codec read chip  ac97 num  reg  
+    
+}
+

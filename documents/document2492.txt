@@ -1,0 +1,29 @@
+int efi set rtc mmss unsigned long nowtime 
+{
+	int real seconds  real minutes 
+	efi status t 	status 
+	efi time t 	eft 
+	efi time cap t 	cap 
+
+	status = efi get time  eft   cap  
+	if  status  = EFI SUCCESS  {
+		printk KERN ERR  Oops  efitime  can't read time \n   
+		return  1 
+	}
+
+	real seconds = nowtime   60 
+	real minutes = nowtime   60 
+	if    abs real minutes   eft minute  + 15  30    1 
+		real minutes += 30 
+	real minutes  = 60 
+	eft minute = real minutes 
+	eft second = real seconds 
+
+	status = efi set time  eft  
+	if  status  = EFI SUCCESS  {
+		printk KERN ERR  Oops  efitime  can't write time \n   
+		return  1 
+	}
+	return 0 
+}
+

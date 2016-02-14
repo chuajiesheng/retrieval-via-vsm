@@ -1,0 +1,6 @@
+static inline int ablkcipher enqueue request struct crypto queue  queue 
+					     struct ablkcipher request  request 
+{
+	return crypto enqueue request queue   request base  
+}
+

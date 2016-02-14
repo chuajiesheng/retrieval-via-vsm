@@ -1,0 +1,11 @@
+   
+   priv to wiphy   return the wiphy containing the priv
+  
+   @priv  a pointer previously returned by wiphy priv
+   
+static inline struct wiphy  priv to wiphy void  priv 
+{
+	BUG ON  priv  
+	return container of priv  struct wiphy  priv  
+}
+

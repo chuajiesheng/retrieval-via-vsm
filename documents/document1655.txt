@@ -1,0 +1,85 @@
+snd m3 pcm setup1 struct snd m3  chip  struct m3 dma  s  struct snd pcm substream  subs 
+{
+	int dsp in size  dsp out size  dsp in buffer  dsp out buffer 
+	struct snd pcm runtime  runtime = subs runtime 
+
+	if  subs stream == SNDRV PCM STREAM PLAYBACK  {
+		dsp in size = MINISRC IN BUFFER SIZE    0x20   2  
+		dsp out size = MINISRC OUT BUFFER SIZE    0x20   2  
+	} else {
+		dsp in size = MINISRC IN BUFFER SIZE    0x10   2  
+		dsp out size = MINISRC OUT BUFFER SIZE    0x10   2  
+	}
+	dsp in buffer = s inst data +  MINISRC TMP BUFFER SIZE   2  
+	dsp out buffer = dsp in buffer +  dsp in size   2  + 1 
+
+	s dma size = frames to bytes runtime  runtime buffer size  
+	s period size = frames to bytes runtime  runtime period size  
+	s hwptr = 0 
+	s count = 0 
+
+#define LO x    x    0xffff 
+#define HI x  LO  x     16 
+
+	   host dma buffer pointers   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA HOST SRC ADDRL 
+			  LO s buffer addr   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA HOST SRC ADDRH 
+			  HI s buffer addr   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA HOST SRC END PLUS 1L 
+			  LO s buffer addr + s dma size   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA HOST SRC END PLUS 1H 
+			  HI s buffer addr + s dma size   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA HOST SRC CURRENTL 
+			  LO s buffer addr   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA HOST SRC CURRENTH 
+			  HI s buffer addr   
+#undef LO
+#undef HI
+
+	   dsp buffers   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA IN BUF BEGIN 
+			  dsp in buffer  
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA IN BUF END PLUS 1 
+			  dsp in buffer +  dsp in size   2   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA IN BUF HEAD 
+			  dsp in buffer  
+    
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA IN BUF TAIL 
+			  dsp in buffer  
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA OUT BUF BEGIN 
+			  dsp out buffer  
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA OUT BUF END PLUS 1 
+			  dsp out buffer +  dsp out size   2   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA OUT BUF HEAD 
+			  dsp out buffer  
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA OUT BUF TAIL 
+			  dsp out buffer  
+}
+

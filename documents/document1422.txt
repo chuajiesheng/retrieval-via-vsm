@@ -1,0 +1,9 @@
+static int snd ak4531 info input sw struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	uinfo type = SNDRV CTL ELEM TYPE BOOLEAN 
+	uinfo count = 4 
+	uinfo value integer min = 0 
+	uinfo value integer max = 1 
+	return 0 
+}
+

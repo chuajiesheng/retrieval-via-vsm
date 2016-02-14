@@ -1,0 +1,5 @@
+int vga switcheroo register client struct pci dev  dev 
+				   void   set gpu state  struct pci dev  dev  enum vga switcheroo state  
+				   void   reprobe  struct pci dev  dev  
+				   bool   can switch  struct pci dev  dev   
+

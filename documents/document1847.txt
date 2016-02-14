@@ -1,0 +1,29 @@
+static int snd bt87x pcm open struct snd pcm substream  substream 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	if  test and set bit 0   chip opened  
+		return  EBUSY 
+
+	if  substream pcm device == DEVICE DIGITAL 
+		err = snd bt87x set digital hw chip  runtime  
+	else
+		err = snd bt87x set analog hw chip  runtime  
+	if  err   0 
+		goto  error 
+
+	err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS  
+	if  err   0 
+		goto  error 
+
+	chip substream = substream 
+	return 0 
+
+ error 
+	clear bit 0   chip opened  
+	smp mb  after clear bit   
+	return err 
+}
+

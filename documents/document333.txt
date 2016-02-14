@@ -1,0 +1,77 @@
+   
+    snd card disconnect   disconnect all APIs from the file operations  user space 
+    @card  soundcard structure
+  
+    Disconnects all APIs from the file operations  user space  
+  
+    Returns zero  otherwise a negative error code 
+  
+    Note  The current implementation replaces all active file f op with special
+          dummy file operations  they do nothing except release  
+   
+int snd card disconnect struct snd card  card 
+{
+	struct snd monitor file  mfile 
+	struct file  file 
+	int err 
+
+	if   card 
+		return  EINVAL 
+
+	spin lock  card files lock  
+	if  card shutdown  {
+		spin unlock  card files lock  
+		return 0 
+	}
+	card shutdown = 1 
+	spin unlock  card files lock  
+
+	   phase 1  disable fops  user space  operations for ALSA API   
+	mutex lock  snd card mutex  
+	snd cards card number  = NULL 
+	snd cards lock  = ~ 1    card number  
+	mutex unlock  snd card mutex  
+	
+	   phase 2  replace file f op with special dummy operations   
+	
+	spin lock  card files lock  
+	list for each entry mfile   card files list  list  {
+		file = mfile file 
+
+		   it's critical part  use endless loop   
+		   we have no room to fail   
+		mfile disconnected f op = mfile file f op 
+
+		spin lock  shutdown lock  
+		list add  mfile shutdown list   shutdown files  
+		spin unlock  shutdown lock  
+
+		mfile file f op =  snd shutdown f ops 
+		fops get mfile file f op  
+	}
+	spin unlock  card files lock  	
+
+	   phase 3  notify all connected devices about disconnection   
+	   at this point  they cannot respond to any calls except release     
+
+#if defined CONFIG SND MIXER OSS  || defined CONFIG SND MIXER OSS MODULE 
+	if  snd mixer oss notify callback 
+		snd mixer oss notify callback card  SND MIXER OSS NOTIFY DISCONNECT  
+#endif
+
+	   notify all devices that we are disconnected   
+	err = snd device disconnect all card  
+	if  err   0 
+		snd printk KERN ERR  not all devices for card  i can be disconnected\n   card number  
+
+	snd info card disconnect card  
+	if  card card dev  {
+		device unregister card card dev  
+		card card dev = NULL 
+	}
+#ifdef CONFIG PM
+	wake up  card power sleep  
+#endif
+	return 0 	
+}
+

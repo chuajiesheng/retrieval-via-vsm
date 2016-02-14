@@ -1,0 +1,53 @@
+  
+   create pcm instances for VIA8233A
+   
+static int   devinit snd via8233a pcm new struct via82xx  chip 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	chip multi devno = 0 
+	chip playback devno = 1 
+	chip capture devno = 2 
+	chip num devs = 3 
+	chip intr mask = 0x03033000     FLAG|EOL for rec0  mc  sdx3   
+
+	   PCM #0   multi channel playback and capture   
+	err = snd pcm new chip card  chip card shortname  0  1  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd via8233 multi ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd via8233 capture ops  
+	pcm private data = chip 
+	strcpy pcm name  chip card shortname  
+	chip pcms 0  = pcm 
+	   set up playback   
+	init viadev chip  chip multi devno  VIA REG MULTPLAY STATUS  4  0  
+	   capture   
+	init viadev chip  chip capture devno  VIA REG CAPTURE 8233 STATUS  6  1  
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV SG 
+					      snd dma pci data chip pci  
+					      64 1024  VIA MAX BUFSIZE  
+
+	   SPDIF supported?   
+	if    ac97 can spdif chip ac97  
+		return 0 
+
+	   PCM #1   DXS3 playback  for spdif    
+	err = snd pcm new chip card  chip card shortname  1  1  0   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd via8233 playback ops  
+	pcm private data = chip 
+	strcpy pcm name  chip card shortname  
+	chip pcms 1  = pcm 
+	   set up playback   
+	init viadev chip  chip playback devno  0x30  3  0  
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV SG 
+					      snd dma pci data chip pci  
+					      64 1024  VIA MAX BUFSIZE  
+	return 0 
+}
+

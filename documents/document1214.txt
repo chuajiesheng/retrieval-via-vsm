@@ -1,0 +1,25 @@
+static int snd als4000 playback trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+	int result = 0 
+
+	spin lock  chip reg lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		chip mode |= SB RATE LOCK PLAYBACK 
+		snd sbdsp command chip  playback cmd chip  dma on  
+		break 
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		snd sbdsp command chip  playback cmd chip  dma off  
+		chip mode  = ~SB RATE LOCK PLAYBACK 
+		break 
+	default 
+		result =  EINVAL 
+		break 
+	}
+	spin unlock  chip reg lock  
+	return result 
+}
+

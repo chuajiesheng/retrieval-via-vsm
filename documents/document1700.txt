@@ -1,0 +1,5 @@
+static int   init alsa card m3 init void 
+{
+	return pci register driver  driver  
+}
+

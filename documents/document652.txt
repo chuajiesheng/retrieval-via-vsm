@@ -1,0 +1,5 @@
+static void   exit crypto ecb module exit void 
+{
+	crypto unregister template  crypto ecb tmpl  
+}
+

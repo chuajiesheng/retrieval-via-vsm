@@ -1,0 +1,61 @@
+  
+   constructor for chip instance
+   
+static int   devinit snd atiixp create struct snd card  card 
+				      struct pci dev  pci 
+				      struct atiixp   r chip 
+{
+	static struct snd device ops ops = {
+		 dev free =	snd atiixp dev free 
+	} 
+	struct atiixp  chip 
+	int err 
+
+	if   err = pci enable device pci     0 
+		return err 
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	spin lock init  chip reg lock  
+	mutex init  chip open mutex  
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+	if   err = pci request regions pci   ATI IXP AC97      0  {
+		pci disable device pci  
+		kfree chip  
+		return err 
+	}
+	chip addr = pci resource start pci  0  
+	chip remap addr = pci ioremap bar pci  0  
+	if  chip remap addr == NULL  {
+		snd printk KERN ERR  AC'97 space ioremap problem\n   
+		snd atiixp free chip  
+		return  EIO 
+	}
+
+	if  request irq pci irq  snd atiixp interrupt  IRQF SHARED 
+			card shortname  chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd atiixp free chip  
+		return  EBUSY 
+	}
+	chip irq = pci irq 
+	pci set master pci  
+	synchronize irq chip irq  
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd atiixp free chip  
+		return err 
+	}
+
+	snd card set dev card   pci dev  
+
+	 r chip = chip 
+	return 0 
+}
+

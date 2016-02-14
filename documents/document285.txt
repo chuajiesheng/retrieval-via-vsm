@@ -1,0 +1,39 @@
+static int snd open struct inode  inode  struct file  file 
+{
+	unsigned int minor = iminor inode  
+	struct snd minor  mptr = NULL 
+	const struct file operations  old fops 
+	int err = 0 
+
+	if  minor  = ARRAY SIZE snd minors  
+		return  ENODEV 
+	mutex lock  sound mutex  
+	mptr = snd minors minor  
+	if  mptr == NULL  {
+		mptr = autoload device minor  
+		if   mptr  {
+			mutex unlock  sound mutex  
+			return  ENODEV 
+		}
+	}
+	old fops = file f op 
+	file f op = fops get mptr f ops  
+	if  file f op == NULL  {
+		file f op = old fops 
+		err =  ENODEV 
+	}
+	mutex unlock  sound mutex  
+	if  err   0 
+		return err 
+
+	if  file f op open  {
+		err = file f op open inode  file  
+		if  err  {
+			fops put file f op  
+			file f op = fops get old fops  
+		}
+	}
+	fops put old fops  
+	return err 
+}
+

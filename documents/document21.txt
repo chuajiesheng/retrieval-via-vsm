@@ -1,0 +1,29 @@
+int snd info check reserved words const char  str 
+{
+	static char  reserved   =
+	{
+		 version  
+		 meminfo  
+		 memdebug  
+		 detect  
+		 devices  
+		 oss  
+		 cards  
+		 timers  
+		 synth  
+		 pcm  
+		 seq  
+		NULL
+	} 
+	char   xstr = reserved 
+
+	while   xstr  {
+		if   strcmp  xstr  str  
+			return 0 
+		xstr++ 
+	}
+	if   strncmp str   card   4  
+		return 0 
+	return 1 
+}
+

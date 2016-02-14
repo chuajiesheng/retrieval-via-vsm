@@ -1,0 +1,9 @@
+   Similar to the helpers above  these manipulate per pci dev
+   driver specific data   They are really just a wrapper around
+   the generic device structure functions of these calls 
+   
+static inline void  pci get drvdata struct pci dev  pdev 
+{
+	return dev get drvdata  pdev dev  
+}
+

@@ -1,0 +1,6 @@
+static inline void drm connector helper add struct drm connector  connector 
+					    const struct drm connector helper funcs  funcs 
+{
+	connector helper private =  void   funcs 
+}
+

@@ -1,0 +1,5 @@
+  
+    Registering
+   
+int snd timer new struct snd card  card  char  id  struct snd timer id  tid  struct snd timer   rtimer  
+

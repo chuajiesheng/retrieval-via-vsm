@@ -1,0 +1,38 @@
+   common trigger callback
+   calling the lowlevel callbacks in it
+   
+static int snd atiixp pcm trigger struct snd pcm substream  substream  int cmd 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	struct atiixp dma  dma = substream runtime private data 
+	int err = 0 
+
+	if  snd BUG ON  dma ops enable transfer ||
+		        dma ops flush dma  
+		return  EINVAL 
+
+	spin lock  chip reg lock  
+	switch cmd  {
+	case SNDRV PCM TRIGGER START 
+		dma ops enable transfer chip  1  
+		dma running = 1 
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		dma ops enable transfer chip  0  
+		dma running = 0 
+		break 
+	default 
+		err =  EINVAL 
+		break 
+	}
+	if    err  {
+	snd atiixp check bus busy chip  
+	if  cmd == SNDRV PCM TRIGGER STOP  {
+		dma ops flush dma chip  
+		snd atiixp check bus busy chip  
+	}
+	}
+	spin unlock  chip reg lock  
+	return err 
+}
+

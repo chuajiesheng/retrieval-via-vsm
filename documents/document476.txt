@@ -1,0 +1,2 @@
+int snd pcm lib malloc pages struct snd pcm substream  substream  size t size  
+

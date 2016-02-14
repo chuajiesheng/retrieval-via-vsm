@@ -1,0 +1,6 @@
+static inline int pci write config dword struct pci dev  dev  int where 
+					 u32 val 
+{
+	return pci bus write config dword dev bus  dev devfn  where  val  
+}
+

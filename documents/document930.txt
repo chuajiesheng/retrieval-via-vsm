@@ -1,0 +1,11 @@
+static void gcm decrypt done struct crypto async request  areq  int err 
+{
+	struct aead request  req = areq data 
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+
+	if   err 
+		err = crypto gcm verify req  pctx  
+
+	aead request complete req  err  
+}
+

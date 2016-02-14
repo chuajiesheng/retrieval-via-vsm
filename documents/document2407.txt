@@ -1,0 +1,32 @@
+  
+   return the current pointer
+   
+static snd pcm uframes t snd cmipci pcm pointer struct cmipci  cm  struct cmipci pcm  rec 
+						struct snd pcm substream  substream 
+{
+	size t ptr 
+	unsigned int reg  rem  tries 
+
+	if   rec running 
+		return 0 
+#if 1    this seems better  
+	reg = rec ch ? CM REG CH1 FRAME2   CM REG CH0 FRAME2 
+	for  tries = 0  tries   3  tries++  {
+		rem = snd cmipci read w cm  reg  
+		if  rem   rec dma size 
+			goto ok 
+	} 
+	printk KERN ERR  cmipci  invalid PCM pointer   #x\n   rem  
+	return SNDRV PCM POS XRUN 
+ok 
+	ptr =  rec dma size    rem + 1      rec shift 
+#else
+	reg = rec ch ? CM REG CH1 FRAME1   CM REG CH0 FRAME1 
+	ptr = snd cmipci read cm  reg    rec offset 
+	ptr = bytes to frames substream runtime  ptr  
+#endif
+	if  substream runtime channels   2 
+		ptr =  ptr   2    substream runtime channels 
+	return ptr 
+}
+

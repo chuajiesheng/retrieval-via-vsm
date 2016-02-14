@@ -1,0 +1,9 @@
+static void   devinit snd uart16550 substreams struct snd rawmidi str  stream 
+{
+	struct snd rawmidi substream  substream 
+
+	list for each entry substream   stream substreams  list  {
+		sprintf substream name   Serial MIDI  d   substream number + 1  
+	}
+}
+

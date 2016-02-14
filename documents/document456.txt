@@ -1,0 +1,14 @@
+static void print cable info struct snd info entry  entry 
+			     struct snd info buffer  buffer 
+{
+	struct loopback  loopback = entry private data 
+	int sub  num 
+
+	mutex lock  loopback cable lock  
+	num = entry name strlen entry name  1  
+	num = num == '0' ? 0   1 
+	for  sub = 0  sub   MAX PCM SUBSTREAMS  sub++ 
+		print substream info buffer  loopback  sub  num  
+	mutex unlock  loopback cable lock  
+}
+

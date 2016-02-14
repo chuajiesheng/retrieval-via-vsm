@@ -1,0 +1,8 @@
+static void snd cmipci ch reset struct cmipci  cm  int ch 
+{
+	int reset = CM RST CH0     cm channel ch  ch  
+	snd cmipci write cm  CM REG FUNCTRL0  cm ctrl | reset  
+	snd cmipci write cm  CM REG FUNCTRL0  cm ctrl   ~reset  
+	udelay 10  
+}
+

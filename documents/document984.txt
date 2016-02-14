@@ -1,0 +1,15 @@
+static unsigned int snd es1371 wait src ready struct ensoniq   ensoniq 
+{
+	unsigned int t  r = 0 
+
+	for  t = 0  t   POLL COUNT  t++  {
+		r = inl ES REG ensoniq  1371 SMPRATE   
+		if   r   ES 1371 SRC RAM BUSY  == 0 
+			return r 
+		cond resched   
+	}
+	snd printk KERN ERR  wait src ready timeout 0x lx  0x x \n  
+		   ES REG ensoniq  1371 SMPRATE   r  
+	return 0 
+}
+

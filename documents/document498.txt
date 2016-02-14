@@ -1,0 +1,2 @@
+static int mts64 device open struct mts64  mts  
+

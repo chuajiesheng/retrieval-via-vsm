@@ -1,0 +1,7 @@
+static inline void skcipher givcrypt set callback 
+	struct skcipher givcrypt request  req  u32 flags 
+	crypto completion t complete  void  data 
+{
+	ablkcipher request set callback  req creq  flags  complete  data  
+}
+

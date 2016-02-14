@@ -1,0 +1,15 @@
+   These functions multiply a field element by x  by x^4 and by x^8
+   in the polynomial field representation  It uses 32 bit word operations
+   to gain speed but compensates for machine endianess and hence works
+   correctly on both styles of machine 
+   
+static void gf128mul x lle be128  r  const be128  x 
+{
+	u64 a = be64 to cpu x a  
+	u64 b = be64 to cpu x b  
+	u64  tt = gf128mul table lle  b    7    0xff  
+
+	r b = cpu to be64  b    1  |  a    63   
+	r a = cpu to be64  a    1  ^   tt    48   
+}
+

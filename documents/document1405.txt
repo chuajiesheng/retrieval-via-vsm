@@ -1,0 +1,8 @@
+static inline void maestro write struct es1968  chip  u16 reg  u16 data 
+{
+	unsigned long flags 
+	spin lock irqsave  chip reg lock  flags  
+	  maestro write chip  reg  data  
+	spin unlock irqrestore  chip reg lock  flags  
+}
+

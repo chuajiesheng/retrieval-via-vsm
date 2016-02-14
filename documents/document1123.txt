@@ -1,0 +1,10 @@
+static inline u32 dfixed div fixed20 12 A  fixed20 12 B 
+{
+	u64 tmp =   u64 A full    13  
+
+	do div tmp  B full  
+	tmp += 1 
+	tmp  = 2 
+	return lower 32 bits tmp  
+}
+

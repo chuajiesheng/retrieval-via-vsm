@@ -1,0 +1,23 @@
+static int loopback rate shift put struct snd kcontrol  kcontrol 
+				   struct snd ctl elem value  ucontrol 
+{
+	struct loopback  loopback = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change = 0 
+
+	val = ucontrol value integer value 0  
+	if  val   80000 
+		val = 80000 
+	if  val   120000 
+		val = 120000 	
+	mutex lock  loopback cable lock  
+	if  val  = loopback setup kcontrol id subdevice 
+				   kcontrol id device  rate shift  {
+		loopback setup kcontrol id subdevice 
+			        kcontrol id device  rate shift = val 
+		change = 1 
+	}
+	mutex unlock  loopback cable lock  
+	return change 
+}
+

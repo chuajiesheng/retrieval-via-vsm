@@ -1,0 +1,34 @@
+snd m3 pcm trigger struct snd pcm substream  subs  int cmd 
+{
+	struct snd m3  chip = snd pcm substream chip subs  
+	struct m3 dma  s = subs runtime private data 
+	int err =  EINVAL 
+
+	if  snd BUG ON  s  
+		return  ENXIO 
+
+	spin lock  chip reg lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		if  s running 
+			err =  EBUSY 
+		else {
+			s running = 1 
+			err = snd m3 pcm start chip  s  subs  
+		}
+		break 
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		if    s running 
+			err = 0     should return error?   
+		else {
+			s running = 0 
+			err = snd m3 pcm stop chip  s  subs  
+		}
+		break 
+	}
+	spin unlock  chip reg lock  
+	return err 
+}
+

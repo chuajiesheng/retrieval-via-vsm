@@ -1,0 +1,5 @@
+static inline u32 snd bt87x readl struct snd bt87x  chip  u32 reg 
+{
+	return readl chip mmio + reg  
+}
+

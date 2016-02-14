@@ -1,0 +1,5 @@
+int snd pcm hw constraint msbits struct snd pcm runtime  runtime  
+				 unsigned int cond 
+				 unsigned int width 
+				 unsigned int msbits  
+

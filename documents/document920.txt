@@ -1,0 +1,14 @@
+static int crypto gcm verify struct aead request  req 
+			     struct crypto gcm req priv ctx  pctx 
+{
+	struct crypto aead  aead = crypto aead reqtfm req  
+	u8  auth tag = pctx auth tag 
+	u8  iauth tag = pctx iauth tag 
+	unsigned int authsize = crypto aead authsize aead  
+	unsigned int cryptlen = req cryptlen   authsize 
+
+	crypto xor auth tag  iauth tag  16  
+	scatterwalk map and copy iauth tag  req src  cryptlen  authsize  0  
+	return memcmp iauth tag  auth tag  authsize  ?  EBADMSG   0 
+}
+

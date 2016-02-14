@@ -1,0 +1,26 @@
+snd azf3328 free struct snd azf3328  chip 
+{
+	if  chip irq   0 
+		goto   end hw 
+
+	   reset  close  mixer 
+	   first mute master volume  then reset
+	   
+	snd azf3328 mixer set mute chip  IDX MIXER PLAY MASTER  1  
+	snd azf3328 mixer outw chip  IDX MIXER RESET  0x0000  
+
+	snd azf3328 timer stop chip timer  
+	snd azf3328 gameport free chip  
+
+	if  chip irq  = 0 
+		synchronize irq chip irq  
+  end hw 
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	pci release regions chip pci  
+	pci disable device chip pci  
+
+	kfree chip  
+	return 0 
+}
+

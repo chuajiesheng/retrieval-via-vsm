@@ -1,0 +1,10 @@
+snd rme96 get loopback control struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	
+	spin lock irq  rme96 lock  
+	ucontrol value integer value 0  = rme96 wcreg   RME96 WCR SEL ? 0   1 
+	spin unlock irq  rme96 lock  
+	return 0 
+}
+

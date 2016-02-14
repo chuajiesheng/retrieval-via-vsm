@@ -1,0 +1,10 @@
+   
+   Copy the user data to the begin of the buffer and reset the processing
+   iterator 
+  
+     user data  A pointer the data that is copied to the buffer 
+     size  The Number of bytes to copy 
+   
+extern int drm buffer copy from user struct drm buffer  buf 
+		void   user  user data  int size  
+

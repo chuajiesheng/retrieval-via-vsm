@@ -1,0 +1,2 @@
+int snd sbdsp reset struct snd sb  chip  
+

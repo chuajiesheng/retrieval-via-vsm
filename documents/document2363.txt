@@ -1,0 +1,50 @@
+static int   devinit snd intel8x0m probe struct pci dev  pci 
+					const struct pci device id  pci id 
+{
+	struct snd card  card 
+	struct intel8x0m  chip 
+	int err 
+	struct shortname table  name 
+
+	err = snd card create index  id  THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	strcpy card driver   ICH MODEM   
+	strcpy card shortname   Intel ICH   
+	for  name = shortnames  name id  name++  {
+		if  pci device == name id  {
+			strcpy card shortname  name s  
+			break 
+		}
+	}
+	strcat card shortname   Modem   
+
+	if   err = snd intel8x0m create card  pci  pci id driver data   chip     0  {
+		snd card free card  
+		return err 
+	}
+	card private data = chip 
+
+	if   err = snd intel8x0 mixer chip  ac97 clock     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd intel8x0 pcm chip     0  {
+		snd card free card  
+		return err 
+	}
+	
+	snd intel8x0m proc init chip  
+
+	sprintf card longname    s at irq  i  
+		card shortname  chip irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	return 0 
+}
+

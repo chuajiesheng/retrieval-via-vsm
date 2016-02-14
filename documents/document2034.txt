@@ -1,0 +1,10 @@
+  
+    MIDI section
+   
+static void snd cs4281 midi reset struct cs4281  chip 
+{
+	snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr | BA0 MIDCR MRST  
+	udelay 100  
+	snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr  
+}
+

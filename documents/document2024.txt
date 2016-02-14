@@ -1,0 +1,20 @@
+static void   devinit snd cs4281 proc init struct cs4281   chip 
+{
+	struct snd info entry  entry 
+
+	if    snd card proc new chip card   cs4281    entry  
+		snd info set text ops entry  chip  snd cs4281 proc read  
+	if    snd card proc new chip card   cs4281 BA0    entry   {
+		entry content = SNDRV INFO CONTENT DATA 
+		entry private data = chip 
+		entry c ops =  snd cs4281 proc ops BA0 
+		entry size = CS4281 BA0 SIZE 
+	}
+	if    snd card proc new chip card   cs4281 BA1    entry   {
+		entry content = SNDRV INFO CONTENT DATA 
+		entry private data = chip 
+		entry c ops =  snd cs4281 proc ops BA1 
+		entry size = CS4281 BA1 SIZE 
+	}
+}
+

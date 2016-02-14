@@ -1,0 +1,13 @@
+  
+   Read write from to an  offsettable  iomem cookie  It might be a PIO
+   access or a MMIO access  these functions don't care  The info is
+   encoded in the hardware mapping set up by the mapping functions
+    or the cookie itself  depending on implementation and hw  
+  
+   The generic routines just encode the PIO MMIO as part of the
+   cookie  and coldly assume that the MMIO IO mappings are not
+   in the low address range  Architectures for which this is not
+   true can't use this generic implementation 
+   
+extern unsigned int ioread8 void   iomem    
+

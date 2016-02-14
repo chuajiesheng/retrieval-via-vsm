@@ -1,0 +1,19 @@
+  
+   ctl callbacks for master controls
+   
+static int master info struct snd kcontrol  kcontrol 
+		      struct snd ctl elem info  uinfo 
+{
+	struct link master  master = snd kcontrol chip kcontrol  
+	int ret 
+
+	ret = master init master  
+	if  ret   0 
+		return ret 
+	uinfo type = master info type 
+	uinfo count = master info count 
+	uinfo value integer min = master info min val 
+	uinfo value integer max = master info max val 
+	return 0 
+}
+

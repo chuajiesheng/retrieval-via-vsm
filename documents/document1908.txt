@@ -1,0 +1,20 @@
+static int snd intel8x0 pcm open struct snd pcm substream  substream  struct ichdev  ichdev 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	ichdev substream = substream 
+	runtime hw = snd intel8x0 stream 
+	runtime hw rates = ichdev pcm rates 
+	snd pcm limit hw rates runtime  
+	if  chip device type == DEVICE SIS  {
+		runtime hw buffer bytes max = 64 1024 
+		runtime hw period bytes max = 64 1024 
+	}
+	if   err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+	runtime private data = ichdev 
+	return 0 
+}
+

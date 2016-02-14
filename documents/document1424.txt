@@ -1,0 +1,17 @@
+static int snd ak4531 get input sw struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct snd ak4531  ak4531 = snd kcontrol chip kcontrol  
+	int reg1 = kcontrol private value   0xff 
+	int reg2 =  kcontrol private value    8    0xff 
+	int left shift =  kcontrol private value    16    0x0f 
+	int right shift =  kcontrol private value    24    0x0f 
+
+	mutex lock  ak4531 reg mutex  
+	ucontrol value integer value 0  =  ak4531 regs reg1     left shift    1 
+	ucontrol value integer value 1  =  ak4531 regs reg2     left shift    1 
+	ucontrol value integer value 2  =  ak4531 regs reg1     right shift    1 
+	ucontrol value integer value 3  =  ak4531 regs reg2     right shift    1 
+	mutex unlock  ak4531 reg mutex  
+	return 0 
+}
+

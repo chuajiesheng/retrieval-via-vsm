@@ -1,0 +1,63 @@
+snd ad1889 probe struct pci dev  pci 
+		 const struct pci device id  pci id 
+{
+	int err 
+	static int devno 
+	struct snd card  card 
+	struct snd ad1889  chip 
+
+	    1    
+	if  devno  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable devno   {
+		devno++ 
+		return  ENOENT 
+	}
+
+	    2    
+	err = snd card create index devno   id devno   THIS MODULE  0   card  
+	   XXX REVISIT  we can probably allocate chip in this call   
+	if  err   0 
+		return err 
+
+	strcpy card driver   AD1889   
+	strcpy card shortname   Analog Devices AD1889   
+
+	    3    
+	err = snd ad1889 create card  pci   chip  
+	if  err   0 
+		goto free and ret 
+
+	    4    
+	sprintf card longname    s at 0x lx irq  i  
+		card shortname  chip bar  chip irq  
+
+	    5    
+	   register AC97 mixer   
+	err = snd ad1889 ac97 init chip  ac97 quirk devno   
+	if  err   0 
+		goto free and ret 
+	
+	err = snd ad1889 pcm init chip  0  NULL  
+	if  err   0 
+		goto free and ret 
+
+	   register proc interface   
+	snd ad1889 proc init chip  
+
+	    6    
+	err = snd card register card  
+	if  err   0 
+		goto free and ret 
+
+	    7    
+	pci set drvdata pci  card  
+
+	devno++ 
+	return 0 
+
+free and ret 
+	snd card free card  
+	return err 
+}
+

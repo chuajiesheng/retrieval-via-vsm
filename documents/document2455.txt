@@ -1,0 +1,8 @@
+   
+   dccp loss free   Evaluate condition for data loss from RFC 4340  7 7 1
+   
+static inline bool dccp loss free const u64 s1  const u64 s2  const u64 ndp 
+{
+	return dccp loss count s1  s2  ndp  == 0 
+}
+

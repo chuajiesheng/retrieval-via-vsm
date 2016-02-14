@@ -1,0 +1,5 @@
+static void   exit deflate mod fini void 
+{
+	crypto unregister alg  alg  
+}
+

@@ -1,0 +1,39 @@
+static int snd atiixp pcm open struct snd pcm substream  substream 
+			       struct atiixp dma  dma  int pcm type 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+	static unsigned int rates   = { 8000   9600  12000  16000 } 
+	static struct snd pcm hw constraint list hw constraints rates = {
+		 count = ARRAY SIZE rates  
+		 list = rates 
+		 mask = 0 
+	} 
+
+	if  snd BUG ON  dma ops ||  dma ops enable dma  
+		return  EINVAL 
+
+	if  dma opened 
+		return  EBUSY 
+	dma substream = substream 
+	runtime hw = snd atiixp pcm hw 
+	dma ac97 pcm type = pcm type 
+	if   err = snd pcm hw constraint list runtime  0 
+					      SNDRV PCM HW PARAM RATE 
+					       hw constraints rates     0 
+		return err 
+	if   err = snd pcm hw constraint integer runtime 
+						 SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+	runtime private data = dma 
+
+	   enable DMA bits   
+	spin lock irq  chip reg lock  
+	dma ops enable dma chip  1  
+	spin unlock irq  chip reg lock  
+	dma opened = 1 
+
+	return 0 
+}
+

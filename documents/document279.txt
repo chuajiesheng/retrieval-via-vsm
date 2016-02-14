@@ -1,0 +1,4 @@
+int crypto init ahash spawn struct crypto ahash spawn  spawn 
+			    struct hash alg common  alg 
+			    struct crypto instance  inst  
+

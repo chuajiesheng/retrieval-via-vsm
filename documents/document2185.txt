@@ -1,0 +1,25 @@
+static int   devinit check dxs list struct pci dev  pci  int revision 
+{
+	const struct snd pci quirk  w 
+
+	w = snd pci quirk lookup pci  dxs whitelist  
+	if  w  {
+		snd printdd KERN INFO  via82xx  DXS white list for  s found\n  
+			    w name  
+		return w value 
+	}
+
+	   for newer revision  default to DXS SRC   
+	if  revision  = VIA REV 8235 
+		return VIA DXS SRC 
+
+	  
+	   not detected  try 48k rate only to be sure 
+	   
+	printk KERN INFO  via82xx  Assuming DXS channels with 48k fixed sample rate \n   
+	printk KERN INFO           Please try dxs support=5 option\n   
+	printk KERN INFO           and report if it works on your machine \n   
+	printk KERN INFO           For more details  read ALSA Configuration txt \n   
+	return VIA DXS 48K 
+}
+

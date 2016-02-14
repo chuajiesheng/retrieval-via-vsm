@@ -1,0 +1,18 @@
+static int snd mts64 ctl smpte time put struct snd kcontrol  kctl 
+					struct snd ctl elem value  uctl 
+{
+	struct mts64  mts = snd kcontrol chip kctl  
+	int idx = kctl private value 
+	unsigned int time = uctl value integer value 0    60 
+	int changed = 0 
+
+	spin lock irq  mts lock  
+	if  mts time idx   = time  {
+		changed = 1 
+		mts time idx  = time 
+	}
+	spin unlock irq  mts lock  
+
+	return changed 
+}
+

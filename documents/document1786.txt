@@ -1,0 +1,8 @@
+static int snd fm801 capture close struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+
+	chip capture substream = NULL 
+	return 0 
+}
+

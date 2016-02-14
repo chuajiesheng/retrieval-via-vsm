@@ -1,0 +1,83 @@
+static int   devinit snd serial probe struct platform device  devptr 
+{
+	struct snd card  card 
+	struct snd uart16550  uart 
+	int err 
+	int dev = devptr id 
+
+	switch  adaptor dev   {
+	case SNDRV SERIAL SOUNDCANVAS 
+		ins dev  = 1 
+		break 
+	case SNDRV SERIAL MS124T 
+	case SNDRV SERIAL MS124W SA 
+		outs dev  = 1 
+		ins dev  = 1 
+		break 
+	case SNDRV SERIAL MS124W MB 
+		outs dev  = 16 
+		ins dev  = 1 
+		break 
+	case SNDRV SERIAL GENERIC 
+		break 
+	default 
+		snd printk KERN ERR
+			    Adaptor type is out of range 0  d   d \n  
+			   SNDRV SERIAL MAX ADAPTOR  adaptor dev   
+		return  ENODEV 
+	}
+
+	if  outs dev    1 || outs dev    SNDRV SERIAL MAX OUTS  {
+		snd printk KERN ERR
+			    Count of outputs is out of range 1  d   d \n  
+			   SNDRV SERIAL MAX OUTS  outs dev   
+		return  ENODEV 
+	}
+
+	if  ins dev    1 || ins dev    SNDRV SERIAL MAX INS  {
+		snd printk KERN ERR
+			    Count of inputs is out of range 1  d   d \n  
+			   SNDRV SERIAL MAX INS  ins dev   
+		return  ENODEV 
+	}
+
+	err  = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	strcpy card driver   Serial   
+	strcpy card shortname   Serial MIDI  UART16550A    
+
+	if   err = snd uart16550 create card 
+					port dev  
+					irq dev  
+					speed dev  
+					base dev  
+					adaptor dev  
+					droponfull dev  
+					 uart     0 
+		goto  err 
+
+	err = snd uart16550 rmidi uart  0  outs dev   ins dev    uart rmidi  
+	if  err   0 
+		goto  err 
+
+	sprintf card longname    s   s  at  #lx  irq  d  
+		card shortname 
+		adaptor names uart adaptor  
+		uart base 
+		uart irq  
+
+	snd card set dev card   devptr dev  
+
+	if   err = snd card register card     0 
+		goto  err 
+
+	platform set drvdata devptr  card  
+	return 0 
+
+  err 
+	snd card free card  
+	return err 
+}
+

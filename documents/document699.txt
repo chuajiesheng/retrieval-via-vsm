@@ -1,0 +1,18 @@
+  
+   get ISA resources
+   
+static int   devinit snd mtpav get ISA struct mtpav   mcard 
+{
+	if   mcard res port = request region port  3   MotuMTPAV MIDI    == NULL  {
+		snd printk KERN ERR  MTVAP port 0x lx is busy\n   port  
+		return  EBUSY 
+	}
+	mcard port = port 
+	if  request irq irq  snd mtpav irqh  IRQF DISABLED   MOTU MTPAV   mcard   {
+		snd printk KERN ERR  MTVAP IRQ  d busy\n   irq  
+		return  EBUSY 
+	}
+	mcard irq = irq 
+	return 0 
+}
+

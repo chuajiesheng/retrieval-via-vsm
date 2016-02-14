@@ -1,0 +1,11 @@
+static int snd cmipci clear bit struct cmipci  cm  unsigned int cmd  unsigned int flag 
+{
+	unsigned int val  oval 
+	val = oval = inl cm iobase + cmd  
+	val  = ~flag 
+	if  val == oval 
+		return 0 
+	outl val  cm iobase + cmd  
+	return 1 
+}
+

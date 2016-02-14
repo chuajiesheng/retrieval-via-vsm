@@ -1,0 +1,10 @@
+   
+   ieee80211 is auth   check if IEEE80211 FTYPE MGMT    IEEE80211 STYPE AUTH
+   @fc  frame control bytes in little endian byteorder
+   
+static inline int ieee80211 is auth   le16 fc 
+{
+	return  fc   cpu to le16 IEEE80211 FCTL FTYPE | IEEE80211 FCTL STYPE   ==
+	       cpu to le16 IEEE80211 FTYPE MGMT | IEEE80211 STYPE AUTH  
+}
+

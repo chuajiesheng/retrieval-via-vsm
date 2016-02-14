@@ -1,0 +1,11 @@
+static int loopback rate info struct snd kcontrol  kcontrol    
+			      struct snd ctl elem info  uinfo  
+{
+	uinfo type = SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count = 1 
+	uinfo value integer min = 0 
+	uinfo value integer max = 192000 
+	uinfo value integer step = 1 
+	return 0 
+}
+

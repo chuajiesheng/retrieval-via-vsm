@@ -1,0 +1,2 @@
+extern void drm framebuffer cleanup struct drm framebuffer  fb  
+

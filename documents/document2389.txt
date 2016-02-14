@@ -1,0 +1,7 @@
+static void pcrypt aead exit tfm struct crypto tfm  tfm 
+{
+	struct pcrypt aead ctx  ctx = crypto tfm ctx tfm  
+
+	crypto free aead ctx child  
+}
+

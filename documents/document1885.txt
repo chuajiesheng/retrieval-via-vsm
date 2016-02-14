@@ -1,0 +1,15 @@
+   
+   ieee80211 ap probereq get   retrieve a Probe Request template
+   @hw  pointer obtained from ieee80211 alloc hw   
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+  
+   Creates a Probe Request template which can  for example  be uploaded to
+   hardware  The template is filled with bssid  ssid and supported rate
+   information  This function must only be called from within the
+    bss info changed callback function and only in managed mode  The function
+   is only useful when the interface is associated  otherwise it will return
+   NULL 
+   
+struct sk buff  ieee80211 ap probereq get struct ieee80211 hw  hw 
+					  struct ieee80211 vif  vif  
+

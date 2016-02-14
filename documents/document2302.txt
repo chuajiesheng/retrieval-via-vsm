@@ -1,0 +1,19 @@
+snd rme32 info clockmode control struct snd kcontrol  kcontrol 
+				 struct snd ctl elem info  uinfo 
+{
+	static char  texts 4  = {  AutoSync   
+				   Internal 32 0kHz   
+				   Internal 44 1kHz   
+				   Internal 48 0kHz  } 
+
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 1 
+	uinfo value enumerated items = 4 
+	if  uinfo value enumerated item   3  {
+		uinfo value enumerated item = 3 
+	}
+	strcpy uinfo value enumerated name 
+	       texts uinfo value enumerated item   
+	return 0 
+}
+

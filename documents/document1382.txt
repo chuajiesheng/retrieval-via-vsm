@@ -1,0 +1,28 @@
+  
+   update pointer
+   
+static void snd es1968 update pcm struct es1968  chip  struct esschan  es 
+{
+	unsigned int hwptr 
+	unsigned int diff 
+	struct snd pcm substream  subs = es substream 
+        
+	if  subs == NULL ||  es running 
+		return 
+
+	hwptr = snd es1968 get dma ptr chip  es     es wav shift 
+	hwptr  = es dma size 
+
+	diff =  es dma size + hwptr   es hwptr    es dma size 
+
+	es hwptr = hwptr 
+	es count += diff 
+
+	if  es count   es frag size  {
+		spin unlock  chip substream lock  
+		snd pcm period elapsed subs  
+		spin lock  chip substream lock  
+		es count  = es frag size 
+	}
+}
+

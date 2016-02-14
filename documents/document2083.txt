@@ -1,0 +1,13 @@
+   start stop analog IN DMA   
+static void atiixp in enable transfer struct atiixp modem  chip  int on 
+{
+	if  on  {
+		unsigned int data = atiixp read chip  CMD  
+		if     data   ATI REG CMD MODEM RECEIVE EN   {
+			data |= ATI REG CMD MODEM RECEIVE EN 
+			atiixp write chip  CMD  data  
+		}
+	} else
+		atiixp update chip  CMD  ATI REG CMD MODEM RECEIVE EN  0  
+}
+

@@ -1,0 +1,7 @@
+static void snd sonicvibes master free struct snd kcontrol  kcontrol 
+{
+	struct sonicvibes  sonic = snd kcontrol chip kcontrol  
+	sonic master mute = NULL 
+	sonic master volume = NULL 
+}
+

@@ -1,0 +1,3 @@
+int mlx4 multicast attach struct mlx4 dev  dev  struct mlx4 qp  qp  u8 gid 16  
+			  int block mcast loopback  enum mlx4 protocol protocol  
+

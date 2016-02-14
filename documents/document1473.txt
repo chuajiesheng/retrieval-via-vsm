@@ -1,0 +1,29 @@
+   
+   ttm bo reserve locked 
+  
+   @bo  A pointer to a struct ttm buffer object 
+   @interruptible  Sleep interruptible if waiting 
+   @no wait  Don't sleep while trying to reserve  rather return  EBUSY 
+   @use sequence  If @bo is already reserved  Only sleep waiting for
+   it to become unreserved if @sequence    @bo  sequence 
+  
+   Must be called with struct ttm bo global  lru lock held 
+   and will not remove reserved buffers from the lru lists 
+   The function may release the LRU spinlock if it needs to sleep 
+   Otherwise identical to ttm bo reserve 
+  
+   Returns 
+    EAGAIN  The reservation may cause a deadlock 
+   Release all buffer reservations  wait for @bo to become unreserved and
+   try again   only if use sequence == 1  
+    ERESTARTSYS  A wait for the buffer to become unreserved was interrupted by
+   a signal  Release all buffer reservations and return to user space 
+    EBUSY  The function needed to sleep  but @no wait was true
+    EDEADLK  Bo already reserved using @sequence  This error code will only
+   be returned if @use sequence is set to true 
+   
+extern int ttm bo reserve locked struct ttm buffer object  bo 
+				 bool interruptible 
+				 bool no wait  bool use sequence 
+				 uint32 t sequence  
+

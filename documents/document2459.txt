@@ -1,0 +1,14 @@
+   
+   tfrc invert loss event rate     Compute p so that 10^6 corresponds to 100 
+   When @loss event rate is large  there is a chance that p is truncated to 0 
+   To avoid re entering slow start in that case  we set p = TFRC SMALLEST P   0 
+   
+u32 tfrc invert loss event rate u32 loss event rate 
+{
+	if  loss event rate == UINT MAX 		   see RFC 4342  8 5   
+		return 0 
+	if  unlikely loss event rate == 0  		   map 1 0 into 100    
+		return 1000000 
+	return max t u32  scaled div 1  loss event rate   TFRC SMALLEST P  
+}
+

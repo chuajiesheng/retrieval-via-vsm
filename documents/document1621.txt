@@ -1,0 +1,6 @@
+static void chainiv free struct crypto instance  inst 
+{
+	skcipher geniv free inst  
+	crypto put default rng   
+}
+

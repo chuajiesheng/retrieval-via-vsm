@@ -1,0 +1,6 @@
+ad1889 load adc buffer count struct snd ad1889  chip  u32 count 
+{
+	ad1889 writel chip  AD DMA ADCBC  count  
+	ad1889 writel chip  AD DMA ADCCC  count  
+}
+

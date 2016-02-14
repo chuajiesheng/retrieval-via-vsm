@@ -1,0 +1,15 @@
+  
+   This makes me sad  the maestro3 has lists
+   internally that must be packed   0 terminates 
+   apparently  or maybe all unused entries have
+   to be 0  the lists have static lengths set
+   by the binary code images 
+   
+static int snd m3 add list struct snd m3  chip  struct m3 list  list  u16 val 
+{
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  list mem addr + list curlen 
+			  val  
+	return list curlen++ 
+}
+

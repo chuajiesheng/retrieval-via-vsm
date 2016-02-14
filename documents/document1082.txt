@@ -1,0 +1,3 @@
+				   Buffer management support  drm bufs h    
+extern int drm addbufs agp struct drm device  dev  struct drm buf desc   request  
+

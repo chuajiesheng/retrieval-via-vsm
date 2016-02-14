@@ -1,0 +1,51 @@
+   
+   snd hwdep new   create a new hwdep instance
+   @card  the card instance
+   @id  the id string
+   @device  the device index  zero based 
+   @rhwdep  the pointer to store the new hwdep instance
+  
+   Creates a new hwdep instance with the given index on the card 
+   The callbacks  hwdep ops  must be set on the returned instance
+   after this call manually by the caller 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd hwdep new struct snd card  card  char  id  int device 
+		  struct snd hwdep   rhwdep 
+{
+	struct snd hwdep  hwdep 
+	int err 
+	static struct snd device ops ops = {
+		 dev free = snd hwdep dev free 
+		 dev register = snd hwdep dev register 
+		 dev disconnect = snd hwdep dev disconnect 
+	} 
+
+	if  snd BUG ON  card  
+		return  ENXIO 
+	if  rhwdep 
+		 rhwdep = NULL 
+	hwdep = kzalloc sizeof  hwdep   GFP KERNEL  
+	if  hwdep == NULL  {
+		snd printk KERN ERR  hwdep  cannot allocate\n   
+		return  ENOMEM 
+	}
+	hwdep card = card 
+	hwdep device = device 
+	if  id 
+		strlcpy hwdep id  id  sizeof hwdep id   
+#ifdef CONFIG SND OSSEMUL
+	hwdep oss type =  1 
+#endif
+	if   err = snd device new card  SNDRV DEV HWDEP  hwdep   ops     0  {
+		snd hwdep free hwdep  
+		return err 
+	}
+	init waitqueue head  hwdep open wait  
+	mutex init  hwdep open mutex  
+	if  rhwdep 
+		 rhwdep = hwdep 
+	return 0 
+}
+

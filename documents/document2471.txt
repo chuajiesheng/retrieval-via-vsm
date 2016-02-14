@@ -1,0 +1,7 @@
+   given i with 0  = i  = k  return I i as per the rfc3448bis notation   
+static inline u32 tfrc lh get interval struct tfrc loss hist  lh  const u8 i 
+{
+	BUG ON i  = lh counter  
+	return lh ring LIH INDEX lh counter   i   1   li length 
+}
+

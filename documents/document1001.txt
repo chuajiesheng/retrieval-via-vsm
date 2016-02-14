@@ -1,0 +1,40 @@
+static int snd ensoniq playback2 prepare struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned int mode = 0 
+
+	ensoniq p2 dma size = snd pcm lib buffer bytes substream  
+	ensoniq p2 period size = snd pcm lib period bytes substream  
+	if  snd pcm format width runtime format  == 16 
+		mode |= 0x02 
+	if  runtime channels   1 
+		mode |= 0x01 
+	spin lock irq  ensoniq reg lock  
+	ensoniq ctrl  = ~ES DAC2 EN 
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	outl ES MEM PAGEO ES PAGE DAC   ES REG ensoniq  MEM PAGE   
+	outl runtime dma addr  ES REG ensoniq  DAC2 FRAME   
+	outl  ensoniq p2 dma size    2    1  ES REG ensoniq  DAC2 SIZE   
+	ensoniq sctrl  = ~ ES P2 LOOP SEL | ES P2 PAUSE | ES P2 DAC SEN |
+			    ES P2 END INCM | ES P2 ST INCM | ES P2 MODEM  
+	ensoniq sctrl |= ES P2 INT EN | ES P2 MODEO mode  |
+			  ES P2 END INCO mode   2 ? 2   1  | ES P2 ST INCO 0  
+	outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+	outl  ensoniq p2 period size    snd ensoniq sample shift mode     1 
+	     ES REG ensoniq  DAC2 COUNT   
+#ifdef CHIP1370
+	if    ensoniq u es1370 pclkdiv lock   ES MODE CAPTURE   {
+		ensoniq ctrl  = ~ES 1370 PCLKDIVM 
+		ensoniq ctrl |= ES 1370 PCLKDIVO ES 1370 SRTODIV runtime rate   
+		ensoniq u es1370 pclkdiv lock |= ES MODE PLAY2 
+	}
+#endif
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	spin unlock irq  ensoniq reg lock  
+#ifndef CHIP1370
+	snd es1371 dac2 rate ensoniq  runtime rate  
+#endif
+	return 0 
+}
+

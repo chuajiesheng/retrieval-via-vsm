@@ -1,0 +1,27 @@
+   spinlock held    
+static int snd m3 pcm start struct snd m3  chip  struct m3 dma  s 
+			    struct snd pcm substream  subs 
+{
+	if    s ||   subs 
+		return  EINVAL 
+
+	snd m3 inc timer users chip  
+	switch  subs stream  {
+	case SNDRV PCM STREAM PLAYBACK 
+		chip dacs active++ 
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  s inst data + CDATA INSTANCE READY  1  
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  KDATA MIXER TASK NUMBER 
+				  chip dacs active  
+		break 
+	case SNDRV PCM STREAM CAPTURE 
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  KDATA ADC1 REQUEST  1  
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  s inst data + CDATA INSTANCE READY  1  
+		break 
+	}
+	return 0 
+}
+

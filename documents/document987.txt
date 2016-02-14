@@ -1,0 +1,12 @@
+static void snd es1371 src write struct ensoniq   ensoniq 
+				 unsigned short reg  unsigned short data 
+{
+	unsigned int r 
+
+	r = snd es1371 wait src ready ensoniq   
+	     ES 1371 SRC DISABLE | ES 1371 DIS P1 |
+	     ES 1371 DIS P2 | ES 1371 DIS R1  
+	r |= ES 1371 SRC RAM ADDRO reg  | ES 1371 SRC RAM DATAO data  
+	outl r | ES 1371 SRC RAM WE  ES REG ensoniq  1371 SMPRATE   
+}
+

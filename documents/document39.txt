@@ -1,0 +1,21 @@
+  
+   register the card proc file
+   called from init c
+   
+int snd info card register struct snd card  card 
+{
+	struct proc dir entry  p 
+
+	if  snd BUG ON  card  
+		return  ENXIO 
+
+	if   strcmp card id  card proc root name  
+		return 0 
+
+	p = proc symlink card id  snd proc root  card proc root name  
+	if  p == NULL 
+		return  ENOMEM 
+	card proc root link = p 
+	return 0 
+}
+

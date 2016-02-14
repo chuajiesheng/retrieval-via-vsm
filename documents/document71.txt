@@ -1,0 +1,15 @@
+static int snd hrtimer open struct snd timer  t 
+{
+	struct snd hrtimer  stime 
+
+	stime = kmalloc sizeof  stime   GFP KERNEL  
+	if   stime 
+		return  ENOMEM 
+	hrtimer init  stime hrt  CLOCK MONOTONIC  HRTIMER MODE REL  
+	stime timer = t 
+	stime hrt function = snd hrtimer callback 
+	atomic set  stime running  0  
+	t private data = stime 
+	return 0 
+}
+

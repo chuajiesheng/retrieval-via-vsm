@@ -1,0 +1,2 @@
+int snd pcm format width snd pcm format t format  			   in bits   
+

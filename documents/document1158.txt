@@ -1,0 +1,2 @@
+extern void ttm mem global release struct ttm mem global  glob  
+

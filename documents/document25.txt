@@ -1,0 +1,16 @@
+   resize the proc r w buffer   
+static int resize info buffer struct snd info buffer  buffer 
+			      unsigned int nsize 
+{
+	char  nbuf 
+
+	nsize = PAGE ALIGN nsize  
+	nbuf = krealloc buffer buffer  nsize  GFP KERNEL  
+	if    nbuf 
+		return  ENOMEM 
+
+	buffer buffer = nbuf 
+	buffer len = nsize 
+	return 0 
+}
+

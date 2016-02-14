@@ -1,0 +1,14 @@
+   
+   ttm bo reference   reference a struct ttm buffer object
+  
+   @bo  The buffer object 
+  
+   Returns a refcounted pointer to a buffer object 
+   
+static inline struct ttm buffer object  
+ttm bo reference struct ttm buffer object  bo 
+{
+	kref get  bo kref  
+	return bo 
+}
+

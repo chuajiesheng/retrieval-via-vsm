@@ -1,0 +1,8 @@
+  
+   Initialize a customized allocator for one of the managers 
+    See the SiS module   The object pointed to by  allocator  is copied 
+   so it can be destroyed after this call 
+   
+extern int drm sman set manager struct drm sman   sman  unsigned int mananger 
+				struct drm sman mm   allocator  
+

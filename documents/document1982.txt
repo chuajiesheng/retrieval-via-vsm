@@ -1,0 +1,2 @@
+extern unsigned int ioread32 void   iomem    
+

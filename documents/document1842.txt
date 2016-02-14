@@ -1,0 +1,8 @@
+static void snd bt87x free risc struct snd bt87x  chip 
+{
+	if  chip dma risc area  {
+		snd dma free pages  chip dma risc  
+		chip dma risc area = NULL 
+	}
+}
+

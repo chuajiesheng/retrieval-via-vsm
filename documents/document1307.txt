@@ -1,0 +1,13 @@
+   no spinlock   
+static void   apu set register struct es1968  chip  u16 channel  u8 reg  u16 data 
+{
+	if  snd BUG ON channel  = NR APUS  
+		return 
+#ifdef CONFIG PM
+	chip apu map channel  reg  = data 
+#endif
+	reg |=  channel    4  
+	apu index set chip  reg  
+	apu data set chip  data  
+}
+

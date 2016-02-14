@@ -1,0 +1,29 @@
+static void async chainiv do postponed struct work struct  work 
+{
+	struct async chainiv ctx  ctx = container of work 
+						     struct async chainiv ctx 
+						     postponed  
+	struct skcipher givcrypt request  req 
+	struct ablkcipher request  subreq 
+	int err 
+
+	   Only handle one request at a time to avoid hogging keventd    
+	spin lock bh  ctx lock  
+	req = skcipher dequeue givcrypt  ctx queue  
+	spin unlock bh  ctx lock  
+
+	if   req  {
+		async chainiv schedule work ctx  
+		return 
+	}
+
+	subreq = skcipher givcrypt reqctx req  
+	subreq base flags |= CRYPTO TFM REQ MAY SLEEP 
+
+	err = async chainiv givencrypt tail req  
+
+	local bh disable   
+	skcipher givcrypt complete req  err  
+	local bh enable   
+}
+

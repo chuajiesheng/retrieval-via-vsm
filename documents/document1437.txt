@@ -1,0 +1,16 @@
+void snd ak4531 resume struct snd ak4531  ak4531 
+{
+	int idx 
+
+	   initialize   
+	ak4531 write ak4531  AK4531 RESET  0x03  
+	udelay 100  
+	ak4531 write ak4531  AK4531 CLOCK  0x00  
+	   restore mixer registers   
+	for  idx = 0  idx  = 0x19  idx++  {
+		if  idx == AK4531 RESET || idx == AK4531 CLOCK 
+			continue 
+		ak4531 write ak4531  idx  ak4531 regs idx   
+	}
+}
+

@@ -1,0 +1,30 @@
+static void snd ensoniq midi output trigger struct snd rawmidi substream  substream  int up 
+{
+	unsigned long flags 
+	struct ensoniq  ensoniq = substream rmidi private data 
+	unsigned char byte 
+
+	spin lock irqsave  ensoniq reg lock  flags  
+	if  up  {
+		if  ES TXINTENI ensoniq uartc  == 0  {
+			ensoniq uartc |= ES TXINTENO 1  
+			   fill UART FIFO buffer at first  and turn Tx interrupts only if necessary   
+			while  ES TXINTENI ensoniq uartc  == 1   
+			        inb ES REG ensoniq  UART STATUS     ES TXRDY   {
+				if  snd rawmidi transmit substream   byte  1   = 1  {
+					ensoniq uartc  = ~ES TXINTENM 
+				} else {
+					outb byte  ES REG ensoniq  UART DATA   
+				}
+			}
+			outb ensoniq uartc  ES REG ensoniq  UART CONTROL   
+		}
+	} else {
+		if  ES TXINTENI ensoniq uartc  == 1  {
+			ensoniq uartc  = ~ES TXINTENM 
+			outb ensoniq uartc  ES REG ensoniq  UART CONTROL   
+		}
+	}
+	spin unlock irqrestore  ensoniq reg lock  flags  
+}
+

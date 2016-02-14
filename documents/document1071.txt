@@ -1,0 +1,72 @@
+static int   devinit snd audiopci probe struct pci dev  pci 
+					const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct ensoniq  ensoniq 
+	int err  pcm devs 2  
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	if   err = snd ensoniq create card  pci   ensoniq     0  {
+		snd card free card  
+		return err 
+	}
+	card private data = ensoniq 
+
+	pcm devs 0  = 0  pcm devs 1  = 1 
+#ifdef CHIP1370
+	if   err = snd ensoniq 1370 mixer ensoniq     0  {
+		snd card free card  
+		return err 
+	}
+#endif
+#ifdef CHIP1371
+	if   err = snd ensoniq 1371 mixer ensoniq  spdif dev   lineio dev      0  {
+		snd card free card  
+		return err 
+	}
+#endif
+	if   err = snd ensoniq pcm ensoniq  0  NULL     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd ensoniq pcm2 ensoniq  1  NULL     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd ensoniq midi ensoniq  0  NULL     0  {
+		snd card free card  
+		return err 
+	}
+
+	snd ensoniq create gameport ensoniq  dev  
+
+	strcpy card driver  DRIVER NAME  
+
+	strcpy card shortname   Ensoniq AudioPCI   
+	sprintf card longname    s  s at 0x lx  irq  i  
+		card shortname 
+		card driver 
+		ensoniq port 
+		ensoniq irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

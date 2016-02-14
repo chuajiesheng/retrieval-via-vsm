@@ -1,0 +1,20 @@
+   
+   snd pcm lib preallocate free   release the preallocated buffer of the specified substream 
+   @substream  the pcm substream instance
+  
+   Releases the pre allocated buffer of the given substream 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm lib preallocate free struct snd pcm substream  substream 
+{
+	snd pcm lib preallocate dma free substream  
+#ifdef CONFIG SND VERBOSE PROCFS
+	snd info free entry substream proc prealloc max entry  
+	substream proc prealloc max entry = NULL 
+	snd info free entry substream proc prealloc entry  
+	substream proc prealloc entry = NULL 
+#endif
+	return 0 
+}
+

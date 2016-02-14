@@ -1,0 +1,62 @@
+snd rme96 probe struct pci dev  pci 
+		const struct pci device id  pci id 
+{
+	static int dev 
+	struct rme96  rme96 
+	struct snd card  card 
+	int err 
+	u8 val 
+
+	if  dev  = SNDRV CARDS  {
+		return  ENODEV 
+	}
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+	err = snd card create index dev   id dev   THIS MODULE 
+			      sizeof struct rme96    card  
+	if  err   0 
+		return err 
+	card private free = snd rme96 card free 
+	rme96 = card private data 
+	rme96 card = card 
+	rme96 pci = pci 
+	snd card set dev card   pci dev  
+	if   err = snd rme96 create rme96     0  {
+		snd card free card  
+		return err 
+	}
+	
+	strcpy card driver   Digi96   
+	switch  rme96 pci device  {
+	case PCI DEVICE ID RME DIGI96 
+		strcpy card shortname   RME Digi96   
+		break 
+	case PCI DEVICE ID RME DIGI96 8 
+		strcpy card shortname   RME Digi96 8   
+		break 
+	case PCI DEVICE ID RME DIGI96 8 PRO 
+		strcpy card shortname   RME Digi96 8 PRO   
+		break 
+	case PCI DEVICE ID RME DIGI96 8 PAD OR PST 
+		pci read config byte rme96 pci  8   val  
+		if  val   5  {
+			strcpy card shortname   RME Digi96 8 PAD   
+		} else {
+			strcpy card shortname   RME Digi96 8 PST   
+		}
+		break 
+	}
+	sprintf card longname    s at 0x lx  irq  d   card shortname 
+		rme96 port  rme96 irq  
+	
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 	
+	}
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

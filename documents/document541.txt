@@ -1,0 +1,37 @@
+   NOTES ON SERVICING INTERUPTS
+                              
+   After receiving a interrupt  it is important to indicate to the UART that
+   this has been done  
+   For a Rx interrupt  this is done by reading the received byte 
+   For a Tx interrupt this is done by either 
+   a  Writing a byte
+   b  Reading the IIR
+   It is particularly important to read the IIR if a Tx interrupt is received
+   when there is no data in tx buff    as in this case there no other
+   indication that the interrupt has been serviced  and it remains outstanding
+   indefinitely  This has the curious side effect that and no further interrupts
+   will be generated from this device AT ALL   
+   It is also desirable to clear outstanding interrupts when the device is
+   opened closed 
+  
+  
+   Note that some devices need OUT2 to be set before they will generate
+   interrupts at all   Possibly tied to an internal pull up on CTS? 
+   
+static irqreturn t snd uart16550 interrupt int irq  void  dev id 
+{
+	struct snd uart16550  uart 
+
+	uart = dev id 
+	spin lock  uart open lock  
+	if  uart filemode == SERIAL MODE NOT OPENED  {
+		spin unlock  uart open lock  
+		return IRQ NONE 
+	}
+	   indicate to the UART that the interrupt has been serviced   
+	inb uart base + UART IIR  
+	snd uart16550 io loop uart  
+	spin unlock  uart open lock  
+	return IRQ HANDLED 
+}
+

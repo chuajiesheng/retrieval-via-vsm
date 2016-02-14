@@ -1,0 +1,2 @@
+void release and free resource struct resource  res  
+

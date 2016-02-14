@@ -1,0 +1,11 @@
+  
+   open callback for capture
+   
+static int snd via82xx capture open struct snd pcm substream  substream 
+{
+	struct via82xx modem  chip = snd pcm substream chip substream  
+	struct viadev  viadev =  chip devs chip capture devno + substream pcm device  
+
+	return snd via82xx modem pcm open chip  viadev  substream  
+}
+

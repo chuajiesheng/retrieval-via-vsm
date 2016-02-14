@@ -1,0 +1,29 @@
+static int deflate compress struct crypto tfm  tfm  const u8  src 
+			    unsigned int slen  u8  dst  unsigned int  dlen 
+{
+	int ret = 0 
+	struct deflate ctx  dctx = crypto tfm ctx tfm  
+	struct z stream s  stream =  dctx comp stream 
+
+	ret = zlib deflateReset stream  
+	if  ret  = Z OK  {
+		ret =  EINVAL 
+		goto out 
+	}
+
+	stream next in =  u8   src 
+	stream avail in = slen 
+	stream next out =  u8   dst 
+	stream avail out =  dlen 
+
+	ret = zlib deflate stream  Z FINISH  
+	if  ret  = Z STREAM END  {
+		ret =  EINVAL 
+		goto out 
+	}
+	ret = 0 
+	 dlen = stream total out 
+out 
+	return ret 
+}
+

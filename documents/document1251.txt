@@ -1,0 +1,2 @@
+extern void drm encoder cleanup struct drm encoder  encoder  
+

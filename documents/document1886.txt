@@ -1,0 +1,13 @@
+static int crypto xcbc digest init struct shash desc  pdesc 
+{
+	unsigned long alignmask = crypto shash alignmask pdesc tfm  
+	struct xcbc desc ctx  ctx = shash desc ctx pdesc  
+	int bs = crypto shash blocksize pdesc tfm  
+	u8  prev = PTR ALIGN  ctx ctx 0   alignmask + 1  + bs 
+
+	ctx len = 0 
+	memset prev  0  bs  
+
+	return 0 
+}
+

@@ -1,0 +1,52 @@
+snd rme96 playback hw params struct snd pcm substream  substream 
+			     struct snd pcm hw params  params 
+{
+	struct rme96  rme96 = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err  rate  dummy 
+
+	runtime dma area =  void   force    rme96 iobase +
+					     RME96 IO PLAY BUFFER  
+	runtime dma addr = rme96 port + RME96 IO PLAY BUFFER 
+	runtime dma bytes = RME96 BUFFER SIZE 
+
+	spin lock irq  rme96 lock  
+	if    rme96 wcreg   RME96 WCR MASTER    
+            snd rme96 getinputtype rme96   = RME96 INPUT ANALOG   
+	     rate = snd rme96 capture getrate rme96   dummy     0 
+	{
+                   slave clock   
+                if   int params rate params   = rate  {
+			spin unlock irq  rme96 lock  
+			return  EIO                     
+                }
+	} else if   err = snd rme96 playback setrate rme96  params rate params      0  {
+		spin unlock irq  rme96 lock  
+		return err 
+	}
+	if   err = snd rme96 playback setformat rme96  params format params      0  {
+		spin unlock irq  rme96 lock  
+		return err 
+	}
+	snd rme96 setframelog rme96  params channels params   1  
+	if  rme96 capture periodsize  = 0  {
+		if  params period size params     rme96 playback frlog  =
+		    rme96 capture periodsize 
+		{
+			spin unlock irq  rme96 lock  
+			return  EBUSY 
+		}
+	}
+	rme96 playback periodsize =
+		params period size params     rme96 playback frlog 
+	snd rme96 set period properties rme96  rme96 playback periodsize  
+	   S PDIF setup   
+	if   rme96 wcreg   RME96 WCR ADAT  == 0  {
+		rme96 wcreg  = ~ RME96 WCR PRO | RME96 WCR DOLBY | RME96 WCR EMP  
+		writel rme96 wcreg |= rme96 wcreg spdif stream  rme96 iobase + RME96 IO CONTROL REGISTER  
+	}
+	spin unlock irq  rme96 lock  
+		
+	return 0 
+}
+

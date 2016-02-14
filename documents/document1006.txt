@@ -1,0 +1,23 @@
+static int snd ensoniq playback1 open struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	ensoniq mode |= ES MODE PLAY1 
+	ensoniq playback1 substream = substream 
+	runtime hw = snd ensoniq playback1 
+	snd pcm set sync substream  
+	spin lock irq  ensoniq reg lock  
+	if  ensoniq spdif    ensoniq playback2 substream == NULL 
+		ensoniq spdif stream = ensoniq spdif default 
+	spin unlock irq  ensoniq reg lock  
+#ifdef CHIP1370
+	snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM RATE 
+				    snd es1370 hw constraints rates  
+#else
+	snd pcm hw constraint ratdens runtime  0  SNDRV PCM HW PARAM RATE 
+				       snd es1371 hw constraints dac clock  
+#endif
+	return 0 
+}
+

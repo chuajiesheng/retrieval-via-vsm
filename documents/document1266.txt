@@ -1,0 +1,2 @@
+extern bool drm detect monitor audio struct edid  edid  
+

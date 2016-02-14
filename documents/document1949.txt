@@ -1,0 +1,18 @@
+   look up white black list for SPDIF over ac link   
+static int   devinit check default spdif aclink struct pci dev  pci 
+{
+	const struct snd pci quirk  w 
+
+	w = snd pci quirk lookup pci  spdif aclink defaults  
+	if  w  {
+		if  w value 
+			snd printdd KERN INFO  intel8x0  Using SPDIF over  
+				     AC Link for  s\n   w name  
+		else
+			snd printdd KERN INFO  intel8x0  Using integrated  
+				     SPDIF DMA for  s\n   w name  
+		return w value 
+	}
+	return 0 
+}
+

@@ -1,0 +1,9 @@
+static int snd ensoniq playback1 close struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+
+	ensoniq playback1 substream = NULL 
+	ensoniq mode  = ~ES MODE PLAY1 
+	return 0 
+}
+

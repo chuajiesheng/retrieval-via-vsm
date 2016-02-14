@@ -1,0 +1,22 @@
+   
+   ttm mem register shrink   register a struct ttm mem shrink object 
+  
+   @glob  The struct ttm mem global object to register with 
+   @shrink  An initialized struct ttm mem shrink object to register 
+  
+   Returns 
+    EBUSY  There's already a callback registered   May change  
+   
+static inline int ttm mem register shrink struct ttm mem global  glob 
+					  struct ttm mem shrink  shrink 
+{
+	spin lock  glob lock  
+	if  glob shrink  = NULL  {
+		spin unlock  glob lock  
+		return  EBUSY 
+	}
+	glob shrink = shrink 
+	spin unlock  glob lock  
+	return 0 
+}
+

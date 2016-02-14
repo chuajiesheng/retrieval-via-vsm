@@ -1,0 +1,20 @@
+  
+   
+static int snd atiixp playback open struct snd pcm substream  substream 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+	int err 
+
+	mutex lock  chip open mutex  
+	err = snd atiixp pcm open substream   chip dmas ATI DMA PLAYBACK   0  
+	mutex unlock  chip open mutex  
+	if  err   0 
+		return err 
+	substream runtime hw channels max = chip max channels 
+	if  chip max channels   2 
+		   channels must be even   
+		snd pcm hw constraint step substream runtime  0 
+					   SNDRV PCM HW PARAM CHANNELS  2  
+	return 0 
+}
+

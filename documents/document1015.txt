@@ -1,0 +1,14 @@
+static int snd ensoniq capture close struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+
+	ensoniq capture substream = NULL 
+	spin lock irq  ensoniq reg lock  
+#ifdef CHIP1370
+	ensoniq u es1370 pclkdiv lock  = ~ES MODE CAPTURE 
+#endif
+	ensoniq mode  = ~ES MODE CAPTURE 
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

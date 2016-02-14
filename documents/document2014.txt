@@ -1,0 +1,16 @@
+static int snd cs4281 get volume struct snd kcontrol  kcontrol 
+				 struct snd ctl elem value  ucontrol 
+{
+	struct cs4281  chip = snd kcontrol chip kcontrol  
+	int regL =  kcontrol private value    16    0xffff 
+	int regR = kcontrol private value   0xffff 
+	int volL  volR 
+
+	volL = CS VOL MASK    snd cs4281 peekBA0 chip  regL    CS VOL MASK  
+	volR = CS VOL MASK    snd cs4281 peekBA0 chip  regR    CS VOL MASK  
+
+	ucontrol value integer value 0  = volL 
+	ucontrol value integer value 1  = volR 
+	return 0 
+}
+

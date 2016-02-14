@@ -1,0 +1,12 @@
+   
+   ttm bo list ref sub
+  
+   @bo  The buffer object 
+   @count  The number of references with which to decrease @bo  list kref 
+   @never free  The refcount should not reach zero with this operation 
+  
+   Release @count lru list references to this buffer object 
+   
+extern void ttm bo list ref sub struct ttm buffer object  bo  int count 
+				bool never free  
+

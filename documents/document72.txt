@@ -1,0 +1,12 @@
+static int snd hrtimer close struct snd timer  t 
+{
+	struct snd hrtimer  stime = t private data 
+
+	if  stime  {
+		hrtimer cancel  stime hrt  
+		kfree stime  
+		t private data = NULL 
+	}
+	return 0 
+}
+

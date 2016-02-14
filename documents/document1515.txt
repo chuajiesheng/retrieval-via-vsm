@@ -1,0 +1,41 @@
+snd rme96 capture analog setrate struct rme96  rme96 
+				 int rate 
+{
+	switch  rate  {
+	case 32000 
+		rme96 areg =   rme96 areg | RME96 AR FREQPAD 0   
+			       ~RME96 AR FREQPAD 1    ~RME96 AR FREQPAD 2 
+		break 
+	case 44100 
+		rme96 areg =   rme96 areg   ~RME96 AR FREQPAD 0  |
+			       RME96 AR FREQPAD 1    ~RME96 AR FREQPAD 2 
+		break 
+	case 48000 
+		rme96 areg =   rme96 areg | RME96 AR FREQPAD 0  |
+			       RME96 AR FREQPAD 1    ~RME96 AR FREQPAD 2 
+		break 
+	case 64000 
+		if  rme96 rev   4  {
+			return  EINVAL 
+		}
+		rme96 areg =   rme96 areg | RME96 AR FREQPAD 0   
+			       ~RME96 AR FREQPAD 1  | RME96 AR FREQPAD 2 
+		break 
+	case 88200 
+		if  rme96 rev   4  {
+			return  EINVAL 
+		}
+		rme96 areg =   rme96 areg   ~RME96 AR FREQPAD 0  |
+			       RME96 AR FREQPAD 1  | RME96 AR FREQPAD 2 
+		break 
+	case 96000 
+		rme96 areg =   rme96 areg | RME96 AR FREQPAD 0  |
+			       RME96 AR FREQPAD 1  | RME96 AR FREQPAD 2 
+		break 
+	default 
+		return  EINVAL 
+	}
+	writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+	return 0 
+}
+

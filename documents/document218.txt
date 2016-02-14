@@ -1,0 +1,17 @@
+static inline void snd pcm set runtime buffer struct snd pcm substream  substream 
+					      struct snd dma buffer  bufp 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	if  bufp  {
+		runtime dma buffer p = bufp 
+		runtime dma area = bufp area 
+		runtime dma addr = bufp addr 
+		runtime dma bytes = bufp bytes 
+	} else {
+		runtime dma buffer p = NULL 
+		runtime dma area = NULL 
+		runtime dma addr = 0 
+		runtime dma bytes = 0 
+	}
+}
+

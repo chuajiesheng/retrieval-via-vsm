@@ -1,0 +1,36 @@
+static void snd sonicvibes pll unsigned int rate 
+			       unsigned int  res r 
+			       unsigned int  res m 
+			       unsigned int  res n 
+{
+	unsigned int r  m = 0  n = 0 
+	unsigned int xm  xn  xr  xd  metric = ~0U 
+
+	if  rate   625000   SV ADCMULT 
+		rate = 625000   SV ADCMULT 
+	if  rate   150000000   SV ADCMULT 
+		rate = 150000000   SV ADCMULT 
+	   slight violation of specs  needed for continuous sampling rates   
+	for  r = 0  rate   75000000   SV ADCMULT  r += 0x20  rate   = 1  
+	for  xn = 3  xn   33  xn++ 	   35   
+		for  xm = 3  xm   257  xm++  {
+			xr =   SV REFFREQUENCY   SV ADCMULT    xm    xn 
+			if  xr  = rate 
+				xd = xr   rate 
+			else
+				xd = rate   xr 
+			if  xd   metric  {
+				metric = xd 
+				m = xm   2 
+				n = xn   2 
+			}
+		}
+	 res r = r 
+	 res m = m 
+	 res n = n 
+#if 0
+	printk KERN DEBUG  metric =  i  xm =  i  xn =  i\n   metric  xm  xn  
+	printk KERN DEBUG  pll  m = 0x x  r = 0x x  n = 0x x\n   reg  m  r  n  
+#endif
+}
+

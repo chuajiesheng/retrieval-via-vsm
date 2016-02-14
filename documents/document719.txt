@@ -1,0 +1,2 @@
+int   first cpu const cpumask t  srcp  
+

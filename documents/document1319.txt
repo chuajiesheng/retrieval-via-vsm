@@ -1,0 +1,19 @@
+   
+   ttm bo kmap
+  
+   @bo  The buffer object 
+   @start page  The first page to map 
+   @num pages  Number of pages to map 
+   @map  pointer to a struct ttm bo kmap obj representing the map 
+  
+   Sets up a kernel virtual mapping  using ioremap  vmap or kmap to the
+   data in the buffer object  The ttm kmap obj virtual function can then be
+   used to obtain a virtual address to the data 
+  
+   Returns
+    ENOMEM  Out of memory 
+    EINVAL  Invalid range 
+   
+extern int ttm bo kmap struct ttm buffer object  bo  unsigned long start page 
+		       unsigned long num pages  struct ttm bo kmap obj  map  
+

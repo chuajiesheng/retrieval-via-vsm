@@ -1,0 +1,2 @@
+extern struct platform device  platform device alloc const char  name  int id  
+

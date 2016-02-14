@@ -1,0 +1,8 @@
+static void apu set register struct es1968  chip  u16 channel  u8 reg  u16 data 
+{
+	unsigned long flags 
+	spin lock irqsave  chip reg lock  flags  
+	  apu set register chip  channel  reg  data  
+	spin unlock irqrestore  chip reg lock  flags  
+}
+

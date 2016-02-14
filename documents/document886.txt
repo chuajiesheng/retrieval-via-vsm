@@ -1,0 +1,4 @@
+int snd ac97 pcm assign struct snd ac97 bus  ac97 
+			unsigned short pcms count 
+			const struct ac97 pcm  pcms  
+

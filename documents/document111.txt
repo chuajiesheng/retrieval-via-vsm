@@ -1,0 +1,15 @@
+   
+   snd pcm format silence 64   return the silent data in 8 bytes array
+   @format  the format to check
+  
+   Returns the format pattern to fill or NULL if error 
+   
+const unsigned char  snd pcm format silence 64 snd pcm format t format 
+{
+	if  format   0 || format   SNDRV PCM FORMAT LAST 
+		return NULL 
+	if    pcm formats format  phys 
+		return NULL 
+	return pcm formats format  silence 
+}
+

@@ -1,0 +1,10 @@
+   
+   ttm ttm bind 
+  
+   @ttm  The struct ttm tt containing backing pages 
+   @bo mem  The struct ttm mem reg identifying the binding location 
+  
+   Bind the pages of @ttm to an aperture location identified by @bo mem
+   
+extern int ttm tt bind struct ttm tt  ttm  struct ttm mem reg  bo mem  
+

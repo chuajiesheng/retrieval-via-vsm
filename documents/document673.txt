@@ -1,0 +1,5 @@
+static inline s64 ktime us delta const ktime t later  const ktime t earlier 
+{
+       return ktime to us ktime sub later  earlier   
+}
+

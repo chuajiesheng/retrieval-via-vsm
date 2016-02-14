@@ -1,0 +1,3 @@
+extern void sdio f0 writeb struct sdio func  func  unsigned char b 
+	unsigned int addr  int  err ret  
+

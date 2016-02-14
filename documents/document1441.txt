@@ -1,0 +1,28 @@
+   
+   list cut position   cut a list into two
+   @list  a new list to add all removed entries
+   @head  a list with entries
+   @entry  an entry within head  could be the head itself
+  	and if so we won't cut the list
+  
+   This helper moves the initial part of @head  up to and
+   including @entry  from @head to @list  You should
+   pass on @entry an element you know is on @head  @list
+   should be an empty list or a list you do not care about
+   losing its data 
+  
+   
+static inline void list cut position struct list head  list 
+		struct list head  head  struct list head  entry 
+{
+	if  list empty head  
+		return 
+	if  list is singular head    
+		 head next  = entry    head  = entry  
+		return 
+	if  entry == head 
+		INIT LIST HEAD list  
+	else
+		  list cut position list  head  entry  
+}
+

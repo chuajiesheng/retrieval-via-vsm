@@ -1,0 +1,9 @@
+   
+   tfrc rx hist rtt prev s  previously suitable  wrt rtt last s  RTT sampling entry
+   
+static inline struct tfrc rx hist entry  
+			tfrc rx hist rtt prev s const struct tfrc rx hist  h 
+{
+	return h ring h rtt sample prev  
+}
+

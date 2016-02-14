@@ -1,0 +1,10 @@
+static int dummy hrtimer start struct snd pcm substream  substream 
+{
+	struct dummy hrtimer pcm  dpcm = substream runtime private data 
+
+	dpcm base time = hrtimer cb get time  dpcm timer  
+	hrtimer start  dpcm timer  dpcm period time  HRTIMER MODE REL  
+	atomic set  dpcm running  1  
+	return 0 
+}
+

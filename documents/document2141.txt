@@ -1,0 +1,11 @@
+  
+   set up the table pointer
+   
+static void snd via82xx set table ptr struct via82xx  chip  struct viadev  viadev 
+{
+	snd via82xx codec ready chip  0  
+	outl  u32 viadev table addr  VIADEV REG viadev  OFFSET TABLE PTR   
+	udelay 20  
+	snd via82xx codec ready chip  0  
+}
+

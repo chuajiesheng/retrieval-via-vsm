@@ -1,0 +1,6 @@
+static inline unsigned int crypto ahash alignmask 
+	struct crypto ahash  tfm 
+{
+	return crypto tfm alg alignmask crypto ahash tfm tfm   
+}
+

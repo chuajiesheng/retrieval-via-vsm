@@ -1,0 +1,19 @@
+   
+   ieee80211 get rx led name   get name of RX LED
+  
+   mac80211 creates a receive LED trigger for each wireless hardware
+   that can be used to drive LEDs if your driver registers a LED device 
+   This function returns the name  or  NULL if not configured for LEDs 
+   of the trigger so you can automatically link the LED device 
+  
+   @hw  the hardware to get the LED trigger name for
+   
+static inline char  ieee80211 get rx led name struct ieee80211 hw  hw 
+{
+#ifdef CONFIG MAC80211 LEDS
+	return   ieee80211 get rx led name hw  
+#else
+	return NULL 
+#endif
+}
+

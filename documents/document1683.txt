@@ -1,0 +1,67 @@
+static void snd m3 ac97 reset struct snd m3  chip 
+{
+	u16 dir 
+	int delay1 = 0  delay2 = 0  i 
+	int io = chip iobase 
+
+	if  chip allegro flag  {
+		  
+		   the onboard codec on the allegro seems 
+		   to want to wait a very long time before
+		   coming back to life 
+		   
+		delay1 = 50 
+		delay2 = 800 
+	} else {
+		   maestro3   
+		delay1 = 20 
+		delay2 = 500 
+	}
+
+	for  i = 0  i   5  i++  {
+		dir = inw io + GPIO DIRECTION  
+		if   chip irda workaround 
+			dir |= 0x10     assuming pci bus master?   
+
+		snd m3 remote codec config io  0  
+
+		outw IO SRAM ENABLE  io + RING BUS CTRL A  
+		udelay 20  
+
+		outw dir   ~GPO PRIMARY AC97   io + GPIO DIRECTION  
+		outw ~GPO PRIMARY AC97   io + GPIO MASK  
+		outw 0  io + GPIO DATA  
+		outw dir | GPO PRIMARY AC97  io + GPIO DIRECTION  
+
+		schedule timeout uninterruptible msecs to jiffies delay1   
+
+		outw GPO PRIMARY AC97  io + GPIO DATA  
+		udelay 5  
+		   ok  bring back the ac link   
+		outw IO SRAM ENABLE | SERIAL AC LINK ENABLE  io + RING BUS CTRL A  
+		outw ~0  io + GPIO MASK  
+
+		schedule timeout uninterruptible msecs to jiffies delay2   
+
+		if    snd m3 try read vendor chip  
+			break 
+
+		delay1 += 10 
+		delay2 += 100 
+
+		snd printd  maestro3  retrying codec reset with delays of  d and  d ms\n  
+			   delay1  delay2  
+	}
+
+#if 0
+	   more gung ho reset that doesn't
+	   seem to work anywhere   
+	   
+	tmp = inw io + RING BUS CTRL A  
+	outw RAC SDFS ENABLE|LAC SDFS ENABLE  io + RING BUS CTRL A  
+	msleep 20  
+	outw tmp  io + RING BUS CTRL A  
+	msleep 50  
+#endif
+}
+

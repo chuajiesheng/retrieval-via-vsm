@@ -1,0 +1,45 @@
+static int   devinit loopback probe struct platform device  devptr 
+{
+	struct snd card  card 
+	struct loopback  loopback 
+	int dev = devptr id 
+	int err 
+
+	err = snd card create index dev   id dev   THIS MODULE 
+			      sizeof struct loopback    card  
+	if  err   0 
+		return err 
+	loopback = card private data 
+
+	if  pcm substreams dev    1 
+		pcm substreams dev  = 1 
+	if  pcm substreams dev    MAX PCM SUBSTREAMS 
+		pcm substreams dev  = MAX PCM SUBSTREAMS 
+	
+	loopback card = card 
+	mutex init  loopback cable lock  
+
+	err = loopback pcm new loopback  0  pcm substreams dev   
+	if  err   0 
+		goto   nodev 
+	err = loopback pcm new loopback  1  pcm substreams dev   
+	if  err   0 
+		goto   nodev 
+	err = loopback mixer new loopback  pcm notify dev  ? 1   0  
+	if  err   0 
+		goto   nodev 
+	loopback proc new loopback  0  
+	loopback proc new loopback  1  
+	strcpy card driver   Loopback   
+	strcpy card shortname   Loopback   
+	sprintf card longname   Loopback  i   dev + 1  
+	err = snd card register card  
+	if   err  {
+		platform set drvdata devptr  card  
+		return 0 
+	}
+        nodev 
+	snd card free card  
+	return err 
+}
+

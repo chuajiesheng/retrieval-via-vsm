@@ -1,0 +1,36 @@
+static int snd intel8x0 chip init struct intel8x0  chip  int probing 
+{
+	unsigned int i  timeout 
+	int err 
+	
+	if  chip device type  = DEVICE ALI  {
+		if   err = snd intel8x0 ich chip init chip  probing     0 
+			return err 
+		iagetword chip  0  	   clear semaphore flag   
+	} else {
+		if   err = snd intel8x0 ali chip init chip  probing     0 
+			return err 
+	}
+
+	   disable interrupts   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputbyte chip  ICH REG OFF CR + chip ichd i  reg offset  0x00  
+	   reset channels   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputbyte chip  ICH REG OFF CR + chip ichd i  reg offset  ICH RESETREGS  
+	for  i = 0  i   chip bdbars count  i++  {
+	        timeout = 100000 
+	        while    timeout  = 0  {
+        		if   igetbyte chip  ICH REG OFF CR + chip ichd i  reg offset    ICH RESETREGS  == 0 
+        		        break 
+                }
+                if  timeout == 0 
+                        printk KERN ERR  intel8x0  reset of registers failed?\n   
+        }
+	   initialize Buffer Descriptor Lists   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputdword chip  ICH REG OFF BDBAR + chip ichd i  reg offset 
+			  chip ichd i  bdbar addr  
+	return 0 
+}
+

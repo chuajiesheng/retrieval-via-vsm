@@ -1,0 +1,9 @@
+static void snd rme32 cp trans copy struct snd pcm substream  substream 
+				    struct snd pcm indirect  rec  size t bytes 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	memcpy fromio substream runtime dma area + rec sw data 
+		      rme32 iobase + RME32 IO DATA BUFFER + rec hw data 
+		      bytes  
+}
+

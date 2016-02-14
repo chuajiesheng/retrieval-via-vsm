@@ -1,0 +1,36 @@
+static void   one after loss struct tfrc rx hist  h  struct sk buff  skb  u32 n2 
+{
+	u64 s0 = tfrc rx hist loss prev h  tfrchrx seqno 
+	    s1 = tfrc rx hist entry h  1  tfrchrx seqno 
+	    s2 = DCCP SKB CB skb  dccpd seq 
+
+	if  likely dccp delta seqno s1  s2    0   {	   S1     S2   
+		h loss count = 2 
+		tfrc rx hist entry from skb tfrc rx hist entry h  2   skb  n2  
+		return 
+	}
+
+	   S0     S2     S1   
+
+	if  dccp loss free s0  s2  n2   {
+		u64 n1 = tfrc rx hist entry h  1  tfrchrx ndp 
+
+		if  dccp loss free s2  s1  n1   {
+			   hole is filled  S0  S2  and S1 are consecutive   
+			h loss count = 0 
+			h loss start = tfrc rx hist index h  1  
+		} else
+			   gap between S2 and S1  just update loss prev   
+			tfrc rx hist entry from skb tfrc rx hist loss prev h   skb  n2  
+
+	} else {	   gap between S0 and S2   
+		  
+		   Reorder history to insert S2 between S0 and S1
+		   
+		tfrc rx hist swap h  0  3  
+		h loss start = tfrc rx hist index h  3  
+		tfrc rx hist entry from skb tfrc rx hist entry h  1   skb  n2  
+		h loss count = 2 
+	}
+}
+

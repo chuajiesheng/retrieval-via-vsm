@@ -1,0 +1,47 @@
+static int crypto xcbc digest update struct shash desc  pdesc  const u8  p 
+				     unsigned int len 
+{
+	struct crypto shash  parent = pdesc tfm 
+	unsigned long alignmask = crypto shash alignmask parent  
+	struct xcbc tfm ctx  tctx = crypto shash ctx parent  
+	struct xcbc desc ctx  ctx = shash desc ctx pdesc  
+	struct crypto cipher  tfm = tctx child 
+	int bs = crypto shash blocksize parent  
+	u8  odds = PTR ALIGN  ctx ctx 0   alignmask + 1  
+	u8  prev = odds + bs 
+
+	   checking the data can fill the block   
+	if   ctx len + len   = bs  {
+		memcpy odds + ctx len  p  len  
+		ctx len += len 
+		return 0 
+	}
+
+	   filling odds with new data and encrypting it   
+	memcpy odds + ctx len  p  bs   ctx len  
+	len  = bs   ctx len 
+	p += bs   ctx len 
+
+	crypto xor prev  odds  bs  
+	crypto cipher encrypt one tfm  prev  prev  
+
+	   clearing the length   
+	ctx len = 0 
+
+	   encrypting the rest of data   
+	while  len   bs  {
+		crypto xor prev  p  bs  
+		crypto cipher encrypt one tfm  prev  prev  
+		p += bs 
+		len  = bs 
+	}
+
+	   keeping the surplus of blocksize   
+	if  len  {
+		memcpy odds  p  len  
+		ctx len = len 
+	}
+
+	return 0 
+}
+

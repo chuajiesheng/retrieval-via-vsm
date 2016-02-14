@@ -1,0 +1,17 @@
+   
+   snd pcm format unsigned   Check the PCM format is unsigned linear
+   @format  the format to check
+  
+   Returns 1 if the given PCM format is unsigned linear  0 if signed
+   linear  and a negative error code for non linear formats 
+   
+int snd pcm format unsigned snd pcm format t format 
+{
+	int val 
+
+	val = snd pcm format signed format  
+	if  val   0 
+		return val 
+	return  val 
+}
+

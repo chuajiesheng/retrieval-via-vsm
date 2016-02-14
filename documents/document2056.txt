@@ -1,0 +1,2 @@
+int snd opl3 init struct snd opl3  opl3  
+

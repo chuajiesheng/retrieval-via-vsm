@@ -1,0 +1,5 @@
+static void   exit alsa card dummy exit void 
+{
+	snd dummy unregister all   
+}
+

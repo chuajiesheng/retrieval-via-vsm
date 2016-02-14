@@ -1,0 +1,21 @@
+snd rme96 playback close struct snd pcm substream  substream 
+{
+	struct rme96  rme96 = snd pcm substream chip substream  
+	int spdif = 0 
+
+	spin lock irq  rme96 lock  	
+	if  RME96 ISPLAYING rme96   {
+		snd rme96 playback stop rme96  
+	}
+	rme96 playback substream = NULL 
+	rme96 playback periodsize = 0 
+	spdif =  rme96 wcreg   RME96 WCR ADAT  == 0 
+	spin unlock irq  rme96 lock  
+	if  spdif  {
+		rme96 spdif ctl vd 0  access |= SNDRV CTL ELEM ACCESS INACTIVE 
+		snd ctl notify rme96 card  SNDRV CTL EVENT MASK VALUE |
+			       SNDRV CTL EVENT MASK INFO   rme96 spdif ctl id  
+	}
+	return 0 
+}
+

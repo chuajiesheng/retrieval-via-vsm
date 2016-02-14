@@ -1,0 +1,5 @@
+static efi status t virt efi get next high mono count u32  count 
+{
+	return efi call virt1 get next high mono count  count  
+}
+

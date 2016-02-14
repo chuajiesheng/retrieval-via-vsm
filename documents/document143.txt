@@ -1,0 +1,2 @@
+extern int dma supported struct device  hwdev  u64 mask  
+

@@ -1,0 +1,15 @@
+snd m3 pcm pointer struct snd pcm substream  subs 
+{
+	struct snd m3  chip = snd pcm substream chip subs  
+	unsigned int ptr 
+	struct m3 dma  s = subs runtime private data 
+
+	if  snd BUG ON  s  
+		return 0 
+
+	spin lock  chip reg lock  
+	ptr = snd m3 get pointer chip  s  subs  
+	spin unlock  chip reg lock  
+	return bytes to frames subs runtime  ptr  
+}
+

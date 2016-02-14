@@ -1,0 +1,2 @@
+extern int  tfrc li init void  
+

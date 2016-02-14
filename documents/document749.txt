@@ -1,0 +1,15 @@
+static int gcm hash update struct aead request  req 
+			   struct crypto gcm req priv ctx  pctx 
+			   crypto completion t complete 
+			   struct scatterlist  src 
+			   unsigned int len 
+{
+	struct ahash request  ahreq =  pctx u ahreq 
+
+	ahash request set callback ahreq  aead request flags req  
+				   complete  req  
+	ahash request set crypt ahreq  src  NULL  len  
+
+	return crypto ahash update ahreq  
+}
+

@@ -1,0 +1,31 @@
+static irqreturn t snd als300 interrupt int irq  void  dev id 
+{
+	u8 status 
+	struct snd als300  chip = dev id 
+	struct snd als300 substream data  data 
+
+	status = inb chip port+ALS300 IRQ STATUS  
+	if   status     shared IRQ  for different device?? Exit ASAP    
+		return IRQ NONE 
+
+	   ACK everything ASAP   
+	outb status  chip port+ALS300 IRQ STATUS  
+	if  status   IRQ PLAYBACK  {
+		if  chip pcm    chip playback substream  {
+			data = chip playback substream runtime private data 
+			data period flipflop ^= 1 
+			snd pcm period elapsed chip playback substream  
+			snd als300 dbgplay  IRQ PLAYBACK\n   
+		}
+	}
+	if  status   IRQ CAPTURE  {
+		if  chip pcm    chip capture substream  {
+			data = chip capture substream runtime private data 
+			data period flipflop ^= 1 
+			snd pcm period elapsed chip capture substream  
+			snd als300 dbgplay  IRQ CAPTURE\n   
+		}
+	}
+	return IRQ HANDLED 
+}
+

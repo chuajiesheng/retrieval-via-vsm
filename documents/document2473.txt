@@ -1,0 +1,5 @@
+static inline u8 tfrc lh length struct tfrc loss hist  lh 
+{
+	return min lh counter   u8 LIH SIZE  
+}
+

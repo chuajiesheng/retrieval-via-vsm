@@ -1,0 +1,12 @@
+snd azf3328 pcm close struct snd pcm substream  substream
+ 
+{
+	struct snd azf3328 codec data  codec =
+		substream runtime private data 
+
+	snd azf3328 dbgcallenter   
+	codec substream = NULL 
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

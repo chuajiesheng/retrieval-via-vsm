@@ -1,0 +1,15 @@
+static int rule format struct snd pcm hw params  params 
+		       struct snd pcm hw rule  rule 
+{
+
+	struct snd pcm hardware  hw = rule private 
+	struct snd mask  maskp = hw param mask params  rule var  
+
+	maskp bits 0   =  u int32 t hw formats 
+	maskp bits 1   =  u int32 t  hw formats    32  
+	memset maskp bits + 2  0   SNDRV MASK MAX 64    8      clear rest   
+	if    maskp bits 0       maskp bits 1  
+		return  EINVAL 
+	return 0 
+}
+

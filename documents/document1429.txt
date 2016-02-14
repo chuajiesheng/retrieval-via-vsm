@@ -1,0 +1,5 @@
+  
+   Free a memory block identified by its user hash key 
+   
+extern int drm sman free key struct drm sman   sman  unsigned int key  
+

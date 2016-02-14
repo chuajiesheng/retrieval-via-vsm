@@ -1,0 +1,31 @@
+static void crypto gcm init crypt struct ablkcipher request  ablk req 
+				  struct aead request  req 
+				  unsigned int cryptlen 
+{
+	struct crypto aead  aead = crypto aead reqtfm req  
+	struct crypto gcm ctx  ctx = crypto aead ctx aead  
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+	struct scatterlist  dst 
+	  be32 counter = cpu to be32 1  
+
+	memset pctx auth tag  0  sizeof pctx auth tag   
+	memcpy req iv + 12   counter  4  
+
+	sg init table pctx src  2  
+	sg set buf pctx src  pctx auth tag  sizeof pctx auth tag   
+	scatterwalk sg chain pctx src  2  req src  
+
+	dst = pctx src 
+	if  req src  = req dst  {
+		sg init table pctx dst  2  
+		sg set buf pctx dst  pctx auth tag  sizeof pctx auth tag   
+		scatterwalk sg chain pctx dst  2  req dst  
+		dst = pctx dst 
+	}
+
+	ablkcipher request set tfm ablk req  ctx ctr  
+	ablkcipher request set crypt ablk req  pctx src  dst 
+				     cryptlen + sizeof pctx auth tag  
+				     req iv  
+}
+

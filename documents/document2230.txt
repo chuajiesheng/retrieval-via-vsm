@@ -1,0 +1,32 @@
+snd ad1889 ac97 init struct snd ad1889  chip  const char  quirk override 
+{
+	int err 
+	struct snd ac97 template ac97 
+	static struct snd ac97 bus ops ops = {
+		 write = snd ad1889 ac97 write 
+		 read = snd ad1889 ac97 read 
+	} 
+
+	   doing that here  it works    
+	snd ad1889 ac97 xinit chip  
+
+	err = snd ac97 bus chip card  0   ops  chip   chip ac97 bus  
+	if  err   0 
+		return err 
+	
+	chip ac97 bus private free = snd ad1889 ac97 bus free 
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	ac97 private free = snd ad1889 ac97 free 
+	ac97 pci = chip pci 
+
+	err = snd ac97 mixer chip ac97 bus   ac97   chip ac97  
+	if  err   0 
+		return err 
+		
+	snd ac97 tune hardware chip ac97  ac97 quirks  quirk override  
+	
+	return 0 
+}
+

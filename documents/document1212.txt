@@ -1,0 +1,33 @@
+static int snd als4000 capture trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+	int result = 0 
+	
+	   FIXME race condition in here   
+	   chip mode non atomic update gets consistently protected
+	   by reg lock always   except  for this place  
+	   Probably need to take reg lock as outer  or inner??  lock  too 
+	    or serialize both lock operations? probably not  though      racy? 
+	  
+	spin lock  chip mixer lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		chip mode |= SB RATE LOCK CAPTURE 
+		snd als4 cr write chip  ALS4K CR1E FIFO2 CONTROL 
+							 capture cmd chip   
+		break 
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		chip mode  = ~SB RATE LOCK CAPTURE 
+		snd als4 cr write chip  ALS4K CR1E FIFO2 CONTROL 
+							 capture cmd chip   
+		break 
+	default 
+		result =  EINVAL 
+		break 
+	}
+	spin unlock  chip mixer lock  
+	return result 
+}
+

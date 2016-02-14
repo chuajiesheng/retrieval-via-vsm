@@ -1,0 +1,6 @@
+static ssize t snd disconnect write struct file  file  const char   user  buf 
+				    size t count  loff t  offset 
+{
+	return  ENODEV 
+}
+

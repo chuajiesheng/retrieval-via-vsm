@@ -1,0 +1,38 @@
+static int   devinit snd m3 assp client init struct snd m3  chip  struct m3 dma  s  int index 
+{
+	int data bytes = 2     MINISRC TMP BUFFER SIZE   2 + 
+			       MINISRC IN BUFFER SIZE   2 +
+			       1 + MINISRC OUT BUFFER SIZE   2 + 1   
+	int address  i 
+
+	  
+	   the revb memory map has 0x1100 through 0x1c00
+	   free   
+	   
+
+	  
+	   align instance address to 256 bytes so that its
+	   shifted list address is aligned 
+	   list address =  mem address    1     7 
+	   
+	data bytes = ALIGN data bytes  256  
+	address = 0x1100 +   data bytes 2    index  
+
+	if   address +  data bytes 2    = 0x1c00  {
+		snd printk KERN ERR  no memory for  d bytes at ind  d  addr 0x x \n  
+			   data bytes  index  address  
+		return  ENOMEM 
+	}
+
+	s number = index 
+	s inst code = 0x400 
+	s inst data = address 
+
+	for  i = data bytes   2  i   0  address++  i    {
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  address  0  
+	}
+
+	return 0 
+}
+

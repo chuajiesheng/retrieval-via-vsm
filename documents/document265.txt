@@ -1,0 +1,5 @@
+static void snd pcm proc done void 
+{
+	snd info free entry snd pcm proc entry  
+}
+

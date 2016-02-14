@@ -1,0 +1,11 @@
+void tfrc rx hist purge struct tfrc rx hist  h 
+{
+	int i 
+
+	for  i = 0  i  = TFRC NDUPACK  ++i 
+		if  h ring i   = NULL  {
+			kmem cache free tfrc rx hist slab  h ring i   
+			h ring i  = NULL 
+		}
+}
+

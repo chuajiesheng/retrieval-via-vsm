@@ -1,0 +1,5 @@
+static void snd m3 assp continue struct snd m3  chip 
+{
+	snd m3 outb chip  chip reset state | REGB ENABLE RESET  DSP PORT CONTROL REG B  
+}
+

@@ -1,0 +1,9 @@
+   
+   cpumask full    srcp == 0xFFFFFFFF   
+   @srcp  the cpumask to that all cpus   nr cpu ids are set 
+   
+static inline bool cpumask full const struct cpumask  srcp 
+{
+	return bitmap full cpumask bits srcp   nr cpumask bits  
+}
+

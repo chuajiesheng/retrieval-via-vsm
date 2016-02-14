@@ -1,0 +1,22 @@
+   
+   ttm bo validate
+  
+   @bo  The buffer object 
+   @placement  Proposed placement for the buffer object 
+   @interruptible  Sleep interruptible if sleeping 
+   @no wait reserve  Return immediately if other buffers are busy 
+   @no wait gpu  Return immediately if the GPU is busy 
+  
+   Changes placement and caching policy of the buffer object
+   according proposed placement 
+   Returns
+    EINVAL on invalid proposed placement 
+    ENOMEM on out of memory condition 
+    EBUSY if no wait is true and buffer busy 
+    ERESTARTSYS if interrupted by a signal 
+   
+extern int ttm bo validate struct ttm buffer object  bo 
+				struct ttm placement  placement 
+				bool interruptible  bool no wait reserve 
+				bool no wait gpu  
+

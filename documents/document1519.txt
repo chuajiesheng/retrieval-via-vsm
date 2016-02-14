@@ -1,0 +1,9 @@
+snd rme96 getclockmode struct rme96  rme96 
+{
+	if  rme96 areg   RME96 AR WSEL  {
+		return RME96 CLOCKMODE WORDCLOCK 
+	}
+	return  rme96 wcreg   RME96 WCR MASTER  ? RME96 CLOCKMODE MASTER  
+		RME96 CLOCKMODE SLAVE 
+}
+

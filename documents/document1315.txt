@@ -1,0 +1,39 @@
+static void snd es1968 bob start struct es1968  chip 
+{
+	int prescale 
+	int divide 
+
+	   compute ideal interrupt frequency for buffer size   play rate   
+	   first  find best prescaler value to match freq   
+	for  prescale = 5  prescale   12  prescale++ 
+		if  chip bob freq    ESS SYSCLK     prescale + 9   
+			break 
+
+	   next  back off prescaler whilst getting divider into optimum range   
+	divide = 1 
+	while   prescale   5      divide   32   {
+		prescale   
+		divide   = 1 
+	}
+	divide   = 1 
+
+	   now fine tune the divider for best match   
+	for    divide   31  divide++ 
+		if  chip bob freq  
+		      ESS SYSCLK     prescale + 9      divide + 1    break 
+
+	   divide = 0 is illegal  but don't let prescale = 4    
+	if  divide == 0  {
+		divide++ 
+		if  prescale   5 
+			prescale   
+	} else if  divide   1 
+		divide   
+
+	  maestro write chip  6  0x9000 |  prescale    5  | divide  	   set reg   
+
+	   Now set IDR 11 17   
+	  maestro write chip  0x11    maestro read chip  0x11  | 1  
+	  maestro write chip  0x17    maestro read chip  0x17  | 1  
+}
+

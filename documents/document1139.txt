@@ -1,0 +1,21 @@
+snd azf3328 timer stop struct snd timer  timer 
+{
+	struct snd azf3328  chip 
+	unsigned long flags 
+
+	snd azf3328 dbgcallenter   
+	chip = snd timer chip timer  
+	spin lock irqsave  chip reg lock  flags  
+	   disable timer countdown and interrupt   
+	   Hmm  should we write TIMER IRQ ACK here?
+	   YES indeed  otherwise a rogue timer operation   which prompts
+	   ALSA ?  to call repeated stop   in vain  but NOT start    
+	   will never end  value 0x03 is kept shown in control byte  
+	   Simply manually poking 0x04  once  immediately successfully stops
+	   the hardware ALSA interrupt activity    
+	snd azf3328 ctrl outb chip  IDX IO TIMER VALUE + 3  0x04  
+	spin unlock irqrestore  chip reg lock  flags  
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

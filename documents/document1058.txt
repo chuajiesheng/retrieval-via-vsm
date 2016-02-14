@@ -1,0 +1,26 @@
+static int snd ensoniq resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct ensoniq  ensoniq = card private data 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR DRIVER NAME    pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd ensoniq chip init ensoniq  
+
+#ifdef CHIP1371	
+	snd ac97 resume ensoniq u es1371 ac97  
+#else
+	snd ak4531 resume ensoniq u es1370 ak4531  
+#endif	
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

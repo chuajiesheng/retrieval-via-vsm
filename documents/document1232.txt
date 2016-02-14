@@ -1,0 +1,12 @@
+static void snd card als4000 free  struct snd card  card  
+{
+	struct snd card als4000  acard = card private data 
+
+	   make sure that interrupts are disabled   
+	snd als4k gcr write addr acard iobase  ALS4K GCR8C MISC CTRL  0  
+	   free resources   
+	snd als4000 free gameport acard  
+	pci release regions acard pci  
+	pci disable device acard pci  
+}
+

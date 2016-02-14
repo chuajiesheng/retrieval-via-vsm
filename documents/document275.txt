@@ -1,0 +1,3 @@
+   basic memory allocation functions   
+void  snd malloc pages size t size  gfp t gfp flags  
+

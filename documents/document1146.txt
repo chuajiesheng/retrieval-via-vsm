@@ -1,0 +1,8 @@
+snd azf3328 remove struct pci dev  pci 
+{
+	snd azf3328 dbgcallenter   
+	snd card free pci get drvdata pci   
+	pci set drvdata pci  NULL  
+	snd azf3328 dbgcallleave   
+}
+

@@ -1,0 +1,42 @@
+static struct crypto instance  crypto ecb alloc struct rtattr   tb 
+{
+	struct crypto instance  inst 
+	struct crypto alg  alg 
+	int err 
+
+	err = crypto check attr type tb  CRYPTO ALG TYPE BLKCIPHER  
+	if  err 
+		return ERR PTR err  
+
+	alg = crypto get attr alg tb  CRYPTO ALG TYPE CIPHER 
+				  CRYPTO ALG TYPE MASK  
+	if  IS ERR alg  
+		return ERR CAST alg  
+
+	inst = crypto alloc instance  ecb   alg  
+	if  IS ERR inst  
+		goto out put alg 
+
+	inst alg cra flags = CRYPTO ALG TYPE BLKCIPHER 
+	inst alg cra priority = alg cra priority 
+	inst alg cra blocksize = alg cra blocksize 
+	inst alg cra alignmask = alg cra alignmask 
+	inst alg cra type =  crypto blkcipher type 
+
+	inst alg cra blkcipher min keysize = alg cra cipher cia min keysize 
+	inst alg cra blkcipher max keysize = alg cra cipher cia max keysize 
+
+	inst alg cra ctxsize = sizeof struct crypto ecb ctx  
+
+	inst alg cra init = crypto ecb init tfm 
+	inst alg cra exit = crypto ecb exit tfm 
+
+	inst alg cra blkcipher setkey = crypto ecb setkey 
+	inst alg cra blkcipher encrypt = crypto ecb encrypt 
+	inst alg cra blkcipher decrypt = crypto ecb decrypt 
+
+out put alg 
+	crypto mod put alg  
+	return inst 
+}
+

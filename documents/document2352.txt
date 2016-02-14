@@ -1,0 +1,53 @@
+static int   devinit snd intel8x0 mixer struct intel8x0m  chip  int ac97 clock 
+{
+	struct snd ac97 bus  pbus 
+	struct snd ac97 template ac97 
+	struct snd ac97  x97 
+	int err 
+	unsigned int glob sta = 0 
+	static struct snd ac97 bus ops ops = {
+		 write = snd intel8x0 codec write 
+		 read = snd intel8x0 codec read 
+	} 
+
+	chip in ac97 init = 1 
+	
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	ac97 private free = snd intel8x0 mixer free ac97 
+	ac97 scaps = AC97 SCAP SKIP AUDIO | AC97 SCAP POWER SAVE 
+
+	glob sta = igetdword chip  ICHREG GLOB STA   
+
+	if   err = snd ac97 bus chip card  0   ops  chip   pbus     0 
+		goto   err 
+	pbus private free = snd intel8x0 mixer free ac97 bus 
+	if  ac97 clock  = 8000    ac97 clock  = 48000 
+		pbus clock = ac97 clock 
+	chip ac97 bus = pbus 
+
+	ac97 pci = chip pci 
+	ac97 num = glob sta   ICH SCR ? 1   0 
+	if   err = snd ac97 mixer pbus   ac97   x97     0  {
+		snd printk KERN ERR  Unable to initialize codec # d\n   ac97 num  
+		if  ac97 num == 0 
+			goto   err 
+		return err 
+	}
+	chip ac97 = x97 
+	if ac97 is modem x97      chip ichd ICHD MDMIN  ac97  {
+		chip ichd ICHD MDMIN  ac97 = x97 
+		chip ichd ICHD MDMOUT  ac97 = x97 
+	}
+
+	chip in ac97 init = 0 
+	return 0 
+
+   err 
+	   clear the cold reset bit for the next chance   
+	if  chip device type  = DEVICE ALI 
+		iputdword chip  ICHREG GLOB CNT  
+			  igetdword chip  ICHREG GLOB CNT     ~ICH AC97COLD  
+	return err 
+}
+

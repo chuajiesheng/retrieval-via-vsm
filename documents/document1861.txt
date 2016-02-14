@@ -1,0 +1,8 @@
+static int snd bt87x capture source info struct snd kcontrol  kcontrol 
+					 struct snd ctl elem info  info 
+{
+	static const char  const texts 3  = { TV Tuner    FM    Mic Line } 
+
+	return snd ctl enum info info  1  3  texts  
+}
+

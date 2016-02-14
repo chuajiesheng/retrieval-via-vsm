@@ -1,0 +1,6 @@
+static void snd rme32 free spdif pcm struct snd pcm  pcm 
+{
+	struct rme32  rme32 =  struct rme32    pcm private data 
+	rme32 spdif pcm = NULL 
+}
+

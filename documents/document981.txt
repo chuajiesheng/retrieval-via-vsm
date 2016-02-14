@@ -1,0 +1,17 @@
+static int crypto rfc4106 setauthsize struct crypto aead  parent 
+				      unsigned int authsize 
+{
+	struct crypto rfc4106 ctx  ctx = crypto aead ctx parent  
+
+	switch  authsize  {
+	case 8 
+	case 12 
+	case 16 
+		break 
+	default 
+		return  EINVAL 
+	}
+
+	return crypto aead setauthsize ctx child  authsize  
+}
+

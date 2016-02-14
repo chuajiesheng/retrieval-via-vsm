@@ -1,0 +1,31 @@
+static int snd als300 playback prepare struct snd pcm substream  substream 
+{
+	u32 tmp 
+	struct snd als300  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned short period bytes = snd pcm lib period bytes substream  
+	unsigned short buffer bytes = snd pcm lib buffer bytes substream  
+	
+	snd als300 dbgcallenter   
+	spin lock irq  chip reg lock  
+	tmp = snd als300 gcr read chip port  PLAYBACK CONTROL  
+	tmp  = ~TRANSFER START 
+
+	snd als300 dbgplay  Period bytes   d Buffer bytes  d\n  
+						period bytes  buffer bytes  
+	
+	   set block size   
+	tmp  = 0xffff0000 
+	tmp |= period bytes   1 
+	snd als300 gcr write chip port  PLAYBACK CONTROL  tmp  
+
+	   set dma area   
+	snd als300 gcr write chip port  PLAYBACK START 
+					runtime dma addr  
+	snd als300 gcr write chip port  PLAYBACK END 
+					runtime dma addr + buffer bytes   1  
+	spin unlock irq  chip reg lock  
+	snd als300 dbgcallleave   
+	return 0 
+}
+

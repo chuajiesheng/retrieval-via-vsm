@@ -1,0 +1,6 @@
+static inline void loopback timer stop struct loopback pcm  dpcm 
+{
+	del timer  dpcm timer  
+	dpcm timer expires = 0 
+}
+

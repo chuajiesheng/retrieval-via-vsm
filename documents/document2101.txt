@@ -1,0 +1,26 @@
+static int snd atiixp resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct atiixp modem  chip = card private data 
+	int i 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  atiixp modem  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd atiixp aclink reset chip  
+	snd atiixp chip start chip  
+
+	for  i = 0  i   NUM ATI CODECS  i++ 
+		snd ac97 resume chip ac97 i   
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

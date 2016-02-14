@@ -1,0 +1,15 @@
+static int snd hwdep info struct snd hwdep  hw 
+			  struct snd hwdep info   user   info 
+{
+	struct snd hwdep info info 
+	
+	memset  info  0  sizeof info   
+	info card = hw card number 
+	strlcpy info id  hw id  sizeof info id   	
+	strlcpy info name  hw name  sizeof info name   
+	info iface = hw iface 
+	if  copy to user  info   info  sizeof info   
+		return  EFAULT 
+	return 0 
+}
+

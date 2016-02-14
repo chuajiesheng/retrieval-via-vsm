@@ -1,0 +1,38 @@
+static int   devinit snd mtpav get RAWMIDI struct mtpav  mcard 
+{
+	int rval 
+	struct snd rawmidi  rawmidi 
+	struct snd rawmidi substream  substream 
+	struct list head  list 
+
+	if  hwports   1 
+		hwports = 1 
+	else if  hwports   8 
+		hwports = 8 
+	mcard num ports = hwports 
+
+	if   rval = snd rawmidi new mcard card   MotuMIDI   0 
+				    mcard num ports   2 + MTPAV PIDX BROADCAST + 1 
+				    mcard num ports   2 + MTPAV PIDX BROADCAST + 1 
+				     mcard rmidi     0 
+		return rval 
+	rawmidi = mcard rmidi 
+	rawmidi private data = mcard 
+
+	list for each list   rawmidi streams SNDRV RAWMIDI STREAM INPUT  substreams  {
+		substream = list entry list  struct snd rawmidi substream  list  
+		snd mtpav set name mcard  substream  
+		substream ops =  snd mtpav input 
+	}
+	list for each list   rawmidi streams SNDRV RAWMIDI STREAM OUTPUT  substreams  {
+		substream = list entry list  struct snd rawmidi substream  list  
+		snd mtpav set name mcard  substream  
+		substream ops =  snd mtpav output 
+		mcard ports substream number  hwport = translate subdevice to hwport mcard  substream number  
+	}
+	rawmidi info flags |= SNDRV RAWMIDI INFO OUTPUT | SNDRV RAWMIDI INFO INPUT |
+			       SNDRV RAWMIDI INFO DUPLEX 
+	sprintf rawmidi name   MTP AV MIDI   
+	return 0 
+}
+

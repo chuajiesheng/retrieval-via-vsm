@@ -1,0 +1,8 @@
+static inline void skcipher givcrypt set crypt 
+	struct skcipher givcrypt request  req 
+	struct scatterlist  src  struct scatterlist  dst 
+	unsigned int nbytes  void  iv 
+{
+	ablkcipher request set crypt  req creq  src  dst  nbytes  iv  
+}
+

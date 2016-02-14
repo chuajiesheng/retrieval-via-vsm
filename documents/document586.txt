@@ -1,0 +1,15 @@
+  
+   card models
+   
+static int emu10k1 playback constraints struct snd pcm runtime  runtime 
+{
+	int err 
+	err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS  
+	if  err   0 
+		return err 
+	err = snd pcm hw constraint minmax runtime  SNDRV PCM HW PARAM BUFFER BYTES  256  UINT MAX  
+	if  err   0 
+		return err 
+	return 0 
+}
+

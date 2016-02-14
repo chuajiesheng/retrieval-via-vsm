@@ -1,0 +1,10 @@
+static void snd rme32 pcm start struct rme32   rme32  int from pause 
+{
+	if   from pause  {
+		writel 0  rme32 iobase + RME32 IO RESET POS  
+	}
+
+	rme32 wcreg |= RME32 WCR START 
+	writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+}
+

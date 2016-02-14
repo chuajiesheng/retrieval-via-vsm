@@ -1,0 +1,47 @@
+static unsigned int loopback pos update struct loopback cable  cable 
+{
+	struct loopback pcm  dpcm play =
+			cable streams SNDRV PCM STREAM PLAYBACK  
+	struct loopback pcm  dpcm capt =
+			cable streams SNDRV PCM STREAM CAPTURE  
+	unsigned long delta play = 0  delta capt = 0 
+	unsigned int running 
+
+	spin lock  cable lock  	
+	running = cable running ^ cable pause 
+	if  running    1    SNDRV PCM STREAM PLAYBACK   {
+		delta play = jiffies   dpcm play last jiffies 
+		dpcm play last jiffies += delta play 
+	}
+
+	if  running    1    SNDRV PCM STREAM CAPTURE   {
+		delta capt = jiffies   dpcm capt last jiffies 
+		dpcm capt last jiffies += delta capt 
+	}
+
+	if  delta play == 0    delta capt == 0  {
+		spin unlock  cable lock  
+		return running 
+	}
+		
+	if  delta play   delta capt  {
+		loopback bytepos update dpcm play  delta play   delta capt 
+					BYTEPOS UPDATE POSONLY  
+		delta play = delta capt 
+	} else if  delta play   delta capt  {
+		loopback bytepos update dpcm capt  delta capt   delta play 
+					BYTEPOS UPDATE CLEAR  
+		delta capt = delta play 
+	}
+
+	if  delta play == 0    delta capt == 0  {
+		spin unlock  cable lock  
+		return running 
+	}
+	   note delta capt == delta play at this moment   
+	loopback bytepos update dpcm capt  delta capt  BYTEPOS UPDATE COPY  
+	loopback bytepos update dpcm play  delta play  BYTEPOS UPDATE POSONLY  
+	spin unlock  cable lock  
+	return running 
+}
+

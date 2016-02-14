@@ -1,0 +1,179 @@
+static int   devinit snd intel8x0 mixer struct intel8x0  chip  int ac97 clock 
+					const char  quirk override 
+{
+	struct snd ac97 bus  pbus 
+	struct snd ac97 template ac97 
+	int err 
+	unsigned int i  codecs 
+	unsigned int glob sta = 0 
+	struct snd ac97 bus ops  ops 
+	static struct snd ac97 bus ops standard bus ops = {
+		 write = snd intel8x0 codec write 
+		 read = snd intel8x0 codec read 
+	} 
+	static struct snd ac97 bus ops ali bus ops = {
+		 write = snd intel8x0 ali codec write 
+		 read = snd intel8x0 ali codec read 
+	} 
+
+	chip spdif idx =  1     use PCMOUT  or disabled    
+	if   spdif aclink  {
+		switch  chip device type  {
+		case DEVICE NFORCE 
+			chip spdif idx = NVD SPBAR 
+			break 
+		case DEVICE ALI 
+			chip spdif idx = ALID AC97SPDIFOUT 
+			break 
+		case DEVICE INTEL ICH4 
+			chip spdif idx = ICHD SPBAR 
+			break 
+		} 
+	}
+
+	chip in ac97 init = 1 
+	
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	ac97 private free = snd intel8x0 mixer free ac97 
+	ac97 scaps = AC97 SCAP SKIP MODEM | AC97 SCAP POWER SAVE 
+	if  chip xbox 
+		ac97 scaps |= AC97 SCAP DETECT BY VENDOR 
+	if  chip device type  = DEVICE ALI  {
+		glob sta = igetdword chip  ICHREG GLOB STA   
+		ops =  standard bus ops 
+		chip in sdin init = 1 
+		codecs = 0 
+		for  i = 0  i   chip max codecs  i++  {
+			if     glob sta   chip codec bit i   
+				continue 
+			if  chip device type == DEVICE INTEL ICH4  {
+				snd intel8x0 codec read test chip  codecs  
+				chip ac97 sdin codecs  =
+					igetbyte chip  ICHREG SDM     ICH LDI MASK 
+				if  snd BUG ON chip ac97 sdin codecs   = 3  
+					chip ac97 sdin codecs  = 0 
+			} else
+				chip ac97 sdin codecs  = i 
+			codecs++ 
+		}
+		chip in sdin init = 0 
+		if    codecs 
+			codecs = 1 
+	} else {
+		ops =  ali bus ops 
+		codecs = 1 
+		   detect the secondary codec   
+		for  i = 0  i   100  i++  {
+			unsigned int reg = igetdword chip  ICHREG ALI RTSR   
+			if  reg   0x40  {
+				codecs = 2 
+				break 
+			}
+			iputdword chip  ICHREG ALI RTSR   reg | 0x40  
+			udelay 1  
+		}
+	}
+	if   err = snd ac97 bus chip card  0  ops  chip   pbus     0 
+		goto   err 
+	pbus private free = snd intel8x0 mixer free ac97 bus 
+	if  ac97 clock  = 8000    ac97 clock  = 48000 
+		pbus clock = ac97 clock 
+	   FIXME  my test board doesn't work well with VRA      
+	if  chip device type == DEVICE ALI 
+		pbus no vra = 1 
+	else
+		pbus dra = 1 
+	chip ac97 bus = pbus 
+	chip ncodecs = codecs 
+
+	ac97 pci = chip pci 
+	for  i = 0  i   codecs  i++  {
+		ac97 num = i 
+		if   err = snd ac97 mixer pbus   ac97   chip ac97 i      0  {
+			if  err  =  EACCES 
+				snd printk KERN ERR  Unable to initialize codec # d\n   i  
+			if  i == 0 
+				goto   err 
+		}
+	}
+	   tune up the primary codec   
+	snd ac97 tune hardware chip ac97 0   ac97 quirks  quirk override  
+	   enable separate SDINs for ICH4   
+	if  chip device type == DEVICE INTEL ICH4 
+		pbus isdin = 1 
+	   find the available PCM streams   
+	i = ARRAY SIZE ac97 pcm defs  
+	if  chip device type  = DEVICE INTEL ICH4 
+		i  = 2 		   do not allocate PCM2IN and MIC2   
+	if  chip spdif idx   0 
+		i   		   do not allocate S PDIF   
+	err = snd ac97 pcm assign pbus  i  ac97 pcm defs  
+	if  err   0 
+		goto   err 
+	chip ichd ICHD PCMOUT  pcm =  pbus pcms 0  
+	chip ichd ICHD PCMIN  pcm =  pbus pcms 1  
+	chip ichd ICHD MIC  pcm =  pbus pcms 2  
+	if  chip spdif idx  = 0 
+		chip ichd chip spdif idx  pcm =  pbus pcms 3  
+	if  chip device type == DEVICE INTEL ICH4  {
+		chip ichd ICHD PCM2IN  pcm =  pbus pcms 4  
+		chip ichd ICHD MIC2  pcm =  pbus pcms 5  
+	}
+	   enable separate SDINs for ICH4   
+	if  chip device type == DEVICE INTEL ICH4  {
+		struct ac97 pcm  pcm = chip ichd ICHD PCM2IN  pcm 
+		u8 tmp = igetbyte chip  ICHREG SDM   
+		tmp  = ~ ICH DI2L MASK|ICH DI1L MASK  
+		if  pcm  {
+			tmp |= ICH SE 	   steer enable for multiple SDINs   
+			tmp |= chip ac97 sdin 0     ICH DI1L SHIFT 
+			for  i = 1  i   4  i++  {
+				if  pcm r 0  codec i   {
+					tmp |= chip ac97 sdin pcm r 0  codec 1  num     ICH DI2L SHIFT 
+					break 
+				}
+			}
+		} else {
+			tmp  = ~ICH SE     steer disable   
+		}
+		iputbyte chip  ICHREG SDM   tmp  
+	}
+	if  pbus pcms 0  r 0  slots    1    AC97 SLOT PCM SLEFT   {
+		chip multi4 = 1 
+		if  pbus pcms 0  r 0  slots    1    AC97 SLOT LFE   {
+			chip multi6 = 1 
+			if  chip ac97 0  flags   AC97 HAS 8CH 
+				chip multi8 = 1 
+		}
+	}
+	if  pbus pcms 0  r 1  rslots 0   {
+		chip dra = 1 
+	}
+	if  chip device type == DEVICE INTEL ICH4  {
+		if   igetdword chip  ICHREG GLOB STA     ICH SAMPLE CAP  == ICH SAMPLE 16 20 
+			chip smp20bit = 1 
+	}
+	if  chip device type == DEVICE NFORCE     spdif aclink  {
+		   48kHz only   
+		chip ichd chip spdif idx  pcm rates = SNDRV PCM RATE 48000 
+	}
+	if  chip device type == DEVICE INTEL ICH4     spdif aclink  {
+		   use slot 10 11 for SPDIF   
+		u32 val 
+		val = igetdword chip  ICHREG GLOB CNT     ~ICH PCM SPDIF MASK 
+		val |= ICH PCM SPDIF 1011 
+		iputdword chip  ICHREG GLOB CNT   val  
+		snd ac97 update bits chip ac97 0   AC97 EXTENDED STATUS  0x03    4  0x03    4  
+	}
+	chip in ac97 init = 0 
+	return 0 
+
+   err 
+	   clear the cold reset bit for the next chance   
+	if  chip device type  = DEVICE ALI 
+		iputdword chip  ICHREG GLOB CNT  
+			  igetdword chip  ICHREG GLOB CNT     ~ICH AC97COLD  
+	return err 
+}
+

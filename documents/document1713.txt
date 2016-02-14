@@ -1,0 +1,12 @@
+   
+   ieee80211 get hdrlen from skb   get header length from data
+  
+   Given an skb with a raw 802 11 header at the data pointer this function
+   returns the 802 11 header length in bytes  not including encryption
+   headers   If the data in the sk buff is too short to contain a valid 802 11
+   header the function returns 0 
+  
+   @skb  the frame
+   
+unsigned int ieee80211 get hdrlen from skb const struct sk buff  skb  
+

@@ -1,0 +1,7 @@
+  
+   Initialize a drm mm c allocator  Should be called only once for each
+   manager unless a customized allogator is used 
+   
+extern int drm sman set range struct drm sman   sman  unsigned int manager 
+			      unsigned long start  unsigned long size  
+

@@ -1,0 +1,45 @@
+snd azf3328 info mixer enum struct snd kcontrol  kcontrol 
+			    struct snd ctl elem info  uinfo 
+{
+	static const char   const texts1   = {
+		 Mic1    Mic2 
+	} 
+	static const char   const texts2   = {
+		 Mix    Mic 
+	} 
+	static const char   const texts3   = {
+		 Mic    CD    Video    Aux  
+		 Line    Mix    Mix Mono    Phone 
+        } 
+	static const char   const texts4   = {
+		 pre 3D    post 3D 
+        } 
+	struct azf3328 mixer reg reg 
+	const char   const  p = NULL 
+
+	snd azf3328 mixer reg decode  reg  kcontrol private value  
+        uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+        uinfo count =  reg reg == IDX MIXER REC SELECT  ? 2   1 
+        uinfo value enumerated items = reg enum c 
+        if  uinfo value enumerated item   reg enum c   1U 
+                uinfo value enumerated item = reg enum c   1U 
+	if  reg reg == IDX MIXER ADVCTL2  {
+		switch reg lchan shift  {
+		case 8     modem out sel   
+			p = texts1 
+			break 
+		case 9     mono sel source   
+			p = texts2 
+			break 
+		case 15     PCM Out Path   
+			p = texts4 
+			break 
+		}
+	} else
+	if  reg reg == IDX MIXER REC SELECT 
+		p = texts3 
+
+	strcpy uinfo value enumerated name  p uinfo value enumerated item   
+        return 0 
+}
+

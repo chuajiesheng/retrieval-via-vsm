@@ -1,0 +1,11 @@
+static void   gcm hash final done struct aead request  req  int err 
+{
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+
+	if   err 
+		crypto xor pctx auth tag  pctx iauth tag  16  
+
+	gctx complete req  err  
+}
+

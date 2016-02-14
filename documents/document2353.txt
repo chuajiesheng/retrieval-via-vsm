@@ -1,0 +1,85 @@
+  
+  
+   
+static int snd intel8x0m ich chip init struct intel8x0m  chip  int probing 
+{
+	unsigned long end time 
+	unsigned int cnt  status  nstatus 
+	
+	   put logic to right state   
+	   first clear status bits   
+	status = ICH RCS | ICH MIINT | ICH MOINT 
+	cnt = igetdword chip  ICHREG GLOB STA   
+	iputdword chip  ICHREG GLOB STA   cnt   status  
+
+	   ACLink on  2 channels   
+	cnt = igetdword chip  ICHREG GLOB CNT   
+	cnt  = ~ ICH ACLINK  
+	   finish cold or do warm reset   
+	cnt |=  cnt   ICH AC97COLD  == 0 ? ICH AC97COLD   ICH AC97WARM 
+	iputdword chip  ICHREG GLOB CNT   cnt  
+	end time =  jiffies +  HZ   4   + 1 
+	do {
+		if   igetdword chip  ICHREG GLOB CNT     ICH AC97WARM  == 0 
+			goto   ok 
+		schedule timeout uninterruptible 1  
+	} while  time after eq end time  jiffies   
+	snd printk KERN ERR  AC'97 warm reset still in progress?  0x x \n  
+		   igetdword chip  ICHREG GLOB CNT    
+	return  EIO 
+
+        ok 
+	if  probing  {
+		   wait for any codec ready status 
+		   Once it becomes ready it should remain ready
+		   as long as we do not disable the ac97 link 
+		   
+		end time = jiffies + HZ 
+		do {
+			status = igetdword chip  ICHREG GLOB STA    
+				 ICH PCR | ICH SCR | ICH TCR  
+			if  status 
+				break 
+			schedule timeout uninterruptible 1  
+		} while  time after eq end time  jiffies   
+		if    status  {
+			   no codec is found   
+			snd printk KERN ERR  codec ready  codec is not ready  0x x \n  
+				   igetdword chip  ICHREG GLOB STA    
+			return  EIO 
+		}
+
+		   up to two codecs  modem cannot be tertiary with ICH4    
+		nstatus = ICH PCR | ICH SCR 
+
+		   wait for other codecs ready status    
+		end time = jiffies + HZ   4 
+		while  status  = nstatus    time after eq end time  jiffies   {
+			schedule timeout uninterruptible 1  
+			status |= igetdword chip  ICHREG GLOB STA     nstatus 
+		}
+
+	} else {
+		   resume phase   
+		status = 0 
+		if  chip ac97 
+			status |= get ich codec bit chip  chip ac97 num  
+		   wait until all the probed codecs are ready   
+		end time = jiffies + HZ 
+		do {
+			nstatus = igetdword chip  ICHREG GLOB STA    
+				 ICH PCR | ICH SCR | ICH TCR  
+			if  status == nstatus 
+				break 
+			schedule timeout uninterruptible 1  
+		} while  time after eq end time  jiffies   
+	}
+
+	if  chip device type == DEVICE SIS  {
+		   unmute the output on SIS7012   
+		iputword chip  0x4c  igetword chip  0x4c  | 1  
+	}
+
+      	return 0 
+}
+

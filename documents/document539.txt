@@ -1,0 +1,16 @@
+static int crypto ecb setkey struct crypto tfm  parent  const u8  key 
+			     unsigned int keylen 
+{
+	struct crypto ecb ctx  ctx = crypto tfm ctx parent  
+	struct crypto cipher  child = ctx child 
+	int err 
+
+	crypto cipher clear flags child  CRYPTO TFM REQ MASK  
+	crypto cipher set flags child  crypto tfm get flags parent   
+				       CRYPTO TFM REQ MASK  
+	err = crypto cipher setkey child  key  keylen  
+	crypto tfm set flags parent  crypto cipher get flags child   
+				     CRYPTO TFM RES MASK  
+	return err 
+}
+

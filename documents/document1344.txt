@@ -1,0 +1,2 @@
+i2c dp aux add bus struct i2c adapter  adapter  
+

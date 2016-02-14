@@ -1,0 +1,26 @@
+static inline void preallocate info init struct snd pcm substream  substream 
+{
+	struct snd info entry  entry 
+
+	if   entry = snd info create card entry substream pcm card   prealloc   substream proc root    = NULL  {
+		entry c text read = snd pcm lib preallocate proc read 
+		entry c text write = snd pcm lib preallocate proc write 
+		entry mode |= S IWUSR 
+		entry private data = substream 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	substream proc prealloc entry = entry 
+	if   entry = snd info create card entry substream pcm card   prealloc max   substream proc root    = NULL  {
+		entry c text read = snd pcm lib preallocate max proc read 
+		entry private data = substream 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	substream proc prealloc max entry = entry 
+}
+

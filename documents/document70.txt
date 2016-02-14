@@ -1,0 +1,17 @@
+static enum hrtimer restart snd hrtimer callback struct hrtimer  hrt 
+{
+	struct snd hrtimer  stime = container of hrt  struct snd hrtimer  hrt  
+	struct snd timer  t = stime timer 
+	unsigned long oruns 
+
+	if   atomic read  stime running  
+		return HRTIMER NORESTART 
+
+	oruns = hrtimer forward now hrt  ns to ktime t sticks   resolution   
+	snd timer interrupt stime timer  t sticks   oruns  
+
+	if   atomic read  stime running  
+		return HRTIMER NORESTART 
+	return HRTIMER RESTART 
+}
+

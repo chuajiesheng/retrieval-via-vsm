@@ -1,0 +1,12 @@
+static int snd via686 playback prepare struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	struct snd pcm runtime  runtime = substream runtime 
+
+	snd ac97 set rate chip ac97  AC97 PCM FRONT DAC RATE  runtime rate  
+	snd ac97 set rate chip ac97  AC97 SPDIF  runtime rate  
+	via686 setup format chip  viadev  runtime  
+	return 0 
+}
+

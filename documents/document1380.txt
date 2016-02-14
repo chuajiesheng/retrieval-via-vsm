@@ -1,0 +1,2 @@
+extern void drm mode config init struct drm device  dev  
+

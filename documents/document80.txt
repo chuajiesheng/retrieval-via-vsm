@@ -1,0 +1,2 @@
+int snd timer global register struct snd timer  timer  
+

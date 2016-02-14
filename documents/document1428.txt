@@ -1,0 +1,9 @@
+  
+   Allocate a memory block  Aligment is not implemented yet 
+   
+extern struct drm memblock item  drm sman alloc struct drm sman   sman 
+						unsigned int manager 
+						unsigned long size 
+						unsigned alignment 
+						unsigned long owner  
+

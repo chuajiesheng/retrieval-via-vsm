@@ -1,0 +1,13 @@
+   
+   ttm bo mmap   mmap out of the ttm device address space 
+  
+   @filp       filp as input from the mmap method 
+   @vma        vma as input from the mmap method 
+   @bdev       Pointer to the ttm bo device with the address space manager 
+  
+   This function is intended to be called by the device mmap method 
+   if the device address space is to be backed by the bo manager 
+   
+extern int ttm bo mmap struct file  filp  struct vm area struct  vma 
+		       struct ttm bo device  bdev  
+

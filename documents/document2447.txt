@@ -1,0 +1,9 @@
+   
+   tfrc rx hist rtt last s   reference entry to compute RTT samples against
+   
+static inline struct tfrc rx hist entry  
+			tfrc rx hist rtt last s const struct tfrc rx hist  h 
+{
+	return h ring 0  
+}
+

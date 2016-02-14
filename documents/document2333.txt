@@ -1,0 +1,27 @@
+static unsigned short snd intel8x0 codec read struct snd ac97  ac97 
+					      unsigned short reg 
+{
+	struct intel8x0m  chip = ac97 private data 
+	unsigned short res 
+	unsigned int tmp 
+
+	if  snd intel8x0m codec semaphore chip  ac97 num    0  {
+		if    chip in ac97 init 
+			snd printk KERN ERR  codec read  d  semaphore is not ready for register 0x x\n   ac97 num  reg  
+		res = 0xffff 
+	} else {
+		res = iagetword chip  reg + ac97 num   0x80  
+		if   tmp = igetdword chip  ICHREG GLOB STA      ICH RCS  {
+			   reset RCS and preserve other R WC bits   
+			iputdword chip  ICHREG GLOB STA  
+				  tmp   ~ ICH SRI|ICH PRI|ICH TRI|ICH GSCI   
+			if    chip in ac97 init 
+				snd printk KERN ERR  codec read  d  read timeout for register 0x x\n   ac97 num  reg  
+			res = 0xffff 
+		}
+	}
+	if  reg == AC97 GPIO STATUS 
+		iagetword chip  0      clear semaphore   
+	return res 
+}
+

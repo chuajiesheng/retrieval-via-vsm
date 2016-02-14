@@ -1,0 +1,8 @@
+static inline int dma set coherent mask struct device  dev  u64 mask 
+{
+	if   dma supported dev  mask  
+		return  EIO 
+	dev coherent dma mask = mask 
+	return 0 
+}
+

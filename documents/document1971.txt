@@ -1,0 +1,5 @@
+conf is ht40 minus struct ieee80211 conf  conf 
+{
+	return conf channel type == NL80211 CHAN HT40MINUS 
+}
+

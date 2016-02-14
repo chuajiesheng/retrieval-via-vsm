@@ -1,0 +1,12 @@
+static void snd es1968 pcm stop struct es1968  chip  struct esschan  es 
+{
+	spin lock  chip reg lock  
+	snd es1968 trigger apu chip  es apu 0   0  
+	snd es1968 trigger apu chip  es apu 1   0  
+	if  es mode == ESM MODE CAPTURE  {
+		snd es1968 trigger apu chip  es apu 2   0  
+		snd es1968 trigger apu chip  es apu 3   0  
+	}
+	spin unlock  chip reg lock  
+}
+

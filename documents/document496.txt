@@ -1,0 +1,2 @@
+static int mts64 device ready struct parport  p  
+

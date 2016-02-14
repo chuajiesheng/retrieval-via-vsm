@@ -1,0 +1,13 @@
+static inline void tfrc rx hist entry from skb struct tfrc rx hist entry  entry 
+					       const struct sk buff  skb 
+					       const u64 ndp 
+{
+	const struct dccp hdr  dh = dccp hdr skb  
+
+	entry tfrchrx seqno = DCCP SKB CB skb  dccpd seq 
+	entry tfrchrx ccval = dh dccph ccval 
+	entry tfrchrx type  = dh dccph type 
+	entry tfrchrx ndp   = ndp 
+	entry tfrchrx tstamp = ktime get real   
+}
+

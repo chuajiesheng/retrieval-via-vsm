@@ -1,0 +1,20 @@
+static void snd cs4281 midi input trigger struct snd rawmidi substream  substream  int up 
+{
+	unsigned long flags 
+	struct cs4281  chip = substream rmidi private data 
+
+	spin lock irqsave  chip reg lock  flags  
+	if  up  {
+		if   chip midcr   BA0 MIDCR RIE  == 0  {
+			chip midcr |= BA0 MIDCR RIE 
+			snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr  
+		}
+	} else {
+		if  chip midcr   BA0 MIDCR RIE  {
+			chip midcr  = ~BA0 MIDCR RIE 
+			snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr  
+		}
+	}
+	spin unlock irqrestore  chip reg lock  flags  
+}
+

@@ -1,0 +1,3 @@
+int snd pcm info user struct snd pcm substream  substream 
+		      struct snd pcm info   user  info  
+

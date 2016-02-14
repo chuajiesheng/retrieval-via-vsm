@@ -1,0 +1,3 @@
+   parport unregister unlinks a device from the chain    
+extern void parport unregister device struct pardevice  dev  
+

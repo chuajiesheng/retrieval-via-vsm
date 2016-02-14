@@ -1,0 +1,2 @@
+extern int sdio set host pm flags struct sdio func  func  mmc pm flag t flags  
+

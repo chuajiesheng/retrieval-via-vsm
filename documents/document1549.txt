@@ -1,0 +1,128 @@
+snd rme96 proc read struct snd info entry  entry  struct snd info buffer  buffer 
+{
+	int n 
+	struct rme96  rme96 = entry private data 
+	
+	rme96 rcreg = readl rme96 iobase + RME96 IO CONTROL REGISTER  
+
+	snd iprintf buffer  rme96 card longname  
+	snd iprintf buffer     index # d \n   rme96 card number + 1  
+
+	snd iprintf buffer   \nGeneral settings\n   
+	if  rme96 wcreg   RME96 WCR IDIS  {
+		snd iprintf buffer     period size  N A  interrupts  
+			     disabled \n   
+	} else if  rme96 wcreg   RME96 WCR ISEL  {
+		snd iprintf buffer     period size  2048 bytes\n   
+	} else {
+		snd iprintf buffer     period size  8192 bytes\n   
+	}	
+	snd iprintf buffer   \nInput settings\n   
+	switch  snd rme96 getinputtype rme96   {
+	case RME96 INPUT OPTICAL 
+		snd iprintf buffer     input  optical   
+		break 
+	case RME96 INPUT COAXIAL 
+		snd iprintf buffer     input  coaxial   
+		break 
+	case RME96 INPUT INTERNAL 
+		snd iprintf buffer     input  internal   
+		break 
+	case RME96 INPUT XLR 
+		snd iprintf buffer     input  XLR   
+		break 
+	case RME96 INPUT ANALOG 
+		snd iprintf buffer     input  analog   
+		break 
+	}
+	if  snd rme96 capture getrate rme96   n    0  {
+		snd iprintf buffer   \n  sample rate  no valid signal\n   
+	} else {
+		if  n  {
+			snd iprintf buffer     8 channels \n   
+		} else {
+			snd iprintf buffer     2 channels \n   
+		}
+		snd iprintf buffer     sample rate   d Hz\n  
+			    snd rme96 capture getrate rme96   n   
+	}
+	if  rme96 wcreg   RME96 WCR MODE24 2  {
+		snd iprintf buffer     sample format  24 bit\n   
+	} else {
+		snd iprintf buffer     sample format  16 bit\n   
+	}
+	
+	snd iprintf buffer   \nOutput settings\n   
+	if  rme96 wcreg   RME96 WCR SEL  {
+		snd iprintf buffer     output signal  normal playback\n   
+	} else {
+		snd iprintf buffer     output signal  same as input\n   
+	}
+	snd iprintf buffer     sample rate   d Hz\n  
+		    snd rme96 playback getrate rme96   
+	if  rme96 wcreg   RME96 WCR MODE24  {
+		snd iprintf buffer     sample format  24 bit\n   
+	} else {
+		snd iprintf buffer     sample format  16 bit\n   
+	}
+	if  rme96 areg   RME96 AR WSEL  {
+		snd iprintf buffer     sample clock source  word clock\n   
+	} else if  rme96 wcreg   RME96 WCR MASTER  {
+		snd iprintf buffer     sample clock source  internal\n   
+	} else if  snd rme96 getinputtype rme96  == RME96 INPUT ANALOG  {
+		snd iprintf buffer     sample clock source  autosync  internal anyway due to analog input setting \n   
+	} else if  snd rme96 capture getrate rme96   n    0  {
+		snd iprintf buffer     sample clock source  autosync  internal anyway due to no valid signal \n   
+	} else {
+		snd iprintf buffer     sample clock source  autosync\n   
+	}
+	if  rme96 wcreg   RME96 WCR PRO  {
+		snd iprintf buffer     format  AES EBU  professional \n   
+	} else {
+		snd iprintf buffer     format  IEC958  consumer \n   
+	}
+	if  rme96 wcreg   RME96 WCR EMP  {
+		snd iprintf buffer     emphasis  on\n   
+	} else {
+		snd iprintf buffer     emphasis  off\n   
+	}
+	if  rme96 wcreg   RME96 WCR DOLBY  {
+		snd iprintf buffer     non audio  dolby   on\n   
+	} else {
+		snd iprintf buffer     non audio  dolby   off\n   
+	}
+	if  RME96 HAS ANALOG IN rme96   {
+		snd iprintf buffer   \nAnalog output settings\n   
+		switch  snd rme96 getmontracks rme96   {
+		case RME96 MONITOR TRACKS 1 2 
+			snd iprintf buffer     monitored ADAT tracks  1+2\n   
+			break 
+		case RME96 MONITOR TRACKS 3 4 
+			snd iprintf buffer     monitored ADAT tracks  3+4\n   
+			break 
+		case RME96 MONITOR TRACKS 5 6 
+			snd iprintf buffer     monitored ADAT tracks  5+6\n   
+			break 
+		case RME96 MONITOR TRACKS 7 8 
+			snd iprintf buffer     monitored ADAT tracks  7+8\n   
+			break 
+		}
+		switch  snd rme96 getattenuation rme96   {
+		case RME96 ATTENUATION 0 
+			snd iprintf buffer     attenuation  0 dB\n   
+			break 
+		case RME96 ATTENUATION 6 
+			snd iprintf buffer     attenuation   6 dB\n   
+			break 
+		case RME96 ATTENUATION 12 
+			snd iprintf buffer     attenuation   12 dB\n   
+			break 
+		case RME96 ATTENUATION 18 
+			snd iprintf buffer     attenuation   18 dB\n   
+			break 
+		}
+		snd iprintf buffer     volume left   u\n   rme96 vol 0   
+		snd iprintf buffer     volume right   u\n   rme96 vol 1   
+	}
+}
+

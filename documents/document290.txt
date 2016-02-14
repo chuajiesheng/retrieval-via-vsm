@@ -1,0 +1,30 @@
+   
+   snd unregister device   unregister the device on the given card
+   @type  the device type  SNDRV DEVICE TYPE XXX
+   @card  the card instance
+   @dev  the device index
+  
+   Unregisters the device file already registered via
+   snd register device   
+  
+   Returns zero if sucecessful  or a negative error code on failure
+   
+int snd unregister device int type  struct snd card  card  int dev 
+{
+	int minor 
+
+	mutex lock  sound mutex  
+	minor = find snd minor type  card  dev  
+	if  minor   0  {
+		mutex unlock  sound mutex  
+		return  EINVAL 
+	}
+
+	device destroy sound class  MKDEV major  minor   
+
+	kfree snd minors minor   
+	snd minors minor  = NULL 
+	mutex unlock  sound mutex  
+	return 0 
+}
+

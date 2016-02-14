@@ -1,0 +1,15 @@
+  
+   
+static int snd mtpav output open struct snd rawmidi substream  substream 
+{
+	struct mtpav  mtp card = substream rmidi private data 
+	struct mtpav port  portp =  mtp card ports substream number  
+	unsigned long flags 
+
+	spin lock irqsave  mtp card spinlock  flags  
+	portp mode |= MTPAV MODE OUTPUT OPENED 
+	portp output = substream 
+	spin unlock irqrestore  mtp card spinlock  flags  
+	return 0 
+}
+

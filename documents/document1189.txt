@@ -1,0 +1,10 @@
+snd azf3328 ctrl enable codecs struct snd azf3328  chip  bool enable 
+{
+	snd azf3328 dbgcodec  codec enable  d\n   enable  
+	   no idea what exactly is being done here  but I strongly assume it's
+	   PM related   
+	snd azf3328 ctrl reg 6AH update 
+		chip  IO 6A PAUSE PLAYBACK BIT8  enable
+	  
+}
+

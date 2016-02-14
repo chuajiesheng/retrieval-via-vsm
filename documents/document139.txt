@@ -1,0 +1,5 @@
+static inline unsigned int crypto aead authsize struct crypto aead  tfm 
+{
+	return crypto aead crt tfm  authsize 
+}
+

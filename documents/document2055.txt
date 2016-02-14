@@ -1,0 +1,3 @@
+int snd opl3 new struct snd card  card  unsigned short hardware 
+		 struct snd opl3   ropl3  
+

@@ -1,0 +1,39 @@
+static int snd atiixp resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct atiixp  chip = card private data 
+	int i 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  atiixp  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd atiixp aclink reset chip  
+	snd atiixp chip start chip  
+
+	for  i = 0  i   NUM ATI CODECS  i++ 
+		snd ac97 resume chip ac97 i   
+
+	for  i = 0  i   NUM ATI PCMDEVS  i++ 
+		if  chip pcmdevs i   {
+			struct atiixp dma  dma =  chip dmas i  
+			if  dma substream    dma suspended  {
+				dma ops enable dma chip  1  
+				dma substream ops prepare dma substream  
+				writel  u32 dma desc buf addr | ATI REG LINKPTR EN 
+				       chip remap addr + dma ops llp offset  
+				writel dma saved curptr  chip remap addr +
+				       dma ops dt cur  
+			}
+		}
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

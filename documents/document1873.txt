@@ -1,0 +1,7 @@
+static int   init alsa card bt87x init void 
+{
+	if  load all 
+		driver id table = snd bt87x default ids 
+	return pci register driver  driver  
+}
+

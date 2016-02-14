@@ -1,0 +1,9 @@
+static u8   devinit snd cs5530 mixer read unsigned long io  u8 reg 
+{
+	outb reg  io + 4  
+	udelay 20  
+	reg = inb io + 5  
+	udelay 20  
+	return reg 
+}
+

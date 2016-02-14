@@ -1,0 +1,15 @@
+static int dummy systimer prepare struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct dummy systimer pcm  dpcm = runtime private data 
+
+	dpcm frac pos = 0 
+	dpcm rate = runtime rate 
+	dpcm frac buffer size = runtime buffer size   HZ 
+	dpcm frac period size = runtime period size   HZ 
+	dpcm frac period rest = dpcm frac period size 
+	dpcm elapsed = 0 
+
+	return 0 
+}
+

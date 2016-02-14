@@ -1,0 +1,5 @@
+int snd pcm hw constraint step struct snd pcm runtime  runtime 
+			       unsigned int cond 
+			       snd pcm hw param t var 
+			       unsigned long step  
+

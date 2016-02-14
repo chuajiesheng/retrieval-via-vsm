@@ -1,0 +1,3 @@
+int mlx4 qp query struct mlx4 dev  dev  struct mlx4 qp  qp 
+		  struct mlx4 qp context  context  
+

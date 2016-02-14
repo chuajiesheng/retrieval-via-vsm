@@ -1,0 +1,37 @@
+   
+   snd dma alloc pages fallback   allocate the buffer area according to the given type with fallback
+   @type  the DMA buffer type
+   @device  the device pointer
+   @size  the buffer size to allocate
+   @dmab  buffer allocation record to store the allocated data
+  
+   Calls the memory allocator function for the corresponding
+   buffer type   When no space is left  this function reduces the size and
+   tries to allocate again   The size actually allocated is stored in
+   res size argument 
+   
+   Returns zero if the buffer with the given size is allocated successfuly 
+   other a negative value at error 
+   
+int snd dma alloc pages fallback int type  struct device  device  size t size 
+				 struct snd dma buffer  dmab 
+{
+	int err 
+
+	while   err = snd dma alloc pages type  device  size  dmab     0  {
+		size t aligned size 
+		if  err  =  ENOMEM 
+			return err 
+		if  size  = PAGE SIZE 
+			return  ENOMEM 
+		aligned size = PAGE SIZE    get order size  
+		if  size  = aligned size 
+			size = aligned size 
+		else
+			size   = 1 
+	}
+	if    dmab area 
+		return  ENOMEM 
+	return 0 
+}
+

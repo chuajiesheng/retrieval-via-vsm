@@ -1,0 +1,20 @@
+static int slave put struct snd kcontrol  kcontrol 
+		     struct snd ctl elem value  ucontrol 
+{
+	struct link slave  slave = snd kcontrol chip kcontrol  
+	int err  ch  changed = 0 
+
+	err = slave init slave  
+	if  err   0 
+		return err 
+	for  ch = 0  ch   slave info count  ch++  {
+		if  slave vals ch   = ucontrol value integer value ch   {
+			changed = 1 
+			slave vals ch  = ucontrol value integer value ch  
+		}
+	}
+	if   changed 
+		return 0 
+	return slave put val slave  ucontrol  
+}
+

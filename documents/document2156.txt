@@ -1,0 +1,9 @@
+static void init viadev struct via82xx  chip  int idx  unsigned int reg offset 
+			int shadow pos  int direction 
+{
+	chip devs idx  reg offset = reg offset 
+	chip devs idx  shadow shift = shadow pos   4 
+	chip devs idx  direction = direction 
+	chip devs idx  port = chip port + reg offset 
+}
+

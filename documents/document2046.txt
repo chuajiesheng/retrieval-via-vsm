@@ -1,0 +1,39 @@
+static int cs4281 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct cs4281  chip = card private data 
+	unsigned int i 
+	u32 ulCLK 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  cs4281  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	ulCLK = snd cs4281 peekBA0 chip  BA0 CLKCR1  
+	ulCLK |= CLKCR1 CKRA 
+	snd cs4281 pokeBA0 chip  BA0 CLKCR1  ulCLK  
+
+	snd cs4281 chip init chip  
+
+	   restore the status registers   
+	for  i = 0  i   ARRAY SIZE saved regs   i++ 
+		if  saved regs i  
+			snd cs4281 pokeBA0 chip  saved regs i   chip suspend regs i   
+
+	snd ac97 resume chip ac97  
+	snd ac97 resume chip ac97 secondary  
+
+	ulCLK = snd cs4281 peekBA0 chip  BA0 CLKCR1  
+	ulCLK  = ~CLKCR1 CKRA 
+	snd cs4281 pokeBA0 chip  BA0 CLKCR1  ulCLK  
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

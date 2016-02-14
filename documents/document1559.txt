@@ -1,0 +1,17 @@
+static int async chainiv postpone request struct skcipher givcrypt request  req 
+{
+	struct crypto ablkcipher  geniv = skcipher givcrypt reqtfm req  
+	struct async chainiv ctx  ctx = crypto ablkcipher ctx geniv  
+	int err 
+
+	spin lock bh  ctx lock  
+	err = skcipher enqueue givcrypt  ctx queue  req  
+	spin unlock bh  ctx lock  
+
+	if  test and set bit CHAINIV STATE INUSE   ctx state  
+		return err 
+
+	ctx err = err 
+	return async chainiv schedule work ctx  
+}
+

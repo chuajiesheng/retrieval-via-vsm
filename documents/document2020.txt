@@ -1,0 +1,31 @@
+static int   devinit snd cs4281 mixer struct cs4281   chip 
+{
+	struct snd card  card = chip card 
+	struct snd ac97 template ac97 
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd cs4281 ac97 write 
+		 read = snd cs4281 ac97 read 
+	} 
+
+	if   err = snd ac97 bus card  0   ops  chip   chip ac97 bus     0 
+		return err 
+	chip ac97 bus private free = snd cs4281 mixer free ac97 bus 
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	ac97 private free = snd cs4281 mixer free ac97 
+	if   err = snd ac97 mixer chip ac97 bus   ac97   chip ac97     0 
+		return err 
+	if  chip dual codec  {
+		ac97 num = 1 
+		if   err = snd ac97 mixer chip ac97 bus   ac97   chip ac97 secondary     0 
+			return err 
+	}
+	if   err = snd ctl add card  snd ctl new1  snd cs4281 fm vol  chip      0 
+		return err 
+	if   err = snd ctl add card  snd ctl new1  snd cs4281 pcm vol  chip      0 
+		return err 
+	return 0 
+}
+

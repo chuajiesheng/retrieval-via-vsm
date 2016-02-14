@@ -1,0 +1,21 @@
+static struct aead request  crypto rfc4106 crypt struct aead request  req 
+{
+	struct aead request  subreq = aead request ctx req  
+	struct crypto aead  aead = crypto aead reqtfm req  
+	struct crypto rfc4106 ctx  ctx = crypto aead ctx aead  
+	struct crypto aead  child = ctx child 
+	u8  iv = PTR ALIGN  u8    subreq + 1  + crypto aead reqsize child  
+			   crypto aead alignmask child  + 1  
+
+	memcpy iv  ctx nonce  4  
+	memcpy iv + 4  req iv  8  
+
+	aead request set tfm subreq  child  
+	aead request set callback subreq  req base flags  req base complete 
+				  req base data  
+	aead request set crypt subreq  req src  req dst  req cryptlen  iv  
+	aead request set assoc subreq  req assoc  req assoclen  
+
+	return subreq 
+}
+

@@ -1,0 +1,11 @@
+static snd pcm uframes t snd es1968 pcm pointer struct snd pcm substream  substream 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct esschan  es = substream runtime private data 
+	unsigned int ptr 
+
+	ptr = snd es1968 get dma ptr chip  es     es wav shift 
+	
+	return bytes to frames substream runtime  ptr   es dma size  
+}
+

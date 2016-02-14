@@ -1,0 +1,37 @@
+static void snd pcm substream proc hw params read struct snd info entry  entry 
+						  struct snd info buffer  buffer 
+{
+	struct snd pcm substream  substream = entry private data 
+	struct snd pcm runtime  runtime 
+
+	mutex lock  substream pcm open mutex  
+	runtime = substream runtime 
+	if   runtime  {
+		snd iprintf buffer   closed\n   
+		goto unlock 
+	}
+	if  runtime status state == SNDRV PCM STATE OPEN  {
+		snd iprintf buffer   no setup\n   
+		goto unlock 
+	}
+	snd iprintf buffer   access   s\n   snd pcm access name runtime access   
+	snd iprintf buffer   format   s\n   snd pcm format name runtime format   
+	snd iprintf buffer   subformat   s\n   snd pcm subformat name runtime subformat   
+	snd iprintf buffer   channels   u\n   runtime channels  	
+	snd iprintf buffer   rate   u   u  u \n   runtime rate  runtime rate num  runtime rate den  	
+	snd iprintf buffer   period size   lu\n   runtime period size  	
+	snd iprintf buffer   buffer size   lu\n   runtime buffer size  	
+#if defined CONFIG SND PCM OSS  || defined CONFIG SND PCM OSS MODULE 
+	if  substream oss oss  {
+		snd iprintf buffer   OSS format   s\n   snd pcm oss format name runtime oss format   
+		snd iprintf buffer   OSS channels   u\n   runtime oss channels  	
+		snd iprintf buffer   OSS rate   u\n   runtime oss rate  
+		snd iprintf buffer   OSS period bytes   lu\n    unsigned long runtime oss period bytes  
+		snd iprintf buffer   OSS periods   u\n   runtime oss periods  
+		snd iprintf buffer   OSS period frames   lu\n    unsigned long runtime oss period frames  
+	}
+#endif
+ unlock 
+	mutex unlock  substream pcm open mutex  
+}
+

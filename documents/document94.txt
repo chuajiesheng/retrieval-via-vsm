@@ -1,0 +1,40 @@
+  
+   Add a slave control to the group with the given master control
+  
+   All slaves must be the same type  returning the same information
+   via info callback    The fucntion doesn't check it  so it's your
+   responsibility 
+  
+   Also  some additional limitations 
+     at most two channels
+     logarithmic volume control  dB level   no linear volume
+     master can only attenuate the volume  no gain
+   
+int  snd ctl add slave struct snd kcontrol  master  struct snd kcontrol  slave 
+		       unsigned int flags 
+{
+	struct link master  master link = snd kcontrol chip master  
+	struct link slave  srec 
+
+	srec = kzalloc sizeof  srec  +
+		       slave count   sizeof  slave vd   GFP KERNEL  
+	if   srec 
+		return  ENOMEM 
+	srec slave =  slave 
+	memcpy srec slave vd  slave vd  slave count   sizeof  slave vd   
+	srec master = master link 
+	srec flags = flags 
+
+	   override callbacks   
+	slave info = slave info 
+	slave get = slave get 
+	slave put = slave put 
+	if  slave vd 0  access   SNDRV CTL ELEM ACCESS TLV CALLBACK 
+		slave tlv c = slave tlv cmd 
+	slave private data = srec 
+	slave private free = slave free 
+
+	list add tail  srec list   master link slaves  
+	return 0 
+}
+

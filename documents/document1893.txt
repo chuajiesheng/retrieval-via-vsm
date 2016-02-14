@@ -1,0 +1,16 @@
+  
+   access to AC97 for Ali5455
+   
+static int snd intel8x0 ali codec ready struct intel8x0  chip  int mask 
+{
+	int count = 0 
+	for  count = 0  count   0x7f  count++  {
+		int val = igetbyte chip  ICHREG ALI CSPSR   
+		if  val   mask 
+			return 0 
+	}
+	if    chip in ac97 init 
+		snd printd KERN WARNING  intel8x0  AC97 codec ready timeout \n   
+	return  EBUSY 
+}
+

@@ -1,0 +1,6 @@
+static inline int skcipher enqueue givcrypt 
+	struct crypto queue  queue  struct skcipher givcrypt request  request 
+{
+	return ablkcipher enqueue request queue   request creq  
+}
+

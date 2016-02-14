@@ -1,0 +1,3 @@
+extern struct proc dir entry  create proc entry const char  name  mode t mode 
+						struct proc dir entry  parent  
+

@@ -1,0 +1,77 @@
+snd azf3328 codec setfmt struct snd azf3328 codec data  codec 
+			       enum azf freq t bitrate 
+			       unsigned int format width 
+			       unsigned int channels
+ 
+{
+	unsigned long flags 
+	u16 val = 0xff00 
+	u8 freq = 0 
+
+	snd azf3328 dbgcallenter   
+	switch  bitrate  {
+	case AZF FREQ 4000   freq = SOUNDFORMAT FREQ SUSPECTED 4000  break 
+	case AZF FREQ 4800   freq = SOUNDFORMAT FREQ SUSPECTED 4800  break 
+	case AZF FREQ 5512 
+		   the AZF3328 names it  5510  for some strange reason   
+			     freq = SOUNDFORMAT FREQ 5510  break 
+	case AZF FREQ 6620   freq = SOUNDFORMAT FREQ 6620  break 
+	case AZF FREQ 8000   freq = SOUNDFORMAT FREQ 8000  break 
+	case AZF FREQ 9600   freq = SOUNDFORMAT FREQ 9600  break 
+	case AZF FREQ 11025  freq = SOUNDFORMAT FREQ 11025  break 
+	case AZF FREQ 13240  freq = SOUNDFORMAT FREQ SUSPECTED 13240  break 
+	case AZF FREQ 16000  freq = SOUNDFORMAT FREQ 16000  break 
+	case AZF FREQ 22050  freq = SOUNDFORMAT FREQ 22050  break 
+	case AZF FREQ 32000  freq = SOUNDFORMAT FREQ 32000  break 
+	default 
+		snd printk KERN WARNING  unknown bitrate  d  assuming 44 1kHz \n   bitrate  
+		   fall through   
+	case AZF FREQ 44100  freq = SOUNDFORMAT FREQ 44100  break 
+	case AZF FREQ 48000  freq = SOUNDFORMAT FREQ 48000  break 
+	case AZF FREQ 66200  freq = SOUNDFORMAT FREQ SUSPECTED 66200  break 
+	}
+	   val = 0xff07  3m27 993s  65301Hz    64000Hz???  hmm  66120  65967  66123   
+	   val = 0xff09  17m15 098s  13123 478Hz    12000Hz???  hmm  13237 2Hz?   
+	   val = 0xff0a  47m30 599s  4764 891Hz    4800Hz???  yup  4803Hz   
+	   val = 0xff0c  57m0 510s  4010 263Hz    4000Hz???  yup  4003Hz   
+	   val = 0xff05  5m11 556s        44100Hz    
+	   val = 0xff03  10m21 529s  21872 463Hz    22050Hz???    
+	   val = 0xff0f  20m41 883s  10937 993Hz    11025Hz???    
+	   val = 0xff0d  41m23 135s  5523 600Hz    5512Hz???    
+	   val = 0xff0e  28m30 777s  8017Hz    8000Hz???    
+
+	val |= freq 
+
+	if  channels == 2 
+		val |= SOUNDFORMAT FLAG 2CHANNELS 
+
+	if  format width == 16 
+		val |= SOUNDFORMAT FLAG 16BIT 
+
+	spin lock irqsave codec lock  flags  
+
+	   set bitrate format   
+	snd azf3328 codec outw codec  IDX IO CODEC SOUNDFORMAT  val  
+
+	   changing the bitrate format settings switches off the
+	   audio output with an annoying click in case of 8 16bit format change
+	    maybe shutting down DAC ADC?   thus immediately
+	   do some tweaking to reenable it and get rid of the clicking
+	    FIXME  yes  it works  but what exactly am I doing here??   
+	   FIXME  does this have some side effects for full duplex
+	   or other dramatic side effects?   
+	   do it for non capture codecs only   
+	if  codec type  = AZF CODEC CAPTURE 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+			snd azf3328 codec inw codec  IDX IO CODEC DMA FLAGS  |
+			DMA RUN SOMETHING1 |
+			DMA RUN SOMETHING2 |
+			SOMETHING ALMOST ALWAYS SET |
+			DMA EPILOGUE SOMETHING |
+			DMA SOMETHING ELSE
+		  
+
+	spin unlock irqrestore codec lock  flags  
+	snd azf3328 dbgcallleave   
+}
+

@@ -1,0 +1,35 @@
+snd azf3328 timer struct snd azf3328  chip  int device 
+{
+	struct snd timer  timer = NULL 
+	struct snd timer id tid 
+	int err 
+
+	snd azf3328 dbgcallenter   
+	tid dev class = SNDRV TIMER CLASS CARD 
+	tid dev sclass = SNDRV TIMER SCLASS NONE 
+	tid card = chip card number 
+	tid device = device 
+	tid subdevice = 0 
+
+	snd azf3328 timer hw resolution  = seqtimer scaling 
+	snd azf3328 timer hw ticks  = seqtimer scaling 
+
+	err = snd timer new chip card   AZF3328    tid   timer  
+	if  err   0 
+		goto out 
+
+	strcpy timer name   AZF3328 timer   
+	timer private data = chip 
+	timer hw = snd azf3328 timer hw 
+
+	chip timer = timer 
+
+	snd azf3328 timer stop timer  
+
+	err = 0 
+
+out 
+	snd azf3328 dbgcallleave   
+	return err 
+}
+

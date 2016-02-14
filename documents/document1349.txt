@@ -1,0 +1,35 @@
+                    
+    ALSA Interface  
+                     
+static int snd es1968 pcm prepare struct snd pcm substream  substream 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct esschan  es = runtime private data 
+
+	es dma size = snd pcm lib buffer bytes substream  
+	es frag size = snd pcm lib period bytes substream  
+
+	es wav shift = 1     maestro handles always 16bit   
+	es fmt = 0 
+	if  snd pcm format width runtime format  == 16 
+		es fmt |= ESS FMT 16BIT 
+	if  runtime channels   1  {
+		es fmt |= ESS FMT STEREO 
+		if  es fmt   ESS FMT 16BIT     8bit is already word shifted   
+			es wav shift++ 
+	}
+	es bob freq = snd es1968 calc bob rate chip  es  runtime  
+
+	switch  es mode  {
+	case ESM MODE PLAY 
+		snd es1968 playback setup chip  es  runtime  
+		break 
+	case ESM MODE CAPTURE 
+		snd es1968 capture setup chip  es  runtime  
+		break 
+	}
+
+	return 0 
+}
+

@@ -1,0 +1,31 @@
+static int pcrypt aead givencrypt struct aead givcrypt request  req 
+{
+	int err 
+	struct aead request  areq =  req areq 
+	struct pcrypt request  preq = aead request ctx areq  
+	struct aead givcrypt request  creq = pcrypt request ctx preq  
+	struct padata priv  padata = pcrypt request padata preq  
+	struct crypto aead  aead = aead givcrypt reqtfm req  
+	struct pcrypt aead ctx  ctx = crypto aead ctx aead  
+	u32 flags = aead request flags areq  
+
+	memset padata  0  sizeof struct padata priv   
+
+	padata parallel = pcrypt aead givenc 
+	padata serial = pcrypt aead giv serial 
+
+	aead givcrypt set tfm creq  ctx child  
+	aead givcrypt set callback creq  flags   ~CRYPTO TFM REQ MAY SLEEP 
+				   pcrypt aead done  areq  
+	aead givcrypt set crypt creq  areq src  areq dst 
+				areq cryptlen  areq iv  
+	aead givcrypt set assoc creq  areq assoc  areq assoclen  
+	aead givcrypt set giv creq  req giv  req seq  
+
+	err = pcrypt do parallel padata   ctx cb cpu   pencrypt  
+	if   err 
+		return  EINPROGRESS 
+
+	return err 
+}
+

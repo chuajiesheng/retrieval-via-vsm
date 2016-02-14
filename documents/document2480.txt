@@ -1,0 +1,30 @@
+static int pcrypt cpumask change notify struct notifier block  self 
+					unsigned long val  void  data 
+{
+	struct padata pcrypt  pcrypt 
+	struct pcrypt cpumask  new mask   old mask 
+	struct padata cpumask  cpumask =  struct padata cpumask   data 
+
+	if    val   PADATA CPU SERIAL  
+		return 0 
+
+	pcrypt = container of self  struct padata pcrypt  nblock  
+	new mask = kmalloc sizeof  new mask   GFP KERNEL  
+	if   new mask 
+		return  ENOMEM 
+	if   alloc cpumask var  new mask mask  GFP KERNEL   {
+		kfree new mask  
+		return  ENOMEM 
+	}
+
+	old mask = pcrypt cb cpumask 
+
+	cpumask copy new mask mask  cpumask cbcpu  
+	rcu assign pointer pcrypt cb cpumask  new mask  
+	synchronize rcu bh   
+
+	free cpumask var old mask mask  
+	kfree old mask  
+	return 0 
+}
+

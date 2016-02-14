@@ -1,0 +1,7 @@
+snd rme96 reset dac struct rme96  rme96 
+{
+	writel rme96 wcreg | RME96 WCR PD 
+	       rme96 iobase + RME96 IO CONTROL REGISTER  
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+}
+

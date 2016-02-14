@@ -1,0 +1,8 @@
+static int snd cmipci spdif stream info struct snd kcontrol  kcontrol 
+					struct snd ctl elem info  uinfo 
+{
+	uinfo type = SNDRV CTL ELEM TYPE IEC958 
+	uinfo count = 1 
+	return 0 
+}
+

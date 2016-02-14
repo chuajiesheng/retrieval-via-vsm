@@ -1,0 +1,29 @@
+static int pcrypt aead init tfm struct crypto tfm  tfm 
+{
+	int cpu  cpu index 
+	struct crypto instance  inst = crypto tfm alg instance tfm  
+	struct pcrypt instance ctx  ictx = crypto instance ctx inst  
+	struct pcrypt aead ctx  ctx = crypto tfm ctx tfm  
+	struct crypto aead  cipher 
+
+	ictx tfm count++ 
+
+	cpu index = ictx tfm count   cpumask weight cpu active mask  
+
+	ctx cb cpu = cpumask first cpu active mask  
+	for  cpu = 0  cpu   cpu index  cpu++ 
+		ctx cb cpu = cpumask next ctx cb cpu  cpu active mask  
+
+	cipher = crypto spawn aead crypto instance ctx inst   
+
+	if  IS ERR cipher  
+		return PTR ERR cipher  
+
+	ctx child = cipher 
+	tfm crt aead reqsize = sizeof struct pcrypt request 
+		+ sizeof struct aead givcrypt request 
+		+ crypto aead reqsize cipher  
+
+	return 0 
+}
+

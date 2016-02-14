@@ -1,0 +1,2 @@
+static u16 mts64 read struct parport  p  
+

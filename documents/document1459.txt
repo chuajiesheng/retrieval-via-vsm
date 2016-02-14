@@ -1,0 +1,23 @@
+   
+   ttm ref object add 
+  
+   @tfile  A struct ttm object file representing the application owning the
+   ref object 
+   @base  The base object to reference 
+   @ref type  The type of reference 
+   @existed  Upon completion  indicates that an identical reference object
+   already existed  and the refcount was upped on that object instead 
+  
+   Adding a ref object to a base object is basically like referencing the
+   base object  but a user space application holds the reference  When the
+   file corresponding to @tfile is closed  all its reference objects are
+   deleted  A reference object can have different types depending on what
+   it's intended for  It can be refcounting to prevent object destruction 
+   When user space takes a lock  it can add a ref object to that lock to
+   make sure the lock is released if the application dies  A ref object
+   will hold a single reference on a base object 
+   
+extern int ttm ref object add struct ttm object file  tfile 
+			      struct ttm base object  base 
+			      enum ttm ref type ref type  bool  existed  
+

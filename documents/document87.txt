@@ -1,0 +1,31 @@
+static int slave put val struct link slave  slave 
+			 struct snd ctl elem value  ucontrol 
+{
+	int err  ch  vol 
+
+	err = master init slave master  
+	if  err   0 
+		return err 
+
+	switch  slave info type  {
+	case SNDRV CTL ELEM TYPE BOOLEAN 
+		for  ch = 0  ch   slave info count  ch++ 
+			ucontrol value integer value ch   =
+				  slave master val 
+		break 
+	case SNDRV CTL ELEM TYPE INTEGER 
+		for  ch = 0  ch   slave info count  ch++  {
+			   max master volume is supposed to be 0 dB   
+			vol = ucontrol value integer value ch  
+			vol += slave master val   slave master info max val 
+			if  vol   slave info min val 
+				vol = slave info min val 
+			else if  vol   slave info max val 
+				vol = slave info max val 
+			ucontrol value integer value ch  = vol 
+		}
+		break 
+	}
+	return slave slave put  slave slave  ucontrol  
+}
+

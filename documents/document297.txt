@@ -1,0 +1,7 @@
+static void   exit alsa sound exit void 
+{
+	snd info minor unregister   
+	snd info done   
+	unregister chrdev major   alsa   
+}
+

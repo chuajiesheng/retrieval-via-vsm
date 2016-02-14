@@ -1,0 +1,39 @@
+static int snd intel8x0 hw params struct snd pcm substream  substream 
+				  struct snd pcm hw params  hw params 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct ichdev  ichdev = get ichdev substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int dbl = params rate hw params    48000 
+	int err 
+
+	if  chip fix nocache    ichdev page attr changed  {
+		fill nocache runtime dma area  runtime dma bytes  0      clear   
+		ichdev page attr changed = 0 
+	}
+	err = snd pcm lib malloc pages substream  params buffer bytes hw params   
+	if  err   0 
+		return err 
+	if  chip fix nocache  {
+		if  runtime dma area      ichdev page attr changed  {
+			fill nocache runtime dma area  runtime dma bytes  1  
+			ichdev page attr changed = 1 
+		}
+	}
+	if  ichdev pcm open flag  {
+		snd ac97 pcm close ichdev pcm  
+		ichdev pcm open flag = 0 
+	}
+	err = snd ac97 pcm open ichdev pcm  params rate hw params  
+				params channels hw params  
+				ichdev pcm r dbl  slots  
+	if  err  = 0  {
+		ichdev pcm open flag = 1 
+		   Force SPDIF setting   
+		if  ichdev ichd == ICHD PCMOUT    chip spdif idx   0 
+			snd ac97 set rate ichdev pcm r 0  codec 0   AC97 SPDIF 
+					  params rate hw params   
+	}
+	return err 
+}
+

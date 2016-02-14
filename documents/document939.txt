@@ -1,0 +1,8 @@
+static void snd sonicvibes free gameport struct sonicvibes  sonic 
+{
+	if  sonic gameport  {
+		gameport unregister port sonic gameport  
+		sonic gameport = NULL 
+	}
+}
+

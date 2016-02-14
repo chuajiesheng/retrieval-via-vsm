@@ -1,0 +1,2 @@
+snd rme96 playback prepare struct snd pcm substream  substream  
+

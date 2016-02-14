@@ -1,0 +1,41 @@
+                   
+   PCM open close  
+                    
+static int snd es1968 playback open struct snd pcm substream  substream 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct esschan  es 
+	int apu1 
+
+	   search 2 APUs   
+	apu1 = snd es1968 alloc apu pair chip  ESM APU PCM PLAY  
+	if  apu1   0 
+		return apu1 
+
+	es = kzalloc sizeof  es   GFP KERNEL  
+	if   es  {
+		snd es1968 free apu pair chip  apu1  
+		return  ENOMEM 
+	}
+
+	es apu 0  = apu1 
+	es apu 1  = apu1 + 1 
+	es apu mode 0  = 0 
+	es apu mode 1  = 0 
+	es running = 0 
+	es substream = substream 
+	es mode = ESM MODE PLAY 
+
+	runtime private data = es 
+	runtime hw = snd es1968 playback 
+	runtime hw buffer bytes max = runtime hw period bytes max =
+		calc available memory size chip  
+
+	spin lock irq  chip substream lock  
+	list add  es list   chip substream list  
+	spin unlock irq  chip substream lock  
+
+	return 0 
+}
+

@@ -1,0 +1,53 @@
+static int   devinit loopback mixer new struct loopback  loopback  int notify 
+{
+	struct snd card  card = loopback card 
+	struct snd pcm  pcm 
+	struct snd kcontrol  kctl 
+	struct loopback setup  setup 
+	int err  dev  substr  substr count  idx 
+
+	strcpy card mixername   Loopback Mixer   
+	for  dev = 0  dev   2  dev++  {
+		pcm = loopback pcm dev  
+		substr count =
+		    pcm streams SNDRV PCM STREAM CAPTURE  substream count 
+		for  substr = 0  substr   substr count  substr++  {
+			setup =  loopback setup substr  dev  
+			setup notify = notify 
+			setup rate shift = NO PITCH 
+			setup format = SNDRV PCM FORMAT S16 LE 
+			setup rate = 48000 
+			setup channels = 2 
+			for  idx = 0  idx   ARRAY SIZE loopback controls  
+									idx++  {
+				kctl = snd ctl new1  loopback controls idx  
+						    loopback  
+				if   kctl 
+					return  ENOMEM 
+				kctl id device = dev 
+				kctl id subdevice = substr 
+				switch  idx  {
+				case ACTIVE IDX 
+					setup active id = kctl id 
+					break 
+				case FORMAT IDX 
+					setup format id = kctl id 
+					break 
+				case RATE IDX 
+					setup rate id = kctl id 
+					break 
+				case CHANNELS IDX 
+					setup channels id = kctl id 
+					break 
+				default 
+					break 
+				}
+				err = snd ctl add card  kctl  
+				if  err   0 
+					return err 
+			}
+		}
+	}
+	return 0 
+}
+

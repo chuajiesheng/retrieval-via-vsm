@@ -1,0 +1,26 @@
+static int   devinit snd ensoniq midi struct ensoniq   ensoniq  int device 
+				      struct snd rawmidi   rrawmidi 
+{
+	struct snd rawmidi  rmidi 
+	int err 
+
+	if  rrawmidi 
+		 rrawmidi = NULL 
+	if   err = snd rawmidi new ensoniq card   ES1370 1   device  1  1   rmidi     0 
+		return err 
+#ifdef CHIP1370
+	strcpy rmidi name   ES1370   
+#else
+	strcpy rmidi name   ES1371   
+#endif
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM OUTPUT   snd ensoniq midi output  
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM INPUT   snd ensoniq midi input  
+	rmidi info flags |= SNDRV RAWMIDI INFO OUTPUT | SNDRV RAWMIDI INFO INPUT |
+		SNDRV RAWMIDI INFO DUPLEX 
+	rmidi private data = ensoniq 
+	ensoniq rmidi = rmidi 
+	if  rrawmidi 
+		 rrawmidi = rmidi 
+	return 0 
+}
+

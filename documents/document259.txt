@@ -1,0 +1,25 @@
+void snd pcm detach substream struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime 
+
+	if  PCM RUNTIME CHECK substream  
+		return 
+	runtime = substream runtime 
+	if  runtime private free  = NULL 
+		runtime private free runtime  
+	snd free pages  void  runtime status 
+		       PAGE ALIGN sizeof struct snd pcm mmap status    
+	snd free pages  void  runtime control 
+		       PAGE ALIGN sizeof struct snd pcm mmap control    
+	kfree runtime hw constraints rules  
+#ifdef CONFIG SND PCM XRUN DEBUG
+	if  runtime hwptr log 
+		kfree runtime hwptr log  
+#endif
+	kfree runtime  
+	substream runtime = NULL 
+	put pid substream pid  
+	substream pid = NULL 
+	substream pstr substream opened   
+}
+

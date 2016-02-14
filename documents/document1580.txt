@@ -1,0 +1,11 @@
+snd rme96 dac volume info struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	
+        uinfo type = SNDRV CTL ELEM TYPE INTEGER 
+        uinfo count = 2 
+        uinfo value integer min = 0 
+	uinfo value integer max = RME96 185X MAX OUT rme96  
+        return 0 
+}
+

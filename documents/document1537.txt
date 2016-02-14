@@ -1,0 +1,26 @@
+snd rme96 interrupt int irq 
+		    void  dev id 
+{
+	struct rme96  rme96 =  struct rme96   dev id 
+
+	rme96 rcreg = readl rme96 iobase + RME96 IO CONTROL REGISTER  
+	   fastpath out  to ease interrupt sharing   
+	if     rme96 rcreg   RME96 RCR IRQ  ||
+	       rme96 rcreg   RME96 RCR IRQ 2   
+	{
+		return IRQ NONE 
+	}
+	
+	if  rme96 rcreg   RME96 RCR IRQ  {
+		   playback   
+                snd pcm period elapsed rme96 playback substream  
+		writel 0  rme96 iobase + RME96 IO CONFIRM PLAY IRQ  
+	}
+	if  rme96 rcreg   RME96 RCR IRQ 2  {
+		   capture   
+		snd pcm period elapsed rme96 capture substream  		
+		writel 0  rme96 iobase + RME96 IO CONFIRM REC IRQ  
+	}
+	return IRQ HANDLED 
+}
+

@@ -1,0 +1,4 @@
+extern int drm addmap struct drm device  dev  resource size t offset 
+		      unsigned int size  enum drm map type type 
+		      enum drm map flags flags  struct drm local map   map ptr  
+

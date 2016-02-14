@@ -1,0 +1,6 @@
+static void crypto rfc4106 free struct crypto instance  inst 
+{
+	crypto drop spawn crypto instance ctx inst   
+	kfree inst  
+}
+

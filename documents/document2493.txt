@@ -1,0 +1,14 @@
+unsigned long efi get time void 
+{
+	efi status t status 
+	efi time t eft 
+	efi time cap t cap 
+
+	status = efi get time  eft   cap  
+	if  status  = EFI SUCCESS 
+		printk KERN ERR  Oops  efitime  can't read time \n   
+
+	return mktime eft year  eft month  eft day  eft hour 
+		      eft minute  eft second  
+}
+

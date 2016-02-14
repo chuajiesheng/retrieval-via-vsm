@@ -1,0 +1,86 @@
+static int   devinit snd als300 create struct snd card  card 
+				       struct pci dev  pci  int chip type 
+				       struct snd als300   rchip 
+{
+	struct snd als300  chip 
+	void  irq handler 
+	int err 
+
+	static struct snd device ops ops = {
+		 dev free = snd als300 dev free 
+	} 
+	 rchip = NULL 
+
+	snd als300 dbgcallenter   
+	if   err = pci enable device pci     0 
+		return err 
+
+	if  pci set dma mask pci  DMA BIT MASK 28     0 ||
+		pci set consistent dma mask pci  DMA BIT MASK 28     0  {
+		printk KERN ERR  error setting 28bit DMA mask\n   
+		pci disable device pci  
+		return  ENXIO 
+	}
+	pci set master pci  
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+	chip chip type = chip type 
+	spin lock init  chip reg lock  
+
+	if   err = pci request regions pci   ALS300      0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+	chip port = pci resource start pci  0  
+
+	if  chip chip type == DEVICE ALS300 PLUS 
+		irq handler = snd als300plus interrupt 
+	else
+		irq handler = snd als300 interrupt 
+
+	if  request irq pci irq  irq handler  IRQF SHARED 
+			card shortname  chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd als300 free chip  
+		return  EBUSY 
+	}
+	chip irq = pci irq 
+
+
+	snd als300 init chip  
+
+	err = snd als300 ac97 chip  
+	if  err   0  {
+		snd printk KERN WARNING  Could not create ac97\n   
+		snd als300 free chip  
+		return err 
+	}
+
+	if   err = snd als300 new pcm chip     0  {
+		snd printk KERN WARNING  Could not create PCM\n   
+		snd als300 free chip  
+		return err 
+	}
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL 
+						chip   ops     0  {
+		snd als300 free chip  
+		return err 
+	}
+
+	snd card set dev card   pci dev  
+
+	 rchip = chip 
+	snd als300 dbgcallleave   
+	return 0 
+}
+

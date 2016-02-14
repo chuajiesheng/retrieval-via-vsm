@@ -1,0 +1,5 @@
+static inline int rdma is multicast addr struct in6 addr  addr 
+{
+	return addr s6 addr 0  == 0xff 
+}
+

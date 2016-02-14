@@ -1,0 +1,8 @@
+  
+    Lowlevel I O   AC'97 registers
+   
+static inline u16 iagetword struct intel8x0m  chip  u32 offset 
+{
+	return ioread16 chip addr + offset  
+}
+

@@ -1,0 +1,33 @@
+static int   init alsa card serial init void 
+{
+	int i  cards  err 
+
+	if   err = platform driver register  snd serial driver     0 
+		return err 
+
+	cards = 0 
+	for  i = 0  i   SNDRV CARDS  i++  {
+		struct platform device  device 
+		if    enable i  
+			continue 
+		device = platform device register simple SND SERIAL DRIVER 
+							 i  NULL  0  
+		if  IS ERR device  
+			continue 
+		if   platform get drvdata device   {
+			platform device unregister device  
+			continue 
+		}
+		devices i  = device 
+		cards++ 
+	}
+	if    cards  {
+#ifdef MODULE
+		printk KERN ERR  serial midi soundcard not found or device busy\n   
+#endif
+		snd serial unregister all   
+		return  ENODEV 
+	}
+	return 0 
+}
+

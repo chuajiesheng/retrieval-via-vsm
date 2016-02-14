@@ -1,0 +1,19 @@
+   
+   ttm bo device init
+  
+   @bdev  A pointer to a struct ttm bo device to initialize 
+   @mem global  A pointer to an initialized struct ttm mem global 
+   @driver  A pointer to a struct ttm bo driver set up by the caller 
+   @file page offset  Offset into the device address space that is available
+   for buffer data  This ensures compatibility with other users of the
+   address space 
+  
+   Initializes a struct ttm bo device 
+   Returns 
+    0  Failure 
+   
+extern int ttm bo device init struct ttm bo device  bdev 
+			      struct ttm bo global  glob 
+			      struct ttm bo driver  driver 
+			      uint64 t file page offset  bool need dma32  
+

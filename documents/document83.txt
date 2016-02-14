@@ -1,0 +1,16 @@
+static int slave update struct link slave  slave 
+{
+	struct snd ctl elem value  uctl 
+	int err  ch 
+
+	uctl = kmalloc sizeof  uctl   GFP KERNEL  
+	if   uctl 
+		return  ENOMEM 
+	uctl id = slave slave id 
+	err = slave slave get  slave slave  uctl  
+	for  ch = 0  ch   slave info count  ch++ 
+		slave vals ch  = uctl value integer value ch  
+	kfree uctl  
+	return 0 
+}
+

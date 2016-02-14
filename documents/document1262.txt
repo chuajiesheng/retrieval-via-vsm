@@ -1,0 +1,7 @@
+static inline u8 snd als4 cr read struct snd sb  chip 
+					enum als4k cr t reg 
+{
+	   NOTE  assumes chip mixer lock to be locked externally already    
+	return snd sbmixer read chip  reg | 0xc0  
+}
+

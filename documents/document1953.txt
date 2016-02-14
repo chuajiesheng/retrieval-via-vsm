@@ -1,0 +1,5 @@
+static int   init alsa card intel8x0 init void 
+{
+	return pci register driver  driver  
+}
+

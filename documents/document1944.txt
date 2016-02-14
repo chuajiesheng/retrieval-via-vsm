@@ -1,0 +1,8 @@
+static void   devinit snd intel8x0 proc init struct intel8x0   chip 
+{
+	struct snd info entry  entry 
+
+	if    snd card proc new chip card   intel8x0    entry  
+		snd info set text ops entry  chip  snd intel8x0 proc read  
+}
+

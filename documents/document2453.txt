@@ -1,0 +1,9 @@
+   
+   tfrc rx hist entry   return the n th history entry after loss start
+   
+static inline struct tfrc rx hist entry  
+			tfrc rx hist entry const struct tfrc rx hist  h  const u8 n 
+{
+	return h ring tfrc rx hist index h  n   
+}
+

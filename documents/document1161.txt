@@ -1,0 +1,13 @@
+   
+   ttm agp backend init
+  
+   @bdev  Pointer to a struct ttm bo device 
+   @bridge  The agp bridge this device is sitting on 
+  
+   Create a TTM backend that uses the indicated AGP bridge as an aperture
+   for TT memory  This function uses the linux agpgart interface to
+   bind and unbind memory backing a ttm tt 
+   
+extern struct ttm backend  ttm agp backend init struct ttm bo device  bdev 
+						struct agp bridge data  bridge  
+

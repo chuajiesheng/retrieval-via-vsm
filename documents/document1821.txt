@@ -1,0 +1,6 @@
+static void deflate comp exit struct deflate ctx  ctx 
+{
+	zlib deflateEnd  ctx comp stream  
+	vfree ctx comp stream workspace  
+}
+

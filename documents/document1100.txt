@@ -1,0 +1,37 @@
+snd azf3328 mixer new struct snd azf3328  chip 
+{
+	struct snd card  card 
+	const struct snd kcontrol new  sw 
+	unsigned int idx 
+	int err 
+
+	snd azf3328 dbgcallenter   
+	if  snd BUG ON  chip ||  chip card  
+		return  EINVAL 
+
+	card = chip card 
+
+	   mixer reset   
+	snd azf3328 mixer outw chip  IDX MIXER RESET  0x0000  
+
+	   mute and zero volume channels   
+	for  idx = 0  idx   ARRAY SIZE snd azf3328 init values   ++idx  {
+		snd azf3328 mixer outw chip 
+			snd azf3328 init values idx  0  
+			snd azf3328 init values idx  1   
+	}
+
+	   add mixer controls   
+	sw = snd azf3328 mixer controls 
+	for  idx = 0  idx   ARRAY SIZE snd azf3328 mixer controls  
+			++idx  ++sw  {
+		if   err = snd ctl add chip card  snd ctl new1 sw  chip      0 
+			return err 
+	}
+	snd component add card   AZF3328 mixer   
+	strcpy card mixername   AZF3328 mixer   
+
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

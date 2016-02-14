@@ -1,0 +1,15 @@
+static int snd cs4281 gameport open struct gameport  gameport  int mode 
+{
+	switch  mode  {
+#ifdef COOKED MODE
+	case GAMEPORT MODE COOKED 
+		return 0 
+#endif
+	case GAMEPORT MODE RAW 
+		return 0 
+	default 
+		return  1 
+	}
+	return 0 
+}
+

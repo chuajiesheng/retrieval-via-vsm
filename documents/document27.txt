@@ -1,0 +1,7 @@
+static void snd remove proc entry struct proc dir entry  parent 
+				  struct proc dir entry  de 
+{
+	if  de 
+		remove proc entry de name  parent  
+}
+

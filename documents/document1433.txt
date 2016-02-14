@@ -1,0 +1,6 @@
+static int snd ak4531 dev free struct snd device  device 
+{
+	struct snd ak4531  ak4531 = device device data 
+	return snd ak4531 free ak4531  
+}
+

@@ -1,0 +1,3 @@
+int mlx4 map phys fmr struct mlx4 dev  dev  struct mlx4 fmr  fmr  u64  page list 
+		      int npages  u64 iova  u32  lkey  u32  rkey  
+

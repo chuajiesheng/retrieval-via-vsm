@@ -1,0 +1,17 @@
+static int snd bt87x capture source put struct snd kcontrol  kcontrol 
+					struct snd ctl elem value  value 
+{
+	struct snd bt87x  chip = snd kcontrol chip kcontrol  
+	u32 old control 
+	int changed 
+
+	spin lock irq  chip reg lock  
+	old control = chip reg control 
+	chip reg control =  chip reg control   ~CTL A SEL MASK 
+		|  value value enumerated item 0     CTL A SEL SHIFT  
+	snd bt87x writel chip  REG GPIO DMA CTL  chip reg control  
+	changed = chip reg control  = old control 
+	spin unlock irq  chip reg lock  
+	return changed 
+}
+

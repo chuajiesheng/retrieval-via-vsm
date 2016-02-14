@@ -1,0 +1,21 @@
+static long snd info entry ioctl struct file  file  unsigned int cmd 
+				unsigned long arg 
+{
+	struct snd info private data  data 
+	struct snd info entry  entry 
+
+	data = file private data 
+	if  data == NULL 
+		return 0 
+	entry = data entry 
+	switch  entry content  {
+	case SNDRV INFO CONTENT DATA 
+		if  entry c ops ioctl 
+			return entry c ops ioctl entry 
+						   data file private data 
+						   file  cmd  arg  
+		break 
+	}
+	return  ENOTTY 
+}
+

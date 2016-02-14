@@ -1,0 +1,19 @@
+static int snd rme32 playback close struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	int spdif = 0 
+
+	spin lock irq  rme32 lock  
+	rme32 playback substream = NULL 
+	rme32 playback periodsize = 0 
+	spdif =  rme32 wcreg   RME32 WCR ADAT  == 0 
+	spin unlock irq  rme32 lock  
+	if  spdif  {
+		rme32 spdif ctl vd 0  access |= SNDRV CTL ELEM ACCESS INACTIVE 
+		snd ctl notify rme32 card  SNDRV CTL EVENT MASK VALUE |
+			       SNDRV CTL EVENT MASK INFO 
+			        rme32 spdif ctl id  
+	}
+	return 0 
+}
+

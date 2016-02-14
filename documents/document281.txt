@@ -1,0 +1,16 @@
+   
+   snd request card   try to load the card module
+   @card  the card number
+  
+   Tries to load the module  snd card X  for the given card number
+   via request module   Returns immediately if already loaded 
+   
+void snd request card int card 
+{
+	if  snd card locked card  
+		return 
+	if  card   0 || card  = cards limit 
+		return 
+	request module  snd card  i   card  
+}
+

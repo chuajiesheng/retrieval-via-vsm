@@ -1,0 +1,2 @@
+extern int wimax msg send struct wimax dev    struct sk buff    
+

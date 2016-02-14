@@ -1,0 +1,17 @@
+static int   devinit snd card dummy new mixer struct snd dummy  dummy 
+{
+	struct snd card  card = dummy card 
+	unsigned int idx 
+	int err 
+
+	spin lock init  dummy mixer lock  
+	strcpy card mixername   Dummy Mixer   
+
+	for  idx = 0  idx   ARRAY SIZE snd dummy controls   idx++  {
+		err = snd ctl add card  snd ctl new1  snd dummy controls idx   dummy   
+		if  err   0 
+			return err 
+	}
+	return 0 
+}
+

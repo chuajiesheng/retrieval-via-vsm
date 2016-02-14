@@ -1,0 +1,13 @@
+static int snd atiixp spdif open struct snd pcm substream  substream 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+	int err 
+	mutex lock  chip open mutex  
+	if  chip spdif over aclink     share DMA PLAYBACK   
+		err = snd atiixp pcm open substream   chip dmas ATI DMA PLAYBACK   2  
+	else
+		err = snd atiixp pcm open substream   chip dmas ATI DMA SPDIF    1  
+	mutex unlock  chip open mutex  
+	return err 
+}
+

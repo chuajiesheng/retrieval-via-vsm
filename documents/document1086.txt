@@ -1,0 +1,17 @@
+snd azf3328 io reg setb unsigned reg  u8 mask  bool do set 
+{
+	   Well  strictly spoken  the inb outb sequence isn't atomic
+	   and would need locking  However we currently don't care
+	   since it potentially complicates matters    
+	u8 prev = inb reg   new 
+
+	new =  do set  ?  prev|mask     prev   ~mask  
+	   we need to always write the new value no matter whether it differs
+	   or not  since some register bits don't indicate their setting   
+	outb new  reg  
+	if  new  = prev 
+		return 1 
+
+	return 0 
+}
+

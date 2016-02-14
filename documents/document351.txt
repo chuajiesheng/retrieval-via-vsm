@@ -1,0 +1,31 @@
+   
+    snd card file add   add the file to the file list of the card
+    @card  soundcard structure
+    @file  file pointer
+  
+    This function adds the file to the file linked list of the card 
+    This linked list is used to keep tracking the connection state 
+    and to avoid the release of busy resources by hotplug 
+  
+    Returns zero or a negative error code 
+   
+int snd card file add struct snd card  card  struct file  file 
+{
+	struct snd monitor file  mfile 
+
+	mfile = kmalloc sizeof  mfile   GFP KERNEL  
+	if  mfile == NULL 
+		return  ENOMEM 
+	mfile file = file 
+	mfile disconnected f op = NULL 
+	spin lock  card files lock  
+	if  card shutdown  {
+		spin unlock  card files lock  
+		kfree mfile  
+		return  ENODEV 
+	}
+	list add  mfile list   card files list  
+	spin unlock  card files lock  
+	return 0 
+}
+

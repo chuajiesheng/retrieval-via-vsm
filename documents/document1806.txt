@@ -1,0 +1,10 @@
+static void snd fm801 mixer free ac97 struct snd ac97  ac97 
+{
+	struct fm801  chip = ac97 private data 
+	if  ac97 num == 0  {
+		chip ac97 = NULL 
+	} else {
+		chip ac97 sec = NULL 
+	}
+}
+

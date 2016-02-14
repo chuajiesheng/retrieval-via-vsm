@@ -1,0 +1,27 @@
+   
+   snd dma free pages   release the allocated buffer
+   @dmab  the buffer allocation record to release
+  
+   Releases the allocated buffer via snd dma alloc pages   
+   
+void snd dma free pages struct snd dma buffer  dmab 
+{
+	switch  dmab dev type  {
+	case SNDRV DMA TYPE CONTINUOUS 
+		snd free pages dmab area  dmab bytes  
+		break 
+#ifdef CONFIG HAS DMA
+	case SNDRV DMA TYPE DEV 
+		snd free dev pages dmab dev dev  dmab bytes  dmab area  dmab addr  
+		break 
+#endif
+#ifdef CONFIG SND DMA SGBUF
+	case SNDRV DMA TYPE DEV SG 
+		snd free sgbuf pages dmab  
+		break 
+#endif
+	default 
+		printk KERN ERR  snd malloc  invalid device type  d\n   dmab dev type  
+	}
+}
+

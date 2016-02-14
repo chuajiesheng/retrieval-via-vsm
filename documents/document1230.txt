@@ -1,0 +1,46 @@
+static int   devinit snd als4000 create gameport struct snd card als4000  acard  int dev 
+{
+	struct gameport  gp 
+	struct resource  r 
+	int io port 
+
+	if  joystick port dev  == 0 
+		return  ENODEV 
+
+	if  joystick port dev  == 1  {    auto detect   
+		for  io port = 0x200  io port  = 0x218  io port += 8  {
+			r = request region io port  8   ALS4000 gameport   
+			if  r 
+				break 
+		}
+	} else {
+		io port = joystick port dev  
+		r = request region io port  8   ALS4000 gameport   
+	}
+
+	if   r  {
+		printk KERN WARNING  als4000  cannot reserve joystick ports\n   
+		return  EBUSY 
+	}
+
+	acard gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  als4000  cannot allocate memory for gameport\n   
+		release and free resource r  
+		return  ENOMEM 
+	}
+
+	gameport set name gp   ALS4000 Gameport   
+	gameport set phys gp   pci s gameport0   pci name acard pci   
+	gameport set dev parent gp   acard pci dev  
+	gp io = io port 
+	gameport set port data gp  r  
+
+	   Enable legacy joystick port   
+	snd als4000 set addr acard iobase  0  0  0  1  
+
+	gameport register port acard gameport  
+
+	return 0 
+}
+

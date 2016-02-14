@@ -1,0 +1,171 @@
+snd m3 create struct snd card  card  struct pci dev  pci 
+	      int enable amp 
+	      int amp gpio 
+	      struct snd m3   chip ret 
+{
+	struct snd m3  chip 
+	int i  err 
+	const struct snd pci quirk  quirk 
+	static struct snd device ops ops = {
+		 dev free =	snd m3 dev free 
+	} 
+
+	 chip ret = NULL 
+
+	if  pci enable device pci  
+		return  EIO 
+
+	   check  if we can restrict PCI DMA transfers to 28 bits   
+	if  pci set dma mask pci  DMA BIT MASK 28     0 ||
+	    pci set consistent dma mask pci  DMA BIT MASK 28     0  {
+		snd printk KERN ERR  architecture does not support 28bit PCI busmaster DMA\n   
+		pci disable device pci  
+		return  ENXIO 
+	}
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	spin lock init  chip reg lock  
+#ifndef CONFIG SND MAESTRO3 INPUT
+	spin lock init  chip ac97 lock  
+#endif
+
+	switch  pci device  {
+	case PCI DEVICE ID ESS ALLEGRO 
+	case PCI DEVICE ID ESS ALLEGRO 1 
+	case PCI DEVICE ID ESS CANYON3D 2LE 
+	case PCI DEVICE ID ESS CANYON3D 2 
+		chip allegro flag = 1 
+		break 
+	}
+
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+
+	chip external amp = enable amp 
+	if  amp gpio  = 0    amp gpio  = 0x0f 
+		chip amp gpio = amp gpio 
+	else {
+		quirk = snd pci quirk lookup pci  m3 amp quirk list  
+		if  quirk  {
+			snd printdd KERN INFO  maestro3  set amp gpio  
+				     for ' s'\n   quirk name  
+			chip amp gpio = quirk value 
+		} else if  chip allegro flag 
+			chip amp gpio = GPO EXT AMP ALLEGRO 
+		else    presumably this is for all 'maestro3's     
+			chip amp gpio = GPO EXT AMP M3 
+	}
+
+	quirk = snd pci quirk lookup pci  m3 irda quirk list  
+	if  quirk  {
+		snd printdd KERN INFO  maestro3  enabled irda workaround  
+			     for ' s'\n   quirk name  
+		chip irda workaround = 1 
+	}
+	quirk = snd pci quirk lookup pci  m3 hv quirk list  
+	if  quirk 
+		chip hv config = quirk value 
+	if  snd pci quirk lookup pci  m3 omnibook quirk list  
+		chip is omnibook = 1 
+
+	chip num substreams = NR DSPS 
+	chip substreams = kcalloc chip num substreams  sizeof struct m3 dma  
+				   GFP KERNEL  
+	if  chip substreams == NULL  {
+		kfree chip  
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	err = request firmware  chip assp kernel image 
+			        ess maestro3 assp kernel fw    pci dev  
+	if  err   0  {
+		snd m3 free chip  
+		return err 
+	}
+
+	err = request firmware  chip assp minisrc image 
+			        ess maestro3 assp minisrc fw    pci dev  
+	if  err   0  {
+		snd m3 free chip  
+		return err 
+	}
+
+	if   err = pci request regions pci  card driver     0  {
+		snd m3 free chip  
+		return err 
+	}
+	chip iobase = pci resource start pci  0  
+	
+	   just to be sure   
+	pci set master pci  
+
+	snd m3 chip init chip  
+	snd m3 assp halt chip  
+
+	snd m3 ac97 reset chip  
+
+	snd m3 amp enable chip  1  
+
+	snd m3 hv init chip  
+
+#ifndef CONFIG SND MAESTRO3 INPUT
+	tasklet init  chip hwvol tq  snd m3 update hw volume   unsigned long chip  
+#endif
+
+	if  request irq pci irq  snd m3 interrupt  IRQF SHARED 
+			card driver  chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd m3 free chip  
+		return  ENOMEM 
+	}
+	chip irq = pci irq 
+
+#ifdef CONFIG PM
+	chip suspend mem = vmalloc sizeof u16     REV B CODE MEMORY LENGTH + REV B DATA MEMORY LENGTH   
+	if  chip suspend mem == NULL 
+		snd printk KERN WARNING  can't allocate apm buffer\n   
+#endif
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd m3 free chip  
+		return err 
+	}
+
+	if   err = snd m3 mixer chip     0 
+		return err 
+
+	for  i = 0  i   chip num substreams  i++  {
+		struct m3 dma  s =  chip substreams i  
+		if   err = snd m3 assp client init chip  s  i     0 
+			return err 
+	}
+
+	if   err = snd m3 pcm chip  0     0 
+		return err 
+
+#ifdef CONFIG SND MAESTRO3 INPUT
+	if  chip hv config   HV CTRL ENABLE  {
+		err = snd m3 input register chip  
+		if  err 
+			snd printk KERN WARNING  Input device registration  
+				 failed with error  i   err  
+	}
+#endif
+
+	snd m3 enable ints chip  
+	snd m3 assp continue chip  
+
+	snd card set dev card   pci dev  
+
+	 chip ret = chip 
+
+	return 0  
+}
+

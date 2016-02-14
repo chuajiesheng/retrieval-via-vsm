@@ -1,0 +1,6 @@
+static inline unsigned int snd rme32 pcm byteptr struct rme32   rme32 
+{
+	return  readl rme32 iobase + RME32 IO GET POS 
+		  RME32 RCR AUDIO ADDR MASK  
+}
+

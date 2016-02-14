@@ -1,0 +1,14 @@
+void tfrc tx hist purge struct tfrc tx hist entry   headp 
+{
+	struct tfrc tx hist entry  head =  headp 
+
+	while  head  = NULL  {
+		struct tfrc tx hist entry  next = head next 
+
+		kmem cache free tfrc tx hist slab  head  
+		head = next 
+	}
+
+	 headp = NULL 
+}
+

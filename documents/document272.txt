@@ -1,0 +1,5 @@
+static inline void input report ff status struct input dev  dev  unsigned int code  int value 
+{
+	input event dev  EV FF STATUS  code  value  
+}
+

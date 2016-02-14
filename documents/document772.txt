@@ -1,0 +1,2 @@
+extern void synchronize irq unsigned int irq  
+

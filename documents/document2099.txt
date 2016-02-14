@@ -1,0 +1,4 @@
+extern int ssb bus sdiobus register struct ssb bus  bus 
+				    struct sdio func  sdio func 
+				    unsigned int quirks  
+

@@ -1,0 +1,108 @@
+  
+   reset ac97 codec
+   
+static void snd es1968 ac97 reset struct es1968  chip 
+{
+	unsigned long ioaddr = chip io port 
+
+	unsigned short save ringbus a 
+	unsigned short save 68 
+	unsigned short w 
+	unsigned int vend 
+
+	   save configuration   
+	save ringbus a = inw ioaddr + 0x36  
+
+	  outw inw ioaddr + 0x38    0xfffc  ioaddr + 0x38      clear second codec id?   
+	   set command status address i o to 1st codec   
+	outw inw ioaddr + 0x3a    0xfffc  ioaddr + 0x3a  
+	outw inw ioaddr + 0x3c    0xfffc  ioaddr + 0x3c  
+
+	   disable ac link   
+	outw 0x0000  ioaddr + 0x36  
+	save 68 = inw ioaddr + 0x68  
+	pci read config word chip pci  0x58   w  	   something magical with gpio and bus arb    
+	pci read config dword chip pci  PCI SUBSYSTEM VENDOR ID   vend  
+	if  w   1 
+		save 68 |= 0x10 
+	outw 0xfffe  ioaddr + 0x64  	   unmask gpio 0   
+	outw 0x0001  ioaddr + 0x68  	   gpio write   
+	outw 0x0000  ioaddr + 0x60  	   write 0 to gpio 0   
+	udelay 20  
+	outw 0x0001  ioaddr + 0x60  	   write 1 to gpio 1   
+	msleep 20  
+
+	outw save 68 | 0x1  ioaddr + 0x68  	   now restore      
+	outw  inw ioaddr + 0x38    0xfffc  | 0x1  ioaddr + 0x38  
+	outw  inw ioaddr + 0x3a    0xfffc  | 0x1  ioaddr + 0x3a  
+	outw  inw ioaddr + 0x3c    0xfffc  | 0x1  ioaddr + 0x3c  
+
+	   now the second codec   
+	   disable ac link   
+	outw 0x0000  ioaddr + 0x36  
+	outw 0xfff7  ioaddr + 0x64  	   unmask gpio 3   
+	save 68 = inw ioaddr + 0x68  
+	outw 0x0009  ioaddr + 0x68  	   gpio write 0   3 ??   
+	outw 0x0001  ioaddr + 0x60  	   write 1 to gpio   
+	udelay 20  
+	outw 0x0009  ioaddr + 0x60  	   write 9 to gpio   
+	msleep 500  
+	  outw inw ioaddr + 0x38    0xfffc  ioaddr + 0x38  
+	outw inw ioaddr + 0x3a    0xfffc  ioaddr + 0x3a  
+	outw inw ioaddr + 0x3c    0xfffc  ioaddr + 0x3c  
+
+#if 0				   the loop here needs to be much better if we want it     
+	snd printk KERN INFO  trying software reset\n   
+	   try and do a software reset   
+	outb 0x80 | 0x7c  ioaddr + 0x30  
+	for  w = 0   w++  {
+		if   inw ioaddr + 0x30    1  == 0  {
+			if  inb ioaddr + 0x32   = 0 
+				break 
+
+			outb 0x80 | 0x7d  ioaddr + 0x30  
+			if    inw ioaddr + 0x30    1  == 0 
+			        inb ioaddr + 0x32   = 0  
+				break 
+			outb 0x80 | 0x7f  ioaddr + 0x30  
+			if    inw ioaddr + 0x30    1  == 0 
+			        inb ioaddr + 0x32   = 0  
+				break 
+		}
+
+		if  w   10000  {
+			outb inb ioaddr + 0x37  | 0x08  ioaddr + 0x37  	   do a software reset   
+			msleep 500  	   oh my     
+			outb inb ioaddr + 0x37    ~0x08 
+				ioaddr + 0x37  
+			udelay 1  
+			outw 0x80  ioaddr + 0x30  
+			for  w = 0  w   10000  w++  {
+				if   inw ioaddr + 0x30    1  == 0 
+					break 
+			}
+		}
+	}
+#endif
+	if  vend == NEC VERSA SUBID1 || vend == NEC VERSA SUBID2  {
+		   turn on external amp?   
+		outw 0xf9ff  ioaddr + 0x64  
+		outw inw ioaddr + 0x68  | 0x600  ioaddr + 0x68  
+		outw 0x0209  ioaddr + 0x60  
+	}
+
+	   restore     
+	outw save ringbus a  ioaddr + 0x36  
+
+	   Turn on the 978 docking chip 
+	   First frob the  master output enable  bit 
+	   then set most of the playback volume control registers to max    
+	outb inb ioaddr+0xc0 | 1  5   ioaddr+0xc0  
+	outb 0xff  ioaddr+0xc3  
+	outb 0xff  ioaddr+0xc4  
+	outb 0xff  ioaddr+0xc6  
+	outb 0xff  ioaddr+0xc8  
+	outb 0x3f  ioaddr+0xcf  
+	outb 0x3f  ioaddr+0xd0  
+}
+

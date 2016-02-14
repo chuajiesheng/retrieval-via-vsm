@@ -1,0 +1,5 @@
+static void   exit alsa card cs5530 exit void 
+{
+	pci unregister driver  driver  
+}
+

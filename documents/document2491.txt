@@ -1,0 +1,11 @@
+static efi status t   init phys efi get time efi time t  tm 
+					     efi time cap t  tc 
+{
+	efi status t status 
+
+	efi call phys prelog   
+	status = efi call phys2 efi phys get time  tm  tc  
+	efi call phys epilog   
+	return status 
+}
+

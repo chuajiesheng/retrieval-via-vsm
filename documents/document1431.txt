@@ -1,0 +1,9 @@
+  
+   Frees all stale memory blocks associated with this owner  Note that this
+   requires that the hardware is finished with all blocks  so the graphics engine
+   should be idled before this call is made  This function also frees
+   any resources associated with  owner  and should be called when owner
+   is not going to be referenced anymore 
+   
+extern void drm sman owner cleanup struct drm sman   sman  unsigned long owner  
+

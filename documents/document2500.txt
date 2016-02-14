@@ -1,0 +1,91 @@
+  
+   This function will switch the EFI runtime services to virtual mode 
+   Essentially  look through the EFI memmap and map every region that
+   has the runtime attribute bit set in its memory descriptor and update
+   that memory descriptor with the virtual address obtained from ioremap   
+   This enables the runtime services to be called without having to
+   thunk back into physical mode for every invocation 
+   
+void   init efi enter virtual mode void 
+{
+	efi memory desc t  md 
+	efi status t status 
+	unsigned long size 
+	u64 end  systab  addr  npages  end pfn 
+	void  p   va 
+
+	efi systab = NULL 
+	for  p = memmap map  p   memmap map end  p += memmap desc size  {
+		md = p 
+		if    md attribute   EFI MEMORY RUNTIME  
+			continue 
+
+		size = md num pages    EFI PAGE SHIFT 
+		end = md phys addr + size 
+
+		end pfn = PFN UP end  
+		if  end pfn  = max low pfn mapped
+		    ||  end pfn    1UL     32   PAGE SHIFT  
+			   end pfn  = max pfn mapped  
+			va =   va md phys addr  
+		else
+			va = efi ioremap md phys addr  size  md type  
+
+		md virt addr =  u64   unsigned long  va 
+
+		if   va  {
+			printk KERN ERR PFX  ioremap of 0x llX failed \n  
+			        unsigned long long md phys addr  
+			continue 
+		}
+
+		if    md attribute   EFI MEMORY WB   {
+			addr = md virt addr 
+			npages = md num pages 
+			memrange efi to native  addr   npages  
+			set memory uc addr  npages  
+		}
+
+		systab =  u64   unsigned long  efi phys systab 
+		if  md phys addr  = systab    systab   end  {
+			systab += md virt addr   md phys addr 
+			efi systab =  efi system table t     unsigned long  systab 
+		}
+	}
+
+	BUG ON  efi systab  
+
+	status = phys efi set virtual address map 
+		memmap desc size   memmap nr map 
+		memmap desc size 
+		memmap desc version 
+		memmap phys map  
+
+	if  status  = EFI SUCCESS  {
+		printk KERN ALERT  Unable to switch EFI into virtual mode  
+		         status= lx  \n   status  
+		panic  EFI call to SetVirtualAddressMap   failed    
+	}
+
+	  
+	   Now that EFI is in virtual mode  update the function
+	   pointers in the runtime service table to the new virtual addresses 
+	  
+	   Call EFI services through wrapper functions 
+	   
+	efi get time = virt efi get time 
+	efi set time = virt efi set time 
+	efi get wakeup time = virt efi get wakeup time 
+	efi set wakeup time = virt efi set wakeup time 
+	efi get variable = virt efi get variable 
+	efi get next variable = virt efi get next variable 
+	efi set variable = virt efi set variable 
+	efi get next high mono count = virt efi get next high mono count 
+	efi reset system = virt efi reset system 
+	efi set virtual address map = virt efi set virtual address map 
+	if    supported pte mask    PAGE NX 
+		runtime code page mkexec   
+	early iounmap memmap map  memmap nr map   memmap desc size  
+	memmap map = NULL 
+}
+

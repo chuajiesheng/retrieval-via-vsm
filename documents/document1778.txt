@@ -1,0 +1,17 @@
+static snd pcm uframes t snd fm801 playback pointer struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+	size t ptr 
+
+	if    chip ply ctrl   FM801 START  
+		return 0 
+	spin lock  chip reg lock  
+	ptr = chip ply pos +  chip ply count   1    inw FM801 REG chip  PLY COUNT   
+	if  inw FM801 REG chip  IRQ STATUS     FM801 IRQ PLAYBACK  {
+		ptr += chip ply count 
+		ptr  = chip ply size 
+	}
+	spin unlock  chip reg lock  
+	return bytes to frames substream runtime  ptr  
+}
+

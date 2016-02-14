@@ -1,0 +1,12 @@
+dummy systimer pointer struct snd pcm substream  substream 
+{
+	struct dummy systimer pcm  dpcm = substream runtime private data 
+	snd pcm uframes t pos 
+
+	spin lock  dpcm lock  
+	dummy systimer update dpcm  
+	pos = dpcm frac pos   HZ 
+	spin unlock  dpcm lock  
+	return pos 
+}
+

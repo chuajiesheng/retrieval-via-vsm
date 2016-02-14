@@ -1,0 +1,2 @@
+extern int drm add edid modes struct drm connector  connector  struct edid  edid  
+

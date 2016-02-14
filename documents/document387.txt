@@ -1,0 +1,5 @@
+static void snd portman detach struct parport  p 
+{
+	   nothing to do here   
+}
+

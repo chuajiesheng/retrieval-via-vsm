@@ -1,0 +1,10 @@
+static int snd bt87x set digital hw struct snd bt87x  chip  struct snd pcm runtime  runtime 
+{
+	chip reg control |= CTL DA IOM DA | CTL A PWRDN 
+	runtime hw = snd bt87x digital hw 
+	runtime hw rates = snd pcm rate to rate bit chip board dig rate  
+	runtime hw rate min = chip board dig rate 
+	runtime hw rate max = chip board dig rate 
+	return 0 
+}
+

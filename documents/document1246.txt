@@ -1,0 +1,17 @@
+   
+   ttm bo wait   wait for buffer idle 
+  
+   @bo   The buffer object 
+   @interruptible   Use interruptible wait 
+   @no wait   Return immediately if buffer is busy 
+  
+   This function must be called with the bo  mutex held  and makes
+   sure any previous rendering to the buffer is completed 
+   Note  It might be necessary to block validations before the
+   wait by reserving the buffer 
+   Returns  EBUSY if no wait is true and the buffer is busy 
+   Returns  ERESTARTSYS if interrupted by a signal 
+   
+extern int ttm bo wait struct ttm buffer object  bo  bool lazy 
+		       bool interruptible  bool no wait  
+

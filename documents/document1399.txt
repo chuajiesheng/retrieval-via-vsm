@@ -1,0 +1,110 @@
+static int   devinit snd es1968 create struct snd card  card 
+				       struct pci dev  pci 
+				       int total bufsize 
+				       int play streams 
+				       int capt streams 
+				       int chip type 
+				       int do pm 
+				       struct es1968   chip ret 
+{
+	static struct snd device ops ops = {
+		 dev free =	snd es1968 dev free 
+	} 
+	struct es1968  chip 
+	int i  err 
+
+	 chip ret = NULL 
+
+	   enable PCI device   
+	if   err = pci enable device pci     0 
+		return err 
+	   check  if we can restrict PCI DMA transfers to 28 bits   
+	if  pci set dma mask pci  DMA BIT MASK 28     0 ||
+	    pci set consistent dma mask pci  DMA BIT MASK 28     0  {
+		snd printk KERN ERR  architecture does not support 28bit PCI busmaster DMA\n   
+		pci disable device pci  
+		return  ENXIO 
+	}
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if    chip  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	   Set Vars   
+	chip type = chip type 
+	spin lock init  chip reg lock  
+	spin lock init  chip substream lock  
+	INIT LIST HEAD  chip buf list  
+	INIT LIST HEAD  chip substream list  
+	mutex init  chip memory mutex  
+#ifndef CONFIG SND ES1968 INPUT
+	spin lock init  chip ac97 lock  
+	tasklet init  chip hwvol tq  es1968 update hw volume   unsigned long chip  
+#endif
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+	chip total bufsize = total bufsize 	   in bytes   
+	chip playback streams = play streams 
+	chip capture streams = capt streams 
+
+	if   err = pci request regions pci   ESS Maestro      0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+	chip io port = pci resource start pci  0  
+	if  request irq pci irq  snd es1968 interrupt  IRQF SHARED 
+			 ESS Maestro   chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd es1968 free chip  
+		return  EBUSY 
+	}
+	chip irq = pci irq 
+	        
+	   Clear Maestro map   
+	for  i = 0  i   32  i++ 
+		chip maestro map i  = 0 
+
+	   Clear Apu Map   
+	for  i = 0  i   NR APUS  i++ 
+		chip apu i  = ESM APU FREE 
+
+	   just to be sure   
+	pci set master pci  
+
+	if  do pm   1  {
+		   disable power management if not on the whitelist   
+		unsigned short vend 
+		pci read config word chip pci  PCI SUBSYSTEM VENDOR ID   vend  
+		for  i = 0  i    int ARRAY SIZE pm whitelist   i++  {
+			if  chip type == pm whitelist i  type   
+			    vend == pm whitelist i  vendor  {
+				do pm = 1 
+				break 
+			}
+		}
+		if  do pm   1  {
+			   not matched  disabling pm   
+			printk KERN INFO  es1968  not attempting power management \n   
+			do pm = 0 
+		}
+	}
+	chip do pm = do pm 
+
+	snd es1968 chip init chip  
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd es1968 free chip  
+		return err 
+	}
+
+	snd card set dev card   pci dev  
+
+	 chip ret = chip 
+
+	return 0 
+}
+

@@ -1,0 +1,12 @@
+static ssize t snd cs4281 BA0 read struct snd info entry  entry 
+				   void  file private data 
+				   struct file  file  char   user  buf 
+				   size t count  loff t pos 
+{
+	struct cs4281  chip = entry private data 
+	
+	if  copy to user fromio buf  chip ba0 + pos  count  
+		return  EFAULT 
+	return count 
+}
+

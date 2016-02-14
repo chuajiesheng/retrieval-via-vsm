@@ -1,0 +1,5 @@
+memset io volatile void   iomem  addr  unsigned char val  size t count 
+{
+	memset  void   force   addr  val  count  
+}
+

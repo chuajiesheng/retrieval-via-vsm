@@ -1,0 +1,2 @@
+void gameport unregister port struct gameport  gameport  
+

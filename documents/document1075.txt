@@ -1,0 +1,54 @@
+static struct aead request  crypto rfc4543 crypt struct aead request  req 
+						 int enc 
+{
+	struct crypto aead  aead = crypto aead reqtfm req  
+	struct crypto rfc4543 ctx  ctx = crypto aead ctx aead  
+	struct crypto rfc4543 req ctx  rctx = crypto rfc4543 reqctx req  
+	struct aead request  subreq =  rctx subreq 
+	struct scatterlist  dst = req dst 
+	struct scatterlist  cipher = rctx cipher 
+	struct scatterlist  payload = rctx payload 
+	struct scatterlist  assoc = rctx assoc 
+	unsigned int authsize = crypto aead authsize aead  
+	unsigned int assoclen = req assoclen 
+	struct page  dstp 
+	u8  vdst 
+	u8  iv = PTR ALIGN  u8    rctx + 1  + crypto aead reqsize ctx child  
+			   crypto aead alignmask ctx child  + 1  
+
+	memcpy iv  ctx nonce  4  
+	memcpy iv + 4  req iv  8  
+
+	   construct cipher plaintext   
+	if  enc 
+		memset rctx auth tag  0  authsize  
+	else
+		scatterwalk map and copy rctx auth tag  dst 
+					 req cryptlen   authsize 
+					 authsize  0  
+
+	sg init one cipher  rctx auth tag  authsize  
+
+	   construct the aad   
+	dstp = sg page dst  
+	vdst = PageHighMem dstp  ? NULL   page address dstp  + dst offset 
+
+	sg init table payload  2  
+	sg set buf payload  req iv  8  
+	scatterwalk crypto chain payload  dst  vdst == req iv + 8  2  
+	assoclen += 8 + req cryptlen    enc ? 0   authsize  
+
+	sg init table assoc  2  
+	sg set page assoc  sg page req assoc   req assoc length 
+		    req assoc offset  
+	scatterwalk crypto chain assoc  payload  0  2  
+
+	aead request set tfm subreq  ctx child  
+	aead request set callback subreq  req base flags  req base complete 
+				  req base data  
+	aead request set crypt subreq  cipher  cipher  enc ? 0   authsize  iv  
+	aead request set assoc subreq  assoc  assoclen  
+
+	return subreq 
+}
+

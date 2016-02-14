@@ -1,0 +1,2 @@
+int snd device free all struct snd card  card  snd device cmd t cmd  
+

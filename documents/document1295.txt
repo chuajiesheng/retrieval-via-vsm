@@ -1,0 +1,10 @@
+   
+   function ttm eu backoff reservation
+  
+   @list      thread private list of ttm validate buffer structs 
+  
+   Undoes all buffer validation reservations for bos pointed to by
+   the list entries 
+   
+extern void ttm eu backoff reservation struct list head  list  
+

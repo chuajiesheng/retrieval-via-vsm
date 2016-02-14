@@ -1,0 +1,17 @@
+  
+   prepare callback for playback and capture on via686
+   
+static void via686 setup format struct via82xx  chip  struct viadev  viadev 
+				struct snd pcm runtime  runtime 
+{
+	snd via82xx channel reset chip  viadev  
+	   this must be set after channel reset   
+	snd via82xx set table ptr chip  viadev  
+	outb VIA REG TYPE AUTOSTART |
+	      runtime format == SNDRV PCM FORMAT S16 LE ? VIA REG TYPE 16BIT   0  |
+	      runtime channels   1 ? VIA REG TYPE STEREO   0  |
+	       viadev reg offset   0x10  == 0 ? VIA REG TYPE INT LSAMPLE   0  |
+	     VIA REG TYPE INT EOL |
+	     VIA REG TYPE INT FLAG  VIADEV REG viadev  OFFSET TYPE   
+}
+

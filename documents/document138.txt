@@ -1,0 +1,2 @@
+int snd free sgbuf pages struct snd dma buffer  dmab  
+

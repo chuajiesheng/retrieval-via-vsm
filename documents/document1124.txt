@@ -1,0 +1,21 @@
+snd azf3328 pcm open struct snd pcm substream  substream 
+		     enum snd azf3328 codec type codec type
+ 
+{
+	struct snd azf3328  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct snd azf3328 codec data  codec =  chip codecs codec type  
+
+	snd azf3328 dbgcallenter   
+	codec substream = substream 
+
+	   same parameters for all our codecs   at least we think so      
+	runtime hw = snd azf3328 hardware 
+
+	snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM RATE 
+				    snd azf3328 hw constraints rates  
+	runtime private data = codec 
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

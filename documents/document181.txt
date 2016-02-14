@@ -1,0 +1,9 @@
+  
+    Init functions
+   
+static void snd pcm timer free struct snd timer  timer 
+{
+	struct snd pcm substream  substream = timer private data 
+	substream timer = NULL 
+}
+

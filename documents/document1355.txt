@@ -1,0 +1,34 @@
+   allocate a new memory chunk with the specified size   
+static struct esm memory  snd es1968 new memory struct es1968  chip  int size 
+{
+	struct esm memory  buf 
+
+	size = ALIGN size  ESM MEM ALIGN  
+	mutex lock  chip memory mutex  
+	list for each entry buf   chip buf list  list  {
+		if  buf empty    buf buf bytes  = size 
+			goto   found 
+	}
+	mutex unlock  chip memory mutex  
+	return NULL 
+
+  found 
+	if  buf buf bytes   size  {
+		struct esm memory  chunk = kmalloc sizeof  chunk   GFP KERNEL  
+		if  chunk == NULL  {
+			mutex unlock  chip memory mutex  
+			return NULL 
+		}
+		chunk buf = buf buf 
+		chunk buf bytes  = size 
+		chunk buf area += size 
+		chunk buf addr += size 
+		chunk empty = 1 
+		buf buf bytes = size 
+		list add  chunk list   buf list  
+	}
+	buf empty = 0 
+	mutex unlock  chip memory mutex  
+	return buf 
+}
+

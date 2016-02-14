@@ -1,0 +1,7 @@
+   
+   ttm bo unmap virtual
+  
+   @bo  tear down the virtual mappings for this BO
+   
+extern void ttm bo unmap virtual struct ttm buffer object  bo  
+

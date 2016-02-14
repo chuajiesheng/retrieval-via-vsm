@@ -1,0 +1,2 @@
+snd rme96 capture pointer struct snd pcm substream  substream  
+

@@ -1,0 +1,5 @@
+static inline void iputdword struct intel8x0m  chip  u32 offset  u32 val 
+{
+	iowrite32 val  chip bmaddr + offset  
+}
+

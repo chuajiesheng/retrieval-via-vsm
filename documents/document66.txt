@@ -1,0 +1,21 @@
+  
+   register all the devices on the card 
+   called from init c
+   
+int snd device register all struct snd card  card 
+{
+	struct snd device  dev 
+	int err 
+	
+	if  snd BUG ON  card  
+		return  ENXIO 
+	list for each entry dev   card devices  list  {
+		if  dev state == SNDRV DEV BUILD    dev ops dev register  {
+			if   err = dev ops dev register dev     0 
+				return err 
+			dev state = SNDRV DEV REGISTERED 
+		}
+	}
+	return 0 
+}
+

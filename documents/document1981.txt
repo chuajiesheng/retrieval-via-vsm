@@ -1,0 +1,21 @@
+static void xtea encrypt struct crypto tfm  tfm  u8  dst  const u8  src 
+{
+	u32 y  z  sum = 0 
+	u32 limit = XTEA DELTA   XTEA ROUNDS 
+	struct xtea ctx  ctx = crypto tfm ctx tfm  
+	const   le32  in =  const   le32   src 
+	  le32  out =    le32   dst 
+
+	y = le32 to cpu in 0   
+	z = le32 to cpu in 1   
+
+	while  sum  = limit  {
+		y +=   z    4 ^ z    5  + z  ^  sum + ctx KEY sum 3    
+		sum += XTEA DELTA 
+		z +=   y    4 ^ y    5  + y  ^  sum + ctx KEY sum  11  3    
+	}
+	
+	out 0  = cpu to le32 y  
+	out 1  = cpu to le32 z  
+}
+

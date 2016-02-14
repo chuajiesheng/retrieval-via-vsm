@@ -1,0 +1,18 @@
+static int snd via8233 capture source put struct snd kcontrol  kcontrol 
+					  struct snd ctl elem value  ucontrol 
+{
+	struct via82xx  chip = snd kcontrol chip kcontrol  
+	unsigned long port = chip port +  kcontrol id index ?  VIA REG CAPTURE CHANNEL + 0x10    VIA REG CAPTURE CHANNEL  
+	u8 val  oval 
+
+	spin lock irq  chip reg lock  
+	oval = inb port  
+	val = oval   ~VIA REG CAPTURE CHANNEL MIC 
+	if  ucontrol value enumerated item 0  
+		val |= VIA REG CAPTURE CHANNEL MIC 
+	if  val  = oval 
+		outb val  port  
+	spin unlock irq  chip reg lock  
+	return val  = oval 
+}
+

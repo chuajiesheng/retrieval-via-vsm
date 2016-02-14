@@ -1,0 +1,32 @@
+   
+   snd info register   register the info entry
+   @entry  the info entry
+  
+   Registers the proc info entry 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd info register struct snd info entry   entry 
+{
+	struct proc dir entry  root   p = NULL 
+
+	if  snd BUG ON  entry  
+		return  ENXIO 
+	root = entry parent == NULL ? snd proc root   entry parent p 
+	mutex lock  info mutex  
+	p = create proc entry entry name  entry mode  root  
+	if   p  {
+		mutex unlock  info mutex  
+		return  ENOMEM 
+	}
+	if   S ISDIR entry mode  
+		p proc fops =  snd info entry operations 
+	p size = entry size 
+	p data = entry 
+	entry p = p 
+	if  entry parent 
+		list add tail  entry list   entry parent children  
+	mutex unlock  info mutex  
+	return 0 
+}
+

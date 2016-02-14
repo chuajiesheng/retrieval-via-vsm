@@ -1,0 +1,5 @@
+static void   exit snd portman module exit void 
+{
+	snd portman unregister all   
+}
+

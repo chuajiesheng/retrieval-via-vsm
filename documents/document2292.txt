@@ -1,0 +1,23 @@
+static void snd rme32 free void  private data 
+{
+	struct rme32  rme32 =  struct rme32    private data 
+
+	if  rme32 == NULL  {
+		return 
+	}
+	if  rme32 irq  = 0  {
+		snd rme32 pcm stop rme32  0  
+		free irq rme32 irq   void    rme32  
+		rme32 irq =  1 
+	}
+	if  rme32 iobase  {
+		iounmap rme32 iobase  
+		rme32 iobase = NULL 
+	}
+	if  rme32 port  {
+		pci release regions rme32 pci  
+		rme32 port = 0 
+	}
+	pci disable device rme32 pci  
+}
+

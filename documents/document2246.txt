@@ -1,0 +1,6 @@
+ad1889 load adc buffer address struct snd ad1889  chip  u32 address 
+{
+	ad1889 writel chip  AD DMA ADCBA  address  
+	ad1889 writel chip  AD DMA ADCCA  address  
+}
+

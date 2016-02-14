@@ -1,0 +1,43 @@
+static int snd pcm stream proc init struct snd pcm str  pstr 
+{
+	struct snd pcm  pcm = pstr pcm 
+	struct snd info entry  entry 
+	char name 16  
+
+	sprintf name   pcm i c   pcm device  
+		pstr stream == SNDRV PCM STREAM PLAYBACK ? 'p'   'c'  
+	if   entry = snd info create card entry pcm card  name  pcm card proc root   == NULL 
+		return  ENOMEM 
+	entry mode = S IFDIR | S IRUGO | S IXUGO 
+	if  snd info register entry    0  {
+		snd info free entry entry  
+		return  ENOMEM 
+	}
+	pstr proc root = entry 
+
+	if   entry = snd info create card entry pcm card   info   pstr proc root    = NULL  {
+		snd info set text ops entry  pstr  snd pcm stream proc info read  
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	pstr proc info entry = entry 
+
+#ifdef CONFIG SND PCM XRUN DEBUG
+	if   entry = snd info create card entry pcm card   xrun debug  
+						pstr proc root    = NULL  {
+		entry c text read = snd pcm xrun debug read 
+		entry c text write = snd pcm xrun debug write 
+		entry mode |= S IWUSR 
+		entry private data = pstr 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	pstr proc xrun debug entry = entry 
+#endif
+	return 0 
+}
+

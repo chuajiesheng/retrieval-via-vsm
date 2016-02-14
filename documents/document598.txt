@@ -1,0 +1,19 @@
+static void dummy systimer update struct dummy systimer pcm  dpcm 
+{
+	unsigned long delta 
+
+	delta = jiffies   dpcm base time 
+	if   delta 
+		return 
+	dpcm base time += delta 
+	delta  = dpcm rate 
+	dpcm frac pos += delta 
+	while  dpcm frac pos  = dpcm frac buffer size 
+		dpcm frac pos  = dpcm frac buffer size 
+	while  dpcm frac period rest  = delta  {
+		dpcm elapsed++ 
+		dpcm frac period rest += dpcm frac period size 
+	}
+	dpcm frac period rest  = delta 
+}
+

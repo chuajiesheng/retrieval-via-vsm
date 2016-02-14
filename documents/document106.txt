@@ -1,0 +1,5 @@
+static inline void crypto aead set flags struct crypto aead  tfm  u32 flags 
+{
+	crypto tfm set flags crypto aead tfm tfm   flags  
+}
+

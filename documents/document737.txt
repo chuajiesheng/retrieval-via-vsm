@@ -1,0 +1,8 @@
+static void init viadev struct via82xx modem  chip  int idx  unsigned int reg offset 
+			int direction 
+{
+	chip devs idx  reg offset = reg offset 
+	chip devs idx  direction = direction 
+	chip devs idx  port = chip port + reg offset 
+}
+

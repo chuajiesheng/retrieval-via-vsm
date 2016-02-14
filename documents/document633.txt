@@ -1,0 +1,7 @@
+static int dummy pcm hw free struct snd pcm substream  substream 
+{
+	if  fake buffer 
+		return 0 
+	return snd pcm lib free pages substream  
+}
+

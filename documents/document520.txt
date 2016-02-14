@@ -1,0 +1,18 @@
+static int snd mts64 ctl smpte fps put struct snd kcontrol  kctl 
+				       struct snd ctl elem value  uctl 
+{
+	struct mts64  mts = snd kcontrol chip kctl  
+	int changed = 0 
+
+	if  uctl value enumerated item 0   = 5 
+		return  EINVAL 
+	spin lock irq  mts lock  
+	if  mts fps  = uctl value enumerated item 0   {
+		changed = 1 
+		mts fps = uctl value enumerated item 0  
+	}
+	spin unlock irq  mts lock  
+
+	return changed 
+}
+

@@ -1,0 +1,2 @@
+int snd card info init void  
+

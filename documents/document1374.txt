@@ -1,0 +1,3 @@
+extern bool drm mode crtc set gamma size struct drm crtc  crtc 
+					 int gamma size  
+

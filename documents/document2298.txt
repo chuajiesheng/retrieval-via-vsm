@@ -1,0 +1,21 @@
+snd rme32 put loopback control struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct rme32  rme32 = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change 
+
+	val = ucontrol value integer value 0  ? 0   RME32 WCR SEL 
+	spin lock irq  rme32 lock  
+	val =  rme32 wcreg   ~RME32 WCR SEL  | val 
+	change = val  = rme32 wcreg 
+	if  ucontrol value integer value 0  
+		val  = ~RME32 WCR MUTE 
+	else
+		val |= RME32 WCR MUTE 
+	rme32 wcreg = val 
+	writel val  rme32 iobase + RME32 IO CONTROL REGISTER  
+	spin unlock irq  rme32 lock  
+	return change 
+}
+

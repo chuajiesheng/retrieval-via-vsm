@@ -1,0 +1,26 @@
+snd ad1889 interrupt int irq  void  dev id 
+{
+	unsigned long st 
+	struct snd ad1889  chip = dev id 
+
+	st = ad1889 readl chip  AD DMA DISR  
+
+	   clear ISR   
+	ad1889 writel chip  AD DMA DISR  st  
+
+	st  = AD INTR MASK 
+
+	if  unlikely  st  
+		return IRQ NONE 
+
+	if  st    AD DMA DISR PMAI|AD DMA DISR PTAI  
+		ad1889 debug  Unexpected master or target abort interrupt \n   
+
+	if   st   AD DMA DISR WAVI     chip psubs 
+		snd pcm period elapsed chip psubs  
+	if   st   AD DMA DISR ADCI     chip csubs 
+		snd pcm period elapsed chip csubs  
+
+	return IRQ HANDLED 
+}
+

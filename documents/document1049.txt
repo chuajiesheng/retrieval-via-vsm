@@ -1,0 +1,2 @@
+extern struct drm local map  drm getsarea struct drm device  dev  
+

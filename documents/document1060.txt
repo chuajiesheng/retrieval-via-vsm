@@ -1,0 +1,40 @@
+  
+    MIDI section
+   
+static void snd ensoniq midi interrupt struct ensoniq   ensoniq 
+{
+	struct snd rawmidi  rmidi = ensoniq rmidi 
+	unsigned char status  mask  byte 
+
+	if  rmidi == NULL 
+		return 
+	   do Rx at first   
+	spin lock  ensoniq reg lock  
+	mask = ensoniq uartm   ES MODE INPUT ? ES RXRDY   0 
+	while  mask  {
+		status = inb ES REG ensoniq  UART STATUS   
+		if   status   mask  == 0 
+			break 
+		byte = inb ES REG ensoniq  UART DATA   
+		snd rawmidi receive ensoniq midi input   byte  1  
+	}
+	spin unlock  ensoniq reg lock  
+
+	   do Tx at second   
+	spin lock  ensoniq reg lock  
+	mask = ensoniq uartm   ES MODE OUTPUT ? ES TXRDY   0 
+	while  mask  {
+		status = inb ES REG ensoniq  UART STATUS   
+		if   status   mask  == 0 
+			break 
+		if  snd rawmidi transmit ensoniq midi output   byte  1   = 1  {
+			ensoniq uartc  = ~ES TXINTENM 
+			outb ensoniq uartc  ES REG ensoniq  UART CONTROL   
+			mask  = ~ES TXRDY 
+		} else {
+			outb byte  ES REG ensoniq  UART DATA   
+		}
+	}
+	spin unlock  ensoniq reg lock  
+}
+

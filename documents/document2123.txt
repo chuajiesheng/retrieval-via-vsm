@@ -1,0 +1,2 @@
+extern unsigned int sdio align size struct sdio func  func  unsigned int sz  
+

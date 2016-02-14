@@ -1,0 +1,53 @@
+  
+   PCM trigger stop
+   
+static int snd cmipci pcm trigger struct cmipci  cm  struct cmipci pcm  rec 
+				  int cmd 
+{
+	unsigned int inthld  chen  reset  pause 
+	int result = 0 
+
+	inthld = CM CH0 INT EN    rec ch 
+	chen = CM CHEN0    rec ch 
+	reset = CM RST CH0    rec ch 
+	pause = CM PAUSE0    rec ch 
+
+	spin lock  cm reg lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		rec running = 1 
+		   set interrupt   
+		snd cmipci set bit cm  CM REG INT HLDCLR  inthld  
+		cm ctrl |= chen 
+		   enable channel   
+		snd cmipci write cm  CM REG FUNCTRL0  cm ctrl  
+		  snd printd  cmipci  functrl0 =  08x\n   cm ctrl  
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		rec running = 0 
+		   disable interrupt   
+		snd cmipci clear bit cm  CM REG INT HLDCLR  inthld  
+		   reset   
+		cm ctrl  = ~chen 
+		snd cmipci write cm  CM REG FUNCTRL0  cm ctrl | reset  
+		snd cmipci write cm  CM REG FUNCTRL0  cm ctrl   ~reset  
+		rec needs silencing = rec is dac 
+		break 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+	case SNDRV PCM TRIGGER SUSPEND 
+		cm ctrl |= pause 
+		snd cmipci write cm  CM REG FUNCTRL0  cm ctrl  
+		break 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+	case SNDRV PCM TRIGGER RESUME 
+		cm ctrl  = ~pause 
+		snd cmipci write cm  CM REG FUNCTRL0  cm ctrl  
+		break 
+	default 
+		result =  EINVAL 
+		break 
+	}
+	spin unlock  cm reg lock  
+	return result 
+}
+

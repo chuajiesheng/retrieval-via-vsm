@@ -1,0 +1,6 @@
+static struct page  dummy pcm page struct snd pcm substream  substream 
+				   unsigned long offset 
+{
+	return virt to page dummy page substream stream       the same page   
+}
+

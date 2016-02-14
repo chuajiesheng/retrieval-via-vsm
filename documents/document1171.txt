@@ -1,0 +1,18 @@
+   
+   ttm bo init mm
+  
+   @bdev  Pointer to a ttm bo device struct 
+   @mem type  The memory type 
+   @p size  size managed area in pages 
+  
+   Initialize a manager for a given memory type 
+   Note  if part of driver firstopen  it must be protected from a
+   potentially racing lastclose 
+   Returns 
+    EINVAL  invalid size or memory type 
+    ENOMEM  Not enough memory 
+   May also return driver specified errors 
+   
+extern int ttm bo init mm struct ttm bo device  bdev  unsigned type 
+				unsigned long p size  
+

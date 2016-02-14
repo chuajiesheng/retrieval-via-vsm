@@ -1,0 +1,5 @@
+static void   exit crypto authenc module exit void 
+{
+	crypto unregister template  crypto authenc tmpl  
+}
+

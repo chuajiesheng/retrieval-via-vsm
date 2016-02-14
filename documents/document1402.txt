@@ -1,0 +1,8 @@
+static inline void aead request set assoc struct aead request  req 
+					  struct scatterlist  assoc 
+					  unsigned int assoclen 
+{
+	req assoc = assoc 
+	req assoclen = assoclen 
+}
+

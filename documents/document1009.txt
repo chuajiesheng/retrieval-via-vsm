@@ -1,0 +1,19 @@
+static int snd ensoniq capture open struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	ensoniq mode |= ES MODE CAPTURE 
+	ensoniq capture substream = substream 
+	runtime hw = snd ensoniq capture 
+	snd pcm set sync substream  
+#ifdef CHIP1370
+	snd pcm hw constraint ratnums runtime  0  SNDRV PCM HW PARAM RATE 
+				       snd es1370 hw constraints clock  
+#else
+	snd pcm hw constraint ratnums runtime  0  SNDRV PCM HW PARAM RATE 
+				       snd es1371 hw constraints adc clock  
+#endif
+	return 0 
+}
+

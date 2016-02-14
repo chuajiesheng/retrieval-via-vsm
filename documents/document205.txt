@@ -1,0 +1,20 @@
+int  snd pcm lib alloc vmalloc buffer struct snd pcm substream  substream 
+				      size t size  gfp t gfp flags 
+{
+	struct snd pcm runtime  runtime 
+
+	if  PCM RUNTIME CHECK substream  
+		return  EINVAL 
+	runtime = substream runtime 
+	if  runtime dma area  {
+		if  runtime dma bytes  = size 
+			return 0     already large enough   
+		vfree runtime dma area  
+	}
+	runtime dma area =   vmalloc size  gfp flags  PAGE KERNEL  
+	if   runtime dma area 
+		return  ENOMEM 
+	runtime dma bytes = size 
+	return 1 
+}
+

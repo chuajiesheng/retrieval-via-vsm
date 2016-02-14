@@ -1,0 +1,6 @@
+static void   devexit snd cs5530 remove struct pci dev  pci 
+{
+	snd card free pci get drvdata pci   
+	pci set drvdata pci  NULL  
+}
+

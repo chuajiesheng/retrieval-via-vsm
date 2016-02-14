@@ -1,0 +1,40 @@
+   
+    snd card free   frees given soundcard structure
+    @card  soundcard structure
+  
+    This function releases the soundcard structure and the all assigned
+    devices automatically   That is  you don't have to release the devices
+    by yourself 
+  
+    Returns zero  Frees all associated devices and frees the control
+    interface associated to given soundcard 
+   
+static int snd card do free struct snd card  card 
+{
+#if defined CONFIG SND MIXER OSS  || defined CONFIG SND MIXER OSS MODULE 
+	if  snd mixer oss notify callback 
+		snd mixer oss notify callback card  SND MIXER OSS NOTIFY FREE  
+#endif
+	if  snd device free all card  SNDRV DEV CMD PRE    0  {
+		snd printk KERN ERR  unable to free all devices  pre \n   
+		   Fatal  but this situation should never occur   
+	}
+	if  snd device free all card  SNDRV DEV CMD NORMAL    0  {
+		snd printk KERN ERR  unable to free all devices  normal \n   
+		   Fatal  but this situation should never occur   
+	}
+	if  snd device free all card  SNDRV DEV CMD POST    0  {
+		snd printk KERN ERR  unable to free all devices  post \n   
+		   Fatal  but this situation should never occur   
+	}
+	if  card private free 
+		card private free card  
+	snd info free entry card proc id  
+	if  snd info card free card    0  {
+		snd printk KERN WARNING  unable to free card info\n   
+		   Not fatal error   
+	}
+	kfree card  
+	return 0 
+}
+

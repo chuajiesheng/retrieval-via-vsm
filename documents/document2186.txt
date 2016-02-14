@@ -1,0 +1,108 @@
+static int   devinit snd via82xx probe struct pci dev  pci 
+				       const struct pci device id  pci id 
+{
+	struct snd card  card 
+	struct via82xx  chip 
+	int chip type = 0  card type 
+	unsigned int i 
+	int err 
+
+	err = snd card create index  id  THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	card type = pci id driver data 
+	switch  card type  {
+	case TYPE CARD VIA686 
+		strcpy card driver   VIA686A   
+		sprintf card shortname   VIA 82C686A B rev x   pci revision  
+		chip type = TYPE VIA686 
+		break 
+	case TYPE CARD VIA8233 
+		chip type = TYPE VIA8233 
+		sprintf card shortname   VIA 823x rev x   pci revision  
+		for  i = 0  i   ARRAY SIZE via823x cards   i++  {
+			if  pci revision == via823x cards i  revision  {
+				chip type = via823x cards i  type 
+				strcpy card shortname  via823x cards i  name  
+				break 
+			}
+		}
+		if  chip type  = TYPE VIA8233A  {
+			if  dxs support == VIA DXS AUTO 
+				dxs support = check dxs list pci  pci revision  
+			   force to use VIA8233 or 8233A model according to
+			   dxs support module option
+			   
+			if  dxs support == VIA DXS DISABLE 
+				chip type = TYPE VIA8233A 
+			else
+				chip type = TYPE VIA8233 
+		}
+		if  chip type == TYPE VIA8233A 
+			strcpy card driver   VIA8233A   
+		else if  pci revision  = VIA REV 8237 
+			strcpy card driver   VIA8237       no slog assignment   
+		else
+			strcpy card driver   VIA8233   
+		break 
+	default 
+		snd printk KERN ERR  invalid card type  d\n   card type  
+		err =  EINVAL 
+		goto   error 
+	}
+		
+	if   err = snd via82xx create card  pci  chip type  pci revision 
+				      ac97 clock   chip     0 
+		goto   error 
+	card private data = chip 
+	if   err = snd via82xx mixer new chip  ac97 quirk     0 
+		goto   error 
+
+	if  chip type == TYPE VIA686  {
+		if   err = snd via686 pcm new chip     0 ||
+		     err = snd via686 init misc chip     0 
+			goto   error 
+	} else {
+		if  chip type == TYPE VIA8233A  {
+			if   err = snd via8233a pcm new chip     0 
+				goto   error 
+			   chip dxs fixed = 1     FIXME  use 48k for DXS #3?   
+		} else {
+			if   err = snd via8233 pcm new chip     0 
+				goto   error 
+			if  dxs support == VIA DXS 48K 
+				chip dxs fixed = 1 
+			else if  dxs support == VIA DXS NO VRA 
+				chip no vra = 1 
+			else if  dxs support == VIA DXS SRC  {
+				chip no vra = 1 
+				chip dxs src = 1 
+			}
+		}
+		if   err = snd via8233 init misc chip     0 
+			goto   error 
+	}
+
+	   disable interrupts   
+	for  i = 0  i   chip num devs  i++ 
+		snd via82xx channel reset chip   chip devs i   
+
+	snprintf card longname  sizeof card longname  
+		   s with  s at  #lx  irq  d   card shortname 
+		 snd ac97 get short name chip ac97   chip port  chip irq  
+
+	snd via82xx proc init chip  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	return 0 
+
+   error 
+	snd card free card  
+	return err 
+}
+

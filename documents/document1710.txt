@@ -1,0 +1,11 @@
+   
+   ieee80211 beacon loss   inform hardware does not receive beacons
+  
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+  
+   When beacon filtering is enabled with  IEEE80211 HW BEACON FILTER and
+    IEEE80211 CONF PS is set  the driver needs to inform whenever the
+   hardware is not receiving beacons with this function 
+   
+void ieee80211 beacon loss struct ieee80211 vif  vif  
+

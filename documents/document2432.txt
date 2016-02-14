@@ -1,0 +1,8 @@
+int   init tfrc rx packet history init void 
+{
+	tfrc rx hist slab = kmem cache create  tfrc rxh cache  
+					      sizeof struct tfrc rx hist entry  
+					      0  SLAB HWCACHE ALIGN  NULL  
+	return tfrc rx hist slab == NULL ?  ENOBUFS   0 
+}
+

@@ -1,0 +1,53 @@
+snd rme96 capture hw params struct snd pcm substream  substream 
+			    struct snd pcm hw params  params 
+{
+	struct rme96  rme96 = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err  isadat  rate 
+	
+	runtime dma area =  void   force    rme96 iobase +
+					     RME96 IO REC BUFFER  
+	runtime dma addr = rme96 port + RME96 IO REC BUFFER 
+	runtime dma bytes = RME96 BUFFER SIZE 
+
+	spin lock irq  rme96 lock  
+	if   err = snd rme96 capture setformat rme96  params format params      0  {
+		spin unlock irq  rme96 lock  
+		return err 
+	}
+	if  snd rme96 getinputtype rme96  == RME96 INPUT ANALOG  {
+		if   err = snd rme96 capture analog setrate rme96 
+							    params rate params      0 
+		{
+			spin unlock irq  rme96 lock  
+			return err 
+		}
+	} else if   rate = snd rme96 capture getrate rme96   isadat     0  {
+                if   int params rate params   = rate  {
+			spin unlock irq  rme96 lock  
+			return  EIO                     
+                }
+                if   isadat    runtime hw channels min == 2  ||
+                      isadat    runtime hw channels min == 8  
+                {
+			spin unlock irq  rme96 lock  
+			return  EIO 
+                }
+        }
+	snd rme96 setframelog rme96  params channels params   0  
+	if  rme96 playback periodsize  = 0  {
+		if  params period size params     rme96 capture frlog  =
+		    rme96 playback periodsize 
+		{
+			spin unlock irq  rme96 lock  
+			return  EBUSY 
+		}
+	}
+	rme96 capture periodsize =
+		params period size params     rme96 capture frlog 
+	snd rme96 set period properties rme96  rme96 capture periodsize  
+	spin unlock irq  rme96 lock  
+
+	return 0 
+}
+

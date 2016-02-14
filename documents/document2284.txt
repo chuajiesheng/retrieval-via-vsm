@@ -1,0 +1,6 @@
+snd rme32 playback pointer struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	return snd rme32 pcm byteptr rme32     rme32 playback frlog 
+}
+

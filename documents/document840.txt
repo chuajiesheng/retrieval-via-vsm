@@ -1,0 +1,19 @@
+   flush FIFO of SPDIF OUT DMA   
+static void atiixp spdif flush dma struct atiixp  chip 
+{
+	int timeout 
+
+	   DMA off  transfer on   
+	atiixp spdif enable dma chip  0  
+	atiixp spdif enable transfer chip  1  
+	
+	timeout = 100 
+	do {
+		if     atiixp read chip  SPDF DMA DT SIZE    ATI REG DMA FIFO USED  
+			break 
+		udelay 1  
+	} while  timeout     0  
+
+	atiixp spdif enable transfer chip  0  
+}
+

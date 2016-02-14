@@ -1,0 +1,24 @@
+static int chainiv givencrypt first struct skcipher givcrypt request  req 
+{
+	struct crypto ablkcipher  geniv = skcipher givcrypt reqtfm req  
+	struct chainiv ctx  ctx = crypto ablkcipher ctx geniv  
+	int err = 0 
+
+	spin lock bh  ctx lock  
+	if  crypto ablkcipher crt geniv  givencrypt  =
+	    chainiv givencrypt first 
+		goto unlock 
+
+	crypto ablkcipher crt geniv  givencrypt = chainiv givencrypt 
+	err = crypto rng get bytes crypto default rng  ctx iv 
+				   crypto ablkcipher ivsize geniv   
+
+unlock 
+	spin unlock bh  ctx lock  
+
+	if  err 
+		return err 
+
+	return chainiv givencrypt req  
+}
+

@@ -1,0 +1,17 @@
+static int snd rme96 control spdif stream put struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	int change 
+	u32 val 
+	
+	val = snd rme96 convert from aes  ucontrol value iec958  
+	spin lock irq  rme96 lock  
+	change = val  = rme96 wcreg spdif stream 
+	rme96 wcreg spdif stream = val 
+	rme96 wcreg  = ~ RME96 WCR PRO | RME96 WCR DOLBY | RME96 WCR EMP  
+	rme96 wcreg |= val 
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	spin unlock irq  rme96 lock  
+	return change 
+}
+

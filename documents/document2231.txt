@@ -1,0 +1,32 @@
+snd ad1889 free struct snd ad1889  chip 
+{
+	if  chip irq   0 
+		goto skip hw 
+
+	spin lock irq  chip lock  
+
+	ad1889 mute chip  
+
+	   Turn off interrupt on count and zero DMA registers   
+	ad1889 channel reset chip  AD CHAN WAV | AD CHAN ADC  
+
+	   clear DISR  If we don't  we'd better jump off the Eiffel Tower   
+	ad1889 writel chip  AD DMA DISR  AD DMA DISR PTAI | AD DMA DISR PMAI  
+	ad1889 readl chip  AD DMA DISR  	   flush  dammit    
+
+	spin unlock irq  chip lock  
+
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+
+skip hw 
+	if  chip iobase 
+		iounmap chip iobase  
+
+	pci release regions chip pci  
+	pci disable device chip pci  
+
+	kfree chip  
+	return 0 
+}
+

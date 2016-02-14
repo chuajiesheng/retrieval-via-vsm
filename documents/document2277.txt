@@ -1,0 +1,12 @@
+static void snd rme32 set buffer constraint struct rme32  rme32  struct snd pcm runtime  runtime 
+{
+	if    rme32 fullduplex mode  {
+		snd pcm hw constraint minmax runtime 
+					     SNDRV PCM HW PARAM BUFFER BYTES 
+					     RME32 BUFFER SIZE  RME32 BUFFER SIZE  
+		snd pcm hw constraint list runtime  0 
+					   SNDRV PCM HW PARAM PERIOD BYTES 
+					    hw constraints period bytes  
+	}
+}
+

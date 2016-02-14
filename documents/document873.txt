@@ -1,0 +1,2 @@
+module param ac97 clock  int  0444  
+

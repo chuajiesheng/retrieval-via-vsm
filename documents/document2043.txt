@@ -1,0 +1,67 @@
+static int   devinit snd cs4281 probe struct pci dev  pci 
+				      const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct cs4281  chip 
+	struct snd opl3  opl3 
+	int err 
+
+        if  dev  = SNDRV CARDS 
+                return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	if   err = snd cs4281 create card  pci   chip  dual codec dev      0  {
+		snd card free card  
+		return err 
+	}
+	card private data = chip 
+
+	if   err = snd cs4281 mixer chip     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd cs4281 pcm chip  0  NULL     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd cs4281 midi chip  0  NULL     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd opl3 new card  OPL3 HW OPL3 CS4281   opl3     0  {
+		snd card free card  
+		return err 
+	}
+	opl3 private data = chip 
+	opl3 command = snd cs4281 opl3 command 
+	snd opl3 init opl3  
+	if   err = snd opl3 hwdep new opl3  0  1  NULL     0  {
+		snd card free card  
+		return err 
+	}
+	snd cs4281 create gameport chip  
+	strcpy card driver   CS4281   
+	strcpy card shortname   Cirrus Logic CS4281   
+	sprintf card longname    s at 0x lx  irq  d  
+		card shortname 
+		chip ba0 addr 
+		chip irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

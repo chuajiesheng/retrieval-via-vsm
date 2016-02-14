@@ -1,0 +1,15 @@
+static int snd atiixp pcm close struct snd pcm substream  substream 
+				struct atiixp dma  dma 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+	   disable DMA bits   
+	if  snd BUG ON  dma ops ||  dma ops enable dma  
+		return  EINVAL 
+	spin lock irq  chip reg lock  
+	dma ops enable dma chip  0  
+	spin unlock irq  chip reg lock  
+	dma substream = NULL 
+	dma opened = 0 
+	return 0 
+}
+

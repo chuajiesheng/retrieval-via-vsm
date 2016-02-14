@@ -1,0 +1,5 @@
+static inline u32 crypto ablkcipher get flags struct crypto ablkcipher  tfm 
+{
+	return crypto tfm get flags crypto ablkcipher tfm tfm   
+}
+

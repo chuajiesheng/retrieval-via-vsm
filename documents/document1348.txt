@@ -1,0 +1,65 @@
+static void snd es1968 capture setup struct es1968  chip  struct esschan  es 
+				     struct snd pcm runtime  runtime 
+{
+	int size 
+	u32 freq 
+	unsigned long flags 
+
+	size = es dma size    es wav shift 
+
+	   APU assignments 
+	   0 = mono left SRC
+	   1 = right SRC
+	   2 = mono left Input Mixer
+	   3 = right Input Mixer
+	  
+	   data seems to flow from the codec  through an apu into
+	   the 'mixbuf' bit of page  then through the SRC apu
+	   and out to the real 'buffer'   ok   sure     
+
+	   input mixer  left mono    
+	   parallel in crap  see maestro reg 0xC  8 11    
+	init capture apu chip  es  2 
+			 es mixbuf buf addr  ESM MIXBUF SIZE 4     in words   
+			 ESM APU INPUTMIXER  0x14  
+	   SRC  left mono   get input from inputing apu   
+	init capture apu chip  es  0  es memory buf addr  size 
+			 ESM APU SRCONVERTOR  es apu 2   
+	if  es fmt   ESS FMT STEREO  {
+		   input mixer  right    
+		init capture apu chip  es  3 
+				 es mixbuf buf addr + ESM MIXBUF SIZE 2 
+				 ESM MIXBUF SIZE 4     in words   
+				 ESM APU INPUTMIXER  0x15  
+		   SRC  right    
+		init capture apu chip  es  1 
+				 es memory buf addr + size 2  size 
+				 ESM APU SRCONVERTOR  es apu 3   
+	}
+
+	freq = runtime rate 
+	   Sample Rate conversion APUs don't like 0x10000 for their rate   
+	if  freq   47999 
+		freq = 47999 
+	if  freq   4000 
+		freq = 4000 
+
+	freq = snd es1968 compute rate chip  freq  
+
+	   Load the frequency  turn on 6dB   
+	snd es1968 apu set freq chip  es apu 0   freq  
+	snd es1968 apu set freq chip  es apu 1   freq  
+
+	   fix mixer rate at 48khz   and its  must  be 0x10000    
+	freq = 0x10000 
+	snd es1968 apu set freq chip  es apu 2   freq  
+	snd es1968 apu set freq chip  es apu 3   freq  
+
+	spin lock irqsave  chip reg lock  flags  
+	   clear WP interrupts   
+	outw 1  chip io port + 0x04  
+	   enable WP ints   
+	outw inw chip io port + ESM PORT HOST IRQ  | ESM HIRQ DSIE  chip io port + ESM PORT HOST IRQ  
+	spin unlock irqrestore  chip reg lock  flags  
+}
+

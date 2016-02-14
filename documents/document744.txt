@@ -1,0 +1,82 @@
+  
+  
+   
+static int snd via82xx chip init struct via82xx modem  chip 
+{
+	unsigned int val 
+	unsigned long end time 
+	unsigned char pval 
+
+	pci read config byte chip pci  VIA MC97 CTRL   pval  
+	if  pval   VIA MC97 CTRL INIT   = VIA MC97 CTRL INIT  {
+		pci write config byte chip pci  0x44  pval|VIA MC97 CTRL INIT  
+		udelay 100  
+	}
+
+	pci read config byte chip pci  VIA ACLINK STAT   pval  
+	if     pval   VIA ACLINK C00 READY   {    codec not ready?   
+		   deassert ACLink reset  force SYNC   
+		pci write config byte chip pci  VIA ACLINK CTRL 
+				      VIA ACLINK CTRL ENABLE |
+				      VIA ACLINK CTRL RESET |
+				      VIA ACLINK CTRL SYNC  
+		udelay 100  
+#if 1    FIXME  should we do full reset here for all chip models?   
+		pci write config byte chip pci  VIA ACLINK CTRL  0x00  
+		udelay 100  
+#else
+		   deassert ACLink reset  force SYNC  warm AC'97 reset    
+		pci write config byte chip pci  VIA ACLINK CTRL 
+				      VIA ACLINK CTRL RESET|VIA ACLINK CTRL SYNC  
+		udelay 2  
+#endif
+		   ACLink on  deassert ACLink reset  VSR  SGD data out   
+		pci write config byte chip pci  VIA ACLINK CTRL  VIA ACLINK CTRL INIT  
+		udelay 100  
+	}
+	
+	pci read config byte chip pci  VIA ACLINK CTRL   pval  
+	if   pval   VIA ACLINK CTRL INIT   = VIA ACLINK CTRL INIT  {
+		   ACLink on  deassert ACLink reset  VSR  SGD data out   
+		pci write config byte chip pci  VIA ACLINK CTRL  VIA ACLINK CTRL INIT  
+		udelay 100  
+	}
+
+	   wait until codec ready   
+	end time = jiffies + msecs to jiffies 750  
+	do {
+		pci read config byte chip pci  VIA ACLINK STAT   pval  
+		if  pval   VIA ACLINK C00 READY     primary codec ready   
+			break 
+		schedule timeout uninterruptible 1  
+	} while  time before jiffies  end time   
+
+	if   val = snd via82xx codec xread chip     VIA REG AC97 BUSY 
+		snd printk KERN ERR  AC'97 codec is not ready  0x x \n   val  
+
+	snd via82xx codec xwrite chip  VIA REG AC97 READ |
+				 VIA REG AC97 SECONDARY VALID |
+				  VIA REG AC97 CODEC ID SECONDARY    VIA REG AC97 CODEC ID SHIFT   
+	end time = jiffies + msecs to jiffies 750  
+	snd via82xx codec xwrite chip  VIA REG AC97 READ |
+				 VIA REG AC97 SECONDARY VALID |
+				  VIA REG AC97 CODEC ID SECONDARY    VIA REG AC97 CODEC ID SHIFT   
+	do {
+		if   val = snd via82xx codec xread chip     VIA REG AC97 SECONDARY VALID  {
+			chip ac97 secondary = 1 
+			goto   ac97 ok2 
+		}
+		schedule timeout uninterruptible 1  
+	} while  time before jiffies  end time   
+	   This is ok  the most of motherboards have only one codec   
+
+        ac97 ok2 
+
+	   route FM trap to IRQ  disable FM trap   
+	   pci write config byte chip pci  VIA FM NMI CTRL  0  
+	   disable all GPI interrupts   
+	outl 0  VIAREG chip  GPI INTR   
+
+	return 0 
+}
+

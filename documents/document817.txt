@@ -1,0 +1,7 @@
+static void snd atiixp ac97 write struct snd ac97  ac97  unsigned short reg 
+				  unsigned short val 
+{
+	struct atiixp  chip = ac97 private data 
+	snd atiixp codec write chip  ac97 num  reg  val  
+}
+

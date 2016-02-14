@@ -1,0 +1,20 @@
+static void snd sonicvibes setfmt struct sonicvibes   sonic 
+                                  unsigned char mask 
+                                  unsigned char value 
+{
+	unsigned long flags 
+
+	spin lock irqsave  sonic reg lock  flags  
+	outb SV MCE | SV IREG DMA DATA FMT  SV REG sonic  INDEX   
+	if  mask  {
+		sonic format = inb SV REG sonic  DATA   
+		udelay 10  
+	}
+	sonic format =  sonic format   mask  | value 
+	outb sonic format  SV REG sonic  DATA   
+	udelay 10  
+	outb 0  SV REG sonic  INDEX   
+	udelay 10  
+	spin unlock irqrestore  sonic reg lock  flags  
+}
+

@@ -1,0 +1,12 @@
+void gf128mul 64k bbe be128  a  struct gf128mul 64k  t 
+{
+	u8  ap =  u8   a 
+	be128 r 1  
+	int i 
+
+	 r = t t 0  t ap 15   
+	for  i = 1  i   16  ++i 
+		be128 xor r  r   t t i  t ap 15   i    
+	 a =  r 
+}
+

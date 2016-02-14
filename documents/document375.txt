@@ -1,0 +1,41 @@
+struct gf128mul 64k  gf128mul init 64k bbe const be128  g 
+{
+	struct gf128mul 64k  t 
+	int i  j  k 
+
+	t = kzalloc sizeof  t   GFP KERNEL  
+	if   t 
+		goto out 
+
+	for  i = 0  i   16  i++  {
+		t t i  = kzalloc sizeof  t t i    GFP KERNEL  
+		if   t t i   {
+			gf128mul free 64k t  
+			t = NULL 
+			goto out 
+		}
+	}
+
+	t t 0  t 1  =  g 
+	for  j = 1  j  = 64  j   = 1 
+		gf128mul x bbe  t t 0  t j + j    t t 0  t j   
+
+	for  i = 0    {
+		for  j = 2  j   256  j += j 
+			for  k = 1  k   j  ++k 
+				be128 xor  t t i  t j + k  
+					   t t i  t j    t t i  t k   
+
+		if  ++i  = 16 
+			break 
+
+		for  j = 128  j   0  j   = 1  {
+			t t i  t j  = t t i   1  t j  
+			gf128mul x8 bbe  t t i  t j   
+		}
+	}
+
+out 
+	return t 
+}
+

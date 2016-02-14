@@ -1,0 +1,6 @@
+static inline void crypto ablkcipher clear flags struct crypto ablkcipher  tfm 
+						 u32 flags 
+{
+	crypto tfm clear flags crypto ablkcipher tfm tfm   flags  
+}
+

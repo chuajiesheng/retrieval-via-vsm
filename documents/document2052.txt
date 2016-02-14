@@ -1,0 +1,3 @@
+void ssb pmu set ldo voltage struct ssb chipcommon  cc 
+			     enum ssb pmu ldo volt id id  u32 voltage  
+

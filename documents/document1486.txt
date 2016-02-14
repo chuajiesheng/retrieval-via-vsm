@@ -1,0 +1,3 @@
+extern void ttm mem global free page struct ttm mem global  glob 
+				     struct page  page  
+

@@ -1,0 +1,15 @@
+static void snd via82xx codec write struct snd ac97  ac97 
+				    unsigned short reg 
+				    unsigned short val 
+{
+	struct via82xx  chip = ac97 private data 
+	unsigned int xval 
+
+	xval =  ac97 num ? VIA REG AC97 CODEC ID PRIMARY   VIA REG AC97 CODEC ID SECONDARY 
+	xval   = VIA REG AC97 CODEC ID SHIFT 
+	xval |= reg    VIA REG AC97 CMD SHIFT 
+	xval |= val    VIA REG AC97 DATA SHIFT 
+	snd via82xx codec xwrite chip  xval  
+	snd via82xx codec ready chip  ac97 num  
+}
+

@@ -1,0 +1,26 @@
+static int snd rme32 setinputtype struct rme32   rme32  int type 
+{
+	switch  type  {
+	case RME32 INPUT OPTICAL 
+		rme32 wcreg =  rme32 wcreg   ~RME32 WCR INP 0    
+			~RME32 WCR INP 1 
+		break 
+	case RME32 INPUT COAXIAL 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR INP 0    
+			~RME32 WCR INP 1 
+		break 
+	case RME32 INPUT INTERNAL 
+		rme32 wcreg =  rme32 wcreg   ~RME32 WCR INP 0  | 
+			RME32 WCR INP 1 
+		break 
+	case RME32 INPUT XLR 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR INP 0  | 
+			RME32 WCR INP 1 
+		break 
+	default 
+		return  EINVAL 
+	}
+	writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	return 0 
+}
+

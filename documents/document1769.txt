@@ -1,0 +1,41 @@
+static unsigned short snd fm801 codec read struct snd ac97  ac97  unsigned short reg 
+{
+	struct fm801  chip = ac97 private data 
+	int idx 
+
+	  
+	    Wait until the codec interface is not ready  
+	   
+	for  idx = 0  idx   100  idx++  {
+		if    inw FM801 REG chip  AC97 CMD     FM801 AC97 BUSY  
+			goto ok1 
+		udelay 10  
+	}
+	snd printk KERN ERR  AC'97 interface is busy  1 \n   
+	return 0 
+
+ ok1 
+	   read command   
+	outw reg |  ac97 addr    FM801 AC97 ADDR SHIFT  | FM801 AC97 READ 
+	     FM801 REG chip  AC97 CMD   
+	for  idx = 0  idx   100  idx++  {
+		if    inw FM801 REG chip  AC97 CMD     FM801 AC97 BUSY  
+			goto ok2 
+		udelay 10  
+	}
+	snd printk KERN ERR  AC'97 interface # d is busy  2 \n   ac97 num  
+	return 0 
+
+ ok2 
+	for  idx = 0  idx   1000  idx++  {
+		if  inw FM801 REG chip  AC97 CMD     FM801 AC97 VALID 
+			goto ok3 
+		udelay 10  
+	}
+	snd printk KERN ERR  AC'97 interface # d is not valid  2 \n   ac97 num  
+	return 0 
+
+ ok3 
+	return inw FM801 REG chip  AC97 DATA   
+}
+

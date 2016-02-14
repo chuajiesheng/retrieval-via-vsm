@@ -1,0 +1,71 @@
+static int snd hwdep open struct inode  inode  struct file   file 
+{
+	int major = imajor inode  
+	struct snd hwdep  hw 
+	int err 
+	wait queue t wait 
+
+	if  major == snd major  {
+		hw = snd lookup minor data iminor inode  
+					   SNDRV DEVICE TYPE HWDEP  
+#ifdef CONFIG SND OSSEMUL
+	} else if  major == SOUND MAJOR  {
+		hw = snd lookup oss minor data iminor inode  
+					       SNDRV OSS DEVICE TYPE DMFM  
+#endif
+	} else
+		return  ENXIO 
+	if  hw == NULL 
+		return  ENODEV 
+
+	if   try module get hw card module  
+		return  EFAULT 
+
+	init waitqueue entry  wait  current  
+	add wait queue  hw open wait   wait  
+	mutex lock  hw open mutex  
+	while  1  {
+		if  hw exclusive    hw used   0  {
+			err =  EBUSY 
+			break 
+		}
+		if   hw ops open  {
+			err = 0 
+			break 
+		}
+		err = hw ops open hw  file  
+		if  err  = 0 
+			break 
+		if  err ==  EAGAIN  {
+			if  file f flags   O NONBLOCK  {
+				err =  EBUSY 
+				break 
+			}
+		} else
+			break 
+		set current state TASK INTERRUPTIBLE  
+		mutex unlock  hw open mutex  
+		schedule   
+		mutex lock  hw open mutex  
+		if  signal pending current   {
+			err =  ERESTARTSYS 
+			break 
+		}
+	}
+	remove wait queue  hw open wait   wait  
+	if  err  = 0  {
+		err = snd card file add hw card  file  
+		if  err  = 0  {
+			file private data = hw 
+			hw used++ 
+		} else {
+			if  hw ops release 
+				hw ops release hw  file  
+		}
+	}
+	mutex unlock  hw open mutex  
+	if  err   0 
+		module put hw card module  
+	return err 
+}
+

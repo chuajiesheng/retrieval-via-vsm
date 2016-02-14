@@ -1,0 +1,27 @@
+static int   devinit snd uart16550 rmidi struct snd uart16550  uart  int device 
+				      int outs  int ins 
+				      struct snd rawmidi   rmidi 
+{
+	struct snd rawmidi  rrawmidi 
+	int err 
+
+	err = snd rawmidi new uart card   UART Serial MIDI   device 
+			      outs  ins   rrawmidi  
+	if  err   0 
+		return err 
+	snd rawmidi set ops rrawmidi  SNDRV RAWMIDI STREAM INPUT 
+			     snd uart16550 input  
+	snd rawmidi set ops rrawmidi  SNDRV RAWMIDI STREAM OUTPUT 
+			     snd uart16550 output  
+	strcpy rrawmidi name   Serial MIDI   
+	snd uart16550 substreams  rrawmidi streams SNDRV RAWMIDI STREAM OUTPUT   
+	snd uart16550 substreams  rrawmidi streams SNDRV RAWMIDI STREAM INPUT   
+	rrawmidi info flags = SNDRV RAWMIDI INFO OUTPUT |
+			       SNDRV RAWMIDI INFO INPUT |
+			       SNDRV RAWMIDI INFO DUPLEX 
+	rrawmidi private data = uart 
+	if  rmidi 
+		 rmidi = rrawmidi 
+	return 0 
+}
+

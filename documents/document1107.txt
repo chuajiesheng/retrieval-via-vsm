@@ -1,0 +1,48 @@
+snd azf3328 ctrl codec activity struct snd azf3328  chip 
+				enum snd azf3328 codec type codec type 
+				bool enable
+ 
+{
+	struct snd azf3328 codec data  codec =  chip codecs codec type  
+	bool need change =  codec running  = enable  
+
+	snd azf3328 dbgcodec 
+		 codec activity   s codec  enable  d  need change  d\n  
+				codec name  enable  need change
+	  
+	if  need change  {
+		static const struct {
+			enum snd azf3328 codec type other1 
+			enum snd azf3328 codec type other2 
+		} peer codecs 3  =
+			{ { AZF CODEC CAPTURE  AZF CODEC I2S OUT } 
+			  { AZF CODEC PLAYBACK  AZF CODEC I2S OUT } 
+			  { AZF CODEC PLAYBACK  AZF CODEC CAPTURE } } 
+		bool call function 
+
+		if  enable 
+			   if enable codec  call enable codecs func
+			   to enable codec supply      
+			call function = 1 
+		else {
+			      otherwise call enable codecs func
+			    which globally shuts down operation of codecs 
+			   only in case the other codecs are currently
+			   not active either    
+			call function =
+				   chip codecs peer codecs codec type  other1 
+					 running 
+			           chip codecs peer codecs codec type  other2 
+					 running   
+		 }
+		 if  call function 
+			snd azf3328 ctrl enable codecs chip  enable  
+
+		      and adjust clock  too
+		    reduce noise and power consumption    
+		if   enable 
+			snd azf3328 codec setfmt lowpower codec  
+		codec running = enable 
+	}
+}
+

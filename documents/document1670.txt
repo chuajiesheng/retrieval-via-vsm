@@ -1,0 +1,10 @@
+   
+   ieee80211 is ack   check if IEEE80211 FTYPE CTL    IEEE80211 STYPE ACK
+   @fc  frame control bytes in little endian byteorder
+   
+static inline int ieee80211 is ack   le16 fc 
+{
+	return  fc   cpu to le16 IEEE80211 FCTL FTYPE | IEEE80211 FCTL STYPE   ==
+	       cpu to le16 IEEE80211 FTYPE CTL | IEEE80211 STYPE ACK  
+}
+

@@ -1,0 +1,7 @@
+static int crypto rfc4543 decrypt struct aead request  req 
+{
+	req = crypto rfc4543 crypt req  0  
+
+	return crypto aead decrypt req  
+}
+

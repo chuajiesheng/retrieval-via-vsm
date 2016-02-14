@@ -1,0 +1,80 @@
+static int   devinit snd uart16550 create struct snd card  card 
+				       unsigned long iobase 
+				       int irq 
+				       unsigned int speed 
+				       unsigned int base 
+				       int adaptor 
+				       int droponfull 
+				       struct snd uart16550   ruart 
+{
+	static struct snd device ops ops = {
+		 dev free =	snd uart16550 dev free 
+	} 
+	struct snd uart16550  uart 
+	int err 
+
+
+	if   uart = kzalloc sizeof  uart   GFP KERNEL   == NULL 
+		return  ENOMEM 
+	uart adaptor = adaptor 
+	uart card = card 
+	spin lock init  uart open lock  
+	uart irq =  1 
+	uart base = iobase 
+	uart drop on full = droponfull 
+
+	if   err = snd uart16550 detect uart    = 0  {
+		printk KERN ERR  no UART detected at 0x lx\n   iobase  
+		snd uart16550 free uart  
+		return  ENODEV 
+	}
+
+	if  irq  = 0    irq  = SNDRV AUTO IRQ  {
+		if  request irq irq  snd uart16550 interrupt 
+				IRQF DISABLED   Serial MIDI   uart   {
+			snd printk KERN WARNING
+				    irq  d busy  Using Polling \n   irq  
+		} else {
+			uart irq = irq 
+		}
+	}
+	uart divisor = base   speed 
+	uart speed = base    unsigned int uart divisor 
+	uart speed base = base 
+	uart prev out =  1 
+	uart prev in = 0 
+	uart rstatus = 0 
+	memset uart prev status  0x80  sizeof unsigned char    SNDRV SERIAL MAX OUTS  
+	init timer  uart buffer timer  
+	uart buffer timer function = snd uart16550 buffer timer 
+	uart buffer timer data =  unsigned long uart 
+	uart timer running = 0 
+
+	   Register device   
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  uart   ops     0  {
+		snd uart16550 free uart  
+		return err 
+	}
+
+	switch  uart adaptor  {
+	case SNDRV SERIAL MS124W SA 
+	case SNDRV SERIAL MS124W MB 
+		   MS 124W can draw power from RTS and DTR if they
+		   are in opposite states     
+		outb UART MCR RTS |  0 UART MCR DTR   uart base + UART MCR  
+		break 
+	case SNDRV SERIAL MS124T 
+		   MS 124T can draw power from RTS and or DTR  preferably
+		   both  if they are asserted    
+		outb UART MCR RTS | UART MCR DTR  uart base + UART MCR  
+		break 
+	default 
+		break 
+	}
+
+	if  ruart 
+		 ruart = uart 
+
+	return 0 
+}
+

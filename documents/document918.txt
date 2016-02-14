@@ -1,0 +1,13 @@
+static int snd sonicvibes capture open struct snd pcm substream  substream 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	sonic mode |= SV MODE CAPTURE 
+	sonic capture substream = substream 
+	runtime hw = snd sonicvibes capture 
+	snd pcm hw constraint ratdens runtime  0  SNDRV PCM HW PARAM RATE 
+				       snd sonicvibes hw constraints adc clock  
+	return 0 
+}
+

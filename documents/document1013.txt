@@ -1,0 +1,2 @@
+extern void pcie set ecrc checking struct pci dev  dev  
+

@@ -1,0 +1,2 @@
+extern void drm core ioremap struct drm local map  map  struct drm device  dev  
+

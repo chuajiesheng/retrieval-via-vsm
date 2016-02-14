@@ -1,0 +1,8 @@
+                                                                      
+   Hardware specific functions
+                                                                       
+static inline void portman write command struct portman  pm  u8 value 
+{
+	parport write control pm pardev port  value  
+}
+

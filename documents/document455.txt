@@ -1,0 +1,19 @@
+static void print substream info struct snd info buffer  buffer 
+				 struct loopback  loopback 
+				 int sub 
+				 int num 
+{
+	struct loopback cable  cable = loopback cables sub  num  
+
+	snd iprintf buffer   Cable  i substream  i \n   num  sub  
+	if  cable == NULL  {
+		snd iprintf buffer     inactive\n   
+		return 
+	}
+	snd iprintf buffer     valid   u\n   cable valid  
+	snd iprintf buffer     running   u\n   cable running  
+	snd iprintf buffer     pause   u\n   cable pause  
+	print dpcm info buffer  cable streams 0    Playback   
+	print dpcm info buffer  cable streams 1    Capture   
+}
+

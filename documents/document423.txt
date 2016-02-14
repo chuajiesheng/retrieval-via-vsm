@@ -1,0 +1,15 @@
+static void loopback timer function unsigned long data 
+{
+	struct loopback pcm  dpcm =  struct loopback pcm   data 
+	unsigned int running 
+
+	running = loopback pos update dpcm cable  
+	if  running    1    dpcm substream stream   {
+		loopback timer start dpcm  
+		if  dpcm period update pending  {
+			dpcm period update pending = 0 
+			snd pcm period elapsed dpcm substream  
+		}
+	}
+}
+

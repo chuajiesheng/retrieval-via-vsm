@@ -1,0 +1,33 @@
+snd azf3328 gameport struct snd azf3328  chip  int dev 
+{
+	struct gameport  gp 
+
+	chip gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  azt3328  cannot alloc memory for gameport\n   
+		return  ENOMEM 
+	}
+
+	gameport set name gp   AZF3328 Gameport   
+	gameport set phys gp   pci s gameport0   pci name chip pci   
+	gameport set dev parent gp   chip pci dev  
+	gp io = chip game io 
+	gameport set port data gp  chip  
+
+	gp open = snd azf3328 gameport open 
+	gp close = snd azf3328 gameport close 
+	gp fuzz = 16     seems ok   
+	gp cooked read = snd azf3328 gameport cooked read 
+
+	   DISABLE legacy address  we don't need it    
+	snd azf3328 gameport legacy address enable chip  0  
+
+	snd azf3328 gameport set counter frequency chip 
+				GAME HWCFG ADC COUNTER FREQ 1 200  
+	snd azf3328 gameport axis circuit enable chip  0  
+
+	gameport register port chip gameport  
+
+	return 0 
+}
+

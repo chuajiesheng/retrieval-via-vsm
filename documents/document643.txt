@@ -1,0 +1,12 @@
+static void free fake buffer void 
+{
+	if  fake buffer  {
+		int i 
+		for  i = 0  i   2  i++ 
+			if  dummy page i   {
+				free page  unsigned long dummy page i   
+				dummy page i  = NULL 
+			}
+	}
+}
+

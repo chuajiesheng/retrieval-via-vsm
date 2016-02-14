@@ -1,0 +1,12 @@
+static snd pcm uframes t snd als4000 playback pointer struct snd pcm substream  substream 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+	unsigned result 
+
+	spin lock  chip reg lock  	
+	result = snd als4k gcr read chip  ALS4K GCRA0 FIFO1 CURRENT ADDR  
+	spin unlock  chip reg lock  
+	result  = 0xffff 
+	return bytes to frames  substream runtime  result   
+}
+

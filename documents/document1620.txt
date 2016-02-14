@@ -1,0 +1,5 @@
+static int snd als300 pcm hw free struct snd pcm substream  substream 
+{
+	return snd pcm lib free pages substream  
+}
+

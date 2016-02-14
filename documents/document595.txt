@@ -1,0 +1,10 @@
+static inline void rdma get mcast mac struct in6 addr  addr  u8  mac 
+{
+	int i 
+
+	mac 0  = 0x33 
+	mac 1  = 0x33 
+	for  i = 2  i   6  ++i 
+		mac i  = addr s6 addr i + 10  
+}
+

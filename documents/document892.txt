@@ -1,0 +1,49 @@
+static int gcm hash struct aead request  req 
+		    struct crypto gcm req priv ctx  pctx 
+{
+	struct ahash request  ahreq =  pctx u ahreq 
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+	struct crypto gcm ctx  ctx = crypto tfm ctx req base tfm  
+	unsigned int remain 
+	crypto completion t complete 
+	int err 
+
+	ahash request set tfm ahreq  ctx ghash  
+
+	ahash request set callback ahreq  aead request flags req  
+				   gcm hash init done  req  
+	err = crypto ahash init ahreq  
+	if  err 
+		return err 
+	remain = gcm remain req assoclen  
+	complete = remain ? gcm hash assoc done   gcm hash assoc remain done 
+	err = gcm hash update req  pctx  complete  req assoc  req assoclen  
+	if  err 
+		return err 
+	if  remain  {
+		err = gcm hash remain req  pctx  remain 
+				      gcm hash assoc remain done  
+		if  err 
+			return err 
+	}
+	remain = gcm remain gctx cryptlen  
+	complete = remain ? gcm hash crypt done   gcm hash crypt remain done 
+	err = gcm hash update req  pctx  complete  gctx src  gctx cryptlen  
+	if  err 
+		return err 
+	if  remain  {
+		err = gcm hash remain req  pctx  remain 
+				      gcm hash crypt remain done  
+		if  err 
+			return err 
+	}
+	err = gcm hash len req  pctx  
+	if  err 
+		return err 
+	err = gcm hash final req  pctx  
+	if  err 
+		return err 
+
+	return 0 
+}
+

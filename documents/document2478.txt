@@ -1,0 +1,5 @@
+static efi status t virt efi get time efi time t  tm  efi time cap t  tc 
+{
+	return efi call virt2 get time  tm  tc  
+}
+

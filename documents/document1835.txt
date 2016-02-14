@@ -1,0 +1,3 @@
+extern u8 sdio writeb readb struct sdio func  func  u8 write byte 
+	unsigned int addr  int  err ret  
+

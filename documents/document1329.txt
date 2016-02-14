@@ -1,0 +1,2 @@
+int vga switcheroo register handler struct vga switcheroo handler  handler  
+

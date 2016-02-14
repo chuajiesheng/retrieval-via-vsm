@@ -1,0 +1,2 @@
+void snd ac97 write struct snd ac97  ac97  unsigned short reg  unsigned short value  
+

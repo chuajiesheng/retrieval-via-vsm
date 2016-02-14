@@ -1,0 +1,2 @@
+const char  snd ac97 get short name struct snd ac97  ac97  
+

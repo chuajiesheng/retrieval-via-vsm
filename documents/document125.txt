@@ -1,0 +1,26 @@
+   
+   snd dma reserve buf   reserve the buffer
+   @dmab  the buffer to reserve
+   @id  the buffer id
+  
+   Reserves the given buffer as a reserved buffer 
+   
+   Returns zero if successful  or a negative code at error 
+   
+int snd dma reserve buf struct snd dma buffer  dmab  unsigned int id 
+{
+	struct snd mem list  mem 
+
+	if  WARN ON  dmab  
+		return  EINVAL 
+	mem = kmalloc sizeof  mem   GFP KERNEL  
+	if    mem 
+		return  ENOMEM 
+	mutex lock  list mutex  
+	mem buffer =  dmab 
+	mem id = id 
+	list add tail  mem list   mem list head  
+	mutex unlock  list mutex  
+	return 0 
+}
+

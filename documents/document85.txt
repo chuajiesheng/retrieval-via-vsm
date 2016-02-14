@@ -1,0 +1,21 @@
+   initialize master volume   
+static int master init struct link master  master 
+{
+	struct link slave  slave 
+
+	if  master info count 
+		return 0     already initialized   
+
+	list for each entry slave   master slaves  list  {
+		int err = slave init slave  
+		if  err   0 
+			return err 
+		master info = slave info 
+		master info count = 1     always mono   
+		   set full volume as default  = no attenuation    
+		master val = master info max val 
+		return 0 
+	}
+	return  ENOENT 
+}
+

@@ -1,0 +1,19 @@
+void   init efi memblock x86 reserve range void 
+{
+	unsigned long pmap 
+
+#ifdef CONFIG X86 32
+	pmap = boot params efi info efi memmap 
+#else
+	pmap =  boot params efi info efi memmap |
+		    u64 boot params efi info efi memmap hi  32   
+#endif
+	memmap phys map =  void   pmap 
+	memmap nr map = boot params efi info efi memmap size  
+		boot params efi info efi memdesc size 
+	memmap desc version = boot params efi info efi memdesc version 
+	memmap desc size = boot params efi info efi memdesc size 
+	memblock x86 reserve range pmap  pmap + memmap nr map   memmap desc size 
+		       EFI memmap   
+}
+

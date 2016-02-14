@@ -1,0 +1,13 @@
+  
+   proc interface
+   
+static void snd cs4281 proc read struct snd info entry  entry  
+				  struct snd info buffer  buffer 
+{
+	struct cs4281  chip = entry private data 
+
+	snd iprintf buffer   Cirrus Logic CS4281\n\n   
+	snd iprintf buffer   Spurious half IRQs      u\n   chip spurious dhtc irq  
+	snd iprintf buffer   Spurious end IRQs       u\n   chip spurious dtc irq  
+}
+

@@ -1,0 +1,52 @@
+  
+   open callback skeleton
+   
+static int snd via82xx pcm open struct via82xx  chip  struct viadev  viadev 
+				struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+	struct via rate lock  ratep 
+
+	runtime hw = snd via82xx hw 
+	
+	   set the hw rate condition   
+	ratep =  chip rates viadev direction  
+	spin lock irq  ratep lock  
+	ratep used++ 
+	if  chip spdif on    viadev reg offset == 0x30  {
+		   DXS#3 and spdif is on   
+		runtime hw rates = chip ac97 rates AC97 RATES SPDIF  
+		snd pcm limit hw rates runtime  
+	} else if  chip dxs fixed    viadev reg offset   0x40  {
+		   fixed DXS playback rate   
+		runtime hw rates = SNDRV PCM RATE 48000 
+		runtime hw rate min = runtime hw rate max = 48000 
+	} else if  chip dxs src    viadev reg offset   0x40  {
+		   use full SRC capabilities of DXS   
+		runtime hw rates =  SNDRV PCM RATE CONTINUOUS |
+				     SNDRV PCM RATE 8000 48000  
+		runtime hw rate min = 8000 
+		runtime hw rate max = 48000 
+	} else if    ratep rate  {
+		int idx = viadev direction ? AC97 RATES ADC   AC97 RATES FRONT DAC 
+		runtime hw rates = chip ac97 rates idx  
+		snd pcm limit hw rates runtime  
+	} else {
+		   a fixed rate   
+		runtime hw rates = SNDRV PCM RATE KNOT 
+		runtime hw rate max = runtime hw rate min = ratep rate 
+	}
+	spin unlock irq  ratep lock  
+
+	   we may remove following constaint when we modify table entries
+	   in interrupt   
+	if   err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+
+	runtime private data = viadev 
+	viadev substream = substream 
+
+	return 0 
+}
+

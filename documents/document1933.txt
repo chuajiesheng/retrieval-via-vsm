@@ -1,0 +1,5 @@
+static void   exit crypto xcbc module exit void 
+{
+	crypto unregister template  crypto xcbc tmpl  
+}
+

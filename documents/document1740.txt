@@ -1,0 +1,5 @@
+static void free prng context struct prng context  ctx 
+{
+	crypto free cipher ctx tfm  
+}
+

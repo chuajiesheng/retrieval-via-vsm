@@ -1,0 +1,10 @@
+static int snd cs4281 info volume struct snd kcontrol  kcontrol 
+				  struct snd ctl elem info  uinfo 
+{
+	uinfo type              = SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count             = 2 
+	uinfo value integer min = 0 
+	uinfo value integer max = CS VOL MASK 
+	return 0 
+}
+

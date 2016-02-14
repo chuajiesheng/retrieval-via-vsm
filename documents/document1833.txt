@@ -1,0 +1,29 @@
+static int   devinit snd ensoniq 1370 mixer struct ensoniq   ensoniq 
+{
+	struct snd card  card = ensoniq card 
+	struct snd ak4531 ak4531 
+	unsigned int idx 
+	int err 
+
+	   try reset AK4531   
+	outw ES 1370 CODEC WRITE AK4531 RESET  0x02   ES REG ensoniq  1370 CODEC   
+	inw ES REG ensoniq  1370 CODEC   
+	udelay 100  
+	outw ES 1370 CODEC WRITE AK4531 RESET  0x03   ES REG ensoniq  1370 CODEC   
+	inw ES REG ensoniq  1370 CODEC   
+	udelay 100  
+
+	memset  ak4531  0  sizeof ak4531   
+	ak4531 write = snd es1370 codec write 
+	ak4531 private data = ensoniq 
+	ak4531 private free = snd ensoniq mixer free ak4531 
+	if   err = snd ak4531 mixer card   ak4531   ensoniq u es1370 ak4531     0 
+		return err 
+	for  idx = 0  idx   ES1370 CONTROLS  idx++  {
+		err = snd ctl add card  snd ctl new1  snd es1370 controls idx   ensoniq   
+		if  err   0 
+			return err 
+	}
+	return 0 
+}
+

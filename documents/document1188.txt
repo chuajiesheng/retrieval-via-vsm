@@ -1,0 +1,10 @@
+snd azf3328 codec setfmt lowpower struct snd azf3328 codec data  codec
+ 
+{
+	   choose lowest frequency for low power consumption 
+	   While this will cause louder noise due to rather coarse frequency 
+	   it should never matter since output should always
+	   get disabled properly when idle anyway    
+	snd azf3328 codec setfmt codec  AZF FREQ 4000  8  1  
+}
+

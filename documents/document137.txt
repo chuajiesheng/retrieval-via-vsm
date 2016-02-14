@@ -1,0 +1,7 @@
+  
+   Scatter Gather generic device pages
+   
+void  snd malloc sgbuf pages struct device  device 
+			     size t size  struct snd dma buffer  dmab 
+			     size t  res size  
+

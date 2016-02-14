@@ -1,0 +1,2 @@
+void snd ac97 resume struct snd ac97  ac97  
+

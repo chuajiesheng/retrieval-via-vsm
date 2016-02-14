@@ -1,0 +1,9 @@
+   parport release reverses a previous parport claim   This can never
+   fail  though the effects are undefined  except that they are bad 
+   if you didn't previously own the port   Once you have released the
+   port you should make sure that neither your code nor the hardware
+   on the port tries to initiate any communication without first
+   re claiming the port   If you mess with the port state  enabling
+   ECP for example  you should clean up before releasing the port    
+extern void parport release struct pardevice  dev  
+

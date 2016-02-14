@@ -1,0 +1,14 @@
+snd m3 capture open struct snd pcm substream  subs 
+{
+	struct snd m3  chip = snd pcm substream chip subs  
+	struct snd pcm runtime  runtime = subs runtime 
+	int err 
+
+	if   err = snd m3 substream open chip  subs     0 
+		return err 
+
+	runtime hw = snd m3 capture 
+
+	return 0 
+}
+

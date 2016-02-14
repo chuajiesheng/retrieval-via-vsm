@@ -1,0 +1,14 @@
+static int wp512 init struct shash desc  desc  {
+	struct wp512 ctx  wctx = shash desc ctx desc  
+	int i 
+
+	memset wctx bitLength  0  32  
+	wctx bufferBits = wctx bufferPos = 0 
+	wctx buffer 0  = 0 
+	for  i = 0  i   8  i++  {
+		wctx hash i  = 0L 
+	}
+
+	return 0 
+}
+

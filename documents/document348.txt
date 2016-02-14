@@ -1,0 +1,28 @@
+int   init snd card info init void 
+{
+	struct snd info entry  entry 
+
+	entry = snd info create module entry THIS MODULE   cards   NULL  
+	if    entry 
+		return  ENOMEM 
+	entry c text read = snd card info read 
+	if  snd info register entry    0  {
+		snd info free entry entry  
+		return  ENOMEM 
+	}
+	snd card info entry = entry 
+
+#ifdef MODULE
+	entry = snd info create module entry THIS MODULE   modules   NULL  
+	if  entry  {
+		entry c text read = snd card module info read 
+		if  snd info register entry    0 
+			snd info free entry entry  
+		else
+			snd card module info entry = entry 
+	}
+#endif
+
+	return 0 
+}
+

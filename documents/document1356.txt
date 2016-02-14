@@ -1,0 +1,27 @@
+   free a memory chunk   
+static void snd es1968 free memory struct es1968  chip  struct esm memory  buf 
+{
+	struct esm memory  chunk 
+
+	mutex lock  chip memory mutex  
+	buf empty = 1 
+	if  buf list prev  =  chip buf list  {
+		chunk = list entry buf list prev  struct esm memory  list  
+		if  chunk empty  {
+			chunk buf bytes += buf buf bytes 
+			list del  buf list  
+			kfree buf  
+			buf = chunk 
+		}
+	}
+	if  buf list next  =  chip buf list  {
+		chunk = list entry buf list next  struct esm memory  list  
+		if  chunk empty  {
+			buf buf bytes += chunk buf bytes 
+			list del  chunk list  
+			kfree chunk  
+		}
+	}
+	mutex unlock  chip memory mutex  
+}
+

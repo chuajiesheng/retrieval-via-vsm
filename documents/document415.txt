@@ -1,0 +1,50 @@
+static int loopback trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct loopback pcm  dpcm = runtime private data 
+	struct loopback cable  cable = dpcm cable 
+	int err  stream = 1    substream stream 
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		err = loopback check format cable  substream stream  
+		if  err   0 
+			return err 
+		dpcm last jiffies = jiffies 
+		dpcm pcm rate shift = 0 
+		spin lock  cable lock  	
+		cable running |= stream 
+		cable pause  = ~stream 
+		spin unlock  cable lock  
+		loopback timer start dpcm  
+		if  substream stream == SNDRV PCM STREAM PLAYBACK 
+			loopback active notify dpcm  
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		spin lock  cable lock  	
+		cable running  = ~stream 
+		cable pause  = ~stream 
+		spin unlock  cable lock  
+		loopback timer stop dpcm  
+		if  substream stream == SNDRV PCM STREAM PLAYBACK 
+			loopback active notify dpcm  
+		break 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+		spin lock  cable lock  	
+		cable pause |= stream 
+		spin unlock  cable lock  
+		loopback timer stop dpcm  
+		break 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+		spin lock  cable lock  
+		dpcm last jiffies = jiffies 
+		cable pause  = ~stream 
+		spin unlock  cable lock  
+		loopback timer start dpcm  
+		break 
+	default 
+		return  EINVAL 
+	}
+	return 0 
+}
+

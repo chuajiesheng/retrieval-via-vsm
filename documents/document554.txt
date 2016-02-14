@@ -1,0 +1,2 @@
+void ib dealloc device struct ib device  device  
+

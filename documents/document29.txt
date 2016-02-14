@@ -1,0 +1,47 @@
+static ssize t snd info entry read struct file  file  char   user  buffer 
+				   size t count  loff t   offset 
+{
+	struct snd info private data  data 
+	struct snd info entry  entry 
+	struct snd info buffer  buf 
+	size t size = 0 
+	loff t pos 
+
+	data = file private data 
+	if  snd BUG ON  data  
+		return  ENXIO 
+	pos =  offset 
+	if  pos   0 ||  long  pos  = pos ||  ssize t  count   0 
+		return  EIO 
+	if   unsigned long  pos +  unsigned long  count    unsigned long  pos 
+		return  EIO 
+	entry = data entry 
+	switch  entry content  {
+	case SNDRV INFO CONTENT TEXT 
+		buf = data rbuffer 
+		if  buf == NULL 
+			return  EIO 
+		if  pos  = buf size 
+			return 0 
+		size = buf size   pos 
+		size = min count  size  
+		if  copy to user buffer  buf buffer + pos  size  
+			return  EFAULT 
+		break 
+	case SNDRV INFO CONTENT DATA 
+		if  pos  = entry size 
+			return 0 
+		if  entry c ops read  {
+			size = entry size   pos 
+			size = min count  size  
+			size = entry c ops read entry 
+						  data file private data 
+						  file  buffer  size  pos  
+		}
+		break 
+	}
+	if   ssize t  size   0 
+		 offset = pos + size 
+	return size 
+}
+

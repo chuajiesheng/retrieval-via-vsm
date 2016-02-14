@@ -1,0 +1,3 @@
+extern u32 drm vblank count and time struct drm device  dev  int crtc 
+				     struct timeval  vblanktime  
+

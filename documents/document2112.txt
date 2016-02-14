@@ -1,0 +1,62 @@
+static int wp512 update struct shash desc  desc  const u8  source 
+			 unsigned int len 
+{
+	struct wp512 ctx  wctx = shash desc ctx desc  
+	int sourcePos    = 0 
+	unsigned int bits len = len   8     convert to number of bits
+	int sourceGap    =  8     int bits len   7     7 
+	int bufferRem    = wctx bufferBits   7 
+	int i 
+	u32 b  carry 
+	u8  buffer       = wctx buffer 
+	u8  bitLength    = wctx bitLength 
+	int bufferBits   = wctx bufferBits 
+	int bufferPos    = wctx bufferPos 
+
+	u64 value = bits len 
+	for  i = 31  carry = 0  i  = 0     carry  = 0 || value  = 0ULL   i    {
+		carry += bitLength i  +   u32 value   0xff  
+		bitLength i  =  u8 carry 
+		carry   = 8 
+		value   = 8 
+	}
+	while  bits len   8  {
+		b =   source sourcePos     sourceGap    0xff  |
+		  source sourcePos + 1    0xff      8   sourceGap   
+		buffer bufferPos++  |=  u8  b    bufferRem  
+		bufferBits += 8   bufferRem 
+		if  bufferBits == WP512 BLOCK SIZE   8  {
+			wp512 process buffer wctx  
+			bufferBits = bufferPos = 0 
+		}
+		buffer bufferPos  = b     8   bufferRem  
+		bufferBits += bufferRem 
+		bits len  = 8 
+		sourcePos++ 
+	}
+	if  bits len   0  {
+		b =  source sourcePos     sourceGap    0xff 
+		buffer bufferPos  |= b    bufferRem 
+	} else {
+		b = 0 
+	}
+	if  bufferRem + bits len   8  {
+		bufferBits += bits len 
+	} else {
+		bufferPos++ 
+		bufferBits += 8   bufferRem 
+		bits len  = 8   bufferRem 
+		if  bufferBits == WP512 BLOCK SIZE   8  {
+			wp512 process buffer wctx  
+			bufferBits = bufferPos = 0 
+		}
+		buffer bufferPos  = b     8   bufferRem  
+		bufferBits +=  int bits len 
+	}
+
+	wctx bufferBits   = bufferBits 
+	wctx bufferPos    = bufferPos 
+
+	return 0 
+}
+

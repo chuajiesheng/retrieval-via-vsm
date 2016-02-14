@@ -1,0 +1,7 @@
+static inline void snd als4k gcr write struct snd sb  sb 
+					 enum als4k gcr t reg 
+					 u32 val 
+{
+	snd als4k gcr write addr sb alt port  reg  val  
+}
+

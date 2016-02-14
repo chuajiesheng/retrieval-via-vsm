@@ -1,0 +1,2 @@
+snd rme96 capture prepare struct snd pcm substream  substream  
+

@@ -1,0 +1,17 @@
+  
+   called on card id change
+   
+void snd info card id change struct snd card  card 
+{
+	mutex lock  info mutex  
+	if  card proc root link  {
+		snd remove proc entry snd proc root  card proc root link  
+		card proc root link = NULL 
+	}
+	if  strcmp card id  card proc root name  
+		card proc root link = proc symlink card id 
+						    snd proc root 
+						    card proc root name  
+	mutex unlock  info mutex  
+}
+

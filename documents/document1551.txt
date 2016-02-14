@@ -1,0 +1,16 @@
+snd rme96 put loopback control struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change 
+	
+	val = ucontrol value integer value 0  ? 0   RME96 WCR SEL 
+	spin lock irq  rme96 lock  
+	val =  rme96 wcreg   ~RME96 WCR SEL  | val 
+	change = val  = rme96 wcreg 
+	rme96 wcreg = val 
+	writel val  rme96 iobase + RME96 IO CONTROL REGISTER  
+	spin unlock irq  rme96 lock  
+	return change 
+}
+

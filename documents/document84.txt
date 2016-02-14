@@ -1,0 +1,38 @@
+   get the slave ctl info and save the initial values   
+static int slave init struct link slave  slave 
+{
+	struct snd ctl elem info  uinfo 
+	int err 
+
+	if  slave info count  {
+		   already initialized   
+		if  slave flags   SND CTL SLAVE NEED UPDATE 
+			return slave update slave  
+		return 0 
+	}
+
+	uinfo = kmalloc sizeof  uinfo   GFP KERNEL  
+	if   uinfo 
+		return  ENOMEM 
+	uinfo id = slave slave id 
+	err = slave slave info  slave slave  uinfo  
+	if  err   0  {
+		kfree uinfo  
+		return err 
+	}
+	slave info type = uinfo type 
+	slave info count = uinfo count 
+	if  slave info count   2  ||
+	     slave info type  = SNDRV CTL ELEM TYPE INTEGER   
+	     slave info type  = SNDRV CTL ELEM TYPE BOOLEAN   {
+		snd printk KERN ERR  invalid slave element\n   
+		kfree uinfo  
+		return  EINVAL 
+	}
+	slave info min val = uinfo value integer min 
+	slave info max val = uinfo value integer max 
+	kfree uinfo  
+
+	return slave update slave  
+}
+

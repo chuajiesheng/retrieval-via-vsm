@@ -1,0 +1,49 @@
+snd azf3328 pcm struct snd azf3328  chip 
+{
+enum { AZF PCMDEV STD  AZF PCMDEV I2S OUT  NUM AZF PCMDEVS }     pcm devices   
+
+	struct snd pcm  pcm 
+	int err 
+
+	snd azf3328 dbgcallenter   
+
+	err = snd pcm new chip card   AZF3328 DSP   AZF PCMDEV STD 
+								1  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK 
+						 snd azf3328 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE 
+						 snd azf3328 capture ops  
+
+	pcm private data = chip 
+	pcm info flags = 0 
+	strcpy pcm name  chip card shortname  
+	   same pcm object for playback capture  see snd pcm new   above    
+	chip pcm AZF CODEC PLAYBACK  = pcm 
+	chip pcm AZF CODEC CAPTURE  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+						snd dma pci data chip pci  
+							64 1024  64 1024  
+
+	err = snd pcm new chip card   AZF3328 I2S OUT   AZF PCMDEV I2S OUT 
+								1  0   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK 
+						 snd azf3328 i2s out ops  
+
+	pcm private data = chip 
+	pcm info flags = 0 
+	strcpy pcm name  chip card shortname  
+	chip pcm AZF CODEC I2S OUT  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+						snd dma pci data chip pci  
+							64 1024  64 1024  
+
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

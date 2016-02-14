@@ -1,0 +1,9 @@
+static inline struct loopback setup  get setup struct loopback pcm  dpcm 
+{
+	int device = dpcm substream pstr pcm device 
+	
+	if  dpcm substream stream == SNDRV PCM STREAM PLAYBACK 
+		device ^= 1 
+	return  dpcm loopback setup dpcm substream number  device  
+}
+

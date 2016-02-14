@@ -1,0 +1,20 @@
+static void gcm dec hash done struct aead request  req  int err 
+{
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+	struct ablkcipher request  abreq =  pctx u abreq 
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+
+	if   err  {
+		ablkcipher request set callback abreq  aead request flags req  
+						gcm decrypt done  req  
+		crypto gcm init crypt abreq  req  gctx cryptlen  
+		err = crypto ablkcipher decrypt abreq  
+		if  err ==  EINPROGRESS || err ==  EBUSY 
+			return 
+		else if   err 
+			err = crypto gcm verify req  pctx  
+	}
+
+	aead request complete req  err  
+}
+

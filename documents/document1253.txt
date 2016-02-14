@@ -1,0 +1,6 @@
+static inline void drm encoder helper add struct drm encoder  encoder 
+					  const struct drm encoder helper funcs  funcs 
+{
+	encoder helper private =  void   funcs 
+}
+

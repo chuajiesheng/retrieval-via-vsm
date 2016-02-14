@@ -1,0 +1,23 @@
+   
+   ieee80211 get buffered bc   accessing buffered broadcast and multicast frames
+   @hw  pointer as obtained from ieee80211 alloc hw   
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+  
+   Function for accessing buffered broadcast and multicast frames  If
+   hardware firmware does not implement buffering of broadcast multicast
+   frames when power saving is used  802 11 code buffers them in the host
+   memory  The low level driver uses this function to fetch next buffered
+   frame  In most cases  this is used when generating beacon frame  This
+   function returns a pointer to the next buffered skb or NULL if no more
+   buffered frames are available 
+  
+   Note  buffered frames are returned only after DTIM beacon frame was
+   generated with ieee80211 beacon get   and the low level driver must thus
+   call ieee80211 beacon get   first  ieee80211 get buffered bc   returns
+   NULL if the previous generated beacon was not DTIM  so the low level driver
+   does not need to check for DTIM beacons separately and should be able to
+   use common code for all beacons 
+   
+struct sk buff  
+ieee80211 get buffered bc struct ieee80211 hw  hw  struct ieee80211 vif  vif  
+

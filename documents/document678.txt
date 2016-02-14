@@ -1,0 +1,17 @@
+  
+   
+static u8 snd mtpav getreg struct mtpav  chip  u16 reg 
+{
+	u8 rval = 0 
+
+	if  reg == SREG  {
+		rval = inb chip port + SREG  
+		rval =  rval   0xf8  
+	} else if  reg == CREG  {
+		rval = inb chip port + CREG  
+		rval =  rval   0x1c  
+	}
+
+	return rval 
+}
+

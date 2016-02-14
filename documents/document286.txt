@@ -1,0 +1,23 @@
+static int snd find free minor int type 
+{
+	int minor 
+
+	   static minors for module auto loading   
+	if  type == SNDRV DEVICE TYPE SEQUENCER 
+		return SNDRV MINOR SEQUENCER 
+	if  type == SNDRV DEVICE TYPE TIMER 
+		return SNDRV MINOR TIMER 
+
+	for  minor = 0  minor   ARRAY SIZE snd minors   ++minor  {
+		   skip static minors still used for module auto loading   
+		if  SNDRV MINOR DEVICE minor  == SNDRV MINOR CONTROL 
+			continue 
+		if  minor == SNDRV MINOR SEQUENCER ||
+		    minor == SNDRV MINOR TIMER 
+			continue 
+		if   snd minors minor  
+			return minor 
+	}
+	return  EBUSY 
+}
+

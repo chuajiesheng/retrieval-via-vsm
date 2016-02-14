@@ -1,0 +1,3 @@
+int lib80211 crypt info init struct lib80211 crypt info  info  char  name 
+                                spinlock t  lock  
+

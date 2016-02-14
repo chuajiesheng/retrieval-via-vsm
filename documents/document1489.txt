@@ -1,0 +1,26 @@
+snd rme96 write SPI struct rme96  rme96  u16 val 
+{
+	int i 
+
+	for  i = 0  i   16  i++  {
+		if  val   0x8000  {
+			rme96 areg |= RME96 AR CDATA 
+		} else {
+			rme96 areg  = ~RME96 AR CDATA 
+		}
+		rme96 areg  = ~ RME96 AR CCLK | RME96 AR CLATCH  
+		writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+		udelay 10  
+		rme96 areg |= RME96 AR CCLK 
+		writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+		udelay 10  
+		val   = 1 
+	}
+	rme96 areg  = ~ RME96 AR CCLK | RME96 AR CDATA  
+	rme96 areg |= RME96 AR CLATCH 
+	writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+	udelay 10  
+	rme96 areg  = ~RME96 AR CLATCH 
+	writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+}
+

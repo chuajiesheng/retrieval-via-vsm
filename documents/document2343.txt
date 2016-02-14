@@ -1,0 +1,8 @@
+static void pcrypt aead serial struct padata priv  padata 
+{
+	struct pcrypt request  preq = pcrypt padata request padata  
+	struct aead request  req = pcrypt request ctx preq  
+
+	aead request complete req base data  padata info  
+}
+

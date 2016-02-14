@@ -1,0 +1,26 @@
+static int snd fm801 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct fm801  chip = card private data 
+	int i 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  fm801  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd fm801 chip init chip  1  
+	snd ac97 resume chip ac97  
+	snd ac97 resume chip ac97 sec  
+	for  i = 0  i   ARRAY SIZE saved regs   i++ 
+		outw chip saved regs i   chip port + saved regs i   
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

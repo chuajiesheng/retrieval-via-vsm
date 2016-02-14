@@ -1,0 +1,38 @@
+snd azf3328 pcm interrupt const struct snd azf3328 codec data  first codec 
+			  u8 status
+ 
+{
+	u8 which 
+	enum snd azf3328 codec type codec type 
+	const struct snd azf3328 codec data  codec = first codec 
+
+	for  codec type = AZF CODEC PLAYBACK 
+		 codec type  = AZF CODEC I2S OUT 
+			 ++codec type  ++codec  {
+
+		   skip codec if there's no interrupt for it   
+		if    status    1    codec type   
+			continue 
+
+		spin lock codec lock  
+		which = snd azf3328 codec inb codec  IDX IO CODEC IRQTYPE  
+		   ack all IRQ types immediately   
+		snd azf3328 codec outb codec  IDX IO CODEC IRQTYPE  which  
+		spin unlock codec lock  
+
+		if  codec substream  {
+			snd pcm period elapsed codec substream  
+			snd azf3328 dbgcodec   s period done  # x   @  x\n  
+				codec name 
+				which 
+				snd azf3328 codec inl 
+					codec  IDX IO CODEC DMA CURRPOS
+				 
+			  
+		} else
+			printk KERN WARNING  azt3328  irq handler problem \n   
+		if  which   IRQ SOMETHING 
+			snd azf3328 irq log unknown type which  
+	}
+}
+

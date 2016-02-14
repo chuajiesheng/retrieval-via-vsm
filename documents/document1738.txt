@@ -1,0 +1,87 @@
+   Our exported functions   
+static int get prng bytes char  buf  size t nbytes  struct prng context  ctx 
+				int do cont test 
+{
+	unsigned char  ptr = buf 
+	unsigned int byte count =  unsigned int nbytes 
+	int err 
+
+
+	spin lock bh  ctx prng lock  
+
+	err =  EINVAL 
+	if  ctx flags   PRNG NEED RESET 
+		goto done 
+
+	  
+	   If the FIXED SIZE flag is on  only return whole blocks of
+	   pseudo random data
+	   
+	err =  EINVAL 
+	if  ctx flags   PRNG FIXED SIZE  {
+		if  nbytes   DEFAULT BLK SZ 
+			goto done 
+		byte count = DEFAULT BLK SZ 
+	}
+
+	err = byte count 
+
+	dbgprint KERN CRIT  getting  d random bytes for context  p\n  
+		byte count  ctx  
+
+
+remainder 
+	if  ctx rand data valid == DEFAULT BLK SZ  {
+		if   get more prng bytes ctx  do cont test    0  {
+			memset buf  0  nbytes  
+			err =  EINVAL 
+			goto done 
+		}
+	}
+
+	  
+	   Copy any data less than an entire block
+	   
+	if  byte count   DEFAULT BLK SZ  {
+empty rbuf 
+		for    ctx rand data valid   DEFAULT BLK SZ 
+			ctx rand data valid++  {
+			 ptr = ctx rand data ctx rand data valid  
+			ptr++ 
+			byte count   
+			if  byte count == 0 
+				goto done 
+		}
+	}
+
+	  
+	   Now copy whole blocks
+	   
+	for    byte count  = DEFAULT BLK SZ  byte count  = DEFAULT BLK SZ  {
+		if  ctx rand data valid == DEFAULT BLK SZ  {
+			if   get more prng bytes ctx  do cont test    0  {
+				memset buf  0  nbytes  
+				err =  EINVAL 
+				goto done 
+			}
+		}
+		if  ctx rand data valid   0 
+			goto empty rbuf 
+		memcpy ptr  ctx rand data  DEFAULT BLK SZ  
+		ctx rand data valid += DEFAULT BLK SZ 
+		ptr += DEFAULT BLK SZ 
+	}
+
+	  
+	   Now go back and get any remaining partial block
+	   
+	if  byte count 
+		goto remainder 
+
+done 
+	spin unlock bh  ctx prng lock  
+	dbgprint KERN CRIT  returning  d from get prng bytes in context  p\n  
+		err  ctx  
+	return err 
+}
+

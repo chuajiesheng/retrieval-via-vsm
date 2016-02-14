@@ -1,0 +1,20 @@
+static int snd fm801 suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct fm801  chip = card private data 
+	int i 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	snd pcm suspend all chip pcm  
+	snd ac97 suspend chip ac97  
+	snd ac97 suspend chip ac97 sec  
+	for  i = 0  i   ARRAY SIZE saved regs   i++ 
+		chip saved regs i  = inw chip port + saved regs i   
+	   FIXME  tea575x suspend   
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

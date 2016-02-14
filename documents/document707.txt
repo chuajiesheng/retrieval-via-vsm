@@ -1,0 +1,6 @@
+static void   exit alsa card mtpav exit void 
+{
+	platform device unregister device  
+	platform driver unregister  snd mtpav driver  
+}
+

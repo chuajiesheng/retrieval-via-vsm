@@ -1,0 +1,18 @@
+   
+   snd free pages   release the pages
+   @ptr  the buffer pointer to release
+   @size  the allocated buffer size
+  
+   Releases the buffer allocated via snd malloc pages   
+   
+void snd free pages void  ptr  size t size 
+{
+	int pg 
+
+	if  ptr == NULL 
+		return 
+	pg = get order size  
+	dec snd pages pg  
+	free pages  unsigned long  ptr  pg  
+}
+

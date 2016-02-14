@@ -1,0 +1,25 @@
+static int   init tea mod init void 
+{
+	int ret = 0 
+	
+	ret = crypto register alg  tea alg  
+	if  ret   0 
+		goto out 
+
+	ret = crypto register alg  xtea alg  
+	if  ret   0  {
+		crypto unregister alg  tea alg  
+		goto out 
+	}
+
+	ret = crypto register alg  xeta alg  
+	if  ret   0  {
+		crypto unregister alg  tea alg  
+		crypto unregister alg  xtea alg  
+		goto out 
+	}
+
+out 	
+	return ret 
+}
+

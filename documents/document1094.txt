@@ -1,0 +1,30 @@
+snd azf3328 get mixer struct snd kcontrol  kcontrol 
+		      struct snd ctl elem value  ucontrol 
+{
+	struct snd azf3328  chip = snd kcontrol chip kcontrol  
+	struct azf3328 mixer reg reg 
+	u16 oreg  val 
+
+	snd azf3328 dbgcallenter   
+	snd azf3328 mixer reg decode  reg  kcontrol private value  
+
+	oreg = snd azf3328 mixer inw chip  reg reg  
+	val =  oreg    reg lchan shift    reg mask 
+	if  reg invert 
+		val = reg mask   val 
+	ucontrol value integer value 0  = val 
+	if  reg stereo  {
+		val =  oreg    reg rchan shift    reg mask 
+		if  reg invert 
+			val = reg mask   val 
+		ucontrol value integer value 1  = val 
+	}
+	snd azf3328 dbgmixer  get   02x is  04x   vol  02lx| 02lx  
+			       shift  02d| 02d  mask  02x  inv   d  stereo  d \n  
+		reg reg  oreg 
+		ucontrol value integer value 0   ucontrol value integer value 1  
+		reg lchan shift  reg rchan shift  reg mask  reg invert  reg stereo  
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

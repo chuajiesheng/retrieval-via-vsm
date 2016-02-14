@@ -1,0 +1,2 @@
+extern void	recv Bchannel struct bchannel    unsigned int id  
+

@@ -1,0 +1,9 @@
+static int snd bt87x capture volume get struct snd kcontrol  kcontrol 
+					struct snd ctl elem value  value 
+{
+	struct snd bt87x  chip = snd kcontrol chip kcontrol  
+
+	value value integer value 0  =  chip reg control   CTL A GAIN MASK     CTL A GAIN SHIFT 
+	return 0 
+}
+

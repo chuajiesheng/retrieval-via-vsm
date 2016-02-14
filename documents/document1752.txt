@@ -1,0 +1,17 @@
+   Module initalization   
+static int   init prng mod init void 
+{
+	int rc = 0 
+
+	rc = crypto register alg  rng alg  
+#ifdef CONFIG CRYPTO FIPS
+	if  rc 
+		goto out 
+
+	rc = crypto register alg  fips rng alg  
+
+out 
+#endif
+	return rc 
+}
+

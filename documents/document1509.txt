@@ -1,0 +1,7 @@
+static inline struct drm mm node  drm mm get block atomic struct drm mm node  parent 
+							  unsigned long size 
+							  unsigned alignment 
+{
+	return drm mm get block generic parent  size  alignment  1  
+}
+

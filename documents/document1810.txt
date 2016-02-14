@@ -1,0 +1,71 @@
+static int snd fm801 chip init struct fm801  chip  int resume 
+{
+	unsigned short cmdw 
+
+	if  chip tea575x tuner   TUNER ONLY 
+		goto   ac97 ok 
+
+	   codec cold reset + AC'97 warm reset   
+	outw  1  5  |  1  6   FM801 REG chip  CODEC CTRL   
+	inw FM801 REG chip  CODEC CTRL       flush posting data   
+	udelay 100  
+	outw 0  FM801 REG chip  CODEC CTRL   
+
+	if  wait for codec chip  0  AC97 RESET  msecs to jiffies 750     0 
+		if   resume  {
+			snd printk KERN INFO  Primary AC'97 codec not found   
+					     assume SF64 PCR  tuner only \n   
+			chip tea575x tuner = 3 | TUNER ONLY 
+			goto   ac97 ok 
+		}
+
+	if  chip multichannel  {
+		if  chip secondary addr  {
+			wait for codec chip  chip secondary addr 
+				       AC97 VENDOR ID1  msecs to jiffies 50   
+		} else {
+			   my card has the secondary codec   
+			   at address #3  so the loop is inverted   
+			int i 
+			for  i = 3  i   0  i    {
+				if   wait for codec chip  i  AC97 VENDOR ID1 
+						     msecs to jiffies 50    {
+					cmdw = inw FM801 REG chip  AC97 DATA   
+					if  cmdw  = 0xffff    cmdw  = 0  {
+						chip secondary = 1 
+						chip secondary addr = i 
+						break 
+					}
+				}
+			}
+		}
+
+		   the recovery phase  it seems that probing for non existing codec might   
+		   cause timeout problems   
+		wait for codec chip  0  AC97 VENDOR ID1  msecs to jiffies 750   
+	}
+
+        ac97 ok 
+
+	   init volume   
+	outw 0x0808  FM801 REG chip  PCM VOL   
+	outw 0x9f1f  FM801 REG chip  FM VOL   
+	outw 0x8808  FM801 REG chip  I2S VOL   
+
+	   I2S control   I2S mode   
+	outw 0x0003  FM801 REG chip  I2S MODE   
+
+	   interrupt setup   
+	cmdw = inw FM801 REG chip  IRQ MASK   
+	if  chip irq   0 
+		cmdw |= 0x00c3 		   mask everything  no PCM nor MPU   
+	else
+		cmdw  = ~0x0083 	   unmask MPU  PLAYBACK   CAPTURE   
+	outw cmdw  FM801 REG chip  IRQ MASK   
+
+	   interrupt clear   
+	outw FM801 IRQ PLAYBACK|FM801 IRQ CAPTURE|FM801 IRQ MPU  FM801 REG chip  IRQ STATUS   
+
+	return 0 
+}
+

@@ -1,0 +1,22 @@
+   
+   ttm bo move ttm
+  
+   @bo  A pointer to a struct ttm buffer object 
+   @evict  1  This is an eviction  Don't try to pipeline 
+   @no wait reserve  Return immediately if other buffers are busy 
+   @no wait gpu  Return immediately if the GPU is busy 
+   @new mem  struct ttm mem reg indicating where to move 
+  
+   Optimized move function for a buffer object with both old and
+   new placement backed by a TTM  The function will  if successful 
+   free any old aperture space  and set  @new mem  mm node to NULL 
+   and update the  @bo  mem placement flags  If unsuccessful  the old
+   data remains untouched  and it's up to the caller to free the
+   memory space indicated by @new mem 
+   Returns 
+    0  Failure 
+   
+extern int ttm bo move ttm struct ttm buffer object  bo 
+			   bool evict  bool no wait reserve 
+			   bool no wait gpu  struct ttm mem reg  new mem  
+

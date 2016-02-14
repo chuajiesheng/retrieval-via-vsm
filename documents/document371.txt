@@ -1,0 +1,22 @@
+static int   devinit portman create struct snd card  card  
+				    struct pardevice  pardev  
+				    struct portman   rchip 
+{
+	struct portman  pm 
+
+	 rchip = NULL 
+
+	pm = kzalloc sizeof struct portman   GFP KERNEL  
+	if  pm == NULL  
+		return  ENOMEM 
+
+	   Init chip specific data   
+	spin lock init  pm reg lock  
+	pm card = card 
+	pm pardev = pardev 
+
+	 rchip = pm 
+
+	return 0 
+}
+

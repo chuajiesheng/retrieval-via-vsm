@@ -1,0 +1,24 @@
+static int cprng init struct crypto tfm  tfm 
+{
+	struct prng context  ctx = crypto tfm ctx tfm  
+
+	spin lock init  ctx prng lock  
+	ctx tfm = crypto alloc cipher  aes   0  0  
+	if  IS ERR ctx tfm   {
+		dbgprint KERN CRIT  Failed to alloc tfm for context  p\n  
+				ctx  
+		return PTR ERR ctx tfm  
+	}
+
+	if  reset prng context ctx  NULL  DEFAULT PRNG KSZ  NULL  NULL    0 
+		return  EINVAL 
+
+	  
+	   after allocation  we should always force the user to reset
+	   so they don't inadvertently use the insecure default values
+	   without specifying them intentially
+	   
+	ctx flags |= PRNG NEED RESET 
+	return 0 
+}
+

@@ -1,0 +1,23 @@
+int snd pcm notify struct snd pcm notify  notify  int nfree 
+{
+	struct snd pcm  pcm 
+
+	if  snd BUG ON  notify ||
+		        notify n register ||
+		        notify n unregister ||
+		        notify n disconnect  
+		return  EINVAL 
+	mutex lock  register mutex  
+	if  nfree  {
+		list del  notify list  
+		list for each entry pcm   snd pcm devices  list 
+			notify n unregister pcm  
+	} else {
+		list add tail  notify list   snd pcm notify list  
+		list for each entry pcm   snd pcm devices  list 
+			notify n register pcm  
+	}
+	mutex unlock  register mutex  
+	return 0 
+}
+

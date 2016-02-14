@@ -1,0 +1,8 @@
+int   init tfrc li init void 
+{
+	tfrc lh slab = kmem cache create  tfrc li hist  
+					 sizeof struct tfrc loss interval   0 
+					 SLAB HWCACHE ALIGN  NULL  
+	return tfrc lh slab == NULL ?  ENOBUFS   0 
+}
+

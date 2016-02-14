@@ -1,0 +1,2 @@
+int set memory wc unsigned long addr  int numpages  
+

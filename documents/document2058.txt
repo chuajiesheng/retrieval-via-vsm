@@ -1,0 +1,6 @@
+static inline void ssb block read struct ssb device  dev  void  buffer 
+				  size t count  u16 offset  u8 reg width 
+{
+	dev ops block read dev  buffer  count  offset  reg width  
+}
+

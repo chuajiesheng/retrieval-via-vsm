@@ -1,0 +1,2 @@
+extern int drm helper resume force mode struct drm device  dev  
+

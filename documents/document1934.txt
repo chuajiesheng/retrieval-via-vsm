@@ -1,0 +1,21 @@
+static int snd intel8x0 ich chip reset struct intel8x0  chip 
+{
+	unsigned long end time 
+	unsigned int cnt 
+	   ACLink on  2 channels   
+	cnt = igetdword chip  ICHREG GLOB CNT   
+	cnt  = ~ ICH ACLINK | ICH PCM 246 MASK  
+	   finish cold or do warm reset   
+	cnt |=  cnt   ICH AC97COLD  == 0 ? ICH AC97COLD   ICH AC97WARM 
+	iputdword chip  ICHREG GLOB CNT   cnt  
+	end time =  jiffies +  HZ   4   + 1 
+	do {
+		if   igetdword chip  ICHREG GLOB CNT     ICH AC97WARM  == 0 
+			return 0 
+		schedule timeout uninterruptible 1  
+	} while  time after eq end time  jiffies   
+	snd printk KERN ERR  AC'97 warm reset still in progress?  0x x \n  
+		   igetdword chip  ICHREG GLOB CNT    
+	return  EIO 
+}
+

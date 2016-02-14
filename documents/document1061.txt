@@ -1,0 +1,16 @@
+static int snd ensoniq midi input open struct snd rawmidi substream  substream 
+{
+	struct ensoniq  ensoniq = substream rmidi private data 
+
+	spin lock irq  ensoniq reg lock  
+	ensoniq uartm |= ES MODE INPUT 
+	ensoniq midi input = substream 
+	if    ensoniq uartm   ES MODE OUTPUT   {
+		outb ES CNTRL 3   ES REG ensoniq  UART CONTROL   
+		outb ensoniq uartc = 0  ES REG ensoniq  UART CONTROL   
+		outl ensoniq ctrl |= ES UART EN  ES REG ensoniq  CONTROL   
+	}
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

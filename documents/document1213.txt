@@ -1,0 +1,3 @@
+extern void remove conflicting framebuffers struct apertures struct  a 
+				const char  name  bool primary  
+

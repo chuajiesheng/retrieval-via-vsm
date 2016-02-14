@@ -1,0 +1,12 @@
+static inline void snd rawmidi output trigger struct snd rawmidi substream  substream int up 
+{
+	if   substream opened 
+		return 
+	if  up  {
+		tasklet schedule  substream runtime tasklet  
+	} else {
+		tasklet kill  substream runtime tasklet  
+		substream ops trigger substream  0  
+	}
+}
+

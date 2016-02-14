@@ -1,0 +1,6 @@
+static int   init setup add efi memmap char  arg 
+{
+	add efi memmap = 1 
+	return 0 
+}
+

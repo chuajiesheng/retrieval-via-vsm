@@ -1,0 +1,8 @@
+   If you want to know what to call your pci dev  ask this function 
+   Again  it's a wrapper around the generic device 
+   
+static inline const char  pci name const struct pci dev  pdev 
+{
+	return dev name  pdev dev  
+}
+

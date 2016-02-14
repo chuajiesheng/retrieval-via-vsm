@@ -1,0 +1,10 @@
+static inline void snd als4 cr write struct snd sb  chip 
+					enum als4k cr t reg 
+					u8 data 
+{
+	   Control Register is reg | 0xc0  bit 7  6 set  on sbmixer index
+	   NOTE  assumes chip mixer lock to be locked externally already 
+	   SPECS PAGE  6   
+	snd sbmixer write chip  reg | 0xc0  data  
+}
+

@@ -1,0 +1,8 @@
+int snd sbdsp create struct snd card  card 
+		     unsigned long port 
+		     int irq 
+		     irq handler t irq handler 
+		     int dma8  int dma16 
+		     unsigned short hardware 
+		     struct snd sb   r chip  
+

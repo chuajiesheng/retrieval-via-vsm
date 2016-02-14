@@ -1,0 +1,22 @@
+static int   devinit snd sonicvibes create gameport struct sonicvibes  sonic 
+{
+	struct gameport  gp 
+
+	sonic gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  sonicvibes  cannot allocate memory for gameport\n   
+		return  ENOMEM 
+	}
+
+	gameport set name gp   SonicVibes Gameport   
+	gameport set phys gp   pci s gameport0   pci name sonic pci   
+	gameport set dev parent gp   sonic pci dev  
+	gp io = sonic game port 
+
+	gameport register port gp  
+
+	snd ctl add sonic card  snd ctl new1  snd sonicvibes game control  sonic   
+
+	return 0 
+}
+

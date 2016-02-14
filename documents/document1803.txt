@@ -1,0 +1,11 @@
+static int snd fm801 put mux struct snd kcontrol  kcontrol 
+			     struct snd ctl elem value  ucontrol 
+{
+	struct fm801  chip = snd kcontrol chip kcontrol  
+        unsigned short val 
+ 
+        if   val = ucontrol value enumerated item 0     4 
+                return  EINVAL 
+	return snd fm801 update bits chip  FM801 REC SRC  7  val  
+}
+

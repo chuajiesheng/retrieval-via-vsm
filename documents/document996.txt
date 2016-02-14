@@ -1,0 +1,6 @@
+static inline void snd pcm trigger done struct snd pcm substream  substream  
+					struct snd pcm substream  master 
+{
+	substream runtime trigger master = master 
+}
+

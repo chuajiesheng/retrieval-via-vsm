@@ -1,0 +1,38 @@
+  
+    Interrupt handler
+   
+static irqreturn t snd audiopci interrupt int irq  void  dev id 
+{
+	struct ensoniq  ensoniq = dev id 
+	unsigned int status  sctrl 
+
+	if  ensoniq == NULL 
+		return IRQ NONE 
+
+	status = inl ES REG ensoniq  STATUS   
+	if    status   ES INTR  
+		return IRQ NONE 
+
+	spin lock  ensoniq reg lock  
+	sctrl = ensoniq sctrl 
+	if  status   ES DAC1 
+		sctrl  = ~ES P1 INT EN 
+	if  status   ES DAC2 
+		sctrl  = ~ES P2 INT EN 
+	if  status   ES ADC 
+		sctrl  = ~ES R1 INT EN 
+	outl sctrl  ES REG ensoniq  SERIAL   
+	outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+	spin unlock  ensoniq reg lock  
+
+	if  status   ES UART 
+		snd ensoniq midi interrupt ensoniq  
+	if   status   ES DAC2     ensoniq playback2 substream 
+		snd pcm period elapsed ensoniq playback2 substream  
+	if   status   ES ADC     ensoniq capture substream 
+		snd pcm period elapsed ensoniq capture substream  
+	if   status   ES DAC1     ensoniq playback1 substream 
+		snd pcm period elapsed ensoniq playback1 substream  
+	return IRQ HANDLED 
+}
+

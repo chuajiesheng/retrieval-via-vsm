@@ -1,0 +1,2 @@
+extern int drm sysfs connector add struct drm connector  connector  
+

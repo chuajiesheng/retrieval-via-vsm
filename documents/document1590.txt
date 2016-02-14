@@ -1,0 +1,6 @@
+snd rme96 playback ptr struct rme96  rme96 
+{
+	return  readl rme96 iobase + RME96 IO GET PLAY POS 
+		  RME96 RCR AUDIO ADDR MASK     rme96 playback frlog 
+}
+

@@ -1,0 +1,49 @@
+  
+   Tell the kernel about the EFI memory map   This might include
+   more than the max 128 entries that can fit in the e820 legacy
+    zeropage  memory map 
+   
+static void   init do add efi memmap void 
+{
+	void  p 
+
+	for  p = memmap map  p   memmap map end  p += memmap desc size  {
+		efi memory desc t  md = p 
+		unsigned long long start = md phys addr 
+		unsigned long long size = md num pages    EFI PAGE SHIFT 
+		int e820 type 
+
+		switch  md type  {
+		case EFI LOADER CODE 
+		case EFI LOADER DATA 
+		case EFI BOOT SERVICES CODE 
+		case EFI BOOT SERVICES DATA 
+		case EFI CONVENTIONAL MEMORY 
+			if  md attribute   EFI MEMORY WB 
+				e820 type = E820 RAM 
+			else
+				e820 type = E820 RESERVED 
+			break 
+		case EFI ACPI RECLAIM MEMORY 
+			e820 type = E820 ACPI 
+			break 
+		case EFI ACPI MEMORY NVS 
+			e820 type = E820 NVS 
+			break 
+		case EFI UNUSABLE MEMORY 
+			e820 type = E820 UNUSABLE 
+			break 
+		default 
+			  
+			   EFI RESERVED TYPE EFI RUNTIME SERVICES CODE
+			   EFI RUNTIME SERVICES DATA EFI MEMORY MAPPED IO
+			   EFI MEMORY MAPPED IO PORT SPACE EFI PAL CODE
+			   
+			e820 type = E820 RESERVED 
+			break 
+		}
+		e820 add region start  size  e820 type  
+	}
+	sanitize e820 map e820 map  ARRAY SIZE e820 map    e820 nr map  
+}
+

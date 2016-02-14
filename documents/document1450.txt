@@ -1,0 +1,3 @@
+snd rme96 playback trigger struct snd pcm substream  substream  
+			   int cmd  
+

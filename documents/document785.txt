@@ -1,0 +1,4 @@
+   Proper probing supporting hot pluggable devices   
+int   must check   pci register driver struct pci driver    struct module   
+				       const char  mod name  
+

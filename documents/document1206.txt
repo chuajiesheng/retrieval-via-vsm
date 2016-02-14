@@ -1,0 +1,9 @@
+static void snd als4000 set rate struct snd sb  chip  unsigned int rate 
+{
+	if    chip mode   SB RATE LOCK   {
+		snd sbdsp command chip  SB DSP SAMPLE RATE OUT  
+		snd sbdsp command chip  rate  8  
+		snd sbdsp command chip  rate  
+	}
+}
+

@@ -1,0 +1,2 @@
+void snd info card disconnect struct snd card  card  
+

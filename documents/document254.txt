@@ -1,0 +1,69 @@
+   
+   snd pcm new stream   create a new PCM stream
+   @pcm  the pcm instance
+   @stream  the stream direction  SNDRV PCM STREAM XXX
+   @substream count  the number of substreams
+  
+   Creates a new stream for the pcm 
+   The corresponding stream on the pcm must have been empty before
+   calling this  i e  zero must be given to the argument of
+   snd pcm new   
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm new stream struct snd pcm  pcm  int stream  int substream count 
+{
+	int idx  err 
+	struct snd pcm str  pstr =  pcm streams stream  
+	struct snd pcm substream  substream   prev 
+
+#if defined CONFIG SND PCM OSS  || defined CONFIG SND PCM OSS MODULE 
+	mutex init  pstr oss setup mutex  
+#endif
+	pstr stream = stream 
+	pstr pcm = pcm 
+	pstr substream count = substream count 
+	if  substream count   0  {
+		err = snd pcm stream proc init pstr  
+		if  err   0  {
+			snd printk KERN ERR  Error in snd pcm stream proc init\n   
+			return err 
+		}
+	}
+	prev = NULL 
+	for  idx = 0  prev = NULL  idx   substream count  idx++  {
+		substream = kzalloc sizeof  substream   GFP KERNEL  
+		if  substream == NULL  {
+			snd printk KERN ERR  Cannot allocate PCM substream\n   
+			return  ENOMEM 
+		}
+		substream pcm = pcm 
+		substream pstr = pstr 
+		substream number = idx 
+		substream stream = stream 
+		sprintf substream name   subdevice # i   idx  
+		substream buffer bytes max = UINT MAX 
+		if  prev == NULL 
+			pstr substream = substream 
+		else
+			prev next = substream 
+		err = snd pcm substream proc init substream  
+		if  err   0  {
+			snd printk KERN ERR  Error in snd pcm stream proc init\n   
+			if  prev == NULL 
+				pstr substream = NULL 
+			else
+				prev next = NULL 
+			kfree substream  
+			return err 
+		}
+		substream group =  substream self group 
+		spin lock init  substream self group lock  
+		INIT LIST HEAD  substream self group substreams  
+		list add tail  substream link list   substream self group substreams  
+		atomic set  substream mmap count  0  
+		prev = substream 
+	}
+	return 0 
+}
+

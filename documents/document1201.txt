@@ -1,0 +1,19 @@
+   
+   Returns the pointer to the dword which is offset number of elements from the
+   current processing location 
+  
+   Caller must make sure that dword is not split in the buffer  This
+   requirement is easily met if all the sizes of objects in buffer are
+   multiples of dword and PAGE SIZE is multiple dword 
+  
+   Call to this function doesn't change the processing location 
+  
+     offset  The index of the dword relative to the internat iterator 
+   
+static inline void  drm buffer pointer to dword struct drm buffer  buffer 
+		int offset 
+{
+	int iter = buffer iterator + offset   4 
+	return  buffer data iter   PAGE SIZE  iter    PAGE SIZE   1   
+}
+

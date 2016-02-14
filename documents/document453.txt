@@ -1,0 +1,25 @@
+static void print dpcm info struct snd info buffer  buffer 
+			    struct loopback pcm  dpcm 
+			    const char  id 
+{
+	snd iprintf buffer      s\n   id  
+	if  dpcm == NULL  {
+		snd iprintf buffer       inactive\n   
+		return 
+	}
+	snd iprintf buffer       buffer size \t u\n   dpcm pcm buffer size  
+	snd iprintf buffer       buffer pos \t\t u\n   dpcm buf pos  
+	snd iprintf buffer       silent size \t u\n   dpcm silent size  
+	snd iprintf buffer       period size \t u\n   dpcm pcm period size  
+	snd iprintf buffer       bytes per sec \t u\n   dpcm pcm bps  
+	snd iprintf buffer       sample align \t u\n   dpcm pcm salign  
+	snd iprintf buffer       rate shift \t\t u\n   dpcm pcm rate shift  
+	snd iprintf buffer       update pending \t u\n  
+						dpcm period update pending  
+	snd iprintf buffer       irq pos \t\t u\n   dpcm irq pos  
+	snd iprintf buffer       period frac \t u\n   dpcm period size frac  
+	snd iprintf buffer       last jiffies \t lu   lu \n  
+					dpcm last jiffies  jiffies  
+	snd iprintf buffer       timer expires \t lu\n   dpcm timer expires  
+}
+

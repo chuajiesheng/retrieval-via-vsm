@@ -1,0 +1,2 @@
+extern int ttm mem io reserve vm struct ttm buffer object  bo  
+

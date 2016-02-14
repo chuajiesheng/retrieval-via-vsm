@@ -1,0 +1,2 @@
+module param dxs support  int  0444  
+

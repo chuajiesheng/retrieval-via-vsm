@@ -1,0 +1,5 @@
+snd azf3328 game outw const struct snd azf3328  chip  unsigned reg  u16 value 
+{
+	outw value  chip game io + reg  
+}
+

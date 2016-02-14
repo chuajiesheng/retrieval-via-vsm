@@ -1,0 +1,9 @@
+static snd pcm uframes t loopback pointer struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct loopback pcm  dpcm = runtime private data 
+
+	loopback pos update dpcm cable  
+	return bytes to frames runtime  dpcm buf pos  
+}
+

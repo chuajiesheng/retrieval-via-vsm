@@ -1,0 +1,17 @@
+static int snd via82xx codec valid struct via82xx modem  chip  int secondary 
+{
+	unsigned int timeout = 1000 	   1ms   
+	unsigned int val  val1 
+	unsigned int stat =  secondary ? VIA REG AC97 PRIMARY VALID  
+					 VIA REG AC97 SECONDARY VALID 
+	
+	while  timeout     0  {
+		val = snd via82xx codec xread chip  
+		val1 = val    VIA REG AC97 BUSY | stat  
+		if  val1 == stat 
+			return val   0xffff 
+		udelay 1  
+	}
+	return  EIO 
+}
+

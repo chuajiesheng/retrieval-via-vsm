@@ -1,0 +1,6 @@
+static ssize t snd disconnect read struct file  file  char   user  buf 
+				   size t count  loff t  offset 
+{
+	return  ENODEV 
+}
+

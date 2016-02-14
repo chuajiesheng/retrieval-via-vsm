@@ -1,0 +1,12 @@
+static unsigned int snd cmipci rate freq unsigned int rate 
+{
+	unsigned int i 
+
+	for  i = 0  i   ARRAY SIZE rates   i++  {
+		if  rates i  == rate 
+			return i 
+	}
+	snd BUG   
+	return 0 
+}
+

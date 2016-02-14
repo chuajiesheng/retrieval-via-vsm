@@ -1,0 +1,38 @@
+   
+   snd info get line   read one line from the procfs buffer
+   @buffer  the procfs buffer
+   @line  the buffer to store
+   @len  the max  buffer size   1
+  
+   Reads one line from the buffer and stores the string 
+  
+   Returns zero if successful  or 1 if error or EOF 
+   
+int snd info get line struct snd info buffer  buffer  char  line  int len 
+{
+	int c =  1 
+
+	if  len  = 0 || buffer stop || buffer error 
+		return 1 
+	while    len   0  {
+		c = buffer buffer buffer curr++  
+		if  c == '\n'  {
+			if  buffer curr  = buffer size 
+				buffer stop = 1 
+			break 
+		}
+		 line++ = c 
+		if  buffer curr  = buffer size  {
+			buffer stop = 1 
+			break 
+		}
+	}
+	while  c  = '\n'     buffer stop  {
+		c = buffer buffer buffer curr++  
+		if  buffer curr  = buffer size 
+			buffer stop = 1 
+	}
+	 line = '\0' 
+	return 0 
+}
+

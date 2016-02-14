@@ -1,0 +1,61 @@
+static int snd pcm substream proc init struct snd pcm substream  substream 
+{
+	struct snd info entry  entry 
+	struct snd card  card 
+	char name 16  
+
+	card = substream pcm card 
+
+	sprintf name   sub i   substream number  
+	if   entry = snd info create card entry card  name  substream pstr proc root   == NULL 
+		return  ENOMEM 
+	entry mode = S IFDIR | S IRUGO | S IXUGO 
+	if  snd info register entry    0  {
+		snd info free entry entry  
+		return  ENOMEM 
+	}
+	substream proc root = entry 
+
+	if   entry = snd info create card entry card   info   substream proc root    = NULL  {
+		snd info set text ops entry  substream 
+				      snd pcm substream proc info read  
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	substream proc info entry = entry 
+
+	if   entry = snd info create card entry card   hw params   substream proc root    = NULL  {
+		snd info set text ops entry  substream 
+				      snd pcm substream proc hw params read  
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	substream proc hw params entry = entry 
+
+	if   entry = snd info create card entry card   sw params   substream proc root    = NULL  {
+		snd info set text ops entry  substream 
+				      snd pcm substream proc sw params read  
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	substream proc sw params entry = entry 
+
+	if   entry = snd info create card entry card   status   substream proc root    = NULL  {
+		snd info set text ops entry  substream 
+				      snd pcm substream proc status read  
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	substream proc status entry = entry 
+
+	return 0 
+}
+

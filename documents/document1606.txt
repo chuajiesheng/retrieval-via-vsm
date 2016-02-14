@@ -1,0 +1,37 @@
+static irqreturn t snd als300plus interrupt int irq  void  dev id 
+{
+	u8 general  mpu  dram 
+	struct snd als300  chip = dev id 
+	struct snd als300 substream data  data 
+	
+	general = inb chip port+ALS300P IRQ STATUS  
+	mpu = inb chip port+MPU IRQ STATUS  
+	dram = inb chip port+ALS300P DRAM IRQ STATUS  
+
+	   shared IRQ  for different device?? Exit ASAP    
+	if   general == 0       mpu   0x80  == 0       dram   0x01  == 0  
+		return IRQ NONE 
+
+	if  general   IRQ PLAYBACK  {
+		if  chip pcm    chip playback substream  {
+			outb IRQ PLAYBACK  chip port+ALS300P IRQ STATUS  
+			data = chip playback substream runtime private data 
+			data period flipflop ^= 1 
+			snd pcm period elapsed chip playback substream  
+			snd als300 dbgplay  IRQ PLAYBACK\n   
+		}
+	}
+	if  general   IRQ CAPTURE  {
+		if  chip pcm    chip capture substream  {
+			outb IRQ CAPTURE  chip port+ALS300P IRQ STATUS  
+			data = chip capture substream runtime private data 
+			data period flipflop ^= 1 
+			snd pcm period elapsed chip capture substream  
+			snd als300 dbgplay  IRQ CAPTURE\n   
+		}
+	}
+	   FIXME  Ack other interrupt types  Not important right now as
+	   those other devices aren't enabled    
+	return IRQ HANDLED 
+}
+

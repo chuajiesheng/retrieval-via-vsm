@@ -1,0 +1,19 @@
+  
+   purge all reserved buffers
+   
+static void free all reserved pages void 
+{
+	struct list head  p 
+	struct snd mem list  mem 
+
+	mutex lock  list mutex  
+	while    list empty  mem list head   {
+		p = mem list head next 
+		mem = list entry p  struct snd mem list  list  
+		list del p  
+		snd dma free pages  mem buffer  
+		kfree mem  
+	}
+	mutex unlock  list mutex  
+}
+

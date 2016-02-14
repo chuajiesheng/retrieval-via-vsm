@@ -1,0 +1,6 @@
+static inline u32 snd als4k iobase readl unsigned long iobase 
+						enum als4k iobase t reg 
+{
+	return inl iobase + reg  
+}
+

@@ -1,0 +1,48 @@
+static int snd ensoniq playback1 prepare struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned int mode = 0 
+
+	ensoniq p1 dma size = snd pcm lib buffer bytes substream  
+	ensoniq p1 period size = snd pcm lib period bytes substream  
+	if  snd pcm format width runtime format  == 16 
+		mode |= 0x02 
+	if  runtime channels   1 
+		mode |= 0x01 
+	spin lock irq  ensoniq reg lock  
+	ensoniq ctrl  = ~ES DAC1 EN 
+#ifdef CHIP1371
+	   48k doesn't need SRC  it breaks AC3 passthru    
+	if  runtime rate == 48000 
+		ensoniq ctrl |= ES 1373 BYPASS P1 
+	else
+		ensoniq ctrl  = ~ES 1373 BYPASS P1 
+#endif
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	outl ES MEM PAGEO ES PAGE DAC   ES REG ensoniq  MEM PAGE   
+	outl runtime dma addr  ES REG ensoniq  DAC1 FRAME   
+	outl  ensoniq p1 dma size    2    1  ES REG ensoniq  DAC1 SIZE   
+	ensoniq sctrl  = ~ ES P1 LOOP SEL | ES P1 PAUSE | ES P1 SCT RLD | ES P1 MODEM  
+	ensoniq sctrl |= ES P1 INT EN | ES P1 MODEO mode  
+	outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+	outl  ensoniq p1 period size    snd ensoniq sample shift mode     1 
+	     ES REG ensoniq  DAC1 COUNT   
+#ifdef CHIP1370
+	ensoniq ctrl  = ~ES 1370 WTSRSELM 
+	switch  runtime rate  {
+	case 5512  ensoniq ctrl |= ES 1370 WTSRSEL 0   break 
+	case 11025  ensoniq ctrl |= ES 1370 WTSRSEL 1   break 
+	case 22050  ensoniq ctrl |= ES 1370 WTSRSEL 2   break 
+	case 44100  ensoniq ctrl |= ES 1370 WTSRSEL 3   break 
+	default  snd BUG   
+	}
+#endif
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	spin unlock irq  ensoniq reg lock  
+#ifndef CHIP1370
+	snd es1371 dac1 rate ensoniq  runtime rate  
+#endif
+	return 0 
+}
+

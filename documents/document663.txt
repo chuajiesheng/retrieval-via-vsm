@@ -1,0 +1,7 @@
+static int   devexit snd dummy remove struct platform device  devptr 
+{
+	snd card free platform get drvdata devptr   
+	platform set drvdata devptr  NULL  
+	return 0 
+}
+

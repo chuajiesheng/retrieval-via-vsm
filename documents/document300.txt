@@ -1,0 +1,5 @@
+static inline void crypto drop ahash struct crypto ahash spawn  spawn 
+{
+	crypto drop spawn  spawn base  
+}
+

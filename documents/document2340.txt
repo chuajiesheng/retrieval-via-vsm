@@ -1,0 +1,15 @@
+static int snd intel8x0m pcm prepare struct snd pcm substream  substream 
+{
+	struct intel8x0m  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct ichdev  ichdev = get ichdev substream  
+
+	ichdev physbuf = runtime dma addr 
+	ichdev size = snd pcm lib buffer bytes substream  
+	ichdev fragsize = snd pcm lib period bytes substream  
+	snd ac97 write ichdev ac97  AC97 LINE1 RATE  runtime rate  
+	snd ac97 write ichdev ac97  AC97 LINE1 LEVEL  0  
+	snd intel8x0 setup periods chip  ichdev  
+	return 0 
+}
+

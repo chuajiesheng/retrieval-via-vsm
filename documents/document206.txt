@@ -1,0 +1,17 @@
+   
+   snd pcm lib free vmalloc buffer   free vmalloc buffer
+   @substream  the substream with a buffer allocated by
+  	snd pcm lib alloc vmalloc buffer  
+   
+int snd pcm lib free vmalloc buffer struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime 
+
+	if  PCM RUNTIME CHECK substream  
+		return  EINVAL 
+	runtime = substream runtime 
+	vfree runtime dma area  
+	runtime dma area = NULL 
+	return 0 
+}
+

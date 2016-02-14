@@ -1,0 +1,28 @@
+static void tea encrypt struct crypto tfm  tfm  u8  dst  const u8  src 
+{
+	u32 y  z  n  sum = 0 
+	u32 k0  k1  k2  k3 
+	struct tea ctx  ctx = crypto tfm ctx tfm  
+	const   le32  in =  const   le32   src 
+	  le32  out =    le32   dst 
+
+	y = le32 to cpu in 0   
+	z = le32 to cpu in 1   
+
+	k0 = ctx KEY 0  
+	k1 = ctx KEY 1  
+	k2 = ctx KEY 2  
+	k3 = ctx KEY 3  
+
+	n = TEA ROUNDS 
+
+	while  n     0  {
+		sum += TEA DELTA 
+		y +=   z    4  + k0  ^  z + sum  ^   z    5  + k1  
+		z +=   y    4  + k2  ^  y + sum  ^   y    5  + k3  
+	}
+	
+	out 0  = cpu to le32 y  
+	out 1  = cpu to le32 z  
+}
+

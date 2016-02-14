@@ -1,0 +1,11 @@
+static int snd sonicvibes get mux struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct sonicvibes  sonic = snd kcontrol chip kcontrol  
+	
+	spin lock irq  sonic reg lock  
+	ucontrol value enumerated item 0  =   snd sonicvibes in1 sonic  SV IREG LEFT ADC    SV RECSRC OUT     5    1 
+	ucontrol value enumerated item 1  =   snd sonicvibes in1 sonic  SV IREG RIGHT ADC    SV RECSRC OUT     5    1 
+	spin unlock irq  sonic reg lock  
+	return 0 
+}
+

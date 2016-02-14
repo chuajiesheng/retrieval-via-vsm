@@ -1,0 +1,10 @@
+  
+   playback
+   
+static int snd cmipci playback trigger struct snd pcm substream  substream 
+				       int cmd 
+{
+	struct cmipci  cm = snd pcm substream chip substream  
+	return snd cmipci pcm trigger cm   cm channel CM CH PLAY   cmd  
+}
+

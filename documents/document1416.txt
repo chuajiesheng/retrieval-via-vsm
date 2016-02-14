@@ -1,0 +1,11 @@
+static int snd ak4531 info single struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	int mask =  kcontrol private value    24    0xff 
+
+	uinfo type = mask == 1 ? SNDRV CTL ELEM TYPE BOOLEAN   SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count = 1 
+	uinfo value integer min = 0 
+	uinfo value integer max = mask 
+	return 0 
+}
+

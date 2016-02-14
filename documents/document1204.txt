@@ -1,0 +1,5 @@
+   
+   Free the drm buffer object
+   
+extern void drm buffer free struct drm buffer  buf  
+

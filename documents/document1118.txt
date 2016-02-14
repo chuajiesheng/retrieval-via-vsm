@@ -1,0 +1,9 @@
+snd azf3328 gameport free struct snd azf3328  chip 
+{
+	if  chip gameport  {
+		gameport unregister port chip gameport  
+		chip gameport = NULL 
+	}
+	snd azf3328 gameport irq enable chip  0  
+}
+

@@ -1,0 +1,3 @@
+extern int ttm mem io lock struct ttm mem type manager  man 
+			   bool interruptible  
+

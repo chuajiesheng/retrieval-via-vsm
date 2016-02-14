@@ -1,0 +1,103 @@
+static int snd info entry open struct inode  inode  struct file  file 
+{
+	struct snd info entry  entry 
+	struct snd info private data  data 
+	struct snd info buffer  buffer 
+	struct proc dir entry  p 
+	int mode  err 
+
+	mutex lock  info mutex  
+	p = PDE inode  
+	entry = p == NULL ? NULL    struct snd info entry   p data 
+	if  entry == NULL ||   entry p  {
+		mutex unlock  info mutex  
+		return  ENODEV 
+	}
+	if   try module get entry module   {
+		err =  EFAULT 
+		goto   error1 
+	}
+	mode = file f flags   O ACCMODE 
+	if  mode == O RDONLY || mode == O RDWR  {
+		if   entry content == SNDRV INFO CONTENT DATA   
+		     entry c ops read == NULL   {
+		    	err =  ENODEV 
+		    	goto   error 
+		}
+	}
+	if  mode == O WRONLY || mode == O RDWR  {
+		if   entry content == SNDRV INFO CONTENT DATA   
+		     entry c ops write == NULL   {
+		    	err =  ENODEV 
+		    	goto   error 
+		}
+	}
+	data = kzalloc sizeof  data   GFP KERNEL  
+	if  data == NULL  {
+		err =  ENOMEM 
+		goto   error 
+	}
+	data entry = entry 
+	switch  entry content  {
+	case SNDRV INFO CONTENT TEXT 
+		if  mode == O RDONLY || mode == O RDWR  {
+			buffer = kzalloc sizeof  buffer   GFP KERNEL  
+			if  buffer == NULL 
+				goto   nomem 
+			data rbuffer = buffer 
+			buffer len = PAGE SIZE 
+			buffer buffer = kmalloc buffer len  GFP KERNEL  
+			if  buffer buffer == NULL 
+				goto   nomem 
+		}
+		if  mode == O WRONLY || mode == O RDWR  {
+			buffer = kzalloc sizeof  buffer   GFP KERNEL  
+			if  buffer == NULL 
+				goto   nomem 
+			data wbuffer = buffer 
+			buffer len = PAGE SIZE 
+			buffer buffer = kmalloc buffer len  GFP KERNEL  
+			if  buffer buffer == NULL 
+				goto   nomem 
+		}
+		break 
+	case SNDRV INFO CONTENT DATA 	   data   
+		if  entry c ops open  {
+			if   err = entry c ops open entry  mode 
+						       data file private data     0  {
+				kfree data  
+				goto   error 
+			}
+		}
+		break 
+	}
+	file private data = data 
+	mutex unlock  info mutex  
+	if  entry content == SNDRV INFO CONTENT TEXT   
+	     mode == O RDONLY || mode == O RDWR   {
+		if  entry c text read  {
+			mutex lock  entry access  
+			entry c text read entry  data rbuffer  
+			mutex unlock  entry access  
+		}
+	}
+	return 0 
+
+   nomem 
+	if  data rbuffer  {
+		kfree data rbuffer buffer  
+		kfree data rbuffer  
+	}
+	if  data wbuffer  {
+		kfree data wbuffer buffer  
+		kfree data wbuffer  
+	}
+	kfree data  
+	err =  ENOMEM 
+        error 
+	module put entry module  
+        error1 
+	mutex unlock  info mutex  
+	return err 
+}
+

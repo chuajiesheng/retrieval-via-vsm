@@ -1,0 +1,19 @@
+   
+   snd pcm lib preallocate free for all   release all pre allocated buffers on the pcm
+   @pcm  the pcm instance
+  
+   Releases all the pre allocated buffers on the given pcm 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm lib preallocate free for all struct snd pcm  pcm 
+{
+	struct snd pcm substream  substream 
+	int stream 
+
+	for  stream = 0  stream   2  stream++ 
+		for  substream = pcm streams stream  substream  substream  substream = substream next 
+			snd pcm lib preallocate free substream  
+	return 0 
+}
+

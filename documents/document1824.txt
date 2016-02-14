@@ -1,0 +1,2 @@
+void snd tea575x init struct snd tea575x  tea  
+

@@ -1,0 +1,22 @@
+   call with substream spinlock   
+static void snd es1968 bob dec struct es1968  chip 
+{
+	chip bobclient   
+	if  chip bobclient  = 0 
+		snd es1968 bob stop chip  
+	else if  chip bob freq   ESM BOB FREQ  {
+		   check reduction of timer frequency   
+		int max freq = ESM BOB FREQ 
+		struct esschan  es 
+		list for each entry es   chip substream list  list  {
+			if  max freq   es bob freq 
+				max freq = es bob freq 
+		}
+		if  max freq  = chip bob freq  {
+			snd es1968 bob stop chip  
+			chip bob freq = max freq 
+			snd es1968 bob start chip  
+		}
+	}
+}
+

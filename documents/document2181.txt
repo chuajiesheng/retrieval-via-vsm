@@ -1,0 +1,38 @@
+static int snd via82xx resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct via82xx  chip = card private data 
+	int i 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  via82xx  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd via82xx chip init chip  
+
+	if  chip chip type == TYPE VIA686  {
+		if  chip mpu port saved 
+			pci write config dword chip pci  0x18  chip mpu port saved | 0x01  
+		pci write config byte chip pci  VIA FUNC ENABLE  chip legacy saved  
+		pci write config byte chip pci  VIA PNP CONTROL  chip legacy cfg saved  
+	} else {
+		pci write config byte chip pci  VIA8233 SPDIF CTRL  chip spdif ctrl saved  
+		outb chip capture src saved 0   chip port + VIA REG CAPTURE CHANNEL  
+		outb chip capture src saved 1   chip port + VIA REG CAPTURE CHANNEL + 0x10  
+	}
+
+	snd ac97 resume chip ac97  
+
+	for  i = 0  i   chip num devs  i++ 
+		snd via82xx channel reset chip   chip devs i   
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

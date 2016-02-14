@@ -1,0 +1,46 @@
+static int snd hwdep control ioctl struct snd card  card 
+				   struct snd ctl file   control 
+				   unsigned int cmd  unsigned long arg 
+{
+	switch  cmd  {
+	case SNDRV CTL IOCTL HWDEP NEXT DEVICE 
+		{
+			int device 
+
+			if  get user device   int   user   arg  
+				return  EFAULT 
+			mutex lock  register mutex  
+			device = device   0 ? 0   device + 1 
+			while  device   SNDRV MINOR HWDEPS  {
+				if  snd hwdep search card  device  
+					break 
+				device++ 
+			}
+			if  device  = SNDRV MINOR HWDEPS 
+				device =  1 
+			mutex unlock  register mutex  
+			if  put user device   int   user   arg  
+				return  EFAULT 
+			return 0 
+		}
+	case SNDRV CTL IOCTL HWDEP INFO 
+		{
+			struct snd hwdep info   user  info =  struct snd hwdep info   user   arg 
+			int device  err 
+			struct snd hwdep  hwdep 
+
+			if  get user device   info device  
+				return  EFAULT 
+			mutex lock  register mutex  
+			hwdep = snd hwdep search card  device  
+			if  hwdep 
+				err = snd hwdep info hwdep  info  
+			else
+				err =  ENXIO 
+			mutex unlock  register mutex  
+			return err 
+		}
+	}
+	return  ENOIOCTLCMD 
+}
+

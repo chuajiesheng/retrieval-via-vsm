@@ -1,0 +1,5 @@
+static inline u8 portman read status struct portman  pm 
+{
+	return parport read status pm pardev port  
+}
+

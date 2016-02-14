@@ -1,0 +1,13 @@
+static int snd ens1373 spdif default get struct snd kcontrol  kcontrol 
+                                         struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	spin lock irq  ensoniq reg lock  
+	ucontrol value iec958 status 0  =  ensoniq spdif default    0    0xff 
+	ucontrol value iec958 status 1  =  ensoniq spdif default    8    0xff 
+	ucontrol value iec958 status 2  =  ensoniq spdif default    16    0xff 
+	ucontrol value iec958 status 3  =  ensoniq spdif default    24    0xff 
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

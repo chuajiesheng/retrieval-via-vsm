@@ -1,0 +1,17 @@
+   
+   ttm tt set user 
+  
+   @ttm  The struct ttm tt to populate 
+   @tsk  A struct task struct for which @start is a valid user space address 
+   @start  A valid user space address 
+   @num pages  Size in pages of the user memory area 
+  
+   Populate a struct ttm tt with a user space memory area after first pinning
+   the pages backing it 
+   Returns 
+    0  Error 
+   
+extern int ttm tt set user struct ttm tt  ttm 
+			   struct task struct  tsk 
+			   unsigned long start  unsigned long num pages  
+

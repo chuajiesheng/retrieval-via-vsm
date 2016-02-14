@@ -1,0 +1,8 @@
+static inline int snd rawmidi ready append struct snd rawmidi substream  substream 
+					   size t count 
+{
+	struct snd rawmidi runtime  runtime = substream runtime 
+	return runtime avail  = runtime avail min   
+	         substream append || runtime avail  = count  
+}
+

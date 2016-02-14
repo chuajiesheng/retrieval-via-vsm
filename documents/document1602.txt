@@ -1,0 +1,18 @@
+   Enable Disable Interrupts   
+static void snd als300 set irq flag struct snd als300  chip  int cmd 
+{
+	u32 tmp = snd als300 gcr read chip port  MISC CONTROL  
+	snd als300 dbgcallenter   
+
+	   boolean XOR check  since old vs  new hardware have
+	   directly reversed bit setting for ENABLE and DISABLE 
+	   ALS300+ acts like newer versions of ALS300   
+	if    chip revision   5 || chip chip type == DEVICE ALS300 PLUS  ^
+						 cmd == IRQ ENABLE   == 0 
+		tmp |= IRQ SET BIT 
+	else
+		tmp  = ~IRQ SET BIT 
+	snd als300 gcr write chip port  MISC CONTROL  tmp  
+	snd als300 dbgcallleave   
+}
+

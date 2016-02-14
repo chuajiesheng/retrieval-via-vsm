@@ -1,0 +1,15 @@
+int snd add device sysfs file int type  struct snd card  card  int dev 
+			      struct device attribute  attr 
+{
+	int minor  ret =  EINVAL 
+	struct device  d 
+
+	mutex lock  sound mutex  
+	minor = find snd minor type  card  dev  
+	if  minor  = 0     d = snd minors minor  dev   = NULL 
+		ret = device create file d  attr  
+	mutex unlock  sound mutex  
+	return ret 
+
+}
+

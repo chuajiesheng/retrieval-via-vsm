@@ -1,0 +1,6 @@
+static snd pcm uframes t snd cmipci playback pointer struct snd pcm substream  substream 
+{
+	struct cmipci  cm = snd pcm substream chip substream  
+	return snd cmipci pcm pointer cm   cm channel CM CH PLAY   substream  
+}
+

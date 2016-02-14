@@ -1,0 +1,12 @@
+int snd card free struct snd card  card 
+{
+	int ret = snd card disconnect card  
+	if  ret 
+		return ret 
+
+	   wait  until all devices are ready for the free operation   
+	wait event card shutdown sleep  list empty  card files list   
+	snd card do free card  
+	return 0 
+}
+

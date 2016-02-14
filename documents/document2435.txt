@@ -1,0 +1,16 @@
+   has the packet contained in skb been seen before?   
+int tfrc rx hist duplicate struct tfrc rx hist  h  struct sk buff  skb 
+{
+	const u64 seq = DCCP SKB CB skb  dccpd seq 
+	int i 
+
+	if  dccp delta seqno tfrc rx hist loss prev h  tfrchrx seqno  seq   = 0 
+		return 1 
+
+	for  i = 1  i  = h loss count  i++ 
+		if  tfrc rx hist entry h  i  tfrchrx seqno == seq 
+			return 1 
+
+	return 0 
+}
+

@@ -1,0 +1,17 @@
+static inline int snd uart16550 write buffer struct snd uart16550  uart 
+					     unsigned char byte 
+{
+	unsigned short buff in = uart buff in 
+	if  uart buff in count   TX BUFF SIZE  {
+		uart tx buff buff in  = byte 
+		buff in++ 
+		buff in  = TX BUFF MASK 
+		uart buff in = buff in 
+		uart buff in count++ 
+		if  uart irq   0     polling mode   
+			snd uart16550 add timer uart  
+		return 1 
+	} else
+		return 0 
+}
+

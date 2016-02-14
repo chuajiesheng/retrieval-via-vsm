@@ -1,0 +1,6 @@
+static void snd card id read struct snd info entry  entry 
+			     struct snd info buffer  buffer 
+{
+	snd iprintf buffer    s\n   entry card id  
+}
+

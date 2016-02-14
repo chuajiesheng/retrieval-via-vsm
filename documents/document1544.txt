@@ -1,0 +1,14 @@
+snd rme96 capture close struct snd pcm substream  substream 
+{
+	struct rme96  rme96 = snd pcm substream chip substream  
+	
+	spin lock irq  rme96 lock  	
+	if  RME96 ISRECORDING rme96   {
+		snd rme96 capture stop rme96  
+	}
+	rme96 capture substream = NULL 
+	rme96 capture periodsize = 0 
+	spin unlock irq  rme96 lock  
+	return 0 
+}
+

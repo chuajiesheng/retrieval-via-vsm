@@ -1,0 +1,16 @@
+static int dummy systimer create struct snd pcm substream  substream 
+{
+	struct dummy systimer pcm  dpcm 
+
+	dpcm = kzalloc sizeof  dpcm   GFP KERNEL  
+	if   dpcm 
+		return  ENOMEM 
+	substream runtime private data = dpcm 
+	init timer  dpcm timer  
+	dpcm timer data =  unsigned long  dpcm 
+	dpcm timer function = dummy systimer callback 
+	spin lock init  dpcm lock  
+	dpcm substream = substream 
+	return 0 
+}
+

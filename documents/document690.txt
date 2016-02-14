@@ -1,0 +1,6 @@
+   spinlock held    
+static void snd mtpav remove output timer struct mtpav  chip 
+{
+	del timer  chip timer  
+}
+

@@ -1,0 +1,12 @@
+static int snd ensoniq control get struct snd kcontrol  kcontrol 
+				   struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	int mask = kcontrol private value 
+	
+	spin lock irq  ensoniq reg lock  
+	ucontrol value integer value 0  = ensoniq ctrl   mask ? 1   0 
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

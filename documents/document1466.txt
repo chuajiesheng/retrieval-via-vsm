@@ -1,0 +1,15 @@
+   
+   ttm ttm destroy 
+  
+   @ttm  The struct ttm tt 
+   @index  Index of the desired page 
+  
+   Return a pointer to the struct page backing @ttm at page
+   index @index  If the page is unpopulated  one will be allocated to
+   populate that index 
+  
+   Returns 
+   NULL on OOM 
+   
+extern struct page  ttm tt get page struct ttm tt  ttm  int index  
+

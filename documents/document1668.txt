@@ -1,0 +1,32 @@
+snd m3 substream open struct snd m3  chip  struct snd pcm substream  subs 
+{
+	int i 
+	struct m3 dma  s 
+
+	spin lock irq  chip reg lock  
+	for  i = 0  i   chip num substreams  i++  {
+		s =  chip substreams i  
+		if    s opened 
+			goto   found 
+	}
+	spin unlock irq  chip reg lock  
+	return  ENOMEM 
+  found 
+	s opened = 1 
+	s running = 0 
+	spin unlock irq  chip reg lock  
+
+	subs runtime private data = s 
+	s substream = subs 
+
+	   set list owners   
+	if  subs stream == SNDRV PCM STREAM PLAYBACK  {
+		s index list 0  =  chip mixer list 
+	} else
+		s index list 0  =  chip adc1 list 
+	s index list 1  =  chip msrc list 
+	s index list 2  =  chip dma list 
+
+	return 0 
+}
+

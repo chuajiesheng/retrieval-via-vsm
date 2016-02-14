@@ -1,0 +1,17 @@
+snd rme96 capture setformat struct rme96  rme96 
+			    int format 
+{
+	switch  format  {
+	case SNDRV PCM FORMAT S16 LE 
+		rme96 wcreg  = ~RME96 WCR MODE24 2 
+		break 
+	case SNDRV PCM FORMAT S32 LE 
+		rme96 wcreg |= RME96 WCR MODE24 2 
+		break 
+	default 
+		return  EINVAL 
+	}
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	return 0 
+}
+

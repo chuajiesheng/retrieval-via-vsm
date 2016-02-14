@@ -1,0 +1,18 @@
+   find the matching minor record
+   return the index of snd minor  or  1 if not found
+   
+static int find snd minor int type  struct snd card  card  int dev 
+{
+	int cardnum  minor 
+	struct snd minor  mptr 
+
+	cardnum = card ? card number    1 
+	for  minor = 0  minor   ARRAY SIZE snd minors   ++minor 
+		if   mptr = snd minors minor    = NULL   
+		    mptr type == type   
+		    mptr card == cardnum   
+		    mptr device == dev 
+			return minor 
+	return  1 
+}
+

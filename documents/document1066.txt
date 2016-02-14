@@ -1,0 +1,24 @@
+static void snd ensoniq midi input trigger struct snd rawmidi substream  substream  int up 
+{
+	unsigned long flags 
+	struct ensoniq  ensoniq = substream rmidi private data 
+	int idx 
+
+	spin lock irqsave  ensoniq reg lock  flags  
+	if  up  {
+		if   ensoniq uartc   ES RXINTEN  == 0  {
+			   empty input FIFO   
+			for  idx = 0  idx   32  idx++ 
+				inb ES REG ensoniq  UART DATA   
+			ensoniq uartc |= ES RXINTEN 
+			outb ensoniq uartc  ES REG ensoniq  UART CONTROL   
+		}
+	} else {
+		if  ensoniq uartc   ES RXINTEN  {
+			ensoniq uartc  = ~ES RXINTEN 
+			outb ensoniq uartc  ES REG ensoniq  UART CONTROL   
+		}
+	}
+	spin unlock irqrestore  ensoniq reg lock  flags  
+}
+

@@ -1,0 +1,17 @@
+static int loopback notify put struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct loopback  loopback = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change = 0 
+
+	val = ucontrol value integer value 0  ? 1   0 
+	if  val  = loopback setup kcontrol id subdevice 
+				 kcontrol id device  notify  {
+		loopback setup kcontrol id subdevice 
+			 kcontrol id device  notify = val 
+		change = 1 
+	}
+	return change 
+}
+

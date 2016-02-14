@@ -1,0 +1,2 @@
+extern int dma set mask struct device  dev  u64 mask  
+

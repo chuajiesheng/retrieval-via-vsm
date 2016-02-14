@@ -1,0 +1,6 @@
+request irq unsigned int irq  irq handler t handler  unsigned long flags 
+	    const char  name  void  dev 
+{
+	return request threaded irq irq  handler  NULL  flags  name  dev  
+}
+

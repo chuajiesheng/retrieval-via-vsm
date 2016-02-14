@@ -1,0 +1,14 @@
+static void   init snd hwdep proc init void 
+{
+	struct snd info entry  entry 
+
+	if   entry = snd info create module entry THIS MODULE   hwdep   NULL    = NULL  {
+		entry c text read = snd hwdep proc read 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			entry = NULL 
+		}
+	}
+	snd hwdep proc entry = entry 
+}
+

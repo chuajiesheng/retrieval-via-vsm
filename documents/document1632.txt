@@ -1,0 +1,2 @@
+extern int wimax dev add struct wimax dev    struct net device    
+

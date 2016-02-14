@@ -1,0 +1,30 @@
+snd rme32 info inputtype control struct snd kcontrol  kcontrol 
+				 struct snd ctl elem info  uinfo 
+{
+	struct rme32  rme32 = snd kcontrol chip kcontrol  
+	static char  texts 4  = {  Optical    Coaxial    Internal    XLR  } 
+
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 1 
+	switch  rme32 pci device  {
+	case PCI DEVICE ID RME DIGI32 
+	case PCI DEVICE ID RME DIGI32 8 
+		uinfo value enumerated items = 3 
+		break 
+	case PCI DEVICE ID RME DIGI32 PRO 
+		uinfo value enumerated items = 4 
+		break 
+	default 
+		snd BUG   
+		break 
+	}
+	if  uinfo value enumerated item  
+	    uinfo value enumerated items   1  {
+		uinfo value enumerated item =
+		    uinfo value enumerated items   1 
+	}
+	strcpy uinfo value enumerated name 
+	       texts uinfo value enumerated item   
+	return 0 
+}
+

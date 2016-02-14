@@ -1,0 +1,11 @@
+   return non zero if a card is already locked   
+int snd card locked int card 
+{
+	int locked 
+
+	mutex lock  snd card mutex  
+	locked = snd cards lock    1    card  
+	mutex unlock  snd card mutex  
+	return locked 
+}
+

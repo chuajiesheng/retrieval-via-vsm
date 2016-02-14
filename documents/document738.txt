@@ -1,0 +1,33 @@
+  
+   create a pcm instance for via686a b
+   
+static int   devinit snd via686 pcm new struct via82xx modem  chip 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	chip playback devno = 0 
+	chip capture devno = 1 
+	chip num devs = 2 
+	chip intr mask = 0x330000     FLAGS | EOL for MR  MW   
+
+	err = snd pcm new chip card  chip card shortname  0  1  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd via686 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd via686 capture ops  
+	pcm dev class = SNDRV PCM CLASS MODEM 
+	pcm private data = chip 
+	strcpy pcm name  chip card shortname  
+	chip pcms 0  = pcm 
+	init viadev chip  0  VIA REG MO STATUS  0  
+	init viadev chip  1  VIA REG MI STATUS  1  
+
+	if   err = snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV SG 
+							 snd dma pci data chip pci  
+							 64 1024  128 1024     0 
+		return err 
+
+	return 0 
+}
+

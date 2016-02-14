@@ -1,0 +1,2 @@
+snd rme96 playback pointer struct snd pcm substream  substream  
+

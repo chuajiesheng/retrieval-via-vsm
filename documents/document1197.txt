@@ -1,0 +1,13 @@
+snd azf3328 suspend regs unsigned long io addr  unsigned count  u32  saved regs 
+{
+	unsigned reg 
+
+	for  reg = 0  reg   count  ++reg  {
+		 saved regs = inl io addr  
+		snd azf3328 dbgpm  suspend  io 0x 04lx  0x 08x\n  
+			io addr   saved regs  
+		++saved regs 
+		io addr += sizeof  saved regs  
+	}
+}
+

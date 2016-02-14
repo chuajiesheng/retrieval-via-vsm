@@ -1,0 +1,53 @@
+static int es1968 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct es1968  chip = card private data 
+	struct esschan  es 
+
+	if    chip do pm 
+		return 0 
+
+	   restore all our config   
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  es1968  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd es1968 chip init chip  
+
+	   need to restore the base pointers      
+	if  chip dma addr  {
+		   set PCMBAR   
+		wave set register chip  0x01FC  chip dma addr    12  
+	}
+
+	snd es1968 start irq chip  
+
+	   restore ac97 state   
+	snd ac97 resume chip ac97  
+
+	list for each entry es   chip substream list  list  {
+		switch  es mode  {
+		case ESM MODE PLAY 
+			snd es1968 playback setup chip  es  es substream runtime  
+			break 
+		case ESM MODE CAPTURE 
+			snd es1968 capture setup chip  es  es substream runtime  
+			break 
+		}
+	}
+
+	   start timer again   
+	if  chip bobclient 
+		snd es1968 bob start chip  
+
+	snd power change state card  SNDRV CTL POWER D0  
+	chip in suspend = 0 
+	return 0 
+}
+

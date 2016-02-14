@@ -1,0 +1,24 @@
+snd m3 get pointer struct snd m3  chip  struct m3 dma  s  struct snd pcm substream  subs 
+{
+	u16 hi = 0  lo = 0 
+	int retry = 10 
+	u32 addr 
+
+	  
+	   try and get a valid answer
+	   
+	while  retry    {
+		hi =  snd m3 assp read chip  MEMTYPE INTERNAL DATA 
+				       s inst data + CDATA HOST SRC CURRENTH  
+
+		lo = snd m3 assp read chip  MEMTYPE INTERNAL DATA 
+				      s inst data + CDATA HOST SRC CURRENTL  
+
+		if  hi == snd m3 assp read chip  MEMTYPE INTERNAL DATA 
+					   s inst data + CDATA HOST SRC CURRENTH  
+			break 
+	}
+	addr = lo |   u32 hi  16  
+	return  unsigned int  addr   s buffer addr  
+}
+

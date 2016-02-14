@@ -1,0 +1,27 @@
+static int async chainiv givencrypt struct skcipher givcrypt request  req 
+{
+	struct crypto ablkcipher  geniv = skcipher givcrypt reqtfm req  
+	struct async chainiv ctx  ctx = crypto ablkcipher ctx geniv  
+	struct ablkcipher request  subreq = skcipher givcrypt reqctx req  
+
+	ablkcipher request set tfm subreq  skcipher geniv cipher geniv   
+	ablkcipher request set callback subreq  req creq base flags 
+					req creq base complete 
+					req creq base data  
+	ablkcipher request set crypt subreq  req creq src  req creq dst 
+				     req creq nbytes  req creq info  
+
+	if  test and set bit CHAINIV STATE INUSE   ctx state  
+		goto postpone 
+
+	if  ctx queue qlen  {
+		clear bit CHAINIV STATE INUSE   ctx state  
+		goto postpone 
+	}
+
+	return async chainiv givencrypt tail req  
+
+postpone 
+	return async chainiv postpone request req  
+}
+

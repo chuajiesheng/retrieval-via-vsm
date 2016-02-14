@@ -1,0 +1,5 @@
+static inline u16 snd m3 inw struct snd m3  chip  unsigned long reg 
+{
+	return inw chip iobase + reg  
+}
+

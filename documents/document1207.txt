@@ -1,0 +1,14 @@
+static int snd als4000 get format struct snd pcm runtime  runtime 
+{
+	int result 
+
+	result = 0 
+	if  snd pcm format signed runtime format  
+		result |= ALS4000 FORMAT SIGNED 
+	if  snd pcm format physical width runtime format  == 16 
+		result |= ALS4000 FORMAT 16BIT 
+	if  runtime channels   1 
+		result |= ALS4000 FORMAT STEREO 
+	return result 
+}
+

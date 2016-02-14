@@ -1,0 +1,2 @@
+extern bool drm detect hdmi monitor struct edid  edid  
+

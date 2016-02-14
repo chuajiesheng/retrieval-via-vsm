@@ -1,0 +1,65 @@
+static void snd cs4281 mode struct cs4281  chip  struct cs4281 dma  dma 
+			    struct snd pcm runtime  runtime 
+			    int capture  int src 
+{
+	int rec mono 
+
+	dma valDMR = BA0 DMR TYPE SINGLE | BA0 DMR AUTO |
+		       capture ? BA0 DMR TR WRITE   BA0 DMR TR READ  
+	if  runtime channels == 1 
+		dma valDMR |= BA0 DMR MONO 
+	if  snd pcm format unsigned runtime format    0 
+		dma valDMR |= BA0 DMR USIGN 
+	if  snd pcm format big endian runtime format    0 
+		dma valDMR |= BA0 DMR BEND 
+	switch  snd pcm format width runtime format   {
+	case 8  dma valDMR |= BA0 DMR SIZE8 
+		if  runtime channels == 1 
+			dma valDMR |= BA0 DMR SWAPC 
+		break 
+	case 32  dma valDMR |= BA0 DMR SIZE20  break 
+	}
+	dma frag = 0 	   for workaround   
+	dma valDCR = BA0 DCR TCIE | BA0 DCR MSK 
+	if  runtime buffer size  = runtime period size 
+		dma valDCR |= BA0 DCR HTCIE 
+	   Initialize DMA   
+	snd cs4281 pokeBA0 chip  dma regDBA  runtime dma addr  
+	snd cs4281 pokeBA0 chip  dma regDBC  runtime buffer size   1  
+	rec mono =  chip dma 1  valDMR   BA0 DMR MONO  == BA0 DMR MONO 
+	snd cs4281 pokeBA0 chip  BA0 SRCSA   chip src left play slot    0  |
+					     chip src right play slot    8  |
+					     chip src left rec slot    16  |
+					      rec mono ? 31   chip src right rec slot     24   
+	if   src 
+		goto   skip src 
+	if   capture  {
+		if  dma left slot == chip src left play slot  {
+			unsigned int val = snd cs4281 rate runtime rate  NULL  
+			snd BUG ON dma right slot  = chip src right play slot  
+			snd cs4281 pokeBA0 chip  BA0 DACSR  val  
+		}
+	} else {
+		if  dma left slot == chip src left rec slot  {
+			unsigned int val = snd cs4281 rate runtime rate  NULL  
+			snd BUG ON dma right slot  = chip src right rec slot  
+			snd cs4281 pokeBA0 chip  BA0 ADCSR  val  
+		}
+	}
+        skip src 
+	   Deactivate wave playback FIFO before changing slot assignments   
+	if  dma regFCR == BA0 FCR0 
+		snd cs4281 pokeBA0 chip  dma regFCR  snd cs4281 peekBA0 chip  dma regFCR    ~BA0 FCR FEN  
+	   Initialize FIFO   
+	dma valFCR = BA0 FCR LS dma left slot  |
+		      BA0 FCR RS capture     dma valDMR   BA0 DMR MONO  ? 31   dma right slot  |
+		      BA0 FCR SZ CS4281 FIFO SIZE  |
+		      BA0 FCR OF dma fifo offset  
+	snd cs4281 pokeBA0 chip  dma regFCR  dma valFCR |  capture ? BA0 FCR PSH   0   
+	   Activate FIFO again for FM playback   
+	if  dma regFCR == BA0 FCR0 
+		snd cs4281 pokeBA0 chip  dma regFCR  dma valFCR | BA0 FCR FEN  
+	   Clear FIFO Status and Interrupt Control Register   
+	snd cs4281 pokeBA0 chip  dma regFSIC  0  
+}
+

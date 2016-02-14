@@ -1,0 +1,11 @@
+snd rme96 apply dac volume struct rme96  rme96 
+{
+	if  RME96 DAC IS 1852 rme96   {
+		snd rme96 write SPI rme96   rme96 vol 0     2  | 0x0  
+		snd rme96 write SPI rme96   rme96 vol 1     2  | 0x2  
+	} else if  RME96 DAC IS 1855 rme96   {
+		snd rme96 write SPI rme96   rme96 vol 0    0x3FF  | 0x000  
+		snd rme96 write SPI rme96   rme96 vol 1    0x3FF  | 0x400  
+	}
+}
+

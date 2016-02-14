@@ -1,0 +1,12 @@
+snd azf3328 gameport interrupt struct snd azf3328  chip 
+{
+	  
+	   skeleton handler only
+	    we do not want axis reading in interrupt handler   too much load  
+	   
+	snd azf3328 dbggame  gameport irq\n   
+
+	    this should ACK the gameport IRQ properly  hopefully    
+	snd azf3328 game inw chip  IDX GAME AXIS VALUE  
+}
+

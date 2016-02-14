@@ -1,0 +1,17 @@
+  
+    common I O routines
+   
+static inline void snd sonicvibes setdmaa struct sonicvibes   sonic 
+					  unsigned int addr 
+					  unsigned int count 
+{
+	count   
+	outl addr  sonic dmaa port + SV DMA ADDR0  
+	outl count  sonic dmaa port + SV DMA COUNT0  
+	outb 0x18  sonic dmaa port + SV DMA MODE  
+#if 0
+	printk KERN DEBUG  program dmaa  addr = 0x x  paddr = 0x x\n  
+	       addr  inl sonic dmaa port + SV DMA ADDR0   
+#endif
+}
+

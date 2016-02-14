@@ -1,0 +1,14 @@
+static int   devinit intel8x0 in clock list struct intel8x0  chip 
+{
+	struct pci dev  pci = chip pci 
+	const struct snd pci quirk  wl 
+
+	wl = snd pci quirk lookup pci  intel8x0 clock list  
+	if   wl 
+		return 0 
+	printk KERN INFO  intel8x0  white list rate for  04x  04x is  i\n  
+	       pci subsystem vendor  pci subsystem device  wl value  
+	chip ac97 bus clock = wl value 
+	return 1 
+}
+

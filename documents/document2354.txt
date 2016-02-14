@@ -1,0 +1,21 @@
+static int snd intel8x0 chip init struct intel8x0m  chip  int probing 
+{
+	unsigned int i 
+	int err 
+	
+	if   err = snd intel8x0m ich chip init chip  probing     0 
+		return err 
+	iagetword chip  0  	   clear semaphore flag   
+
+	   disable interrupts   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputbyte chip  ICH REG OFF CR + chip ichd i  reg offset  0x00  
+	   reset channels   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputbyte chip  ICH REG OFF CR + chip ichd i  reg offset  ICH RESETREGS  
+	   initialize Buffer Descriptor Lists   
+	for  i = 0  i   chip bdbars count  i++ 
+		iputdword chip  ICH REG OFF BDBAR + chip ichd i  reg offset  chip ichd i  bdbar addr  
+	return 0 
+}
+

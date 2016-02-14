@@ -1,0 +1,54 @@
+static int   devinit snd ensoniq create gameport struct ensoniq  ensoniq  int dev 
+{
+	struct gameport  gp 
+	int io port 
+
+	io port = snd ensoniq get joystick port dev  
+
+	switch  io port  {
+	case 0 
+		return  ENOSYS 
+
+	case 1     auto detect   
+		for  io port = 0x200  io port  = 0x218  io port += 8 
+			if  request region io port  8   ens137x  gameport   
+				break 
+		if  io port   0x218  {
+			printk KERN WARNING  ens137x  no gameport ports available\n   
+			return  EBUSY 
+		}
+		break 
+
+	default 
+		if   request region io port  8   ens137x  gameport    {
+			printk KERN WARNING  ens137x  gameport io port 0x #x in use\n  
+			       io port  
+			return  EBUSY 
+		}
+		break 
+	}
+
+	ensoniq gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  ens137x  cannot allocate memory for gameport\n   
+		release region io port  8  
+		return  ENOMEM 
+	}
+
+	gameport set name gp   ES137x   
+	gameport set phys gp   pci s gameport0   pci name ensoniq pci   
+	gameport set dev parent gp   ensoniq pci dev  
+	gp io = io port 
+
+	ensoniq ctrl |= ES JYSTK EN 
+#ifdef CHIP1371
+	ensoniq ctrl  = ~ES 1371 JOY ASELM 
+	ensoniq ctrl |= ES 1371 JOY ASEL  io port   0x200    8  
+#endif
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+
+	gameport register port ensoniq gameport  
+
+	return 0 
+}
+

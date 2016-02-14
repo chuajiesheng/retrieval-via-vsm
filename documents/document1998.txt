@@ -1,0 +1,24 @@
+static unsigned int snd cs4281 rate unsigned int rate  unsigned int  real rate 
+{
+	unsigned int val = ~0 
+	
+	if  real rate 
+		 real rate = rate 
+	   special  hardcoded  rates   
+	switch  rate  {
+	case 8000 	return 5 
+	case 11025 	return 4 
+	case 16000 	return 3 
+	case 22050 	return 2 
+	case 44100 	return 1 
+	case 48000 	return 0 
+	default 
+		goto   variable 
+	}
+        variable 
+	val = 1536000   rate 
+	if  real rate 
+		 real rate = 1536000   val 
+	return val 
+}
+

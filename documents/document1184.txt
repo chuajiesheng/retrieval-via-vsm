@@ -1,0 +1,5 @@
+snd azf3328 game inb const struct snd azf3328  chip  unsigned reg 
+{
+	return inb chip game io + reg  
+}
+

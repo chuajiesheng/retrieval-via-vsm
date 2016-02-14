@@ -1,0 +1,22 @@
+static void tfrc lh calc i mean struct tfrc loss hist  lh 
+{
+	u32 i i  i tot0 = 0  i tot1 = 0  w tot = 0 
+	int i  k = tfrc lh length lh    1     k is as in rfc3448bis  5 4   
+
+	if  k  = 0 
+		return 
+
+	for  i = 0  i  = k  i++  {
+		i i = tfrc lh get interval lh  i  
+
+		if  i   k  {
+			i tot0 += i i   tfrc lh weights i  
+			w tot  += tfrc lh weights i  
+		}
+		if  i   0 
+			i tot1 += i i   tfrc lh weights i 1  
+	}
+
+	lh i mean = max i tot0  i tot1    w tot 
+}
+

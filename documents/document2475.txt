@@ -1,0 +1,33 @@
+   restore the previously saved mixer status   
+static void restore mixer state struct cmipci  cm 
+{
+	if  cm mixer insensitive  {
+		struct snd ctl elem value  val 
+		unsigned int i 
+
+		val = kmalloc sizeof  val   GFP KERNEL  
+		if   val 
+			return 
+		cm mixer insensitive = 0     at first clear this 
+					      otherwise the changes will be ignored   
+		for  i = 0  i   CM SAVED MIXERS  i++  {
+			struct snd kcontrol  ctl = cm mixer res ctl i  
+			if  ctl  {
+				int event 
+
+				memset val  0  sizeof  val   
+				ctl vd 0  access  = ~SNDRV CTL ELEM ACCESS INACTIVE 
+				ctl get ctl  val  
+				event = SNDRV CTL EVENT MASK INFO 
+				if  val value integer value 0   = cm mixer res status i   {
+					val value integer value 0  = cm mixer res status i  
+					ctl put ctl  val  
+					event |= SNDRV CTL EVENT MASK VALUE 
+				}
+				snd ctl notify cm card  event   ctl id  
+			}
+		}
+		kfree val  
+	}
+}
+

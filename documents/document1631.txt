@@ -1,0 +1,5 @@
+static int   init chainiv module init void 
+{
+	return crypto register template  chainiv tmpl  
+}
+

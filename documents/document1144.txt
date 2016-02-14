@@ -1,0 +1,125 @@
+snd azf3328 create struct snd card  card 
+		   struct pci dev  pci 
+		   unsigned long device type 
+		   struct snd azf3328   rchip 
+{
+	struct snd azf3328  chip 
+	int err 
+	static struct snd device ops ops = {
+		 dev free =     snd azf3328 dev free 
+	} 
+	u8 dma init 
+	enum snd azf3328 codec type codec type 
+	struct snd azf3328 codec data  codec setup 
+
+	 rchip = NULL 
+
+	err = pci enable device pci  
+	if  err   0 
+		return err 
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		err =  ENOMEM 
+		goto out err 
+	}
+	spin lock init  chip reg lock  
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+
+	   check if we can restrict PCI DMA transfers to 24 bits   
+	if  pci set dma mask pci  DMA BIT MASK 24     0 ||
+	    pci set consistent dma mask pci  DMA BIT MASK 24     0  {
+		snd printk KERN ERR  architecture does not support  
+					 24bit PCI busmaster DMA\n 
+		  
+		err =  ENXIO 
+		goto out err 
+	}
+
+	err = pci request regions pci   Aztech AZF3328   
+	if  err   0 
+		goto out err 
+
+	chip ctrl io  = pci resource start pci  0  
+	chip game io  = pci resource start pci  1  
+	chip mpu io   = pci resource start pci  2  
+	chip opl3 io  = pci resource start pci  3  
+	chip mixer io = pci resource start pci  4  
+
+	codec setup =  chip codecs AZF CODEC PLAYBACK  
+	codec setup io base = chip ctrl io + AZF IO OFFS CODEC PLAYBACK 
+	codec setup lock =  chip reg lock 
+	codec setup type = AZF CODEC PLAYBACK 
+	codec setup name =  PLAYBACK  
+
+	codec setup =  chip codecs AZF CODEC CAPTURE  
+	codec setup io base = chip ctrl io + AZF IO OFFS CODEC CAPTURE 
+	codec setup lock =  chip reg lock 
+	codec setup type = AZF CODEC CAPTURE 
+	codec setup name =  CAPTURE  
+
+	codec setup =  chip codecs AZF CODEC I2S OUT  
+	codec setup io base = chip ctrl io + AZF IO OFFS CODEC I2S OUT 
+	codec setup lock =  chip reg lock 
+	codec setup type = AZF CODEC I2S OUT 
+	codec setup name =  I2S OUT  
+
+	if  request irq pci irq  snd azf3328 interrupt 
+			IRQF SHARED  card shortname  chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		err =  EBUSY 
+		goto out err 
+	}
+	chip irq = pci irq 
+	pci set master pci  
+	synchronize irq chip irq  
+
+	snd azf3328 debug show ports chip  
+
+	err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops  
+	if  err   0 
+		goto out err 
+
+	   create mixer interface   switches   
+	err = snd azf3328 mixer new chip  
+	if  err   0 
+		goto out err 
+
+	   standard codec init stuff   
+		   default DMA init value   
+	dma init = DMA RUN SOMETHING2|DMA EPILOGUE SOMETHING|DMA SOMETHING ELSE 
+
+	for  codec type = AZF CODEC PLAYBACK 
+		codec type  = AZF CODEC I2S OUT  ++codec type  {
+		struct snd azf3328 codec data  codec =
+			  chip codecs codec type  
+
+		   shutdown codecs to reduce power   noise   
+			   have    ctrl codec activity   act properly   
+		codec running = 1 
+		snd azf3328 ctrl codec activity chip  codec type  0  
+
+		spin lock irq codec lock  
+		snd azf3328 codec outb codec  IDX IO CODEC DMA FLAGS 
+						 dma init  
+		spin unlock irq codec lock  
+	}
+
+	snd card set dev card   pci dev  
+
+	 rchip = chip 
+
+	err = 0 
+	goto out 
+
+out err 
+	if  chip 
+		snd azf3328 free chip  
+	pci disable device pci  
+
+out 
+	return err 
+}
+

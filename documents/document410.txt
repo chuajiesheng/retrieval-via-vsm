@@ -1,0 +1,3 @@
+   Register a new high level driver    
+extern int parport register driver  struct parport driver    
+

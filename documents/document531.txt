@@ -1,0 +1,17 @@
+                                                                      
+   platform stuff
+                                                                       
+static void snd mts64 card private free struct snd card  card 
+{
+	struct mts64  mts = card private data 
+	struct pardevice  pardev = mts pardev 
+
+	if  pardev  {
+		if  mts pardev claimed 
+			parport release pardev  
+		parport unregister device pardev  
+	}
+
+	snd mts64 free mts  
+}
+

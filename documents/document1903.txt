@@ -1,0 +1,16 @@
+static int snd intel8x0 hw free struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct ichdev  ichdev = get ichdev substream  
+
+	if  ichdev pcm open flag  {
+		snd ac97 pcm close ichdev pcm  
+		ichdev pcm open flag = 0 
+	}
+	if  chip fix nocache    ichdev page attr changed  {
+		fill nocache substream runtime dma area  substream runtime dma bytes  0  
+		ichdev page attr changed = 0 
+	}
+	return snd pcm lib free pages substream  
+}
+

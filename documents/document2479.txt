@@ -1,0 +1,5 @@
+static efi status t virt efi set time efi time t  tm 
+{
+	return efi call virt1 set time  tm  
+}
+

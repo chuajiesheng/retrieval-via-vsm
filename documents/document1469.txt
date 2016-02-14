@@ -1,0 +1,12 @@
+   
+   ttm bo add to lru
+  
+   @bo  The buffer object 
+  
+   Add this bo to the relevant mem type lru and  if it's backed by
+   system pages  ttms  to the swap list 
+   This function must be called with struct ttm bo global  lru lock held  and
+   is typically called immediately prior to unreserving a bo 
+   
+extern void ttm bo add to lru struct ttm buffer object  bo  
+

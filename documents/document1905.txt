@@ -1,0 +1,18 @@
+static int snd intel8x0 pcm prepare struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct ichdev  ichdev = get ichdev substream  
+
+	ichdev physbuf = runtime dma addr 
+	ichdev size = snd pcm lib buffer bytes substream  
+	ichdev fragsize = snd pcm lib period bytes substream  
+	if  ichdev ichd == ICHD PCMOUT  {
+		snd intel8x0 setup pcm out chip  runtime  
+		if  chip device type == DEVICE INTEL ICH4 
+			ichdev pos shift =  runtime sample bits   16  ? 2   1 
+	}
+	snd intel8x0 setup periods chip  ichdev  
+	return 0 
+}
+

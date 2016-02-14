@@ -1,0 +1,7 @@
+static inline void skcipher givcrypt set giv 
+	struct skcipher givcrypt request  req  u8  giv  u64 seq 
+{
+	req giv = giv 
+	req seq = seq 
+}
+

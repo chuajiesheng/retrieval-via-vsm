@@ -1,0 +1,6 @@
+static void snd sonicvibes midi input close struct snd mpu401   mpu 
+{
+	struct sonicvibes  sonic = mpu private data 
+	outb sonic irqmask |= SV MIDI MASK  SV REG sonic  IRQMASK   
+}
+

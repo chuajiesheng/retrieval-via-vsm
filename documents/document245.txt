@@ -1,0 +1,28 @@
+static void snd pcm substream proc sw params read struct snd info entry  entry 
+						  struct snd info buffer  buffer 
+{
+	struct snd pcm substream  substream = entry private data 
+	struct snd pcm runtime  runtime 
+
+	mutex lock  substream pcm open mutex  
+	runtime = substream runtime 
+	if   runtime  {
+		snd iprintf buffer   closed\n   
+		goto unlock 
+	}
+	if  runtime status state == SNDRV PCM STATE OPEN  {
+		snd iprintf buffer   no setup\n   
+		goto unlock 
+	}
+	snd iprintf buffer   tstamp mode   s\n   snd pcm tstamp mode name runtime tstamp mode   
+	snd iprintf buffer   period step   u\n   runtime period step  
+	snd iprintf buffer   avail min   lu\n   runtime control avail min  
+	snd iprintf buffer   start threshold   lu\n   runtime start threshold  
+	snd iprintf buffer   stop threshold   lu\n   runtime stop threshold  
+	snd iprintf buffer   silence threshold   lu\n   runtime silence threshold  
+	snd iprintf buffer   silence size   lu\n   runtime silence size  
+	snd iprintf buffer   boundary   lu\n   runtime boundary  
+ unlock 
+	mutex unlock  substream pcm open mutex  
+}
+

@@ -1,0 +1,51 @@
+static irqreturn t snd m3 interrupt int irq  void  dev id 
+{
+	struct snd m3  chip = dev id 
+	u8 status 
+	int i 
+
+	status = inb chip iobase + HOST INT STATUS  
+
+	if  status == 0xff 
+		return IRQ NONE 
+
+	if  status   HV INT PENDING 
+#ifdef CONFIG SND MAESTRO3 INPUT
+		snd m3 update hw volume  unsigned long chip  
+#else
+		tasklet schedule  chip hwvol tq  
+#endif
+
+	  
+	   ack an assp int if its running
+	   and has an int pending
+	   
+	if  status   ASSP INT PENDING  {
+		u8 ctl = inb chip iobase + ASSP CONTROL B  
+		if    ctl   STOP ASSP CLOCK   {
+			ctl = inb chip iobase + ASSP HOST INT STATUS  
+			if  ctl   DSP2HOST REQ TIMER  {
+				outb DSP2HOST REQ TIMER  chip iobase + ASSP HOST INT STATUS  
+				   update adc dac info if it was a timer int   
+				spin lock  chip reg lock  
+				for  i = 0  i   chip num substreams  i++  {
+					struct m3 dma  s =  chip substreams i  
+					if  s running 
+						snd m3 update ptr chip  s  
+				}
+				spin unlock  chip reg lock  
+			}
+		}
+	}
+
+#if 0    TODO  not supported yet   
+	if   status   MPU401 INT PENDING     chip rmidi 
+		snd mpu401 uart interrupt irq  chip rmidi private data  regs  
+#endif
+
+	   ack ints   
+	outb status  chip iobase + HOST INT STATUS  
+
+	return IRQ HANDLED 
+}
+

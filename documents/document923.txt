@@ -1,0 +1,15 @@
+static int snd sonicvibes info mux struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	static char  texts 7  = {
+		 CD    PCM    Aux1    Line    Aux0    Mic    Mix 
+	} 
+
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 2 
+	uinfo value enumerated items = 7 
+	if  uinfo value enumerated item  = 7 
+		uinfo value enumerated item = 6 
+	strcpy uinfo value enumerated name  texts uinfo value enumerated item   
+	return 0 
+}
+

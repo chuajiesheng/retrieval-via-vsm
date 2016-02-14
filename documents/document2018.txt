@@ -1,0 +1,9 @@
+static void snd cs4281 mixer free ac97 struct snd ac97  ac97 
+{
+	struct cs4281  chip = ac97 private data 
+	if  ac97 num 
+		chip ac97 secondary = NULL 
+	else
+		chip ac97 = NULL 
+}
+

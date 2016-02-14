@@ -1,0 +1,9 @@
+static int dummy hrtimer stop struct snd pcm substream  substream 
+{
+	struct dummy hrtimer pcm  dpcm = substream runtime private data 
+
+	atomic set  dpcm running  0  
+	hrtimer cancel  dpcm timer  
+	return 0 
+}
+

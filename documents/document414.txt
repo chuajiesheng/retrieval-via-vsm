@@ -1,0 +1,7 @@
+static void loopback active notify struct loopback pcm  dpcm 
+{
+	snd ctl notify dpcm loopback card 
+		       SNDRV CTL EVENT MASK VALUE 
+		        get setup dpcm  active id  
+}
+

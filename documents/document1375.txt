@@ -1,0 +1,17 @@
+  
+   suppress jitter on some maestros when playing stereo
+   
+static void snd es1968 suppress jitter struct es1968  chip  struct esschan  es 
+{
+	unsigned int cp1 
+	unsigned int cp2 
+	unsigned int diff 
+
+	cp1 =   apu get register chip  0  5  
+	cp2 =   apu get register chip  1  5  
+	diff =  cp1   cp2 ? cp1   cp2   cp2   cp1  
+
+	if  diff   1 
+		  maestro write chip  IDR0 DATA PORT  cp1  
+}
+

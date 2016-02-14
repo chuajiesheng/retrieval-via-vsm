@@ -1,0 +1,34 @@
+static int   devinit snd es1968 create gameport struct es1968  chip  int dev 
+{
+	struct gameport  gp 
+	struct resource  r 
+	u16 val 
+
+	if   joystick dev  
+		return  ENODEV 
+
+	r = request region JOYSTICK ADDR  8   ES1968 gameport   
+	if   r 
+		return  EBUSY 
+
+	chip gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  es1968  cannot allocate memory for gameport\n   
+		release and free resource r  
+		return  ENOMEM 
+	}
+
+	pci read config word chip pci  ESM LEGACY AUDIO CONTROL   val  
+	pci write config word chip pci  ESM LEGACY AUDIO CONTROL  val | 0x04  
+
+	gameport set name gp   ES1968 Gameport   
+	gameport set phys gp   pci s gameport0   pci name chip pci   
+	gameport set dev parent gp   chip pci dev  
+	gp io = JOYSTICK ADDR 
+	gameport set port data gp  r  
+
+	gameport register port gp  
+
+	return 0 
+}
+

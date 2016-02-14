@@ -1,0 +1,2 @@
+void  mlx4 get protocol dev struct mlx4 dev  dev  enum mlx4 protocol proto  int port  
+

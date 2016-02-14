@@ -1,0 +1,24 @@
+  
+   create a card proc file
+   called from init c
+   
+int snd info card create struct snd card  card 
+{
+	char str 8  
+	struct snd info entry  entry 
+
+	if  snd BUG ON  card  
+		return  ENXIO 
+
+	sprintf str   card i   card number  
+	if   entry = snd info create module entry card module  str  NULL   == NULL 
+		return  ENOMEM 
+	entry mode = S IFDIR | S IRUGO | S IXUGO 
+	if  snd info register entry    0  {
+		snd info free entry entry  
+		return  ENOMEM 
+	}
+	card proc root = entry 
+	return 0 
+}
+

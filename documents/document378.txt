@@ -1,0 +1,8 @@
+static int portman device init struct portman  pm 
+{
+	portman flush input pm  0  
+	portman flush input pm  1  
+
+	return 0 
+}
+

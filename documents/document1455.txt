@@ -1,0 +1,3 @@
+snd rme96 capture trigger struct snd pcm substream  substream  
+			  int cmd  
+

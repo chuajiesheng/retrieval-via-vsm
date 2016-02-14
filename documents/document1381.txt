@@ -1,0 +1,2 @@
+extern void drm kms helper poll init struct drm device  dev  
+

@@ -1,0 +1,64 @@
+static void snd ensoniq chip init struct ensoniq  ensoniq 
+{
+#ifdef CHIP1371
+	int idx 
+#endif
+	   this code was part of snd ensoniq create before intruduction
+	    of suspend resume
+	    
+#ifdef CHIP1370
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+	outl ES MEM PAGEO ES PAGE ADC   ES REG ensoniq  MEM PAGE   
+	outl ensoniq dma bug addr  ES REG ensoniq  PHANTOM FRAME   
+	outl 0  ES REG ensoniq  PHANTOM COUNT   
+#else
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+	outl 0  ES REG ensoniq  1371 LEGACY   
+	if  es1371 quirk lookup ensoniq  es1371 ac97 reset hack   {
+	    outl ensoniq cssr  ES REG ensoniq  STATUS   
+	       need to delay around 20ms bleech  to give
+	       some CODECs enough time to wakeup   
+	    msleep 20  
+	}
+	   AC'97 warm reset to start the bitclk   
+	outl ensoniq ctrl | ES 1371 SYNC RES  ES REG ensoniq  CONTROL   
+	inl ES REG ensoniq  CONTROL   
+	udelay 20  
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	   Init the sample rate converter   
+	snd es1371 wait src ready ensoniq  	
+	outl ES 1371 SRC DISABLE  ES REG ensoniq  1371 SMPRATE   
+	for  idx = 0  idx   0x80  idx++ 
+		snd es1371 src write ensoniq  idx  0  
+	snd es1371 src write ensoniq  ES SMPREG DAC1 + ES SMPREG TRUNC N  16    4  
+	snd es1371 src write ensoniq  ES SMPREG DAC1 + ES SMPREG INT REGS  16    10  
+	snd es1371 src write ensoniq  ES SMPREG DAC2 + ES SMPREG TRUNC N  16    4  
+	snd es1371 src write ensoniq  ES SMPREG DAC2 + ES SMPREG INT REGS  16    10  
+	snd es1371 src write ensoniq  ES SMPREG VOL ADC  1    12  
+	snd es1371 src write ensoniq  ES SMPREG VOL ADC + 1  1    12  
+	snd es1371 src write ensoniq  ES SMPREG VOL DAC1  1    12  
+	snd es1371 src write ensoniq  ES SMPREG VOL DAC1 + 1  1    12  
+	snd es1371 src write ensoniq  ES SMPREG VOL DAC2  1    12  
+	snd es1371 src write ensoniq  ES SMPREG VOL DAC2 + 1  1    12  
+	snd es1371 adc rate ensoniq  22050  
+	snd es1371 dac1 rate ensoniq  22050  
+	snd es1371 dac2 rate ensoniq  22050  
+	   WARNING 
+	   enabling the sample rate converter without properly programming
+	   its parameters causes the chip to lock up  the SRC busy bit will
+	   be stuck high  and I've found no way to rectify this other than
+	   power cycle    Thomas Sailer
+	   
+	snd es1371 wait src ready ensoniq  
+	outl 0  ES REG ensoniq  1371 SMPRATE   
+	   try reset codec directly   
+	outl ES 1371 CODEC WRITE 0  0   ES REG ensoniq  1371 CODEC   
+#endif
+	outb ensoniq uartc = 0x00  ES REG ensoniq  UART CONTROL   
+	outb 0x00  ES REG ensoniq  UART RES   
+	outl ensoniq cssr  ES REG ensoniq  STATUS   
+	synchronize irq ensoniq irq  
+}
+

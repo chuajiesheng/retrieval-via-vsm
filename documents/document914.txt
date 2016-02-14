@@ -1,0 +1,25 @@
+static int snd sonicvibes capture prepare struct snd pcm substream  substream 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned char fmt = 0 
+	unsigned int size = snd pcm lib buffer bytes substream  
+	unsigned int count = snd pcm lib period bytes substream  
+
+	sonic c dma size = size 
+	count   = 1 
+	count   
+	if  runtime channels   1 
+		fmt |= 0x10 
+	if  snd pcm format width runtime format  == 16 
+		fmt |= 0x20 
+	snd sonicvibes setfmt sonic  ~0x30  fmt  
+	snd sonicvibes set adc rate sonic  runtime rate  
+	spin lock irq  sonic reg lock  
+	snd sonicvibes setdmac sonic  runtime dma addr  size  
+	snd sonicvibes out1 sonic  SV IREG DMA C UPPER  count    8  
+	snd sonicvibes out1 sonic  SV IREG DMA C LOWER  count  
+	spin unlock irq  sonic reg lock  
+	return 0 
+}
+

@@ -1,0 +1,15 @@
+  
+  
+   
+static void do ali reset struct intel8x0  chip 
+{
+	iputdword chip  ICHREG ALI SCR   ICH ALI SC RESET  
+	iputdword chip  ICHREG ALI FIFOCR1   0x83838383  
+	iputdword chip  ICHREG ALI FIFOCR2   0x83838383  
+	iputdword chip  ICHREG ALI FIFOCR3   0x83838383  
+	iputdword chip  ICHREG ALI INTERFACECR  
+		  ICH ALI IF PI|ICH ALI IF PO  
+	iputdword chip  ICHREG ALI INTERRUPTCR   0x00000000  
+	iputdword chip  ICHREG ALI INTERRUPTSR   0x00000000  
+}
+

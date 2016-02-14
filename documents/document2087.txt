@@ -1,0 +1,34 @@
+  
+   hw params   allocate the buffer and set up buffer descriptors
+   
+static int snd atiixp pcm hw params struct snd pcm substream  substream 
+				   struct snd pcm hw params  hw params 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	struct atiixp dma  dma = substream runtime private data 
+	int err 
+	int i 
+
+	err = snd pcm lib malloc pages substream  params buffer bytes hw params   
+	if  err   0 
+		return err 
+	dma buf addr = substream runtime dma addr 
+	dma buf bytes = params buffer bytes hw params  
+
+	err = atiixp build dma packets chip  dma  substream 
+				       params periods hw params  
+				       params period bytes hw params   
+	if  err   0 
+		return err 
+
+	   set up modem rate   
+	for  i = 0  i   NUM ATI CODECS  i++  {
+		if    chip ac97 i  
+			continue 
+		snd ac97 write chip ac97 i   AC97 LINE1 RATE  params rate hw params   
+		snd ac97 write chip ac97 i   AC97 LINE1 LEVEL  0  
+	}
+
+	return err 
+}
+

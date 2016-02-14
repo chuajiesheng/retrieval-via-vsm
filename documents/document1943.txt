@@ -1,0 +1,34 @@
+static void snd intel8x0 proc read struct snd info entry   entry 
+				   struct snd info buffer  buffer 
+{
+	struct intel8x0  chip = entry private data 
+	unsigned int tmp 
+
+	snd iprintf buffer   Intel8x0\n\n   
+	if  chip device type == DEVICE ALI 
+		return 
+	tmp = igetdword chip  ICHREG GLOB STA   
+	snd iprintf buffer   Global control          0x 08x\n   igetdword chip  ICHREG GLOB CNT    
+	snd iprintf buffer   Global status           0x 08x\n   tmp  
+	if  chip device type == DEVICE INTEL ICH4 
+		snd iprintf buffer   SDM                     0x 08x\n   igetdword chip  ICHREG SDM    
+	snd iprintf buffer   AC'97 codecs ready        
+	if  tmp   chip codec isr bits  {
+		int i 
+		static const char  codecs 3  = {
+			 primary    secondary    tertiary 
+		} 
+		for  i = 0  i   chip max codecs  i++ 
+			if  tmp   chip codec bit i  
+				snd iprintf buffer     s   codecs i   
+	} else
+		snd iprintf buffer    none   
+	snd iprintf buffer   \n   
+	if  chip device type == DEVICE INTEL ICH4 ||
+	    chip device type == DEVICE SIS 
+		snd iprintf buffer   AC'97 codecs SDIN        i  i  i\n  
+			chip ac97 sdin 0  
+			chip ac97 sdin 1  
+			chip ac97 sdin 2   
+}
+

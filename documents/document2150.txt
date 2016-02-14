@@ -1,0 +1,14 @@
+  
+   open callback for playback on via686
+   
+static int snd via686 playback open struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev =  chip devs chip playback devno + substream number  
+	int err 
+
+	if   err = snd via82xx pcm open chip  viadev  substream     0 
+		return err 
+	return 0 
+}
+

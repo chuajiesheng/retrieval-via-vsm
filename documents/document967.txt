@@ -1,0 +1,3 @@
+void gameport set phys struct gameport  gameport  const char  fmt      
+	  attribute     format  printf  2  3    
+

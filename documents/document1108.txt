@@ -1,0 +1,55 @@
+snd azf3328 codec setdmaa struct snd azf3328 codec data  codec 
+				unsigned long addr 
+				unsigned int period bytes 
+				unsigned int buffer bytes
+ 
+{
+	snd azf3328 dbgcallenter   
+	WARN ONCE period bytes   1   odd period length ?\n   
+	WARN ONCE buffer bytes  = 2   period bytes 
+		  missed our input expectations   u vs   u\n  
+		 buffer bytes  period bytes  
+	if   codec running  {
+		   AZF3328 uses a two buffer pointer DMA transfer approach   
+
+		unsigned long flags 
+
+		   width 32bit  prevent overflow     
+		u32 area length 
+		struct codec setup io {
+			u32 dma start 1 
+			u32 dma start 2 
+			u32 dma lengths 
+		}   attribute    packed   setup io 
+
+		area length = buffer bytes 2 
+
+		setup io dma start 1 = addr 
+		setup io dma start 2 = addr+area length 
+
+		snd azf3328 dbgcodec 
+			 setdma  buffers  08x  u     08x  u    u   u\n  
+				setup io dma start 1  area length 
+				setup io dma start 2  area length 
+				period bytes  buffer bytes  
+
+		   Hmm  are we really supposed to decrement this by 1??
+		   Most definitely certainly not  configuring full length does
+		   work properly  i e  likely better   and BTW we
+		   violated possibly differing frame sizes with this   
+
+		area length    |  max  index  |
+		  
+
+		   build combined I O buffer length word   
+		setup io dma lengths =  area length    16  |  area length  
+
+		spin lock irqsave codec lock  flags  
+		snd azf3328 codec outl multi 
+			codec  IDX IO CODEC DMA START 1   setup io  3
+		  
+		spin unlock irqrestore codec lock  flags  
+	}
+	snd azf3328 dbgcallleave   
+}
+

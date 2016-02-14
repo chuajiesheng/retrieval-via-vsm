@@ -1,0 +1,27 @@
+   
+   snd pcm lib preallocate pages for all   pre allocation for continous memory type  all substreams 
+   @pcm  the pcm instance
+   @type  DMA type  SNDRV DMA TYPE   
+   @data  DMA type dependant data
+   @size  the requested pre allocation size in bytes
+   @max  the max  allowed pre allocation size
+  
+   Do pre allocation to all substreams of the given pcm for the
+   specified DMA type 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm lib preallocate pages for all struct snd pcm  pcm 
+					  int type  void  data 
+					  size t size  size t max 
+{
+	struct snd pcm substream  substream 
+	int stream  err 
+
+	for  stream = 0  stream   2  stream++ 
+		for  substream = pcm streams stream  substream  substream  substream = substream next 
+			if   err = snd pcm lib preallocate pages substream  type  data  size  max     0 
+				return err 
+	return 0 
+}
+

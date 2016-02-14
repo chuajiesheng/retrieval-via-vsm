@@ -1,0 +1,2 @@
+extern struct kobject  ttm get kobj void  
+

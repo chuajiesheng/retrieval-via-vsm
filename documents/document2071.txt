@@ -1,0 +1,2 @@
+u32 ssb chipco gpio control struct ssb chipcommon  cc  u32 mask  u32 value  
+

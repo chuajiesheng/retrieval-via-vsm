@@ -1,0 +1,6 @@
+  
+   Take down a memory manager  This function should only be called after a
+   successful init and after a call to drm sman cleanup 
+   
+extern void drm sman takedown struct drm sman   sman  
+

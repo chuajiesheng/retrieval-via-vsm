@@ -1,0 +1,24 @@
+  
+   prepare callback for capture on via823x
+   
+static int snd via8233 capture prepare struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	struct snd pcm runtime  runtime = substream runtime 
+
+	if  via lock rate  chip rates 1   runtime rate    0 
+		return  EINVAL 
+	snd ac97 set rate chip ac97  AC97 PCM LR ADC RATE  runtime rate  
+	snd via82xx channel reset chip  viadev  
+	snd via82xx set table ptr chip  viadev  
+	outb VIA REG CAPTURE FIFO ENABLE  VIADEV REG viadev  OFS CAPTURE FIFO   
+	outl  runtime format == SNDRV PCM FORMAT S16 LE ? VIA8233 REG TYPE 16BIT   0  |
+	      runtime channels   1 ? VIA8233 REG TYPE STEREO   0  |
+	     0xff000000        STOP index is never reached   
+	     VIADEV REG viadev  OFFSET STOP IDX   
+	udelay 20  
+	snd via82xx codec ready chip  0  
+	return 0 
+}
+

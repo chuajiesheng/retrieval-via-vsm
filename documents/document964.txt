@@ -1,0 +1,7 @@
+static inline struct gameport  gameport allocate port void 
+{
+	struct gameport  gameport = kzalloc sizeof struct gameport   GFP KERNEL  
+
+	return gameport 
+}
+

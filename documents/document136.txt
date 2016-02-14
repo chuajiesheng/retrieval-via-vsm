@@ -1,0 +1,5 @@
+static inline void dec snd pages int order 
+{
+	snd allocated pages  = 1    order 
+}
+

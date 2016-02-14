@@ -1,0 +1,13 @@
+clear bit int nr  volatile unsigned long  addr 
+{
+	if  IS IMMEDIATE nr   {
+		asm volatile LOCK PREFIX  andb  1  0 
+			  CONST MASK ADDR nr  addr 
+			   iq    u8 ~CONST MASK nr    
+	} else {
+		asm volatile LOCK PREFIX  btr  1  0 
+			  BITOP ADDR addr 
+			   Ir   nr   
+	}
+}
+

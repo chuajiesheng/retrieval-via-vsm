@@ -1,0 +1,15 @@
+static int deflate init struct crypto tfm  tfm 
+{
+	struct deflate ctx  ctx = crypto tfm ctx tfm  
+	int ret 
+
+	ret = deflate comp init ctx  
+	if  ret 
+		goto out 
+	ret = deflate decomp init ctx  
+	if  ret 
+		deflate comp exit ctx  
+out 
+	return ret 
+}
+

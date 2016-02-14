@@ -1,0 +1,5 @@
+static inline void  crypto rng ctx struct crypto rng  tfm 
+{
+	return crypto tfm ctx  tfm base  
+}
+

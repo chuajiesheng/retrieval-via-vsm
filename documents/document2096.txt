@@ -1,0 +1,27 @@
+static int   devinit snd atiixp pcm new struct atiixp modem  chip 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	   initialize constants   
+	chip dmas ATI DMA PLAYBACK  ops =  snd atiixp playback dma ops 
+	chip dmas ATI DMA CAPTURE  ops =  snd atiixp capture dma ops 
+
+	   PCM #0  analog I O   
+	err = snd pcm new chip card   ATI IXP MC97   ATI PCMDEV ANALOG  1  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd atiixp playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd atiixp capture ops  
+	pcm dev class = SNDRV PCM CLASS MODEM 
+	pcm private data = chip 
+	strcpy pcm name   ATI IXP MC97   
+	chip pcmdevs ATI PCMDEV ANALOG  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data chip pci  
+					      64 1024  128 1024  
+
+	return 0 
+}
+

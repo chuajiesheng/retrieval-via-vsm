@@ -1,0 +1,19 @@
+static void loopback timer start struct loopback pcm  dpcm 
+{
+	unsigned long tick 
+	unsigned int rate shift = get rate shift dpcm  
+
+	if  rate shift  = dpcm pcm rate shift  {
+		dpcm pcm rate shift = rate shift 
+		dpcm period size frac = frac pos dpcm  dpcm pcm period size  
+	}
+	if  dpcm period size frac  = dpcm irq pos  {
+		dpcm irq pos  = dpcm period size frac 
+		dpcm period update pending = 1 
+	}
+	tick = dpcm period size frac   dpcm irq pos 
+	tick =  tick + dpcm pcm bps   1    dpcm pcm bps 
+	dpcm timer expires = jiffies + tick 
+	add timer  dpcm timer  
+}
+

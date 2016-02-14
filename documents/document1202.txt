@@ -1,0 +1,8 @@
+   
+   Allocate the drm buffer object 
+  
+     buf  A pointer to a pointer where the object is stored 
+     size  The number of bytes to allocate 
+   
+extern int drm buffer alloc struct drm buffer   buf  int size  
+

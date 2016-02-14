@@ -1,0 +1,16 @@
+snd azf3328 resume regs const u32  saved regs 
+			unsigned long io addr 
+			unsigned count
+ 
+{
+	unsigned reg 
+
+	for  reg = 0  reg   count  ++reg  {
+		outl  saved regs  io addr  
+		snd azf3328 dbgpm  resume  io 0x 04lx  0x 08x    0x 08x\n  
+			io addr   saved regs  inl io addr   
+		++saved regs 
+		io addr += sizeof  saved regs  
+	}
+}
+

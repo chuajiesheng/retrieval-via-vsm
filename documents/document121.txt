@@ -1,0 +1,51 @@
+   
+   snd dma alloc pages   allocate the buffer area according to the given type
+   @type  the DMA buffer type
+   @device  the device pointer
+   @size  the buffer size to allocate
+   @dmab  buffer allocation record to store the allocated data
+  
+   Calls the memory allocator function for the corresponding
+   buffer type 
+   
+   Returns zero if the buffer with the given size is allocated successfuly 
+   other a negative value at error 
+   
+int snd dma alloc pages int type  struct device  device  size t size 
+			struct snd dma buffer  dmab 
+{
+	if  WARN ON  size  
+		return  ENXIO 
+	if  WARN ON  dmab  
+		return  ENXIO 
+
+	dmab dev type = type 
+	dmab dev dev = device 
+	dmab bytes = 0 
+	switch  type  {
+	case SNDRV DMA TYPE CONTINUOUS 
+		dmab area = snd malloc pages size   unsigned long device  
+		dmab addr = 0 
+		break 
+#ifdef CONFIG HAS DMA
+	case SNDRV DMA TYPE DEV 
+		dmab area = snd malloc dev pages device  size   dmab addr  
+		break 
+#endif
+#ifdef CONFIG SND DMA SGBUF
+	case SNDRV DMA TYPE DEV SG 
+		snd malloc sgbuf pages device  size  dmab  NULL  
+		break 
+#endif
+	default 
+		printk KERN ERR  snd malloc  invalid device type  d\n   type  
+		dmab area = NULL 
+		dmab addr = 0 
+		return  ENXIO 
+	}
+	if    dmab area 
+		return  ENOMEM 
+	dmab bytes = size 
+	return 0 
+}
+

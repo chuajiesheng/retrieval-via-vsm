@@ -1,0 +1,3 @@
+extern void ttm mem global free struct ttm mem global  glob 
+				uint64 t amount  
+

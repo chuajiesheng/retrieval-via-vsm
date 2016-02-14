@@ -1,0 +1,41 @@
+snd es1968 init dmabuf struct es1968  chip 
+{
+	int err 
+	struct esm memory  chunk 
+
+	chip dma dev type = SNDRV DMA TYPE DEV 
+	chip dma dev dev = snd dma pci data chip pci  
+	if    snd dma get reserved buf  chip dma  snd dma pci buf id chip pci    {
+		err = snd dma alloc pages fallback SNDRV DMA TYPE DEV 
+						   snd dma pci data chip pci  
+						   chip total bufsize   chip dma  
+		if  err   0 ||   chip dma area  {
+			snd printk KERN ERR  es1968  can't allocate dma pages for size  d\n  
+				   chip total bufsize  
+			return  ENOMEM 
+		}
+		if   chip dma addr + chip dma bytes   1    ~  1    28    1   {
+			snd dma free pages  chip dma  
+			snd printk KERN ERR  es1968  DMA buffer beyond 256MB \n   
+			return  ENOMEM 
+		}
+	}
+
+	INIT LIST HEAD  chip buf list  
+	   allocate an empty chunk   
+	chunk = kmalloc sizeof  chunk   GFP KERNEL  
+	if  chunk == NULL  {
+		snd es1968 free dmabuf chip  
+		return  ENOMEM 
+	}
+	memset chip dma area  0  ESM MEM ALIGN  
+	chunk buf = chip dma 
+	chunk buf area += ESM MEM ALIGN 
+	chunk buf addr += ESM MEM ALIGN 
+	chunk buf bytes  = ESM MEM ALIGN 
+	chunk empty = 1 
+	list add  chunk list   chip buf list  
+
+	return 0 
+}
+

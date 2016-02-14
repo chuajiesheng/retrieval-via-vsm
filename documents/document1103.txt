@@ -1,0 +1,86 @@
+static struct crypto instance  crypto rfc4543 alloc struct rtattr   tb 
+{
+	struct crypto attr type  algt 
+	struct crypto instance  inst 
+	struct crypto aead spawn  spawn 
+	struct crypto alg  alg 
+	const char  ccm name 
+	int err 
+
+	algt = crypto get attr type tb  
+	err = PTR ERR algt  
+	if  IS ERR algt  
+		return ERR PTR err  
+
+	if   algt type ^ CRYPTO ALG TYPE AEAD    algt mask 
+		return ERR PTR  EINVAL  
+
+	ccm name = crypto attr alg name tb 1   
+	err = PTR ERR ccm name  
+	if  IS ERR ccm name  
+		return ERR PTR err  
+
+	inst = kzalloc sizeof  inst  + sizeof  spawn   GFP KERNEL  
+	if   inst 
+		return ERR PTR  ENOMEM  
+
+	spawn = crypto instance ctx inst  
+	crypto set aead spawn spawn  inst  
+	err = crypto grab aead spawn  ccm name  0 
+			       crypto requires sync algt type  algt mask   
+	if  err 
+		goto out free inst 
+
+	alg = crypto aead spawn alg spawn  
+
+	err =  EINVAL 
+
+	   We only support 16 byte blocks    
+	if  alg cra aead ivsize  = 16 
+		goto out drop alg 
+
+	   Not a stream cipher?   
+	if  alg cra blocksize  = 1 
+		goto out drop alg 
+
+	err =  ENAMETOOLONG 
+	if  snprintf inst alg cra name  CRYPTO MAX ALG NAME 
+		      rfc4543  s    alg cra name   = CRYPTO MAX ALG NAME ||
+	    snprintf inst alg cra driver name  CRYPTO MAX ALG NAME 
+		      rfc4543  s    alg cra driver name   =
+	    CRYPTO MAX ALG NAME 
+		goto out drop alg 
+
+	inst alg cra flags = CRYPTO ALG TYPE AEAD 
+	inst alg cra flags |= alg cra flags   CRYPTO ALG ASYNC 
+	inst alg cra priority = alg cra priority 
+	inst alg cra blocksize = 1 
+	inst alg cra alignmask = alg cra alignmask 
+	inst alg cra type =  crypto nivaead type 
+
+	inst alg cra aead ivsize = 8 
+	inst alg cra aead maxauthsize = 16 
+
+	inst alg cra ctxsize = sizeof struct crypto rfc4543 ctx  
+
+	inst alg cra init = crypto rfc4543 init tfm 
+	inst alg cra exit = crypto rfc4543 exit tfm 
+
+	inst alg cra aead setkey = crypto rfc4543 setkey 
+	inst alg cra aead setauthsize = crypto rfc4543 setauthsize 
+	inst alg cra aead encrypt = crypto rfc4543 encrypt 
+	inst alg cra aead decrypt = crypto rfc4543 decrypt 
+
+	inst alg cra aead geniv =  seqiv  
+
+out 
+	return inst 
+
+out drop alg 
+	crypto drop aead spawn  
+out free inst 
+	kfree inst  
+	inst = ERR PTR err  
+	goto out 
+}
+

@@ -1,0 +1,26 @@
+  
+   OPL3 command
+   
+static void snd cs4281 opl3 command struct snd opl3  opl3  unsigned short cmd 
+				    unsigned char val 
+{
+	unsigned long flags 
+	struct cs4281  chip = opl3 private data 
+	void   iomem  port 
+
+	if  cmd   OPL3 RIGHT 
+		port = chip ba0 + BA0 B1AP     right port   
+	else
+		port = chip ba0 + BA0 B0AP     left port   
+
+	spin lock irqsave  opl3 reg lock  flags  
+
+	writel  unsigned int cmd  port  
+	udelay 10  
+
+	writel  unsigned int val  port + 4  
+	udelay 30  
+
+	spin unlock irqrestore  opl3 reg lock  flags  
+}
+

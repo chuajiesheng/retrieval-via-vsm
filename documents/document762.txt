@@ -1,0 +1,10 @@
+  
+   return the physical address at the corresponding offset
+   
+static inline dma addr t snd sgbuf get addr struct snd sg buf  sgbuf  size t offset 
+{
+	dma addr t addr = sgbuf table offset    PAGE SHIFT  addr 
+	addr  = PAGE MASK 
+	return addr + offset   PAGE SIZE 
+}
+

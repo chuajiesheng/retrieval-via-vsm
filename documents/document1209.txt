@@ -1,0 +1,6 @@
+static int snd als4000 hw free struct snd pcm substream  substream 
+{
+	snd pcm lib free pages substream  
+	return 0 
+}
+

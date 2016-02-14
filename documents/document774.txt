@@ -1,0 +1,2 @@
+void pci disable device struct pci dev  dev  
+

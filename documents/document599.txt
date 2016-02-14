@@ -1,0 +1,6 @@
+static inline struct net device  rdma vlan dev real dev const struct net device  dev 
+{
+	return dev priv flags   IFF 802 1Q VLAN ?
+		vlan dev real dev dev    0 
+}
+

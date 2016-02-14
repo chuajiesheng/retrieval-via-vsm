@@ -1,0 +1,14 @@
+static void snd es1968 free dmabuf struct es1968  chip 
+{
+	struct list head  p 
+
+	if    chip dma area 
+		return 
+	snd dma reserve buf  chip dma  snd dma pci buf id chip pci   
+	while   p = chip buf list next   =  chip buf list  {
+		struct esm memory  chunk = list entry p  struct esm memory  list  
+		list del p  
+		kfree chunk  
+	}
+}
+

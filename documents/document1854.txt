@@ -1,0 +1,14 @@
+static int snd bt87x trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		return snd bt87x start chip  
+	case SNDRV PCM TRIGGER STOP 
+		return snd bt87x stop chip  
+	default 
+		return  EINVAL 
+	}
+}
+

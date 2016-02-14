@@ -1,0 +1,51 @@
+static int snd bt87x create risc struct snd bt87x  chip  struct snd pcm substream  substream 
+			       	 unsigned int periods  unsigned int period bytes 
+{
+	unsigned int i  offset 
+	u32  risc 
+
+	if  chip dma risc area == NULL  {
+		if  snd dma alloc pages SNDRV DMA TYPE DEV  snd dma pci data chip pci  
+					PAGE ALIGN MAX RISC SIZE    chip dma risc    0 
+			return  ENOMEM 
+	}
+	risc =  u32   chip dma risc area 
+	offset = 0 
+	 risc++ = cpu to le32 RISC SYNC | RISC SYNC FM1  
+	 risc++ = cpu to le32 0  
+	for  i = 0  i   periods  ++i  {
+		u32 rest 
+
+		rest = period bytes 
+		do {
+			u32 cmd  len 
+			unsigned int addr 
+
+			len = PAGE SIZE    offset   PAGE SIZE  
+			if  len   rest 
+				len = rest 
+			cmd = RISC WRITE | len 
+			if  rest == period bytes  {
+				u32 block = i   16   periods 
+				cmd |= RISC SOL 
+				cmd |= block    RISC SET STATUS SHIFT 
+				cmd |=  ~block   0xf     RISC RESET STATUS SHIFT 
+			}
+			if  len == rest 
+				cmd |= RISC EOL | RISC IRQ 
+			 risc++ = cpu to le32 cmd  
+			addr = snd pcm sgbuf get addr substream  offset  
+			 risc++ = cpu to le32 addr  
+			offset += len 
+			rest  = len 
+		} while  rest   0  
+	}
+	 risc++ = cpu to le32 RISC SYNC | RISC SYNC VRO  
+	 risc++ = cpu to le32 0  
+	 risc++ = cpu to le32 RISC JUMP  
+	 risc++ = cpu to le32 chip dma risc addr  
+	chip line bytes = period bytes 
+	chip lines = periods 
+	return 0 
+}
+

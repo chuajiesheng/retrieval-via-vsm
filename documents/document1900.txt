@@ -1,0 +1,55 @@
+static int snd intel8x0 ali trigger struct snd pcm substream  substream  int cmd 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct ichdev  ichdev = get ichdev substream  
+	unsigned long port = ichdev reg offset 
+	static int fiforeg   = {
+		ICHREG ALI FIFOCR1   ICHREG ALI FIFOCR2   ICHREG ALI FIFOCR3 
+	} 
+	unsigned int val  fifo 
+
+	val = igetdword chip  ICHREG ALI DMACR   
+	switch  cmd  {
+	case SNDRV PCM TRIGGER RESUME 
+		ichdev suspended = 0 
+		   fallthru   
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+		if  substream stream == SNDRV PCM STREAM PLAYBACK  {
+			   clear FIFO for synchronization of channels   
+			fifo = igetdword chip  fiforeg ichdev ali slot   4   
+			fifo  = ~ 0xff     ichdev ali slot   4     
+			fifo |= 0x83     ichdev ali slot   4   
+			iputdword chip  fiforeg ichdev ali slot   4   fifo  
+		}
+		iputbyte chip  port + ICH REG OFF CR  ICH IOCE  
+		val  = ~ 1     ichdev ali slot + 16       clear PAUSE flag   
+		   start DMA   
+		iputdword chip  ICHREG ALI DMACR   val |  1    ichdev ali slot   
+		break 
+	case SNDRV PCM TRIGGER SUSPEND 
+		ichdev suspended = 1 
+		   fallthru   
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+		   pause   
+		iputdword chip  ICHREG ALI DMACR   val |  1     ichdev ali slot + 16    
+		iputbyte chip  port + ICH REG OFF CR  0  
+		while  igetbyte chip  port + ICH REG OFF CR  
+			 
+		if  cmd == SNDRV PCM TRIGGER PAUSE PUSH 
+			break 
+		   reset whole DMA things   
+		iputbyte chip  port + ICH REG OFF CR  ICH RESETREGS  
+		   clear interrupts   
+		iputbyte chip  port + ICH REG OFF SR 
+			 igetbyte chip  port + ICH REG OFF SR  | 0x1e  
+		iputdword chip  ICHREG ALI INTERRUPTSR  
+			  igetdword chip  ICHREG ALI INTERRUPTSR     ichdev int sta mask  
+		break 
+	default 
+		return  EINVAL 
+	}
+	return 0 
+}
+

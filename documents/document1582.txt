@@ -1,0 +1,27 @@
+static int async chainiv givencrypt first struct skcipher givcrypt request  req 
+{
+	struct crypto ablkcipher  geniv = skcipher givcrypt reqtfm req  
+	struct async chainiv ctx  ctx = crypto ablkcipher ctx geniv  
+	int err = 0 
+
+	if  test and set bit CHAINIV STATE INUSE   ctx state  
+		goto out 
+
+	if  crypto ablkcipher crt geniv  givencrypt  =
+	    async chainiv givencrypt first 
+		goto unlock 
+
+	crypto ablkcipher crt geniv  givencrypt = async chainiv givencrypt 
+	err = crypto rng get bytes crypto default rng  ctx iv 
+				   crypto ablkcipher ivsize geniv   
+
+unlock 
+	clear bit CHAINIV STATE INUSE   ctx state  
+
+	if  err 
+		return err 
+
+out 
+	return async chainiv givencrypt req  
+}
+

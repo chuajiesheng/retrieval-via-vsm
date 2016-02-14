@@ -1,0 +1,6 @@
+static efi status t virt efi set wakeup time efi bool t enabled  efi time t  tm 
+{
+	return efi call virt2 set wakeup time 
+			      enabled  tm  
+}
+

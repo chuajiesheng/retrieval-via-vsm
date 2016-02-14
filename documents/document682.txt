@@ -1,0 +1,11 @@
+static void snd mtpav output write struct snd rawmidi substream  substream 
+{
+	struct mtpav  mtp card = substream rmidi private data 
+	struct mtpav port  portp =  mtp card ports substream number  
+	unsigned long flags 
+
+	spin lock irqsave  mtp card spinlock  flags  
+	snd mtpav output port write mtp card  portp  substream  
+	spin unlock irqrestore  mtp card spinlock  flags  
+}
+

@@ -1,0 +1,5 @@
+static void   exit snd mts64 module exit void 
+{
+	snd mts64 unregister all   
+}
+

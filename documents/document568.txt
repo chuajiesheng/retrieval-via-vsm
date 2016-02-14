@@ -1,0 +1,9 @@
+static void snd serial unregister all void 
+{
+	int i 
+
+	for  i = 0  i   ARRAY SIZE devices   ++i 
+		platform device unregister devices i   
+	platform driver unregister  snd serial driver  
+}
+

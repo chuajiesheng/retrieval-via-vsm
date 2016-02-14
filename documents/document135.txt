@@ -1,0 +1,6 @@
+static long snd allocated pages     holding the number of allocated pages   
+static inline void inc snd pages int order 
+{
+	snd allocated pages += 1    order 
+}
+

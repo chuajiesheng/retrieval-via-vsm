@@ -1,0 +1,17 @@
+   remove dma areas if allocated   
+static int snd es1968 hw free struct snd pcm substream  substream 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct esschan  chan 
+	
+	if  runtime private data == NULL 
+		return 0 
+	chan = runtime private data 
+	if  chan memory  {
+		snd es1968 free memory chip  chan memory  
+		chan memory = NULL 
+	}
+	return 0 
+}
+

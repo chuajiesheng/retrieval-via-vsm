@@ -1,0 +1,2 @@
+static void snd rme32 proc init struct rme32   rme32  
+

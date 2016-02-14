@@ -1,0 +1,11 @@
+static void snd via686 free gameport struct via82xx  chip 
+{
+	if  chip gameport  {
+		struct resource  r = gameport get port data chip gameport  
+
+		gameport unregister port chip gameport  
+		chip gameport = NULL 
+		release and free resource r  
+	}
+}
+

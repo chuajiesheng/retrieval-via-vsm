@@ -1,0 +1,17 @@
+static int   devinit snd ensoniq get joystick port int dev 
+{
+	switch  joystick port dev   {
+	case 0     disabled   
+	case 1     auto detect   
+	case 0x200 
+	case 0x208 
+	case 0x210 
+	case 0x218 
+		return joystick port dev  
+
+	default 
+		printk KERN ERR  ens1371  invalid joystick port  #x   joystick port dev   
+		return 0 
+	}
+}
+

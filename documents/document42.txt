@@ -1,0 +1,13 @@
+  
+   release the card proc file resources
+   called from init c
+   
+int snd info card free struct snd card  card 
+{
+	if   card 
+		return 0 
+	snd info free entry card proc root  
+	card proc root = NULL 
+	return 0 
+}
+

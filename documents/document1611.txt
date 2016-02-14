@@ -1,0 +1,21 @@
+static int snd als300 ac97 struct snd als300  chip 
+{
+	struct snd ac97 bus  bus 
+	struct snd ac97 template ac97 
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd als300 ac97 write 
+		 read = snd als300 ac97 read 
+	} 
+
+	snd als300 dbgcallenter   
+	if   err = snd ac97 bus chip card  0   ops  NULL   bus     0 
+		return err 
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+
+	snd als300 dbgcallleave   
+	return snd ac97 mixer bus   ac97   chip ac97  
+}
+

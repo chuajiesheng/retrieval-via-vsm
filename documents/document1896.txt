@@ -1,0 +1,14 @@
+static void snd intel8x0 ali codec write struct snd ac97  ac97  unsigned short reg 
+					 unsigned short val 
+{
+	struct intel8x0  chip = ac97 private data 
+
+	if  snd intel8x0 ali codec semaphore chip  
+		return 
+	iputword chip  ICHREG ALI CPR   val  
+	if  ac97 num 
+		reg |= ALI CPR ADDR SECONDARY 
+	iputword chip  ICHREG ALI CPR ADDR   reg  
+	snd intel8x0 ali codec ready chip  ALI CSPSR WRITE OK  
+}
+

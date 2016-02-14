@@ -1,0 +1,5 @@
+static inline void  crypto aead ctx struct crypto aead  tfm 
+{
+	return crypto tfm ctx  tfm base  
+}
+

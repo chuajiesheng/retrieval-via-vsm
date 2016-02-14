@@ -1,0 +1,15 @@
+  
+    Info interface
+   
+static void snd hwdep proc read struct snd info entry  entry 
+				struct snd info buffer  buffer 
+{
+	struct snd hwdep  hwdep 
+
+	mutex lock  register mutex  
+	list for each entry hwdep   snd hwdep devices  list 
+		snd iprintf buffer    02i  02i   s\n  
+			    hwdep card number  hwdep device  hwdep name  
+	mutex unlock  register mutex  
+}
+

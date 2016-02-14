@@ -1,0 +1,34 @@
+  
+    Timer functions
+   
+void snd pcm timer resolution change struct snd pcm substream  substream 
+{
+	unsigned long rate  mult  fsize  l  post 
+	struct snd pcm runtime  runtime = substream runtime 
+	
+        mult = 1000000000 
+	rate = runtime rate 
+	if  snd BUG ON  rate  
+		return 
+	l = gcd mult  rate  
+	mult  = l 
+	rate  = l 
+	fsize = runtime period size 
+	if  snd BUG ON  fsize  
+		return 
+	l = gcd rate  fsize  
+	rate  = l 
+	fsize  = l 
+	post = 1 
+	while   mult   fsize    fsize  = mult  {
+		mult  = 2 
+		post  = 2 
+	}
+	if  rate == 0  {
+		snd printk KERN ERR  pcm timer resolution out of range  rate =  u  period size =  lu \n   runtime rate  runtime period size  
+		runtime timer resolution =  1 
+		return 
+	}
+	runtime timer resolution =  mult   fsize   rate    post 
+}
+

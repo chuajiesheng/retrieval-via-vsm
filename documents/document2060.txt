@@ -1,0 +1,17 @@
+   
+   ieee80211 get tkip key   get a TKIP rc4 for skb
+  
+   This function computes a TKIP rc4 key for an skb  It computes
+   a phase 1 key if needed  iv16 wraps around   This function is to
+   be used by drivers which can do HW encryption but need to compute
+   to phase 1 2 key in SW 
+  
+   @keyconf  the parameter passed with the set key
+   @skb  the skb for which the key is needed
+   @type  TBD
+   @key  a buffer to which the key will be written
+   
+void ieee80211 get tkip key struct ieee80211 key conf  keyconf 
+				struct sk buff  skb 
+				enum ieee80211 tkip key type type  u8  key  
+

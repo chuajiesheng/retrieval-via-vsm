@@ -1,0 +1,17 @@
+static void params change struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct loopback pcm  dpcm = runtime private data 
+	struct loopback cable  cable = dpcm cable 
+
+	cable hw formats =  1ULL    runtime format  
+	cable hw rate min = runtime rate 
+	cable hw rate max = runtime rate 
+	cable hw channels min = runtime channels 
+	cable hw channels max = runtime channels 
+	params change substream cable streams SNDRV PCM STREAM PLAYBACK  
+				runtime  
+	params change substream cable streams SNDRV PCM STREAM CAPTURE  
+				runtime  
+}
+

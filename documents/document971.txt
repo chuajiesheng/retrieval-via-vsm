@@ -1,0 +1,3 @@
+int pci bus write config dword struct pci bus  bus  unsigned int devfn 
+			       int where  u32 val  
+

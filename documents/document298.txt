@@ -1,0 +1,2 @@
+module param major  int  0444  
+

@@ -1,0 +1,61 @@
+static irqreturn t snd sonicvibes interrupt int irq  void  dev id 
+{
+	struct sonicvibes  sonic = dev id 
+	unsigned char status 
+
+	status = inb SV REG sonic  STATUS   
+	if    status    SV DMAA IRQ | SV DMAC IRQ | SV MIDI IRQ   
+		return IRQ NONE 
+	if  status == 0xff  {	   failure   
+		outb sonic irqmask = ~0  SV REG sonic  IRQMASK   
+		snd printk KERN ERR  IRQ failure   interrupts disabled  \n   
+		return IRQ HANDLED 
+	}
+	if  sonic pcm  {
+		if  status   SV DMAA IRQ 
+			snd pcm period elapsed sonic playback substream  
+		if  status   SV DMAC IRQ 
+			snd pcm period elapsed sonic capture substream  
+	}
+	if  sonic rmidi  {
+		if  status   SV MIDI IRQ 
+			snd mpu401 uart interrupt irq  sonic rmidi private data  
+	}
+	if  status   SV UD IRQ  {
+		unsigned char udreg 
+		int vol  oleft  oright  mleft  mright 
+
+		spin lock  sonic reg lock  
+		udreg = snd sonicvibes in1 sonic  SV IREG UD BUTTON  
+		vol = udreg   0x3f 
+		if    udreg   0x40  
+			vol =  vol 
+		oleft = mleft = snd sonicvibes in1 sonic  SV IREG LEFT ANALOG  
+		oright = mright = snd sonicvibes in1 sonic  SV IREG RIGHT ANALOG  
+		oleft  = 0x1f 
+		oright  = 0x1f 
+		oleft += vol 
+		if  oleft   0 
+			oleft = 0 
+		if  oleft   0x1f 
+			oleft = 0x1f 
+		oright += vol 
+		if  oright   0 
+			oright = 0 
+		if  oright   0x1f 
+			oright = 0x1f 
+		if  udreg   0x80  {
+			mleft ^= 0x80 
+			mright ^= 0x80 
+		}
+		oleft |= mleft   0x80 
+		oright |= mright   0x80 
+		snd sonicvibes out1 sonic  SV IREG LEFT ANALOG  oleft  
+		snd sonicvibes out1 sonic  SV IREG RIGHT ANALOG  oright  
+		spin unlock  sonic reg lock  
+		snd ctl notify sonic card  SNDRV CTL EVENT MASK VALUE   sonic master mute id  
+		snd ctl notify sonic card  SNDRV CTL EVENT MASK VALUE   sonic master volume id  
+	}
+	return IRQ HANDLED 
+}
+

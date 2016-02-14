@@ -1,0 +1,5 @@
+static int   init alsa card atiixp init void 
+{
+	return pci register driver  driver  
+}
+

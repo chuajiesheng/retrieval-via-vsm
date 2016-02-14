@@ -1,0 +1,11 @@
+  
+    ENTRY functions
+   
+static int   init alsa pcm init void 
+{
+	snd ctl register ioctl snd pcm control ioctl  
+	snd ctl register ioctl compat snd pcm control ioctl  
+	snd pcm proc init   
+	return 0 
+}
+

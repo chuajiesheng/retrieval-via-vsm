@@ -1,0 +1,20 @@
+static ssize t show pcm class struct device  dev 
+			      struct device attribute  attr  char  buf 
+{
+	struct snd pcm  pcm 
+	const char  str 
+	static const char  strs SNDRV PCM CLASS LAST + 1  = {
+		 SNDRV PCM CLASS GENERIC  =  generic  
+		 SNDRV PCM CLASS MULTI  =  multi  
+		 SNDRV PCM CLASS MODEM  =  modem  
+		 SNDRV PCM CLASS DIGITIZER  =  digitizer  
+	} 
+
+	if     pcm = dev get drvdata dev   ||
+	    pcm dev class   SNDRV PCM CLASS LAST 
+		str =  none  
+	else
+		str = strs pcm dev class  
+        return snprintf buf  PAGE SIZE    s\n   str  
+}
+

@@ -1,0 +1,6 @@
+static inline void drm crtc helper add struct drm crtc  crtc 
+				       const struct drm crtc helper funcs  funcs 
+{
+	crtc helper private =  void   funcs 
+}
+

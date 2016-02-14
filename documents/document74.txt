@@ -1,0 +1,7 @@
+static int snd hrtimer stop struct snd timer  t 
+{
+	struct snd hrtimer  stime = t private data 
+	atomic set  stime running  0  
+	return 0 
+}
+

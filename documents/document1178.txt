@@ -1,0 +1,5 @@
+snd azf3328 ctrl inb const struct snd azf3328  chip  unsigned reg 
+{
+	return inb chip ctrl io + reg  
+}
+

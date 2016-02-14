@@ -1,0 +1,4 @@
+extern int drm framebuffer init struct drm device  dev 
+				struct drm framebuffer  fb 
+				const struct drm framebuffer funcs  funcs  
+

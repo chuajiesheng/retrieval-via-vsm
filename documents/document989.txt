@@ -1,0 +1,61 @@
+static unsigned short snd es1371 codec read struct snd ac97  ac97 
+					    unsigned short reg 
+{
+	struct ensoniq  ensoniq = ac97 private data 
+	unsigned int t  x  fail = 0 
+
+        again 
+	mutex lock  ensoniq src mutex  
+	for  t = 0  t   POLL COUNT  t++  {
+		if    inl ES REG ensoniq  1371 CODEC     ES 1371 CODEC WIP   {
+			   save the current state for latter   
+			x = snd es1371 wait src ready ensoniq  
+			outl  x    ES 1371 SRC DISABLE | ES 1371 DIS P1 |
+			           ES 1371 DIS P2 | ES 1371 DIS R1   | 0x00010000 
+			     ES REG ensoniq  1371 SMPRATE   
+			   wait for not busy  state 0  first to avoid
+			   transition states   
+			for  t = 0  t   POLL COUNT  t++  {
+				if   inl ES REG ensoniq  1371 SMPRATE     0x00870000  ==
+				    0x00000000 
+					break 
+			}
+			   wait for a SAFE time to write addr data and then do it  dammit   
+			for  t = 0  t   POLL COUNT  t++  {
+				if   inl ES REG ensoniq  1371 SMPRATE     0x00870000  ==
+				    0x00010000 
+					break 
+			}
+			outl ES 1371 CODEC READS reg   ES REG ensoniq  1371 CODEC   
+			   restore SRC reg   
+			snd es1371 wait src ready ensoniq  
+			outl x  ES REG ensoniq  1371 SMPRATE   
+			   wait for WIP again   
+			for  t = 0  t   POLL COUNT  t++  {
+				if    inl ES REG ensoniq  1371 CODEC     ES 1371 CODEC WIP  
+					break 		
+			}
+			   now wait for the stinkin' data  RDY    
+			for  t = 0  t   POLL COUNT  t++  {
+				if   x = inl ES REG ensoniq  1371 CODEC      ES 1371 CODEC RDY  {
+					mutex unlock  ensoniq src mutex  
+					return ES 1371 CODEC READ x  
+				}
+			}
+			mutex unlock  ensoniq src mutex  
+			if  ++fail   10  {
+				snd printk KERN ERR  codec read timeout  final   
+					    at 0x lx  reg = 0x x  0x x \n  
+					   ES REG ensoniq  1371 CODEC   reg 
+					   inl ES REG ensoniq  1371 CODEC    
+				return 0 
+			}
+			goto   again 
+		}
+	}
+	mutex unlock  ensoniq src mutex  
+	snd printk KERN ERR  es1371  codec read timeout at 0x lx  0x x \n  
+		   ES REG ensoniq  1371 CODEC   inl ES REG ensoniq  1371 CODEC    
+	return 0 
+}
+

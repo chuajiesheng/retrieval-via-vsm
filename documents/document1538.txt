@@ -1,0 +1,18 @@
+rme96 set buffer size constraint struct rme96  rme96 
+				 struct snd pcm runtime  runtime 
+{
+	unsigned int size 
+
+	snd pcm hw constraint minmax runtime  SNDRV PCM HW PARAM BUFFER BYTES 
+				     RME96 BUFFER SIZE  RME96 BUFFER SIZE  
+	if   size = rme96 playback periodsize   = 0 ||
+	     size = rme96 capture periodsize   = 0 
+		snd pcm hw constraint minmax runtime 
+					     SNDRV PCM HW PARAM PERIOD BYTES 
+					     size  size  
+	else
+		snd pcm hw constraint list runtime  0 
+					   SNDRV PCM HW PARAM PERIOD BYTES 
+					    hw constraints period bytes  
+}
+

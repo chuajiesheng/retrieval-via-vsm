@@ -1,0 +1,43 @@
+   
+   snd card proc new   create an info entry for the given card
+   @card  the card instance
+   @name  the file name
+   @entryp  the pointer to store the new info entry
+  
+   Creates a new info entry and assigns it to the given card 
+   Unlike snd info create card entry    this function registers the
+   info entry as an ALSA device component  so that it can be
+   unregistered released without explicit call 
+   Also  you don't have to register this entry via snd info register   
+   since this will be registered by snd card register   automatically 
+  
+   The parent is assumed as card proc root 
+  
+   For releasing this entry  use snd device free   instead of
+   snd info free entry    
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd card proc new struct snd card  card  const char  name 
+		      struct snd info entry   entryp 
+{
+	static struct snd device ops ops = {
+		 dev free = snd info dev free entry 
+		 dev register =	snd info dev register entry 
+		   disconnect is done via snd info card disconnect     
+	} 
+	struct snd info entry  entry 
+	int err 
+
+	entry = snd info create card entry card  name  card proc root  
+	if    entry 
+		return  ENOMEM 
+	if   err = snd device new card  SNDRV DEV INFO  entry   ops     0  {
+		snd info free entry entry  
+		return err 
+	}
+	if  entryp 
+		 entryp = entry 
+	return 0 
+}
+

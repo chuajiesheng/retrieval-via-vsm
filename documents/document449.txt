@@ -1,0 +1,5 @@
+struct ib pool fmr  ib fmr pool map phys struct ib fmr pool  pool handle 
+					 u64                 page list 
+					 int                 list len 
+					 u64                 io virtual address  
+

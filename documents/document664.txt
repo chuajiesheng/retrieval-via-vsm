@@ -1,0 +1,10 @@
+static int snd dummy suspend struct platform device  pdev  pm message t state 
+{
+	struct snd card  card = platform get drvdata pdev  
+	struct snd dummy  dummy = card private data 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	snd pcm suspend all dummy pcm  
+	return 0 
+}
+

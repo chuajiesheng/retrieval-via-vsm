@@ -1,0 +1,2 @@
+int snd ac97 tune hardware struct snd ac97  ac97  struct ac97 quirk  quirk  const char  override  
+

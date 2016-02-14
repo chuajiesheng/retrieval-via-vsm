@@ -1,0 +1,11 @@
+snd rme96 playback start struct rme96  rme96 
+			 int from pause 
+{
+	if   from pause  {
+		writel 0  rme96 iobase + RME96 IO RESET PLAY POS  
+	}
+
+	rme96 wcreg |= RME96 WCR START 
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+}
+

@@ -1,0 +1,10 @@
+static void snd sonicvibes out1 struct sonicvibes   sonic 
+				unsigned char reg 
+				unsigned char value 
+{
+	outb reg  SV REG sonic  INDEX   
+	udelay 10  
+	outb value  SV REG sonic  DATA   
+	udelay 10  
+}
+

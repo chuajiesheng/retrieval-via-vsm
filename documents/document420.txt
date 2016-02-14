@@ -1,0 +1,49 @@
+static void copy play buf struct loopback pcm  play 
+			  struct loopback pcm  capt 
+			  unsigned int bytes 
+{
+	struct snd pcm runtime  runtime = play substream runtime 
+	char  src = runtime dma area 
+	char  dst = capt substream runtime dma area 
+	unsigned int src off = play buf pos 
+	unsigned int dst off = capt buf pos 
+	unsigned int clear bytes = 0 
+
+	   check if playback is draining  trim the capture copy size
+	   when our pointer is at the end of playback ring buffer   
+	if  runtime status state == SNDRV PCM STATE DRAINING   
+	    snd pcm playback hw avail runtime    runtime buffer size  { 
+	    	snd pcm uframes t appl ptr  appl ptr1  diff 
+		appl ptr = appl ptr1 = runtime control appl ptr 
+		appl ptr1  = appl ptr1   runtime buffer size 
+		appl ptr1 += play buf pos   play pcm salign 
+		if  appl ptr   appl ptr1 
+			appl ptr1  = runtime buffer size 
+		diff =  appl ptr   appl ptr1    play pcm salign 
+		if  diff   bytes  {
+			clear bytes = bytes   diff 
+			bytes = diff 
+		}
+	}
+
+	for      {
+		unsigned int size = bytes 
+		if  src off + size   play pcm buffer size 
+			size = play pcm buffer size   src off 
+		if  dst off + size   capt pcm buffer size 
+			size = capt pcm buffer size   dst off 
+		memcpy dst + dst off  src + src off  size  
+		capt silent size = 0 
+		bytes  = size 
+		if   bytes 
+			break 
+		src off =  src off + size    play pcm buffer size 
+		dst off =  dst off + size    capt pcm buffer size 
+	}
+
+	if  clear bytes   0  {
+		clear capture buf capt  clear bytes  
+		capt silent size = 0 
+	}
+}
+

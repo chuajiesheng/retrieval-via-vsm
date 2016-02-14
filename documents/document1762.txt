@@ -1,0 +1,5 @@
+void   ssb get devtypedata struct ssb device  dev 
+{
+	return dev devtypedata 
+}
+

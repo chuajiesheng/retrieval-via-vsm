@@ -1,0 +1,6 @@
+static int portman free struct portman  pm 
+{
+	kfree pm  
+	return 0 
+}
+

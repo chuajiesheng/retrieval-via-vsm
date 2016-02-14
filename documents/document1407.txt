@@ -1,0 +1,11 @@
+snd es1968 get dma ptr struct es1968  chip  struct esschan  es 
+{
+	unsigned int offset 
+
+	offset = apu get register chip  es apu 0   5  
+
+	offset  = es base 0  
+
+	return  offset   0xFFFE  	   hardware is in words   
+}
+

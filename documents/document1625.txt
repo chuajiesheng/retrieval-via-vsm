@@ -1,0 +1,27 @@
+static snd pcm uframes t snd als300 pointer struct snd pcm substream  substream 
+{
+	u16 current ptr 
+	struct snd als300  chip = snd pcm substream chip substream  
+	struct snd als300 substream data  data 
+	unsigned short period bytes 
+
+	data = substream runtime private data 
+	period bytes = snd pcm lib period bytes substream  
+	
+	snd als300 dbgcallenter   
+	spin lock  chip reg lock  
+	current ptr =  u16  snd als300 gcr read chip port 
+					data block counter register  + 4 
+	spin unlock  chip reg lock  
+	if  current ptr   period bytes 
+		current ptr = 0 
+	else
+		current ptr = period bytes   current ptr 
+
+	if  data period flipflop == 0 
+		current ptr += period bytes 
+	snd als300 dbgplay  Pointer  bytes    d\n   current ptr  
+	snd als300 dbgcallleave   
+	return bytes to frames substream runtime  current ptr  
+}
+

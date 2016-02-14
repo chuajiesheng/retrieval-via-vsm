@@ -1,0 +1,39 @@
+                                                                      
+   parport stuff
+                                                                       
+static void snd portman interrupt void  userdata 
+{
+	unsigned char midivalue = 0 
+	struct portman  pm =   struct snd card  userdata  private data 
+
+	spin lock  pm reg lock  
+
+	   While any input data is waiting   
+	while   portman read status pm    INT REQ  == INT REQ  {
+		   If data available on channel 0  
+		   read it and stuff it into the queue    
+		if  portman data avail pm  0   {
+			   Read Midi   
+			midivalue = portman read midi pm  0  
+			   put midi into queue      
+			if  pm mode 0    PORTMAN2X4 MODE INPUT TRIGGERED 
+				snd rawmidi receive pm midi input 0  
+						     midivalue  1  
+
+		}
+		   If data available on channel 1  
+		   read it and stuff it into the queue    
+		if  portman data avail pm  1   {
+			   Read Midi   
+			midivalue = portman read midi pm  1  
+			   put midi into queue      
+			if  pm mode 1    PORTMAN2X4 MODE INPUT TRIGGERED 
+				snd rawmidi receive pm midi input 1  
+						     midivalue  1  
+		}
+
+	}
+
+	spin unlock  pm reg lock  
+}
+

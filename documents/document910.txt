@@ -1,0 +1,29 @@
+static int crypto gcm encrypt struct aead request  req 
+{
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+	struct ablkcipher request  abreq =  pctx u abreq 
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+	int err 
+
+	crypto gcm init crypt abreq  req  req cryptlen  
+	ablkcipher request set callback abreq  aead request flags req  
+					gcm encrypt done  req  
+
+	gctx src = req dst 
+	gctx cryptlen = req cryptlen 
+	gctx complete = gcm enc hash done 
+
+	err = crypto ablkcipher encrypt abreq  
+	if  err 
+		return err 
+
+	err = gcm hash req  pctx  
+	if  err 
+		return err 
+
+	crypto xor pctx auth tag  pctx iauth tag  16  
+	gcm enc copy hash req  pctx  
+
+	return 0 
+}
+

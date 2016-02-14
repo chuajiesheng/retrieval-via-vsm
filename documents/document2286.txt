@@ -1,0 +1,9 @@
+   ack and pointer callbacks for fullduplex mode   
+static void snd rme32 pb trans copy struct snd pcm substream  substream 
+				    struct snd pcm indirect  rec  size t bytes 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	memcpy toio rme32 iobase + RME32 IO DATA BUFFER + rec hw data 
+		    substream runtime dma area + rec sw data  bytes  
+}
+

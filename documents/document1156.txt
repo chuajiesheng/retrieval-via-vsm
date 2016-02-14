@@ -1,0 +1,8 @@
+snd azf3328 codec outl const struct snd azf3328 codec data  codec 
+		       unsigned reg 
+		       u32 value
+ 
+{
+	outl value  codec io base + reg  
+}
+

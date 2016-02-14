@@ -1,0 +1,6 @@
+int   exit snd minor info done void 
+{
+	snd info free entry snd minor info entry  
+	return 0 
+}
+

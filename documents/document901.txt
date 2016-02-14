@@ -1,0 +1,18 @@
+static void gcm encrypt done struct crypto async request  areq  int err 
+{
+	struct aead request  req = areq data 
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+
+	if   err  {
+		err = gcm hash req  pctx  
+		if  err ==  EINPROGRESS || err ==  EBUSY 
+			return 
+		else if   err  {
+			crypto xor pctx auth tag  pctx iauth tag  16  
+			gcm enc copy hash req  pctx  
+		}
+	}
+
+	aead request complete req  err  
+}
+

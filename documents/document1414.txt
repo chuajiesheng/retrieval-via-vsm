@@ -1,0 +1,15 @@
+  
+   Allocate structures for a manager 
+   num managers are the number of memory pools to manage   VRAM  AGP       
+   user order is the log2 of the number of buckets in the user hash table 
+  	    set this to approximately log2 of the max number of memory regions
+  	    that will be allocated for  all  pools together 
+   owner order is the log2 of the number of buckets in the owner hash table 
+  	    set this to approximately log2 of
+  	    the number of client file connections that will
+  	    be using the manager 
+  
+   
+extern int drm sman init struct drm sman   sman  unsigned int num managers 
+			 unsigned int user order  unsigned int owner order  
+

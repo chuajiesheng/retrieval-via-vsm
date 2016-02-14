@@ -1,0 +1,2 @@
+int snd ac97 set rate struct snd ac97  ac97  int reg  unsigned int rate  
+

@@ -1,0 +1,35 @@
+snd es1968 pcm struct es1968  chip  int device 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	   get DMA buffer   
+	if   err = snd es1968 init dmabuf chip     0 
+		return err 
+
+	   set PCMBAR   
+	wave set register chip  0x01FC  chip dma addr    12  
+	wave set register chip  0x01FD  chip dma addr    12  
+	wave set register chip  0x01FE  chip dma addr    12  
+	wave set register chip  0x01FF  chip dma addr    12  
+
+	if   err = snd pcm new chip card   ESS Maestro   device 
+			       chip playback streams 
+			       chip capture streams   pcm     0 
+		return err 
+
+	pcm private data = chip 
+	pcm private free = snd es1968 pcm free 
+
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd es1968 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd es1968 capture ops  
+
+	pcm info flags = 0 
+
+	strcpy pcm name   ESS Maestro   
+
+	chip pcm = pcm 
+
+	return 0 
+}
+

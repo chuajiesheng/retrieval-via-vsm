@@ -1,0 +1,4 @@
+int drm fb helper init struct drm device  dev 
+		       struct drm fb helper  helper  int crtc count 
+		       int max conn  
+

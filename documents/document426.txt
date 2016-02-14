@@ -1,0 +1,6 @@
+static int loopback hw params struct snd pcm substream  substream 
+			      struct snd pcm hw params  params 
+{
+	return snd pcm lib malloc pages substream  params buffer bytes params   
+}
+

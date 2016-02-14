@@ -1,0 +1,8 @@
+static int snd rme32 pcm hw free struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	if    rme32 fullduplex mode 
+		return 0 
+	return snd pcm lib free pages substream  
+}
+

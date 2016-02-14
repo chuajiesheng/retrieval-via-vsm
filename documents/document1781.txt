@@ -1,0 +1,48 @@
+static irqreturn t snd fm801 interrupt int irq  void  dev id 
+{
+	struct fm801  chip = dev id 
+	unsigned short status 
+	unsigned int tmp 
+
+	status = inw FM801 REG chip  IRQ STATUS   
+	status  = FM801 IRQ PLAYBACK|FM801 IRQ CAPTURE|FM801 IRQ MPU|FM801 IRQ VOLUME 
+	if    status 
+		return IRQ NONE 
+	   ack first   
+	outw status  FM801 REG chip  IRQ STATUS   
+	if  chip pcm     status   FM801 IRQ PLAYBACK     chip playback substream  {
+		spin lock  chip reg lock  
+		chip ply buf++ 
+		chip ply pos += chip ply count 
+		chip ply pos  = chip ply size 
+		tmp = chip ply pos + chip ply count 
+		tmp  = chip ply size 
+		outl chip ply buffer + tmp 
+				 chip ply buf   1  ?
+					FM801 REG chip  PLY BUF1   
+					FM801 REG chip  PLY BUF2   
+		spin unlock  chip reg lock  
+		snd pcm period elapsed chip playback substream  
+	}
+	if  chip pcm     status   FM801 IRQ CAPTURE     chip capture substream  {
+		spin lock  chip reg lock  
+		chip cap buf++ 
+		chip cap pos += chip cap count 
+		chip cap pos  = chip cap size 
+		tmp = chip cap pos + chip cap count 
+		tmp  = chip cap size 
+		outl chip cap buffer + tmp 
+				 chip cap buf   1  ?
+					FM801 REG chip  CAP BUF1   
+					FM801 REG chip  CAP BUF2   
+		spin unlock  chip reg lock  
+		snd pcm period elapsed chip capture substream  
+	}
+	if  chip rmidi     status   FM801 IRQ MPU  
+		snd mpu401 uart interrupt irq  chip rmidi private data  
+	if  status   FM801 IRQ VOLUME 
+		    TODO   
+
+	return IRQ HANDLED 
+}
+

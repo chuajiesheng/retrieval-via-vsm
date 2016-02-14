@@ -1,0 +1,35 @@
+static void snd als300 init struct snd als300  chip 
+{
+	unsigned long flags 
+	u32 tmp 
+	
+	snd als300 dbgcallenter   
+	spin lock irqsave  chip reg lock  flags  
+	chip revision =  snd als300 gcr read chip port  MISC CONTROL     16 
+								  0x0000000F 
+	   Setup DRAM   
+	tmp = snd als300 gcr read chip port  DRAM WRITE CONTROL  
+	snd als300 gcr write chip port  DRAM WRITE CONTROL 
+						 tmp | DRAM MODE 2 
+						  ~WRITE TRANS START  
+
+	   Enable IRQ output   
+	snd als300 set irq flag chip  IRQ ENABLE  
+
+	   Unmute hardware devices so their outputs get routed to
+	   the onboard mixer   
+	tmp = snd als300 gcr read chip port  MISC CONTROL  
+	snd als300 gcr write chip port  MISC CONTROL 
+			tmp | VMUTE NORMAL | MMUTE NORMAL  
+
+	   Reset volumes   
+	snd als300 gcr write chip port  MUS VOC VOL  0  
+
+	   Make sure playback transfer is stopped   
+	tmp = snd als300 gcr read chip port  PLAYBACK CONTROL  
+	snd als300 gcr write chip port  PLAYBACK CONTROL 
+			tmp   ~TRANSFER START  
+	spin unlock irqrestore  chip reg lock  flags  
+	snd als300 dbgcallleave   
+}
+

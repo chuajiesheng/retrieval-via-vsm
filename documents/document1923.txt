@@ -1,0 +1,15 @@
+static int snd intel8x0 ali ac97spdifout open struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	unsigned int val 
+
+	spin lock irq  chip reg lock  
+	val = igetdword chip  ICHREG ALI INTERFACECR   
+	val |= ICH ALI IF AC97SP 
+	iputdword chip  ICHREG ALI INTERFACECR   val  
+	   also needs to set ALI SC CODEC SPDF correctly   
+	spin unlock irq  chip reg lock  
+
+	return snd intel8x0 pcm open substream   chip ichd ALID AC97SPDIFOUT   
+}
+

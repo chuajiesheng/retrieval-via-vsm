@@ -1,0 +1,48 @@
+static struct crypto instance  chainiv alloc struct rtattr   tb 
+{
+	struct crypto attr type  algt 
+	struct crypto instance  inst 
+	int err 
+
+	algt = crypto get attr type tb  
+	err = PTR ERR algt  
+	if  IS ERR algt  
+		return ERR PTR err  
+
+	err = crypto get default rng   
+	if  err 
+		return ERR PTR err  
+
+	inst = skcipher geniv alloc  chainiv tmpl  tb  0  0  
+	if  IS ERR inst  
+		goto put rng 
+
+	inst alg cra ablkcipher givencrypt = chainiv givencrypt first 
+
+	inst alg cra init = chainiv init 
+	inst alg cra exit = skcipher geniv exit 
+
+	inst alg cra ctxsize = sizeof struct chainiv ctx  
+
+	if   crypto requires sync algt type  algt mask   {
+		inst alg cra flags |= CRYPTO ALG ASYNC 
+
+		inst alg cra ablkcipher givencrypt =
+			async chainiv givencrypt first 
+
+		inst alg cra init = async chainiv init 
+		inst alg cra exit = async chainiv exit 
+
+		inst alg cra ctxsize = sizeof struct async chainiv ctx  
+	}
+
+	inst alg cra ctxsize += inst alg cra ablkcipher ivsize 
+
+out 
+	return inst 
+
+put rng 
+	crypto put default rng   
+	goto out 
+}
+

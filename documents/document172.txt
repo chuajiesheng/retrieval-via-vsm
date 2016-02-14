@@ -1,0 +1,7 @@
+static void   exit alsa hwdep exit void 
+{
+	snd ctl unregister ioctl snd hwdep control ioctl  
+	snd ctl unregister ioctl compat snd hwdep control ioctl  
+	snd hwdep proc done   
+}
+

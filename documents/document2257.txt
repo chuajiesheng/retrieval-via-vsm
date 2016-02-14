@@ -1,0 +1,2 @@
+static int snd rme32 create switches struct snd card  card  struct rme32   rme32  
+

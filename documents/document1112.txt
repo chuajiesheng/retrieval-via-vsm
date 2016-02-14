@@ -1,0 +1,16 @@
+snd azf3328 gameport set counter frequency struct snd azf3328  chip 
+					   unsigned int freq cfg
+ 
+{
+	snd azf3328 io reg setb 
+		chip game io+IDX GAME HWCONFIG 
+		0x02 
+		 freq cfg   1   = 0
+	  
+	snd azf3328 io reg setb 
+		chip game io+IDX GAME HWCONFIG 
+		0x04 
+		 freq cfg   2   = 0
+	  
+}
+

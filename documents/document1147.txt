@@ -1,0 +1,39 @@
+snd azf3328 suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct snd azf3328  chip = card private data 
+	u16  saved regs ctrl u16 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+
+	   same pcm object for playback capture   
+	snd pcm suspend all chip pcm AZF CODEC PLAYBACK   
+	snd pcm suspend all chip pcm AZF CODEC I2S OUT   
+
+	snd azf3328 suspend regs chip mixer io 
+		ARRAY SIZE chip saved regs mixer   chip saved regs mixer  
+
+	   make sure to disable master volume etc  to prevent looping sound   
+	snd azf3328 mixer set mute chip  IDX MIXER PLAY MASTER  1  
+	snd azf3328 mixer set mute chip  IDX MIXER WAVEOUT  1  
+
+	snd azf3328 suspend regs chip ctrl io 
+		ARRAY SIZE chip saved regs ctrl   chip saved regs ctrl  
+
+	   manually store the one currently relevant write only reg  too   
+	saved regs ctrl u16 =  u16   chip saved regs ctrl 
+	saved regs ctrl u16 IDX IO 6AH   2  = chip shadow reg ctrl 6AH 
+
+	snd azf3328 suspend regs chip game io 
+		ARRAY SIZE chip saved regs game   chip saved regs game  
+	snd azf3328 suspend regs chip mpu io 
+		ARRAY SIZE chip saved regs mpu   chip saved regs mpu  
+	snd azf3328 suspend regs chip opl3 io 
+		ARRAY SIZE chip saved regs opl3   chip saved regs opl3  
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

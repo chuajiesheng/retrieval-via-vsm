@@ -1,0 +1,10 @@
+static int snd atiixp playback close struct snd pcm substream  substream 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+	int err 
+	mutex lock  chip open mutex  
+	err = snd atiixp pcm close substream   chip dmas ATI DMA PLAYBACK   
+	mutex unlock  chip open mutex  
+	return err 
+}
+

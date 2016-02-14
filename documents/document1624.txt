@@ -1,0 +1,46 @@
+static int snd als300 trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd als300  chip = snd pcm substream chip substream  
+	u32 tmp 
+	struct snd als300 substream data  data 
+	unsigned short reg 
+	int ret = 0 
+
+	data = substream runtime private data 
+	reg = data control register 
+
+	snd als300 dbgcallenter   
+	spin lock  chip reg lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		tmp = snd als300 gcr read chip port  reg  
+		data period flipflop = 1 
+		snd als300 gcr write chip port  reg  tmp | TRANSFER START  
+		snd als300 dbgplay  TRIGGER START\n   
+		break 
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		tmp = snd als300 gcr read chip port  reg  
+		snd als300 gcr write chip port  reg  tmp   ~TRANSFER START  
+		snd als300 dbgplay  TRIGGER STOP\n   
+		break 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+		tmp = snd als300 gcr read chip port  reg  
+		snd als300 gcr write chip port  reg  tmp | FIFO PAUSE  
+		snd als300 dbgplay  TRIGGER PAUSE\n   
+		break 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+		tmp = snd als300 gcr read chip port  reg  
+		snd als300 gcr write chip port  reg  tmp   ~FIFO PAUSE  
+		snd als300 dbgplay  TRIGGER RELEASE\n   
+		break 
+	default 
+		snd als300 dbgplay  TRIGGER INVALID\n   
+		ret =  EINVAL 
+	}
+	spin unlock  chip reg lock  
+	snd als300 dbgcallleave   
+	return ret 
+}
+

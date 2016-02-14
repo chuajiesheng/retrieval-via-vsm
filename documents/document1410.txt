@@ -1,0 +1,4 @@
+int snd pcm hw constraint pow2 struct snd pcm runtime  runtime 
+			       unsigned int cond 
+			       snd pcm hw param t var  
+

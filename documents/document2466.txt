@@ -1,0 +1,40 @@
+   
+   tfrc lh interval add     Insert new record into the Loss Interval database
+   @lh 		   Loss Interval database
+   @rh 		   Receive history containing a fresh loss event
+   @calc first li  Caller dependent routine to compute length of first interval
+   @sk 		   Used by @calc first li in caller specific way  subtyping 
+   Updates I mean and returns 1 if a new interval has in fact been added to @lh 
+   
+int tfrc lh interval add struct tfrc loss hist  lh  struct tfrc rx hist  rh 
+			 u32   calc first li  struct sock     struct sock  sk 
+{
+	struct tfrc loss interval  cur = tfrc lh peek lh    new 
+
+	if  cur  = NULL     tfrc lh is new loss cur  tfrc rx hist loss prev rh   
+		return 0 
+
+	new = tfrc lh demand next lh  
+	if  unlikely new == NULL   {
+		DCCP CRIT  Cannot allocate add loss record    
+		return 0 
+	}
+
+	new li seqno	  = tfrc rx hist loss prev rh  tfrchrx seqno 
+	new li ccval	  = tfrc rx hist loss prev rh  tfrchrx ccval 
+	new li is closed = 0 
+
+	if  ++lh counter == 1 
+		lh i mean = new li length =   calc first li  sk  
+	else {
+		cur li length = dccp delta seqno cur li seqno  new li seqno  
+		new li length = dccp delta seqno new li seqno 
+				  tfrc rx hist last rcv rh  tfrchrx seqno  + 1 
+		if  lh counter    2 LIH SIZE  
+			lh counter  = LIH SIZE 
+
+		tfrc lh calc i mean lh  
+	}
+	return 1 
+}
+

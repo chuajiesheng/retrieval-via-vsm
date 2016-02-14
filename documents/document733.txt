@@ -1,0 +1,32 @@
+  
+   open callback skeleton
+   
+static int snd via82xx modem pcm open struct via82xx modem  chip  struct viadev  viadev 
+				      struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+        static unsigned int rates   = { 8000   9600  12000  16000 } 
+        static struct snd pcm hw constraint list hw constraints rates = {
+                 count = ARRAY SIZE rates  
+                 list = rates 
+                 mask = 0 
+        } 
+
+	runtime hw = snd via82xx hw 
+	
+        if   err = snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM RATE 
+					       hw constraints rates     0 
+                return err 
+
+	   we may remove following constaint when we modify table entries
+	   in interrupt   
+	if   err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+
+	runtime private data = viadev 
+	viadev substream = substream 
+
+	return 0 
+}
+

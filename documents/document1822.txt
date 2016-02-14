@@ -1,0 +1,2 @@
+void snd tea575x exit struct snd tea575x  tea  
+

@@ -1,0 +1,37 @@
+   
+   snd device new   create an ALSA device component
+   @card  the card instance
+   @type  the device type  SNDRV DEV XXX
+   @device data  the data pointer of this device
+   @ops  the operator table
+  
+   Creates a new device component for the given data pointer 
+   The device will be assigned to the card and managed together
+   by the card 
+  
+   The data pointer plays a role as the identifier  too  so the
+   pointer address must be unique and unchanged 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd device new struct snd card  card  snd device type t type 
+		   void  device data  struct snd device ops  ops 
+{
+	struct snd device  dev 
+
+	if  snd BUG ON  card ||  device data ||  ops  
+		return  ENXIO 
+	dev = kzalloc sizeof  dev   GFP KERNEL  
+	if  dev == NULL  {
+		snd printk KERN ERR  Cannot allocate device\n   
+		return  ENOMEM 
+	}
+	dev card = card 
+	dev type = type 
+	dev state = SNDRV DEV BUILD 
+	dev device data = device data 
+	dev ops = ops 
+	list add  dev list   card devices  	   add to the head of list   
+	return 0 
+}
+

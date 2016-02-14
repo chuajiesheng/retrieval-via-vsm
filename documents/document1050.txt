@@ -1,0 +1,10 @@
+static   inline   struct drm local map  drm core findmap struct drm device  dev 
+							 unsigned int token 
+{
+	struct drm map list   entry 
+	list for each entry  entry   dev maplist  head 
+	    if   entry user token == token 
+		return  entry map 
+	return NULL 
+}
+

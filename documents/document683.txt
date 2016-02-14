@@ -1,0 +1,14 @@
+  
+        mtpav control
+   
+static void snd mtpav portscan struct mtpav  chip 	   put mtp into smart routing mode
+{
+	u8 p 
+
+	for  p = 0  p   8  p++  {
+		snd mtpav send byte chip  0xf5  
+		snd mtpav send byte chip  p  
+		snd mtpav send byte chip  0xfe  
+	}
+}
+

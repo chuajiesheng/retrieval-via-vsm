@@ -1,0 +1,15 @@
+static void snd mts64 rawmidi output trigger struct snd rawmidi substream  substream 
+					     int up 
+{
+	struct mts64  mts = substream rmidi private data 
+	u8 data 
+	unsigned long flags 
+
+	spin lock irqsave  mts lock  flags  
+	while  snd rawmidi transmit peek substream   data  1  == 1  {
+		mts64 write midi mts  data  substream number+1  
+		snd rawmidi transmit ack substream  1  
+	}
+	spin unlock irqrestore  mts lock  flags  
+}
+

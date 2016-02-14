@@ -1,0 +1,14 @@
+snd azf3328 codec outl multi const struct snd azf3328 codec data  codec 
+			     unsigned reg  const void  buffer  int count
+ 
+{
+	unsigned long addr = codec io base + reg 
+	if  count  {
+		const u32  buf = buffer 
+		do {
+			outl  buf++  addr  
+			addr += 4 
+		} while    count  
+	}
+}
+

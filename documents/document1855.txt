@@ -1,0 +1,8 @@
+static snd pcm uframes t snd bt87x pointer struct snd pcm substream  substream 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	return  snd pcm uframes t bytes to frames runtime  chip current line   chip line bytes  
+}
+

@@ -1,0 +1,8 @@
+   
+   tfrc rx hist index   index to reach n th entry after loss start
+   
+static inline u8 tfrc rx hist index const struct tfrc rx hist  h  const u8 n 
+{
+	return  h loss start + n    TFRC NDUPACK 
+}
+

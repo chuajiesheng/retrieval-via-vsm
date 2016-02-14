@@ -1,0 +1,19 @@
+static int   init alsa card mtpav init void 
+{
+	int err 
+
+	if   err = platform driver register  snd mtpav driver     0 
+		return err 
+
+	device = platform device register simple SND MTPAV DRIVER   1  NULL  0  
+	if   IS ERR device   {
+		if  platform get drvdata device  
+			return 0 
+		platform device unregister device  
+		err =  ENODEV 
+	} else
+		err = PTR ERR device  
+	platform driver unregister  snd mtpav driver  
+	return err 
+}
+

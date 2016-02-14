@@ -1,0 +1,41 @@
+   
+   snd iprintf   printf on the procfs buffer
+   @buffer  the procfs buffer
+   @fmt  the printf format
+  
+   Outputs the string on the procfs buffer just like printf   
+  
+   Returns the size of output string 
+   
+int snd iprintf struct snd info buffer  buffer  const char  fmt      
+{
+	va list args 
+	int len  res 
+	int err = 0 
+
+	might sleep   
+	if  buffer stop || buffer error 
+		return 0 
+	len = buffer len   buffer size 
+	va start args  fmt  
+	for      {
+		va list ap 
+		va copy ap  args  
+		res = vsnprintf buffer buffer + buffer curr  len  fmt  ap  
+		va end ap  
+		if  res   len 
+			break 
+		err = resize info buffer buffer  buffer len + PAGE SIZE  
+		if  err   0 
+			break 
+		len = buffer len   buffer size 
+	}
+	va end args  
+
+	if  err   0 
+		return err 
+	buffer curr += res 
+	buffer size += res 
+	return res 
+}
+

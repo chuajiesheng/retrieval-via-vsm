@@ -1,0 +1,15 @@
+   
+   ttm ref object base unref
+  
+   @key  Key representing the base object 
+   @ref type  Ref type of the ref object to be dereferenced 
+  
+   Unreference a ref object with type @ref type
+   on the base object identified by @key  If there are no duplicate
+   references  the ref object will be destroyed and the base object
+   will be unreferenced 
+   
+extern int ttm ref object base unref struct ttm object file  tfile 
+				     unsigned long key 
+				     enum ttm ref type ref type  
+

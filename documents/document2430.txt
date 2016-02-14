@@ -1,0 +1,13 @@
+int tfrc tx hist add struct tfrc tx hist entry   headp  u64 seqno 
+{
+	struct tfrc tx hist entry  entry = kmem cache alloc tfrc tx hist slab  gfp any    
+
+	if  entry == NULL 
+		return  ENOBUFS 
+	entry seqno = seqno 
+	entry stamp = ktime get real   
+	entry next  =  headp 
+	 headp	     = entry 
+	return 0 
+}
+

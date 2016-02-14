@@ -1,0 +1,38 @@
+snd azf3328 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	const struct snd azf3328  chip = card private data 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  azt3328  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd azf3328 resume regs chip saved regs game  chip game io 
+					ARRAY SIZE chip saved regs game   
+	snd azf3328 resume regs chip saved regs mpu  chip mpu io 
+					ARRAY SIZE chip saved regs mpu   
+	snd azf3328 resume regs chip saved regs opl3  chip opl3 io 
+					ARRAY SIZE chip saved regs opl3   
+
+	snd azf3328 resume regs chip saved regs mixer  chip mixer io 
+					ARRAY SIZE chip saved regs mixer   
+
+	   unfortunately with 32bit transfers  IDX MIXER PLAY MASTER  0x02 
+	   and IDX MIXER RESET  offset 0x00  get touched at the same time 
+	   resulting in a mixer reset condition persisting until  after 
+	   master vol was restored  Thus master vol needs an extra restore    
+	outw   u16   chip saved regs mixer  1   chip mixer io + 2  
+
+	snd azf3328 resume regs chip saved regs ctrl  chip ctrl io 
+					ARRAY SIZE chip saved regs ctrl   
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

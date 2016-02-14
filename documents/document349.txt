@@ -1,0 +1,9 @@
+int   exit snd card info done void 
+{
+	snd info free entry snd card info entry  
+#ifdef MODULE
+	snd info free entry snd card module info entry  
+#endif
+	return 0 
+}
+

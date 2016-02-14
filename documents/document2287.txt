@@ -1,0 +1,17 @@
+static int snd rme32 playback fd ack struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	struct snd pcm indirect  rec   cprec 
+
+	rec =  rme32 playback pcm 
+	cprec =  rme32 capture pcm 
+	spin lock  rme32 lock  
+	rec hw queue size = RME32 BUFFER SIZE 
+	if  rme32 running    1    SNDRV PCM STREAM CAPTURE  
+		rec hw queue size  = cprec hw ready 
+	spin unlock  rme32 lock  
+	snd pcm indirect playback transfer substream  rec 
+					   snd rme32 pb trans copy  
+	return 0 
+}
+

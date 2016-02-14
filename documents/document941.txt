@@ -1,0 +1,6 @@
+static int snd sonicvibes dev free struct snd device  device 
+{
+	struct sonicvibes  sonic = device device data 
+	return snd sonicvibes free sonic  
+}
+

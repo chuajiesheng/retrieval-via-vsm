@@ -1,0 +1,11 @@
+  
+   close callback
+   
+static int snd via82xx pcm close struct snd pcm substream  substream 
+{
+	struct viadev  viadev = substream runtime private data 
+
+	viadev substream = NULL 
+	return 0 
+}
+

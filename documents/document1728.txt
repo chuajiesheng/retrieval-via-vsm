@@ -1,0 +1,8 @@
+  
+   These methods are used by specific locking variants  spinlocks 
+   rwlocks  mutexes and rwsems  to pass init acquire release events
+   to lockdep 
+   
+extern void lockdep init map struct lockdep map  lock  const char  name 
+			     struct lock class key  key  int subclass  
+

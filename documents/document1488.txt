@@ -1,0 +1,14 @@
+snd rme96 capture copy struct snd pcm substream  substream 
+		       int channel     not used  interleaved data    
+		       snd pcm uframes t pos 
+		       void   user  dst 
+		       snd pcm uframes t count 
+{
+	struct rme96  rme96 = snd pcm substream chip substream  
+	count   = rme96 capture frlog 
+	pos   = rme96 capture frlog 
+	copy to user fromio dst  rme96 iobase + RME96 IO REC BUFFER + pos 
+			    count  
+        return 0 
+}
+

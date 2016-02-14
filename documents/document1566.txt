@@ -1,0 +1,20 @@
+static int async chainiv givencrypt tail struct skcipher givcrypt request  req 
+{
+	struct crypto ablkcipher  geniv = skcipher givcrypt reqtfm req  
+	struct async chainiv ctx  ctx = crypto ablkcipher ctx geniv  
+	struct ablkcipher request  subreq = skcipher givcrypt reqctx req  
+	unsigned int ivsize = crypto ablkcipher ivsize geniv  
+
+	memcpy req giv  ctx iv  ivsize  
+	memcpy subreq info  ctx iv  ivsize  
+
+	ctx err = crypto ablkcipher encrypt subreq  
+	if  ctx err 
+		goto out 
+
+	memcpy ctx iv  subreq info  ivsize  
+
+out 
+	return async chainiv schedule work ctx  
+}
+

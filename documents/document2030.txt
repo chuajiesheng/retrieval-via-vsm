@@ -1,0 +1,29 @@
+static int snd cs4281 free struct cs4281  chip 
+{
+	snd cs4281 free gameport chip  
+
+	if  chip irq  = 0 
+		synchronize irq chip irq  
+
+	   Mask interrupts   
+	snd cs4281 pokeBA0 chip  BA0 HIMR  0x7fffffff  
+	   Stop the DLL Clock logic    
+	snd cs4281 pokeBA0 chip  BA0 CLKCR1  0  
+	   Sound System Power Management   Turn Everything OFF   
+	snd cs4281 pokeBA0 chip  BA0 SSPM  0  
+	   PCI interface   D3 state   
+	pci set power state chip pci  3  
+
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	if  chip ba0 
+		iounmap chip ba0  
+	if  chip ba1 
+		iounmap chip ba1  
+	pci release regions chip pci  
+	pci disable device chip pci  
+
+	kfree chip  
+	return 0 
+}
+

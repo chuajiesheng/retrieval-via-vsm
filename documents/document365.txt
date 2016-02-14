@@ -1,0 +1,2 @@
+int snd device register all struct snd card  card  
+

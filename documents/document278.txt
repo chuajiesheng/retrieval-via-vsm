@@ -1,0 +1,2 @@
+void snd pcm timer init struct snd pcm substream  substream  
+

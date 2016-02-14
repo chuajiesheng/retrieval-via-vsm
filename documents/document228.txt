@@ -1,0 +1,2 @@
+static int snd pcm dev disconnect struct snd device  device  
+

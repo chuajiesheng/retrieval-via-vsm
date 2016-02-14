@@ -1,0 +1,24 @@
+int   init tfrc lib init void 
+{
+	int rc = tfrc li init   
+
+	if  rc 
+		goto out 
+
+	rc = tfrc tx packet history init   
+	if  rc 
+		goto out free loss intervals 
+
+	rc = tfrc rx packet history init   
+	if  rc 
+		goto out free tx history 
+	return 0 
+
+out free tx history 
+	tfrc tx packet history exit   
+out free loss intervals 
+	tfrc li exit   
+out 
+	return rc 
+}
+

@@ -1,0 +1,18 @@
+  
+   get RAWMIDI resources
+   
+static void   devinit snd mtpav set name struct mtpav  chip 
+				      struct snd rawmidi substream  substream 
+{
+	if  substream number  = 0    substream number   chip num ports 
+		sprintf substream name   MTP direct  d    substream number   chip num ports  + 1  
+	else if  substream number  = 8    substream number   chip num ports   2 
+		sprintf substream name   MTP remote  d    substream number   chip num ports  + 1  
+	else if  substream number == chip num ports   2 
+		strcpy substream name   MTP computer   
+	else if  substream number == chip num ports   2 + 1 
+		strcpy substream name   MTP ADAT   
+	else
+		strcpy substream name   MTP broadcast   
+}
+

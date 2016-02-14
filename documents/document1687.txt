@@ -1,0 +1,23 @@
+snd m3 amp enable struct snd m3  chip  int enable 
+{
+	int io = chip iobase 
+	u16 gpo  polarity 
+
+	if    chip external amp 
+		return 
+
+	polarity = enable ? 0   1 
+	polarity = polarity    chip amp gpio 
+	gpo = 1    chip amp gpio 
+
+	outw ~gpo  io + GPIO MASK  
+
+	outw inw io + GPIO DIRECTION  | gpo 
+	     io + GPIO DIRECTION  
+
+	outw  GPO SECONDARY AC97 | GPO PRIMARY AC97 | polarity  
+	     io + GPIO DATA  
+
+	outw 0xffff  io + GPIO MASK  
+}
+

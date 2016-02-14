@@ -1,0 +1,28 @@
+static void   devinit snd mts64 attach struct parport  p 
+{
+	struct platform device  device 
+
+	device = platform device alloc PLATFORM DRIVER  device count  
+	if   device 
+		return 
+
+	   Temporary assignment to forward the parport   
+	platform set drvdata device  p  
+
+	if  platform device add device    0  {
+		platform device put device  
+		return 
+	}
+
+	   Since we dont get the return value of probe
+	   We need to check if device probing succeeded or not   
+	if   platform get drvdata device   {
+		platform device unregister device  
+		return 
+	}
+
+	   register device in global table   
+	platform devices device count  = device 
+	device count++ 
+}
+

@@ -1,0 +1,12 @@
+static inline unsigned short snd rawmidi file flags struct file  file 
+{
+	switch  file f mode    FMODE READ | FMODE WRITE   {
+	case FMODE WRITE 
+		return SNDRV RAWMIDI LFLG OUTPUT 
+	case FMODE READ 
+		return SNDRV RAWMIDI LFLG INPUT 
+	default 
+		return SNDRV RAWMIDI LFLG OPEN 
+	}
+}
+

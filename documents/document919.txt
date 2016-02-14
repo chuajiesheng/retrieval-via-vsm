@@ -1,0 +1,9 @@
+static int snd sonicvibes playback close struct snd pcm substream  substream 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+
+	sonic playback substream = NULL 
+	sonic mode  = ~SV MODE PLAY 
+	return 0 
+}
+

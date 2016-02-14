@@ -1,0 +1,37 @@
+static struct crypto instance  pcrypt alloc aead struct rtattr   tb 
+						 u32 type  u32 mask 
+{
+	struct crypto instance  inst 
+	struct crypto alg  alg 
+
+	alg = crypto get attr alg tb  type   mask   CRYPTO ALG TYPE MASK   
+	if  IS ERR alg  
+		return ERR CAST alg  
+
+	inst = pcrypt alloc instance alg  
+	if  IS ERR inst  
+		goto out put alg 
+
+	inst alg cra flags = CRYPTO ALG TYPE AEAD | CRYPTO ALG ASYNC 
+	inst alg cra type =  crypto aead type 
+
+	inst alg cra aead ivsize = alg cra aead ivsize 
+	inst alg cra aead geniv = alg cra aead geniv 
+	inst alg cra aead maxauthsize = alg cra aead maxauthsize 
+
+	inst alg cra ctxsize = sizeof struct pcrypt aead ctx  
+
+	inst alg cra init = pcrypt aead init tfm 
+	inst alg cra exit = pcrypt aead exit tfm 
+
+	inst alg cra aead setkey = pcrypt aead setkey 
+	inst alg cra aead setauthsize = pcrypt aead setauthsize 
+	inst alg cra aead encrypt = pcrypt aead encrypt 
+	inst alg cra aead decrypt = pcrypt aead decrypt 
+	inst alg cra aead givencrypt = pcrypt aead givencrypt 
+
+out put alg 
+	crypto mod put alg  
+	return inst 
+}
+

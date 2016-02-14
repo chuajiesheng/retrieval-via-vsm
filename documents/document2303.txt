@@ -1,0 +1,11 @@
+snd rme32 get clockmode control struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct rme32  rme32 = snd kcontrol chip kcontrol  
+
+	spin lock irq  rme32 lock  
+	ucontrol value enumerated item 0  = snd rme32 getclockmode rme32  
+	spin unlock irq  rme32 lock  
+	return 0 
+}
+

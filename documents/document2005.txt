@@ -1,0 +1,12 @@
+static int snd cs4281 playback prepare struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct cs4281 dma  dma = runtime private data 
+	struct cs4281  chip = snd pcm substream chip substream  
+
+	spin lock irq  chip reg lock  
+	snd cs4281 mode chip  dma  runtime  0  1  
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

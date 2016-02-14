@@ -1,0 +1,5 @@
+extern struct platform device  platform device register resndata 
+		struct device  parent  const char  name  int id 
+		const struct resource  res  unsigned int num 
+		const void  data  size t size  
+

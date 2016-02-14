@@ -1,0 +1,2 @@
+int snd ctl create struct snd card  card  
+

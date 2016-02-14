@@ -1,0 +1,21 @@
+static int snd mts64 rawmidi close struct snd rawmidi substream  substream 
+{
+	struct mts64  mts = substream rmidi private data 
+	unsigned long flags 
+
+	   mts open count  
+	if  mts open count == 0  {
+		   We need the spinlock irqsave here because we can still
+		   have IRQs at this point   
+		spin lock irqsave  mts lock  flags  
+		mts64 device close mts  
+		spin unlock irqrestore  mts lock  flags  
+
+		msleep 500  
+
+	} else if  mts open count   0 
+		mts open count = 0 
+
+	return 0 
+}
+

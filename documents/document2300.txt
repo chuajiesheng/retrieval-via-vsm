@@ -1,0 +1,29 @@
+snd rme32 get inputtype control struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct rme32  rme32 = snd kcontrol chip kcontrol  
+	unsigned int items = 3 
+
+	spin lock irq  rme32 lock  
+	ucontrol value enumerated item 0  = snd rme32 getinputtype rme32  
+
+	switch  rme32 pci device  {
+	case PCI DEVICE ID RME DIGI32 
+	case PCI DEVICE ID RME DIGI32 8 
+		items = 3 
+		break 
+	case PCI DEVICE ID RME DIGI32 PRO 
+		items = 4 
+		break 
+	default 
+		snd BUG   
+		break 
+	}
+	if  ucontrol value enumerated item 0   = items  {
+		ucontrol value enumerated item 0  = items   1 
+	}
+
+	spin unlock irq  rme32 lock  
+	return 0 
+}
+

@@ -1,0 +1,9 @@
+   
+   ttm ttm unbind 
+  
+   @ttm  The struct ttm tt 
+  
+   Unbind a struct ttm tt 
+   
+extern void ttm tt unbind struct ttm tt  ttm  
+

@@ -1,0 +1,19 @@
+snd m3 ac97 write struct snd ac97  ac97  unsigned short reg  unsigned short val 
+{
+	struct snd m3  chip = ac97 private data 
+#ifndef CONFIG SND MAESTRO3 INPUT
+	unsigned long flags 
+#endif
+
+	if  snd m3 ac97 wait chip  
+		return 
+#ifndef CONFIG SND MAESTRO3 INPUT
+	spin lock irqsave  chip ac97 lock  flags  
+#endif
+	snd m3 outw chip  val  CODEC DATA  
+	snd m3 outb chip  reg   0x7f  CODEC COMMAND  
+#ifndef CONFIG SND MAESTRO3 INPUT
+	spin unlock irqrestore  chip ac97 lock  flags  
+#endif
+}
+

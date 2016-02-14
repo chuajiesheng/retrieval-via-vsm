@@ -1,0 +1,16 @@
+static inline void snd sonicvibes setdmac struct sonicvibes   sonic 
+					  unsigned int addr 
+					  unsigned int count 
+{
+	   note  dmac is working in word mode      
+	count   = 1 
+	count   
+	outl addr  sonic dmac port + SV DMA ADDR0  
+	outl count  sonic dmac port + SV DMA COUNT0  
+	outb 0x14  sonic dmac port + SV DMA MODE  
+#if 0
+	printk KERN DEBUG  program dmac  addr = 0x x  paddr = 0x x\n  
+	       addr  inl sonic dmac port + SV DMA ADDR0   
+#endif
+}
+

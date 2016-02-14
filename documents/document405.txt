@@ -1,0 +1,2 @@
+extern int platform device add struct platform device  pdev  
+

@@ -1,0 +1,15 @@
+static void snd via82xx channel reset struct via82xx modem  chip  struct viadev  viadev 
+{
+	outb VIA REG CTRL PAUSE | VIA REG CTRL TERMINATE | VIA REG CTRL RESET 
+	     VIADEV REG viadev  OFFSET CONTROL   
+	inb VIADEV REG viadev  OFFSET CONTROL   
+	udelay 50  
+	   disable interrupts   
+	outb 0x00  VIADEV REG viadev  OFFSET CONTROL   
+	   clear interrupts   
+	outb 0x03  VIADEV REG viadev  OFFSET STATUS   
+	outb 0x00  VIADEV REG viadev  OFFSET TYPE       for via686   
+	   outl 0  VIADEV REG viadev  OFFSET CURR PTR   
+	viadev lastpos = 0 
+}
+

@@ -1,0 +1,98 @@
+static struct crypto instance  crypto gcm alloc common struct rtattr   tb 
+						       const char  full name 
+						       const char  ctr name 
+						       const char  ghash name 
+{
+	struct crypto attr type  algt 
+	struct crypto instance  inst 
+	struct crypto alg  ctr 
+	struct crypto alg  ghash alg 
+	struct ahash alg  ghash ahash alg 
+	struct gcm instance ctx  ctx 
+	int err 
+
+	algt = crypto get attr type tb  
+	err = PTR ERR algt  
+	if  IS ERR algt  
+		return ERR PTR err  
+
+	if   algt type ^ CRYPTO ALG TYPE AEAD    algt mask 
+		return ERR PTR  EINVAL  
+
+	ghash alg = crypto find alg ghash name   crypto ahash type 
+				    CRYPTO ALG TYPE HASH 
+				    CRYPTO ALG TYPE AHASH MASK  
+	err = PTR ERR ghash alg  
+	if  IS ERR ghash alg  
+		return ERR PTR err  
+
+	err =  ENOMEM 
+	inst = kzalloc sizeof  inst  + sizeof  ctx   GFP KERNEL  
+	if   inst 
+		goto out put ghash 
+
+	ctx = crypto instance ctx inst  
+	ghash ahash alg = container of ghash alg  struct ahash alg  halg base  
+	err = crypto init ahash spawn  ctx ghash   ghash ahash alg halg 
+				      inst  
+	if  err 
+		goto err free inst 
+
+	crypto set skcipher spawn  ctx ctr  inst  
+	err = crypto grab skcipher  ctx ctr  ctr name  0 
+				   crypto requires sync algt type 
+							algt mask   
+	if  err 
+		goto err drop ghash 
+
+	ctr = crypto skcipher spawn alg  ctx ctr  
+
+	   We only support 16 byte blocks    
+	if  ctr cra ablkcipher ivsize  = 16 
+		goto out put ctr 
+
+	   Not a stream cipher?   
+	err =  EINVAL 
+	if  ctr cra blocksize  = 1 
+		goto out put ctr 
+
+	err =  ENAMETOOLONG 
+	if  snprintf inst alg cra driver name  CRYPTO MAX ALG NAME 
+		      gcm base  s  s    ctr cra driver name 
+		     ghash alg cra driver name   =
+	    CRYPTO MAX ALG NAME 
+		goto out put ctr 
+
+	memcpy inst alg cra name  full name  CRYPTO MAX ALG NAME  
+
+	inst alg cra flags = CRYPTO ALG TYPE AEAD 
+	inst alg cra flags |= ctr cra flags   CRYPTO ALG ASYNC 
+	inst alg cra priority = ctr cra priority 
+	inst alg cra blocksize = 1 
+	inst alg cra alignmask = ctr cra alignmask |    alignof   u64    1  
+	inst alg cra type =  crypto aead type 
+	inst alg cra aead ivsize = 16 
+	inst alg cra aead maxauthsize = 16 
+	inst alg cra ctxsize = sizeof struct crypto gcm ctx  
+	inst alg cra init = crypto gcm init tfm 
+	inst alg cra exit = crypto gcm exit tfm 
+	inst alg cra aead setkey = crypto gcm setkey 
+	inst alg cra aead setauthsize = crypto gcm setauthsize 
+	inst alg cra aead encrypt = crypto gcm encrypt 
+	inst alg cra aead decrypt = crypto gcm decrypt 
+
+out 
+	crypto mod put ghash alg  
+	return inst 
+
+out put ctr 
+	crypto drop skcipher  ctx ctr  
+err drop ghash 
+	crypto drop ahash  ctx ghash  
+err free inst 
+	kfree inst  
+out put ghash 
+	inst = ERR PTR err  
+	goto out 
+}
+

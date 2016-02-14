@@ -1,0 +1,6 @@
+static inline struct crypto instance  crypto tfm alg instance 
+	struct crypto tfm  tfm 
+{
+	return container of tfm   crt alg  struct crypto instance  alg  
+}
+

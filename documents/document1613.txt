@@ -1,0 +1,17 @@
+static int snd als300 playback open struct snd pcm substream  substream 
+{
+	struct snd als300  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct snd als300 substream data  data = kzalloc sizeof  data  
+								GFP KERNEL  
+
+	snd als300 dbgcallenter   
+	chip playback substream = substream 
+	runtime hw = snd als300 playback hw 
+	runtime private data = data 
+	data control register = PLAYBACK CONTROL 
+	data block counter register = PLAYBACK BLOCK COUNTER 
+	snd als300 dbgcallleave   
+	return 0 
+}
+

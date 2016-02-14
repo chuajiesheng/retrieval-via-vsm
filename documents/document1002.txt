@@ -1,0 +1,38 @@
+static int snd ensoniq capture prepare struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned int mode = 0 
+
+	ensoniq c dma size = snd pcm lib buffer bytes substream  
+	ensoniq c period size = snd pcm lib period bytes substream  
+	if  snd pcm format width runtime format  == 16 
+		mode |= 0x02 
+	if  runtime channels   1 
+		mode |= 0x01 
+	spin lock irq  ensoniq reg lock  
+	ensoniq ctrl  = ~ES ADC EN 
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	outl ES MEM PAGEO ES PAGE ADC   ES REG ensoniq  MEM PAGE   
+	outl runtime dma addr  ES REG ensoniq  ADC FRAME   
+	outl  ensoniq c dma size    2    1  ES REG ensoniq  ADC SIZE   
+	ensoniq sctrl  = ~ ES R1 LOOP SEL | ES R1 MODEM  
+	ensoniq sctrl |= ES R1 INT EN | ES R1 MODEO mode  
+	outl ensoniq sctrl  ES REG ensoniq  SERIAL   
+	outl  ensoniq c period size    snd ensoniq sample shift mode     1 
+	     ES REG ensoniq  ADC COUNT   
+#ifdef CHIP1370
+	if    ensoniq u es1370 pclkdiv lock   ES MODE PLAY2   {
+		ensoniq ctrl  = ~ES 1370 PCLKDIVM 
+		ensoniq ctrl |= ES 1370 PCLKDIVO ES 1370 SRTODIV runtime rate   
+		ensoniq u es1370 pclkdiv lock |= ES MODE CAPTURE 
+	}
+#endif
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	spin unlock irq  ensoniq reg lock  
+#ifndef CHIP1370
+	snd es1371 adc rate ensoniq  runtime rate  
+#endif
+	return 0 
+}
+

@@ -1,0 +1,20 @@
+  
+   destructor
+   
+static int snd atiixp free struct atiixp modem  chip 
+{
+	if  chip irq   0 
+		goto   hw end 
+	snd atiixp chip stop chip  
+
+        hw end 
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	if  chip remap addr 
+		iounmap chip remap addr  
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

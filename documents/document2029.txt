@@ -1,0 +1,8 @@
+static void snd cs4281 free gameport struct cs4281  chip 
+{
+	if  chip gameport  {
+		gameport unregister port chip gameport  
+		chip gameport = NULL 
+	}
+}
+

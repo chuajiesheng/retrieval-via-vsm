@@ -1,0 +1,6 @@
+snd ad1889 dev free struct snd device  device  
+{
+	struct snd ad1889  chip = device device data 
+	return snd ad1889 free chip  
+}
+

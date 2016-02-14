@@ -1,0 +1,5 @@
+static loff t snd disconnect llseek struct file  file  loff t offset  int orig 
+{
+	return  ENODEV 
+}
+

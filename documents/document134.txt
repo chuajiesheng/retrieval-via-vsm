@@ -1,0 +1,5 @@
+static inline u32 aead request flags struct aead request  req 
+{
+	return req base flags 
+}
+

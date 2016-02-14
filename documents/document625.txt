@@ -1,0 +1,18 @@
+  
+   PCM interface
+   
+static int dummy pcm trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd dummy  dummy = snd pcm substream chip substream  
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		return dummy timer ops start substream  
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		return dummy timer ops stop substream  
+	}
+	return  EINVAL 
+}
+

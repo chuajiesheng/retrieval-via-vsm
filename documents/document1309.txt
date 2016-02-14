@@ -1,0 +1,9 @@
+static u16   apu get register struct es1968  chip  u16 channel  u8 reg 
+{
+	if  snd BUG ON channel  = NR APUS  
+		return 0 
+	reg |=  channel    4  
+	apu index set chip  reg  
+	return   maestro read chip  IDR0 DATA PORT  
+}
+

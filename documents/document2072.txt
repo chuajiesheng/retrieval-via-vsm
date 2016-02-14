@@ -1,0 +1,24 @@
+  
+   enable DMA and irqs
+   
+static int snd atiixp chip start struct atiixp modem  chip 
+{
+	unsigned int reg 
+
+	   set up spdif  enable burst mode   
+	reg = atiixp read chip  CMD  
+	reg |= ATI REG CMD BURST EN 
+	if   reg   ATI REG CMD MODEM PRESENT  
+		reg |= ATI REG CMD MODEM PRESENT 
+	atiixp write chip  CMD  reg  
+
+	   clear all interrupt source   
+	atiixp write chip  ISR  0xffffffff  
+	   enable irqs   
+	atiixp write chip  IER 
+		     ATI REG IER MODEM STATUS EN |
+		     ATI REG IER MODEM IN XRUN EN |
+		     ATI REG IER MODEM OUT1 XRUN EN  
+	return 0 
+}
+

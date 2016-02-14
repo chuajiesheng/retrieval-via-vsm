@@ -1,0 +1,9 @@
+alsa card azf3328 init void 
+{
+	int err 
+	snd azf3328 dbgcallenter   
+	err = pci register driver  driver  
+	snd azf3328 dbgcallleave   
+	return err 
+}
+

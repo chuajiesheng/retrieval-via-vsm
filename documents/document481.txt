@@ -1,0 +1,46 @@
+static int   devinit snd virmidi probe struct platform device  devptr 
+{
+	struct snd card  card 
+	struct snd card virmidi  vmidi 
+	int idx  err 
+	int dev = devptr id 
+
+	err = snd card create index dev   id dev   THIS MODULE 
+			      sizeof struct snd card virmidi    card  
+	if  err   0 
+		return err 
+	vmidi = card private data 
+	vmidi card = card 
+
+	if  midi devs dev    MAX MIDI DEVICES  {
+		snd printk KERN WARNING
+			    too much midi devices for virmidi  d   
+			    force to use  d\n   dev  MAX MIDI DEVICES  
+		midi devs dev  = MAX MIDI DEVICES 
+	}
+	for  idx = 0  idx   midi devs dev   idx++  {
+		struct snd rawmidi  rmidi 
+		struct snd virmidi dev  rdev 
+		if   err = snd virmidi new card  idx   rmidi     0 
+			goto   nodev 
+		rdev = rmidi private data 
+		vmidi midi idx  = rmidi 
+		strcpy rmidi name   Virtual Raw MIDI   
+		rdev seq mode = SNDRV VIRMIDI SEQ DISPATCH 
+	}
+	
+	strcpy card driver   VirMIDI   
+	strcpy card shortname   VirMIDI   
+	sprintf card longname   Virtual MIDI Card  i   dev + 1  
+
+	snd card set dev card   devptr dev  
+
+	if   err = snd card register card   == 0  {
+		platform set drvdata devptr  card  
+		return 0 
+	}
+        nodev 
+	snd card free card  
+	return err 
+}
+

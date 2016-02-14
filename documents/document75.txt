@@ -1,0 +1,37 @@
+static int   init snd hrtimer init void 
+{
+	struct snd timer  timer 
+	struct timespec tp 
+	int err 
+
+	hrtimer get res CLOCK MONOTONIC   tp  
+	if  tp tv sec   0 ||  tp tv nsec  {
+		snd printk KERN ERR
+			    snd hrtimer  Invalid resolution  u  09u  
+			    unsigned tp tv sec   unsigned tp tv nsec  
+		return  EINVAL 
+	}
+	resolution = tp tv nsec 
+
+	   Create a new timer and set up the fields   
+	err = snd timer global new  hrtimer   SNDRV TIMER GLOBAL HRTIMER 
+				    timer  
+	if  err   0 
+		return err 
+
+	timer module = THIS MODULE 
+	strcpy timer name   HR timer   
+	timer hw = hrtimer hw 
+	timer hw resolution = resolution 
+	timer hw ticks = NANO SEC   resolution 
+
+	err = snd timer global register timer  
+	if  err   0  {
+		snd timer global free timer  
+		return err 
+	}
+	mytimer = timer     remember this   
+
+	return 0 
+}
+

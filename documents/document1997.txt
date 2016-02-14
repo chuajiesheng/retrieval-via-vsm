@@ -1,0 +1,45 @@
+  
+    PCM part
+   
+static int snd cs4281 trigger struct snd pcm substream  substream  int cmd 
+{
+	struct cs4281 dma  dma = substream runtime private data 
+	struct cs4281  chip = snd pcm substream chip substream  
+
+	spin lock  chip reg lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+		dma valDCR |= BA0 DCR MSK 
+		dma valFCR |= BA0 FCR FEN 
+		break 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+		dma valDCR  = ~BA0 DCR MSK 
+		dma valFCR  = ~BA0 FCR FEN 
+		break 
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		snd cs4281 pokeBA0 chip  dma regDMR  dma valDMR   ~BA0 DMR DMA  
+		dma valDMR |= BA0 DMR DMA 
+		dma valDCR  = ~BA0 DCR MSK 
+		dma valFCR |= BA0 FCR FEN 
+		break 
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		dma valDMR  = ~ BA0 DMR DMA|BA0 DMR POLL  
+		dma valDCR |= BA0 DCR MSK 
+		dma valFCR  = ~BA0 FCR FEN 
+		   Leave wave playback FIFO enabled for FM   
+		if  dma regFCR  = BA0 FCR0 
+			dma valFCR  = ~BA0 FCR FEN 
+		break 
+	default 
+		spin unlock  chip reg lock  
+		return  EINVAL 
+	}
+	snd cs4281 pokeBA0 chip  dma regDMR  dma valDMR  
+	snd cs4281 pokeBA0 chip  dma regFCR  dma valFCR  
+	snd cs4281 pokeBA0 chip  dma regDCR  dma valDCR  
+	spin unlock  chip reg lock  
+	return 0 
+}
+

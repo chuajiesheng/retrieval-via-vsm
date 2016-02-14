@@ -1,0 +1,5 @@
+static const char  snd pcm state name snd pcm state t state 
+{
+	return snd pcm state names state  
+}
+

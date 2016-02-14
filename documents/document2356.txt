@@ -1,0 +1,23 @@
+  
+   power management
+   
+static int intel8x0m suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct intel8x0m  chip = card private data 
+	int i 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	for  i = 0  i   chip pcm devs  i++ 
+		snd pcm suspend all chip pcm i   
+	snd ac97 suspend chip ac97  
+	if  chip irq  = 0  {
+		free irq chip irq  chip  
+		chip irq =  1 
+	}
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

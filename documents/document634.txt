@@ -1,0 +1,3 @@
+int mlx4 srq alloc struct mlx4 dev  dev  u32 pdn  struct mlx4 mtt  mtt 
+		   u64 db rec  struct mlx4 srq  srq  
+

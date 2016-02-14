@@ -1,0 +1,9 @@
+   
+   ttm bo kunmap
+  
+   @map  Object describing the map to unmap 
+  
+   Unmaps a kernel map set up by ttm bo kmap 
+   
+extern void ttm bo kunmap struct ttm bo kmap obj  map  
+

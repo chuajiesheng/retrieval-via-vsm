@@ -1,0 +1,29 @@
+  
+   power management
+   
+static int snd atiixp suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct atiixp  chip = card private data 
+	int i 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	for  i = 0  i   NUM ATI PCMDEVS  i++ 
+		if  chip pcmdevs i   {
+			struct atiixp dma  dma =  chip dmas i  
+			if  dma substream    dma running 
+				dma saved curptr = readl chip remap addr +
+							  dma ops dt cur  
+			snd pcm suspend all chip pcmdevs i   
+		}
+	for  i = 0  i   NUM ATI CODECS  i++ 
+		snd ac97 suspend chip ac97 i   
+	snd atiixp aclink down chip  
+	snd atiixp chip stop chip  
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

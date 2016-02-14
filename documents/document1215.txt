@@ -1,0 +1,4 @@
+extern int drm get pci dev struct pci dev  pdev 
+			   const struct pci device id  ent 
+			   struct drm driver  driver  
+

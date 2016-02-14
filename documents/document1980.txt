@@ -1,0 +1,15 @@
+static int xtea setkey struct crypto tfm  tfm  const u8  in key 
+		       unsigned int key len 
+{
+	struct xtea ctx  ctx = crypto tfm ctx tfm  
+	const   le32  key =  const   le32   in key 
+
+	ctx KEY 0  = le32 to cpu key 0   
+	ctx KEY 1  = le32 to cpu key 1   
+	ctx KEY 2  = le32 to cpu key 2   
+	ctx KEY 3  = le32 to cpu key 3   
+
+	return 0  
+
+}
+

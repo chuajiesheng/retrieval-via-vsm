@@ -1,0 +1,2 @@
+void snd card info read oss struct snd info buffer  buffer  
+

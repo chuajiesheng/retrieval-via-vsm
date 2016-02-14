@@ -1,0 +1,10 @@
+  
+    PCM part
+   
+static int snd sonicvibes playback trigger struct snd pcm substream  substream 
+					   int cmd 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+	return snd sonicvibes trigger sonic  1  cmd  
+}
+

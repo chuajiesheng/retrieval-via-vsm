@@ -1,0 +1,106 @@
+  
+   prepare playback capture channel
+   channel to be used must have been set in rec ch 
+   
+static int snd cmipci pcm prepare struct cmipci  cm  struct cmipci pcm  rec 
+				 struct snd pcm substream  substream 
+{
+	unsigned int reg  freq  freq ext  val 
+	unsigned int period size 
+	struct snd pcm runtime  runtime = substream runtime 
+
+	rec fmt = 0 
+	rec shift = 0 
+	if  snd pcm format width runtime format   = 16  {
+		rec fmt |= 0x02 
+		if  snd pcm format width runtime format    16 
+			rec shift++     24 32bit   
+	}
+	if  runtime channels   1 
+		rec fmt |= 0x01 
+	if  rec is dac    set dac channels cm  rec  runtime channels    0  {
+		snd printd  cannot set dac channels\n   
+		return  EINVAL 
+	}
+
+	rec offset = runtime dma addr 
+	   buffer and period sizes in frame   
+	rec dma size = runtime buffer size    rec shift 
+	period size = runtime period size    rec shift 
+	if  runtime channels   2  {
+		   multi channels   
+		rec dma size =  rec dma size   runtime channels    2 
+		period size =  period size   runtime channels    2 
+	}
+
+	spin lock irq  cm reg lock  
+
+	   set buffer address   
+	reg = rec ch ? CM REG CH1 FRAME1   CM REG CH0 FRAME1 
+	snd cmipci write cm  reg  rec offset  
+	   program sample counts   
+	reg = rec ch ? CM REG CH1 FRAME2   CM REG CH0 FRAME2 
+	snd cmipci write w cm  reg  rec dma size   1  
+	snd cmipci write w cm  reg + 2  period size   1  
+
+	   set adc dac flag   
+	val = rec ch ? CM CHADC1   CM CHADC0 
+	if  rec is dac 
+		cm ctrl  = ~val 
+	else
+		cm ctrl |= val 
+	snd cmipci write cm  CM REG FUNCTRL0  cm ctrl  
+	  snd printd  cmipci  functrl0 =  08x\n   cm ctrl  
+
+	   set sample rate   
+	freq = 0 
+	freq ext = 0 
+	if  runtime rate   48000 
+		switch  runtime rate  {
+		case 88200   freq ext = CM CH0 SRATE 88K  break 
+		case 96000   freq ext = CM CH0 SRATE 96K  break 
+		case 128000  freq ext = CM CH0 SRATE 128K  break 
+		default      snd BUG    break 
+		}
+	else
+		freq = snd cmipci rate freq runtime rate  
+	val = snd cmipci read cm  CM REG FUNCTRL1  
+	if  rec ch  {
+		val  = ~CM DSFC MASK 
+		val |=  freq    CM DSFC SHIFT    CM DSFC MASK 
+	} else {
+		val  = ~CM ASFC MASK 
+		val |=  freq    CM ASFC SHIFT    CM ASFC MASK 
+	}
+	snd cmipci write cm  CM REG FUNCTRL1  val  
+	  snd printd  cmipci  functrl1 =  08x\n   val  
+
+	   set format   
+	val = snd cmipci read cm  CM REG CHFORMAT  
+	if  rec ch  {
+		val  = ~CM CH1FMT MASK 
+		val |= rec fmt    CM CH1FMT SHIFT 
+	} else {
+		val  = ~CM CH0FMT MASK 
+		val |= rec fmt    CM CH0FMT SHIFT 
+	}
+	if  cm can 96k  {
+		val  = ~ CM CH0 SRATE MASK     rec ch   2   
+		val |= freq ext     rec ch   2  
+	}
+	snd cmipci write cm  CM REG CHFORMAT  val  
+	  snd printd  cmipci  chformat =  08x\n   val  
+
+	if   rec is dac    cm chip version  {
+		if  runtime rate   44100 
+			snd cmipci set bit cm  CM REG EXT MISC  CM ADC48K44K  
+		else
+			snd cmipci clear bit cm  CM REG EXT MISC  CM ADC48K44K  
+	}
+
+	rec running = 0 
+	spin unlock irq  cm reg lock  
+
+	return 0 
+}
+

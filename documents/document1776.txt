@@ -1,0 +1,32 @@
+static int snd fm801 playback prepare struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	chip ply size = snd pcm lib buffer bytes substream  
+	chip ply count = snd pcm lib period bytes substream  
+	spin lock irq  chip reg lock  
+	chip ply ctrl  = ~ FM801 START | FM801 16BIT |
+			     FM801 STEREO | FM801 RATE MASK |
+			     FM801 CHANNELS MASK  
+	if  snd pcm format width runtime format  == 16 
+		chip ply ctrl |= FM801 16BIT 
+	if  runtime channels   1  {
+		chip ply ctrl |= FM801 STEREO 
+		if  runtime channels == 4 
+			chip ply ctrl |= FM801 CHANNELS 4 
+		else if  runtime channels == 6 
+			chip ply ctrl |= FM801 CHANNELS 6 
+	}
+	chip ply ctrl |= snd fm801 rate bits runtime rate     FM801 RATE SHIFT 
+	chip ply buf = 0 
+	outw chip ply ctrl  FM801 REG chip  PLY CTRL   
+	outw chip ply count   1  FM801 REG chip  PLY COUNT   
+	chip ply buffer = runtime dma addr 
+	chip ply pos = 0 
+	outl chip ply buffer  FM801 REG chip  PLY BUF1   
+	outl chip ply buffer +  chip ply count   chip ply size   FM801 REG chip  PLY BUF2   
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

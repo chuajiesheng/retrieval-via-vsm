@@ -1,0 +1,28 @@
+static int crypto ecb crypt struct blkcipher desc  desc 
+			    struct blkcipher walk  walk 
+			    struct crypto cipher  tfm 
+			    void   fn  struct crypto tfm    u8    const u8    
+{
+	int bsize = crypto cipher blocksize tfm  
+	unsigned int nbytes 
+	int err 
+
+	err = blkcipher walk virt desc  walk  
+
+	while   nbytes = walk nbytes   {
+		u8  wsrc = walk src virt addr 
+		u8  wdst = walk dst virt addr 
+
+		do {
+			fn crypto cipher tfm tfm   wdst  wsrc  
+
+			wsrc += bsize 
+			wdst += bsize 
+		} while   nbytes  = bsize   = bsize  
+
+		err = blkcipher walk done desc  walk  nbytes  
+	}
+
+	return err 
+}
+

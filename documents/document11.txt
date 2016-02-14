@@ -1,0 +1,20 @@
+static long snd rawmidi ioctl compat struct file  file  unsigned int cmd  unsigned long arg 
+{
+	struct snd rawmidi file  rfile 
+	void   user  argp = compat ptr arg  
+
+	rfile = file private data 
+	switch  cmd  {
+	case SNDRV RAWMIDI IOCTL PVERSION 
+	case SNDRV RAWMIDI IOCTL INFO 
+	case SNDRV RAWMIDI IOCTL DROP 
+	case SNDRV RAWMIDI IOCTL DRAIN 
+		return snd rawmidi ioctl file  cmd   unsigned long argp  
+	case SNDRV RAWMIDI IOCTL PARAMS32 
+		return snd rawmidi ioctl params compat rfile  argp  
+	case SNDRV RAWMIDI IOCTL STATUS32 
+		return snd rawmidi ioctl status compat rfile  argp  
+	}
+	return  ENOIOCTLCMD 
+}
+

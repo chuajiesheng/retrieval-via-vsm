@@ -1,0 +1,25 @@
+   buffer is extracted from the pre allocated memory chunk   
+static int snd es1968 hw params struct snd pcm substream  substream 
+				struct snd pcm hw params  hw params 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct esschan  chan = runtime private data 
+	int size = params buffer bytes hw params  
+
+	if  chan memory  {
+		if  chan memory buf bytes  = size  {
+			runtime dma bytes = size 
+			return 0 
+		}
+		snd es1968 free memory chip  chan memory  
+	}
+	chan memory = snd es1968 new memory chip  size  
+	if  chan memory == NULL  {
+		   snd printd  cannot allocate dma buffer  size =  d\n   size  
+		return  ENOMEM 
+	}
+	snd pcm set runtime buffer substream   chan memory buf  
+	return 1     area was changed   
+}
+

@@ -1,0 +1,7 @@
+   spinlock held    
+static void snd mtpav add output timer struct mtpav  chip 
+{
+	chip timer expires = 1 + jiffies 
+	add timer  chip timer  
+}
+

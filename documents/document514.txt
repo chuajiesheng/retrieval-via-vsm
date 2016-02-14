@@ -1,0 +1,13 @@
+static int snd mts64 ctl smpte time get struct snd kcontrol  kctl 
+					struct snd ctl elem value  uctl 
+{
+	struct mts64  mts = snd kcontrol chip kctl  
+	int idx = kctl private value 
+
+	spin lock irq  mts lock  
+	uctl value integer value 0  = mts time idx  
+	spin unlock irq  mts lock  
+
+	return 0 
+}
+

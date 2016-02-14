@@ -1,0 +1,29 @@
+static int snd als4000 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct snd card als4000  acard = card private data 
+	struct snd sb  chip = acard chip 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  als4000  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd als4000 configure chip  
+	snd sbdsp reset chip  
+	snd sbmixer resume chip  
+
+#ifdef SUPPORT JOYSTICK
+	if  acard gameport 
+		snd als4000 set addr acard iobase  0  0  0  1  
+#endif
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

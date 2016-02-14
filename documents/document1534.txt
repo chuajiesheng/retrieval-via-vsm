@@ -1,0 +1,11 @@
+snd rme96 capture start struct rme96  rme96 
+			int from pause 
+{
+	if   from pause  {
+		writel 0  rme96 iobase + RME96 IO RESET REC POS  
+	}
+
+	rme96 wcreg |= RME96 WCR START 2 
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+}
+

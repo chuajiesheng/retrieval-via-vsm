@@ -1,0 +1,36 @@
+   
+   snd device register   register the device
+   @card  the card instance
+   @device data  the data pointer to register
+  
+   Registers the device which was already created via
+   snd device new     Usually this is called from snd card register   
+   but it can be called later if any new devices are created after
+   invocation of snd card register   
+  
+   Returns zero if successful  or a negative error code on failure or if the
+   device not found 
+   
+int snd device register struct snd card  card  void  device data 
+{
+	struct snd device  dev 
+	int err 
+
+	if  snd BUG ON  card ||  device data  
+		return  ENXIO 
+	list for each entry dev   card devices  list  {
+		if  dev device data  = device data 
+			continue 
+		if  dev state == SNDRV DEV BUILD    dev ops dev register  {
+			if   err = dev ops dev register dev     0 
+				return err 
+			dev state = SNDRV DEV REGISTERED 
+			return 0 
+		}
+		snd printd  snd device register busy\n   
+		return  EBUSY 
+	}
+	snd BUG   
+	return  ENXIO 
+}
+

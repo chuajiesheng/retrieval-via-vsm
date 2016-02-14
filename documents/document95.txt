@@ -1,0 +1,5 @@
+static inline void crypto ahash set flags struct crypto ahash  tfm  u32 flags 
+{
+	crypto tfm set flags crypto ahash tfm tfm   flags  
+}
+

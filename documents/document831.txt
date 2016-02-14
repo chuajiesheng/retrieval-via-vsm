@@ -1,0 +1,6 @@
+   flush FIFO of analog OUT DMA   
+static void atiixp out flush dma struct atiixp  chip 
+{
+	atiixp write chip  FIFO FLUSH  ATI REG FIFO OUT FLUSH  
+}
+

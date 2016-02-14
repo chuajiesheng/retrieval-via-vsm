@@ -1,0 +1,5 @@
+static inline u16 ssb read16 struct ssb device  dev  u16 offset 
+{
+	return dev ops read16 dev  offset  
+}
+

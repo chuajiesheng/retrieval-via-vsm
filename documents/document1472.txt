@@ -1,0 +1,12 @@
+   
+   ttm bo wait unreserved
+  
+   @bo  A pointer to a struct ttm buffer object 
+  
+   Wait for a struct ttm buffer object to become unreserved 
+   This is typically used in the execbuf code to relax cpu usage when
+   a potential deadlock condition backoff 
+   
+extern int ttm bo wait unreserved struct ttm buffer object  bo 
+				  bool interruptible  
+

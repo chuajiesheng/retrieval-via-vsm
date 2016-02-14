@@ -1,0 +1,25 @@
+  
+    This is the cprng registered reset method the seed value is
+    interpreted as the tuple { V KEY DT}
+    V and KEY are required during reset  and DT is optional  detected
+    as being present by testing the length of the seed
+   
+static int cprng reset struct crypto rng  tfm  u8  seed  unsigned int slen 
+{
+	struct prng context  prng = crypto rng ctx tfm  
+	u8  key = seed + DEFAULT BLK SZ 
+	u8  dt = NULL 
+
+	if  slen   DEFAULT PRNG KSZ + DEFAULT BLK SZ 
+		return  EINVAL 
+
+	if  slen  =  2   DEFAULT BLK SZ + DEFAULT PRNG KSZ  
+		dt = key + DEFAULT PRNG KSZ 
+
+	reset prng context prng  key  DEFAULT PRNG KSZ  seed  dt  
+
+	if  prng flags   PRNG NEED RESET 
+		return  EINVAL 
+	return 0 
+}
+

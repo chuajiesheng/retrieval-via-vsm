@@ -1,0 +1,35 @@
+static void snd pcm proc info read struct snd pcm substream  substream 
+				   struct snd info buffer  buffer 
+{
+	struct snd pcm info  info 
+	int err 
+
+	if    substream 
+		return 
+
+	info = kmalloc sizeof  info   GFP KERNEL  
+	if    info  {
+		printk KERN DEBUG  snd pcm proc info read  cannot malloc\n   
+		return 
+	}
+
+	err = snd pcm info substream  info  
+	if  err   0  {
+		snd iprintf buffer   error  d\n   err  
+		kfree info  
+		return 
+	}
+	snd iprintf buffer   card   d\n   info card  
+	snd iprintf buffer   device   d\n   info device  
+	snd iprintf buffer   subdevice   d\n   info subdevice  
+	snd iprintf buffer   stream   s\n   snd pcm stream name info stream   
+	snd iprintf buffer   id   s\n   info id  
+	snd iprintf buffer   name   s\n   info name  
+	snd iprintf buffer   subname   s\n   info subname  
+	snd iprintf buffer   class   d\n   info dev class  
+	snd iprintf buffer   subclass   d\n   info dev subclass  
+	snd iprintf buffer   subdevices count   d\n   info subdevices count  
+	snd iprintf buffer   subdevices avail   d\n   info subdevices avail  
+	kfree info  
+}
+

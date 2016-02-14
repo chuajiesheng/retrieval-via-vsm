@@ -1,0 +1,7 @@
+   
+   mult to ib rate   Convert a multiple of 2 5 Gbit sec to an IB rate
+   enum 
+   @mult  multiple to convert 
+   
+enum ib rate mult to ib rate int mult    attribute const   
+

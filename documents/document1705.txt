@@ -1,0 +1,14 @@
+   
+   ieee80211 restart hw   restart hardware completely
+  
+   Call this function when the hardware was restarted for some reason
+    hardware error       and the driver is unable to restore its state
+   by itself  mac80211 assumes that at this point the driver hardware
+   is completely uninitialised and stopped  it starts the process by
+   calling the  start   operation  The driver will need to reset all
+   internal state that it has prior to calling this function 
+  
+   @hw  the hardware to restart
+   
+void ieee80211 restart hw struct ieee80211 hw  hw  
+

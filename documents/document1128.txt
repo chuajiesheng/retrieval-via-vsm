@@ -1,0 +1,2 @@
+void vga switcheroo unregister client struct pci dev  dev  
+

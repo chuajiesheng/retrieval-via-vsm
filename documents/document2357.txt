@@ -1,0 +1,12 @@
+static void pcrypt aead done struct crypto async request  areq  int err 
+{
+	struct aead request  req = areq data 
+	struct pcrypt request  preq = aead request ctx req  
+	struct padata priv  padata = pcrypt request padata preq  
+
+	padata info = err 
+	req base flags  = ~CRYPTO TFM REQ MAY SLEEP 
+
+	padata do serial padata  
+}
+

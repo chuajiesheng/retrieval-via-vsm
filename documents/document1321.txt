@@ -1,0 +1,18 @@
+   
+   ttm kmap obj virtual
+  
+   @map  A struct ttm bo kmap obj returned from ttm bo kmap 
+   @is iomem  Pointer to an integer that on return indicates 1 if the
+   virtual map is io memory  0 if normal memory 
+  
+   Returns the virtual address of a buffer object area mapped by ttm bo kmap 
+   If  is iomem is 1 on return  the virtual address points to an io memory area 
+   that should strictly be accessed by the iowriteXX   and similar functions 
+   
+static inline void  ttm kmap obj virtual struct ttm bo kmap obj  map 
+					 bool  is iomem 
+{
+	 is iomem =    map bo kmap type   TTM BO MAP IOMEM MASK  
+	return map virtual 
+}
+

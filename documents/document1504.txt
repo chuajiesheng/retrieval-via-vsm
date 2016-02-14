@@ -1,0 +1,16 @@
+   
+   ttm mem unregister shrink   unregister a struct ttm mem shrink object 
+  
+   @glob  The struct ttm mem global object to unregister from 
+   @shrink  A previously registert struct ttm mem shrink object 
+  
+   
+static inline void ttm mem unregister shrink struct ttm mem global  glob 
+					     struct ttm mem shrink  shrink 
+{
+	spin lock  glob lock  
+	BUG ON glob shrink  = shrink  
+	glob shrink = NULL 
+	spin unlock  glob lock  
+}
+

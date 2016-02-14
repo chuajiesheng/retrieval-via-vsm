@@ -1,0 +1,8 @@
+static void   exit snd hrtimer exit void 
+{
+	if  mytimer  {
+		snd timer global free mytimer  
+		mytimer = NULL 
+	}
+}
+

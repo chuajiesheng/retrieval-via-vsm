@@ -1,0 +1,5 @@
+ad1889 writew struct snd ad1889  chip  unsigned reg  u16 val 
+{
+	writew val  chip iobase + reg  
+}
+

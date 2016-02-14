@@ -1,0 +1,6 @@
+static int snd info dev register entry struct snd device  device 
+{
+	struct snd info entry  entry = device device data 
+	return snd info register entry  
+}
+

@@ -1,0 +1,25 @@
+static void snd minor info read struct snd info entry  entry  struct snd info buffer  buffer 
+{
+	int minor 
+	struct snd minor  mptr 
+
+	mutex lock  sound mutex  
+	for  minor = 0  minor   SNDRV OS MINORS  ++minor  {
+		if    mptr = snd minors minor   
+			continue 
+		if  mptr card  = 0  {
+			if  mptr device  = 0 
+				snd iprintf buffer    3i    2i  2i    s\n  
+					    minor  mptr card  mptr device 
+					    snd device type name mptr type   
+			else
+				snd iprintf buffer    3i    2i       s\n  
+					    minor  mptr card 
+					    snd device type name mptr type   
+		} else
+			snd iprintf buffer    3i            s\n   minor 
+				    snd device type name mptr type   
+	}
+	mutex unlock  sound mutex  
+}
+

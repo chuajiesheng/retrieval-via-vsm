@@ -1,0 +1,22 @@
+  
+    INIT PART
+   
+static int   init alsa sound init void 
+{
+	snd major = major 
+	snd ecards limit = cards limit 
+	if  register chrdev major   alsa    snd fops   {
+		snd printk KERN ERR  unable to register native major device number  d\n   major  
+		return  EIO 
+	}
+	if  snd info init     0  {
+		unregister chrdev major   alsa   
+		return  ENOMEM 
+	}
+	snd info minor register   
+#ifndef MODULE
+	printk KERN INFO  Advanced Linux Sound Architecture Driver Version   CONFIG SND VERSION CONFIG SND DATE   \n   
+#endif
+	return 0 
+}
+

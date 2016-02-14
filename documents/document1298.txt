@@ -1,0 +1,8 @@
+static inline int crypto aead setkey struct crypto aead  tfm  const u8  key 
+				     unsigned int keylen 
+{
+	struct aead tfm  crt = crypto aead crt tfm  
+
+	return crt setkey crt base  key  keylen  
+}
+

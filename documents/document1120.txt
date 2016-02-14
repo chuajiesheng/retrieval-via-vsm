@@ -1,0 +1,58 @@
+   
+   ttm bo reserve 
+  
+   @bo  A pointer to a struct ttm buffer object 
+   @interruptible  Sleep interruptible if waiting 
+   @no wait  Don't sleep while trying to reserve  rather return  EBUSY 
+   @use sequence  If @bo is already reserved  Only sleep waiting for
+   it to become unreserved if @sequence    @bo  sequence 
+  
+   Locks a buffer object for validation   Or prevents other processes from
+   locking it for validation  and removes it from lru lists  while taking
+   a number of measures to prevent deadlocks 
+  
+   Deadlocks may occur when two processes try to reserve multiple buffers in
+   different order  either by will or as a result of a buffer being evicted
+   to make room for a buffer already reserved   Buffers are reserved before
+   they are evicted   The following algorithm prevents such deadlocks from
+   occuring 
+   1  Buffers are reserved with the lru spinlock held  Upon successful
+   reservation they are removed from the lru list  This stops a reserved buffer
+   from being evicted  However the lru spinlock is released between the time
+   a buffer is selected for eviction and the time it is reserved 
+   Therefore a check is made when a buffer is reserved for eviction  that it
+   is still the first buffer in the lru list  before it is removed from the
+   list  @check lru == 1 forces this check  If it fails  the function returns
+    EINVAL  and the caller should then choose a new buffer to evict and repeat
+   the procedure 
+   2  Processes attempting to reserve multiple buffers other than for eviction 
+    typically execbuf   should first obtain a unique 32 bit
+   validation sequence number 
+   and call this function with @use sequence == 1 and @sequence == the unique
+   sequence number  If upon call of this function  the buffer object is already
+   reserved  the validation sequence is checked against the validation
+   sequence of the process currently reserving the buffer 
+   and if the current validation sequence is greater than that of the process
+   holding the reservation  the function returns  EAGAIN  Otherwise it sleeps
+   waiting for the buffer to become unreserved  after which it retries
+   reserving 
+   The caller should  when receiving an  EAGAIN error
+   release all its buffer reservations  wait for @bo to become unreserved  and
+   then rerun the validation with the same validation sequence  This procedure
+   will always guarantee that the process with the lowest validation sequence
+   will eventually succeed  preventing both deadlocks and starvation 
+  
+   Returns 
+    EAGAIN  The reservation may cause a deadlock 
+   Release all buffer reservations  wait for @bo to become unreserved and
+   try again   only if use sequence == 1  
+    ERESTARTSYS  A wait for the buffer to become unreserved was interrupted by
+   a signal  Release all buffer reservations and return to user space 
+    EBUSY  The function needed to sleep  but @no wait was true
+    EDEADLK  Bo already reserved using @sequence  This error code will only
+   be returned if @use sequence is set to true 
+   
+extern int ttm bo reserve struct ttm buffer object  bo 
+			  bool interruptible 
+			  bool no wait  bool use sequence  uint32 t sequence  
+

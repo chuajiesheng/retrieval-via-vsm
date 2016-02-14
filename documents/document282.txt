@@ -1,0 +1,12 @@
+static void snd request other int minor 
+{
+	char  str 
+
+	switch  minor  {
+	case SNDRV MINOR SEQUENCER 	str =  snd seq  	break 
+	case SNDRV MINOR TIMER 		str =  snd timer  	break 
+	default 			return 
+	}
+	request module str  
+}
+

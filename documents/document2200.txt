@@ -1,0 +1,8 @@
+  
+    Basic I O
+   
+static inline unsigned int snd via82xx codec xread struct via82xx  chip 
+{
+	return inl VIAREG chip  AC97   
+}
+

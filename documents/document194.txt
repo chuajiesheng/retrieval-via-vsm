@@ -1,0 +1,6 @@
+static inline void skcipher givcrypt set tfm 
+	struct skcipher givcrypt request  req  struct crypto ablkcipher  tfm 
+{
+	req creq base tfm = crypto ablkcipher tfm tfm  
+}
+

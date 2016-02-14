@@ -1,0 +1,22 @@
+static const char  snd device type name int type 
+{
+	switch  type  {
+	case SNDRV DEVICE TYPE CONTROL 
+		return  control  
+	case SNDRV DEVICE TYPE HWDEP 
+		return  hardware dependent  
+	case SNDRV DEVICE TYPE RAWMIDI 
+		return  raw midi  
+	case SNDRV DEVICE TYPE PCM PLAYBACK 
+		return  digital audio playback  
+	case SNDRV DEVICE TYPE PCM CAPTURE 
+		return  digital audio capture  
+	case SNDRV DEVICE TYPE SEQUENCER 
+		return  sequencer  
+	case SNDRV DEVICE TYPE TIMER 
+		return  timer  
+	default 
+		return  ?  
+	}
+}
+

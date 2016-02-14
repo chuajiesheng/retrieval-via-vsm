@@ -1,0 +1,35 @@
+   
+    snd power wait   wait until the power state is changed 
+    @card  soundcard structure
+    @power state  expected power state
+  
+    Waits until the power state is changed 
+  
+    Note  the power lock must be active before call 
+   
+int snd power wait struct snd card  card  unsigned int power state 
+{
+	wait queue t wait 
+	int result = 0 
+
+	   fastpath   
+	if  snd power get state card  == power state 
+		return 0 
+	init waitqueue entry  wait  current  
+	add wait queue  card power sleep   wait  
+	while  1  {
+		if  card shutdown  {
+			result =  ENODEV 
+			break 
+		}
+		if  snd power get state card  == power state 
+			break 
+		set current state TASK UNINTERRUPTIBLE  
+		snd power unlock card  
+		schedule timeout 30   HZ  
+		snd power lock card  
+	}
+	remove wait queue  card power sleep   wait  
+	return result 
+}
+

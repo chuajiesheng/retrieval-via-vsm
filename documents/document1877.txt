@@ -1,0 +1,14 @@
+   
+   ieee80211 connection loss   inform hardware has lost connection to the AP
+  
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+  
+   When beacon filtering is enabled with  IEEE80211 HW BEACON FILTER  and
+    IEEE80211 CONF PS and  IEEE80211 HW CONNECTION MONITOR are set  the driver
+   needs to inform if the connection to the AP has been lost 
+  
+   This function will cause immediate change to disassociated state 
+   without connection recovery attempts 
+   
+void ieee80211 connection loss struct ieee80211 vif  vif  
+

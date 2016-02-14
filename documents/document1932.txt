@@ -1,0 +1,22 @@
+static int snd intel8x0 ich chip cold reset struct intel8x0  chip 
+{
+	unsigned int cnt 
+	   ACLink on  2 channels   
+
+	if  snd pci quirk lookup chip pci  ich chip reset mode  
+		return  EIO 
+
+	cnt = igetdword chip  ICHREG GLOB CNT   
+	cnt  = ~ ICH ACLINK | ICH PCM 246 MASK  
+
+	   do cold reset   the full ac97 powerdown may leave the controller
+	   in a warm state but actually it cannot communicate with the codec 
+	   
+	iputdword chip  ICHREG GLOB CNT   cnt   ~ICH AC97COLD  
+	cnt = igetdword chip  ICHREG GLOB CNT   
+	udelay 10  
+	iputdword chip  ICHREG GLOB CNT   cnt | ICH AC97COLD  
+	msleep 1  
+	return 0 
+}
+

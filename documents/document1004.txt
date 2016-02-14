@@ -1,0 +1,17 @@
+static snd pcm uframes t snd ensoniq playback2 pointer struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+	size t ptr 
+
+	spin lock  ensoniq reg lock  
+	if  inl ES REG ensoniq  CONTROL     ES DAC2 EN  {
+		outl ES MEM PAGEO ES PAGE DAC   ES REG ensoniq  MEM PAGE   
+		ptr = ES REG FCURR COUNTI inl ES REG ensoniq  DAC2 SIZE    
+		ptr = bytes to frames substream runtime  ptr  
+	} else {
+		ptr = 0 
+	}
+	spin unlock  ensoniq reg lock  
+	return ptr 
+}
+

@@ -1,0 +1,11 @@
+static int snd rme32 capture close struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+
+	spin lock irq  rme32 lock  
+	rme32 capture substream = NULL 
+	rme32 capture periodsize = 0 
+	spin unlock  rme32 lock  
+	return 0 
+}
+

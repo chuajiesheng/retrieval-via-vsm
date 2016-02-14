@@ -1,0 +1,8 @@
+static void crypto gcm exit tfm struct crypto tfm  tfm 
+{
+	struct crypto gcm ctx  ctx = crypto tfm ctx tfm  
+
+	crypto free ahash ctx ghash  
+	crypto free ablkcipher ctx ctr  
+}
+

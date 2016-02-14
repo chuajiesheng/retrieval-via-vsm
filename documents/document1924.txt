@@ -1,0 +1,15 @@
+static int snd intel8x0 ali ac97spdifout close struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	unsigned int val 
+
+	chip ichd ALID AC97SPDIFOUT  substream = NULL 
+	spin lock irq  chip reg lock  
+	val = igetdword chip  ICHREG ALI INTERFACECR   
+	val  = ~ICH ALI IF AC97SP 
+	iputdword chip  ICHREG ALI INTERFACECR   val  
+	spin unlock irq  chip reg lock  
+
+	return 0 
+}
+

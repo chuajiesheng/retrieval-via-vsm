@@ -1,0 +1,5 @@
+static inline int   cpus weight const cpumask t  srcp  int nbits 
+{
+	return bitmap weight srcp bits  nbits  
+}
+

@@ -1,0 +1,80 @@
+static int   devinit snd ensoniq create struct snd card  card 
+				     struct pci dev  pci 
+				     struct ensoniq    rensoniq 
+{
+	struct ensoniq  ensoniq 
+	int err 
+	static struct snd device ops ops = {
+		 dev free =	snd ensoniq dev free 
+	} 
+
+	 rensoniq = NULL 
+	if   err = pci enable device pci     0 
+		return err 
+	ensoniq = kzalloc sizeof  ensoniq   GFP KERNEL  
+	if  ensoniq == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+	spin lock init  ensoniq reg lock  
+	mutex init  ensoniq src mutex  
+	ensoniq card = card 
+	ensoniq pci = pci 
+	ensoniq irq =  1 
+	if   err = pci request regions pci   Ensoniq AudioPCI      0  {
+		kfree ensoniq  
+		pci disable device pci  
+		return err 
+	}
+	ensoniq port = pci resource start pci  0  
+	if  request irq pci irq  snd audiopci interrupt  IRQF SHARED 
+			 Ensoniq AudioPCI   ensoniq   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd ensoniq free ensoniq  
+		return  EBUSY 
+	}
+	ensoniq irq = pci irq 
+#ifdef CHIP1370
+	if  snd dma alloc pages SNDRV DMA TYPE DEV  snd dma pci data pci  
+				16   ensoniq dma bug    0  {
+		snd printk KERN ERR  unable to allocate space for phantom area   dma bug\n   
+		snd ensoniq free ensoniq  
+		return  EBUSY 
+	}
+#endif
+	pci set master pci  
+	ensoniq rev = pci revision 
+#ifdef CHIP1370
+#if 0
+	ensoniq ctrl = ES 1370 CDC EN | ES 1370 SERR DISABLE |
+		ES 1370 PCLKDIVO ES 1370 SRTODIV 8000   
+#else	   get microphone working   
+	ensoniq ctrl = ES 1370 CDC EN | ES 1370 PCLKDIVO ES 1370 SRTODIV 8000   
+#endif
+	ensoniq sctrl = 0 
+#else
+	ensoniq ctrl = 0 
+	ensoniq sctrl = 0 
+	ensoniq cssr = 0 
+	if  snd pci quirk lookup pci  es1371 amplifier hack  
+		ensoniq ctrl |= ES 1371 GPIO OUT 1  	   turn amplifier on   
+
+	if  es1371 quirk lookup ensoniq  es1371 ac97 reset hack  
+		ensoniq cssr |= ES 1371 ST AC97 RST 
+#endif
+
+	snd ensoniq chip init ensoniq  
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  ensoniq   ops     0  {
+		snd ensoniq free ensoniq  
+		return err 
+	}
+
+	snd ensoniq proc init ensoniq  
+
+	snd card set dev card   pci dev  
+
+	 rensoniq = ensoniq 
+	return 0 
+}
+

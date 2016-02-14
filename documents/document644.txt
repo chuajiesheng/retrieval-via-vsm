@@ -1,0 +1,16 @@
+static int alloc fake buffer void 
+{
+	int i 
+
+	if   fake buffer 
+		return 0 
+	for  i = 0  i   2  i++  {
+		dummy page i  =  void   get zeroed page GFP KERNEL  
+		if   dummy page i   {
+			free fake buffer   
+			return  ENOMEM 
+		}
+	}
+	return 0 
+}
+

@@ -1,0 +1,12 @@
+   
+   ieee80211 request smps   request SM PS transition
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+   @smps mode  new SM PS mode
+  
+   This allows the driver to request an SM PS transition in managed
+   mode  This is useful when the driver has more information than
+   the stack about possible interference  for example by bluetooth 
+   
+void ieee80211 request smps struct ieee80211 vif  vif 
+			    enum ieee80211 smps mode smps mode  
+

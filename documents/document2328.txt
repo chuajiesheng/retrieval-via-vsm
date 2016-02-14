@@ -1,0 +1,11 @@
+   return the GLOB STA bit for the corresponding codec   
+static unsigned int get ich codec bit struct intel8x0m  chip  unsigned int codec 
+{
+	static unsigned int codec bit 3  = {
+		ICH PCR  ICH SCR  ICH TCR
+	} 
+	if  snd BUG ON codec  = 3  
+		return ICH PCR 
+	return codec bit codec  
+}
+

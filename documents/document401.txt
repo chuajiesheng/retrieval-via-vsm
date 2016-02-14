@@ -1,0 +1,6 @@
+   parport claim tries to gain ownership of the port for a particular
+   driver   This may fail  return non zero  if another driver is busy 
+   If this driver has registered an interrupt handler  it will be
+   enabled     
+extern int parport claim struct pardevice  dev  
+

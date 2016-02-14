@@ -1,0 +1,33 @@
+static void snd fm801 codec write struct snd ac97  ac97 
+				  unsigned short reg 
+				  unsigned short val 
+{
+	struct fm801  chip = ac97 private data 
+	int idx 
+
+	  
+	    Wait until the codec interface is not ready  
+	   
+	for  idx = 0  idx   100  idx++  {
+		if    inw FM801 REG chip  AC97 CMD     FM801 AC97 BUSY  
+			goto ok1 
+		udelay 10  
+	}
+	snd printk KERN ERR  AC'97 interface is busy  1 \n   
+	return 
+
+ ok1 
+	   write data and address   
+	outw val  FM801 REG chip  AC97 DATA   
+	outw reg |  ac97 addr    FM801 AC97 ADDR SHIFT   FM801 REG chip  AC97 CMD   
+	  
+	    Wait until the write command is not completed  
+           
+	for  idx = 0  idx   1000  idx++  {
+		if    inw FM801 REG chip  AC97 CMD     FM801 AC97 BUSY  
+			return 
+		udelay 10  
+	}
+	snd printk KERN ERR  AC'97 interface # d is busy  2 \n   ac97 num  
+}
+

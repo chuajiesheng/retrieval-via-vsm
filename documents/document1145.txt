@@ -1,0 +1,101 @@
+snd azf3328 probe struct pci dev  pci  const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct snd azf3328  chip 
+	struct snd opl3  opl3 
+	int err 
+
+	snd azf3328 dbgcallenter   
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	strcpy card driver   AZF3328   
+	strcpy card shortname   Aztech AZF3328  PCI168    
+
+	err = snd azf3328 create card  pci  pci id driver data   chip  
+	if  err   0 
+		goto out err 
+
+	card private data = chip 
+
+	   chose to use MPU401 HW AZT2320 ID instead of MPU401 HW MPU401 
+	   since our hardware ought to be similar  thus use same ID    
+	err = snd mpu401 uart new 
+		card  0 
+		MPU401 HW AZT2320  chip mpu io  MPU401 INFO INTEGRATED 
+		pci irq  0   chip rmidi
+	  
+	if  err   0  {
+		snd printk KERN ERR  azf3328  no MPU 401 device at 0x lx?\n  
+				chip mpu io
+		  
+		goto out err 
+	}
+
+	err = snd azf3328 timer chip  0  
+	if  err   0 
+		goto out err 
+
+	err = snd azf3328 pcm chip  
+	if  err   0 
+		goto out err 
+
+	if  snd opl3 create card  chip opl3 io  chip opl3 io+2 
+			    OPL3 HW AUTO  1   opl3    0  {
+		snd printk KERN ERR  azf3328  no OPL3 device at 0x lx 0x lx?\n  
+			   chip opl3 io  chip opl3 io+2
+		  
+	} else {
+		   need to use IDs 1  2 since ID 0 is snd azf3328 timer above   
+		err = snd opl3 timer new opl3  1  2  
+		if  err   0 
+			goto out err 
+		err = snd opl3 hwdep new opl3  0  1  NULL  
+		if  err   0 
+			goto out err 
+	}
+
+	opl3 private data = chip 
+
+	sprintf card longname    s at 0x lx  irq  i  
+		card shortname  chip ctrl io  chip irq  
+
+	err = snd card register card  
+	if  err   0 
+		goto out err 
+
+#ifdef MODULE
+	printk KERN INFO
+ azt3328  Sound driver for Aztech AZF3328 based soundcards such as PCI168 \n 
+ azt3328  Hardware was completely undocumented  unfortunately \n 
+ azt3328  Feel free to contact andi AT lisas de for bug reports etc  \n 
+ azt3328  User scalable sequencer timer set to  dHz  1024000Hz    d  \n  
+	1024000   seqtimer scaling  seqtimer scaling  
+#endif
+
+	snd azf3328 gameport chip  dev  
+
+	pci set drvdata pci  card  
+	dev++ 
+
+	err = 0 
+	goto out 
+
+out err 
+	snd printk KERN ERR  azf3328  something failed  exiting\n   
+	snd card free card  
+
+out 
+	snd azf3328 dbgcallleave   
+	return err 
+}
+

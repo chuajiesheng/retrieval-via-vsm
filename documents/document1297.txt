@@ -1,0 +1,2 @@
+extern bool drm edid is valid struct edid  edid  
+

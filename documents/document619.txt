@@ -1,0 +1,14 @@
+dummy hrtimer pointer struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct dummy hrtimer pcm  dpcm = runtime private data 
+	u64 delta 
+	u32 pos 
+
+	delta = ktime us delta hrtimer cb get time  dpcm timer  
+			       dpcm base time  
+	delta = div u64 delta   runtime rate + 999999  1000000  
+	div u64 rem delta  runtime buffer size   pos  
+	return pos 
+}
+

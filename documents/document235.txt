@@ -1,0 +1,5 @@
+static const char  snd pcm stream name int stream 
+{
+	return snd pcm stream names stream  
+}
+

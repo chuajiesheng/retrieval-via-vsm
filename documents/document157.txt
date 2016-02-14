@@ -1,0 +1,19 @@
+static int snd hwdep release struct inode  inode  struct file   file 
+{
+	int err = 0 
+	struct snd hwdep  hw = file private data 
+	struct module  mod = hw card module 
+
+	mutex lock  hw open mutex  
+	if  hw ops release 
+		err = hw ops release hw  file  
+	if  hw used   0 
+		hw used   
+	mutex unlock  hw open mutex  
+	wake up  hw open wait  
+
+	snd card file remove hw card  file  
+	module put mod  
+	return err 
+}
+

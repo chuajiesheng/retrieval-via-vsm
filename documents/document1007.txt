@@ -1,0 +1,2 @@
+void snd pcm set sync struct snd pcm substream  substream  
+

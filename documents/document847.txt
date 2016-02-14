@@ -1,0 +1,35 @@
+static int snd atiixp pcm open struct snd pcm substream  substream 
+			       struct atiixp dma  dma  int pcm type 
+{
+	struct atiixp  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	if  snd BUG ON  dma ops ||  dma ops enable dma  
+		return  EINVAL 
+
+	if  dma opened 
+		return  EBUSY 
+	dma substream = substream 
+	runtime hw = snd atiixp pcm hw 
+	dma ac97 pcm type = pcm type 
+	if  pcm type  = 0  {
+		runtime hw rates = chip pcms pcm type  rates 
+		snd pcm limit hw rates runtime  
+	} else {
+		   direct SPDIF   
+		runtime hw formats = SNDRV PCM FMTBIT IEC958 SUBFRAME LE 
+	}
+	if   err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+	runtime private data = dma 
+
+	   enable DMA bits   
+	spin lock irq  chip reg lock  
+	dma ops enable dma chip  1  
+	spin unlock irq  chip reg lock  
+	dma opened = 1 
+
+	return 0 
+}
+

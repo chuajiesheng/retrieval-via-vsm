@@ -1,0 +1,2 @@
+int snd virmidi new struct snd card  card  int device  struct snd rawmidi   rrmidi  
+

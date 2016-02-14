@@ -1,0 +1,23 @@
+snd azf3328 gameport open struct gameport  gameport  int mode 
+{
+	struct snd azf3328  chip = gameport get port data gameport  
+	int res 
+
+	snd azf3328 dbggame  gameport open  mode  d\n   mode  
+	switch  mode  {
+	case GAMEPORT MODE COOKED 
+	case GAMEPORT MODE RAW 
+		res = 0 
+		break 
+	default 
+		res =  1 
+		break 
+	}
+
+	snd azf3328 gameport set counter frequency chip 
+				GAME HWCFG ADC COUNTER FREQ STD  
+	snd azf3328 gameport axis circuit enable chip   res == 0   
+
+	return res 
+}
+

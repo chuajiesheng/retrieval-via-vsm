@@ -1,0 +1,5 @@
+static inline void portman write data struct portman  pm  u8 value 
+{
+	parport write data pm pardev port  value  
+}
+

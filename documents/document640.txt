@@ -1,0 +1,7 @@
+static inline void rdma get ll mac struct in6 addr  addr  u8  mac 
+{
+	memcpy mac   addr s6 addr 8   3  
+	memcpy mac + 3   addr s6 addr 13   3  
+	mac 0  ^= 2 
+}
+

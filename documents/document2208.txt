@@ -1,0 +1,17 @@
+snd ad1889 ac97 ready struct snd ad1889  chip 
+{
+	int retry = 400     average needs 352 msec   
+	
+	while    ad1889 readw chip  AD AC97 ACIC    AD AC97 ACIC ACRDY  
+			     retry 
+		mdelay 1  
+	if   retry  {
+		snd printk KERN ERR PFX    s  Link is not ready \n  
+		         func    
+		return  EIO 
+	}
+	ad1889 debug    s  ready after  d ms\n     func    400   retry  
+
+	return 0 
+}
+

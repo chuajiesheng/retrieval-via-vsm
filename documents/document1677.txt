@@ -1,0 +1,18 @@
+  
+   Wait for the ac97 serial bus to be free 
+   return nonzero if the bus is still busy 
+   
+static int snd m3 ac97 wait struct snd m3  chip 
+{
+	int i = 10000 
+
+	do {
+		if     snd m3 inb chip  0x30    1  
+			return 0 
+		cpu relax   
+	} while  i     0  
+
+	snd printk KERN ERR  ac97 serial bus busy\n   
+	return 1 
+}
+

@@ -1,0 +1,38 @@
+static struct crypto instance  pcrypt alloc instance struct crypto alg  alg 
+{
+	struct crypto instance  inst 
+	struct pcrypt instance ctx  ctx 
+	int err 
+
+	inst = kzalloc sizeof  inst  + sizeof  ctx   GFP KERNEL  
+	if   inst  {
+		inst = ERR PTR  ENOMEM  
+		goto out 
+	}
+
+	err =  ENAMETOOLONG 
+	if  snprintf inst alg cra driver name  CRYPTO MAX ALG NAME 
+		      pcrypt  s    alg cra driver name   = CRYPTO MAX ALG NAME 
+		goto out free inst 
+
+	memcpy inst alg cra name  alg cra name  CRYPTO MAX ALG NAME  
+
+	ctx = crypto instance ctx inst  
+	err = crypto init spawn  ctx spawn  alg  inst 
+				CRYPTO ALG TYPE MASK  
+	if  err 
+		goto out free inst 
+
+	inst alg cra priority = alg cra priority + 100 
+	inst alg cra blocksize = alg cra blocksize 
+	inst alg cra alignmask = alg cra alignmask 
+
+out 
+	return inst 
+
+out free inst 
+	kfree inst  
+	inst = ERR PTR err  
+	goto out 
+}
+

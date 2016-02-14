@@ -1,0 +1,21 @@
+static int   devinit snd cs4281 midi struct cs4281   chip  int device 
+				     struct snd rawmidi   rrawmidi 
+{
+	struct snd rawmidi  rmidi 
+	int err 
+
+	if  rrawmidi 
+		 rrawmidi = NULL 
+	if   err = snd rawmidi new chip card   CS4281   device  1  1   rmidi     0 
+		return err 
+	strcpy rmidi name   CS4281   
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM OUTPUT   snd cs4281 midi output  
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM INPUT   snd cs4281 midi input  
+	rmidi info flags |= SNDRV RAWMIDI INFO OUTPUT | SNDRV RAWMIDI INFO INPUT | SNDRV RAWMIDI INFO DUPLEX 
+	rmidi private data = chip 
+	chip rmidi = rmidi 
+	if  rrawmidi 
+		 rrawmidi = rmidi 
+	return 0 
+}
+

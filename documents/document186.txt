@@ -1,0 +1,6 @@
+static inline struct crypto aead  aead givcrypt reqtfm 
+	struct aead givcrypt request  req 
+{
+	return crypto aead reqtfm  req areq  
+}
+

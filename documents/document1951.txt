@@ -1,0 +1,83 @@
+static int   devinit snd intel8x0 probe struct pci dev  pci 
+					const struct pci device id  pci id 
+{
+	struct snd card  card 
+	struct intel8x0  chip 
+	int err 
+	struct shortname table  name 
+
+	err = snd card create index  id  THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	if  spdif aclink   0 
+		spdif aclink = check default spdif aclink pci  
+
+	strcpy card driver   ICH   
+	if   spdif aclink  {
+		switch  pci id driver data  {
+		case DEVICE NFORCE 
+			strcpy card driver   NFORCE   
+			break 
+		case DEVICE INTEL ICH4 
+			strcpy card driver   ICH4   
+		}
+	}
+
+	strcpy card shortname   Intel ICH   
+	for  name = shortnames  name id  name++  {
+		if  pci device == name id  {
+			strcpy card shortname  name s  
+			break 
+		}
+	}
+
+	if  buggy irq   0  {
+		   some Nforce 2  and ICH boards have problems with IRQ handling 
+		   Needs to return IRQ HANDLED for unknown irqs 
+		   
+		if  pci id driver data == DEVICE NFORCE 
+			buggy irq = 1 
+		else
+			buggy irq = 0 
+	}
+
+	if   err = snd intel8x0 create card  pci  pci id driver data 
+				        chip     0  {
+		snd card free card  
+		return err 
+	}
+	card private data = chip 
+
+	if   err = snd intel8x0 mixer chip  ac97 clock  ac97 quirk     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd intel8x0 pcm chip     0  {
+		snd card free card  
+		return err 
+	}
+	
+	snd intel8x0 proc init chip  
+
+	snprintf card longname  sizeof card longname  
+		   s with  s at irq  i   card shortname 
+		 snd ac97 get short name chip ac97 0    chip irq  
+
+	if  ac97 clock == 0 || ac97 clock == 1  {
+		if  ac97 clock == 0  {
+			if  intel8x0 in clock list chip  == 0 
+				intel8x0 measure ac97 clock chip  
+		} else {
+			intel8x0 measure ac97 clock chip  
+		}
+	}
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	return 0 
+}
+

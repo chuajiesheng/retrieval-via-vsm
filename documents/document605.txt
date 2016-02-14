@@ -1,0 +1,16 @@
+static void dummy systimer callback unsigned long data 
+{
+	struct dummy systimer pcm  dpcm =  struct dummy systimer pcm   data 
+	unsigned long flags 
+	int elapsed = 0 
+	
+	spin lock irqsave  dpcm lock  flags  
+	dummy systimer update dpcm  
+	dummy systimer rearm dpcm  
+	elapsed = dpcm elapsed 
+	dpcm elapsed = 0 
+	spin unlock irqrestore  dpcm lock  flags  
+	if  elapsed 
+		snd pcm period elapsed dpcm substream  
+}
+

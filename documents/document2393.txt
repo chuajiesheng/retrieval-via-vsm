@@ -1,0 +1,10 @@
+   
+   ieee80211 is nullfunc   check if frame is a regular  non QoS  nullfunc frame
+   @fc  frame control bytes in little endian byteorder
+   
+static inline int ieee80211 is nullfunc   le16 fc 
+{
+	return  fc   cpu to le16 IEEE80211 FCTL FTYPE | IEEE80211 FCTL STYPE   ==
+	       cpu to le16 IEEE80211 FTYPE DATA | IEEE80211 STYPE NULLFUNC  
+}
+

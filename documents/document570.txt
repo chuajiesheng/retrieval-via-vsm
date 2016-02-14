@@ -1,0 +1,5 @@
+static void   exit alsa card serial exit void 
+{
+	snd serial unregister all   
+}
+

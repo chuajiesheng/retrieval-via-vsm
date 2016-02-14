@@ -1,0 +1,7 @@
+const char  snd pcm format name snd pcm format t format 
+{
+	if  format  = ARRAY SIZE snd pcm format names  
+		return  Unknown  
+	return snd pcm format names format  
+}
+

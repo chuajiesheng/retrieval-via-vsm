@@ -1,0 +1,62 @@
+snd rme96 capture getrate struct rme96  rme96 
+			  int  is adat 
+{	
+	int n  rate 
+
+	 is adat = 0 
+	if  rme96 areg   RME96 AR ANALOG  {
+		   Analog input  overrides S PDIF setting   
+		n =   rme96 areg    RME96 AR BITPOS F0    1  +
+			   rme96 areg    RME96 AR BITPOS F1    1     1  
+		switch  n  {
+		case 1 
+			rate = 32000 
+			break 
+		case 2 
+			rate = 44100 
+			break 
+		case 3 
+			rate = 48000 
+			break 
+		default 
+			return  1 
+		}
+		return  rme96 areg   RME96 AR BITPOS F2  ? rate    1   rate 
+	}
+
+	rme96 rcreg = readl rme96 iobase + RME96 IO CONTROL REGISTER  
+	if  rme96 rcreg   RME96 RCR LOCK  {
+		   ADAT rate   
+		 is adat = 1 
+		if  rme96 rcreg   RME96 RCR T OUT  {
+			return 48000 
+		}
+		return 44100 
+	}
+
+	if  rme96 rcreg   RME96 RCR VERF  {
+		return  1 
+	}
+	
+	   S PDIF rate   
+	n =   rme96 rcreg    RME96 RCR BITPOS F0    1  +
+		   rme96 rcreg    RME96 RCR BITPOS F1    1     1  +
+		   rme96 rcreg    RME96 RCR BITPOS F2    1     2  
+	
+	switch  n  {
+	case 0 		
+		if  rme96 rcreg   RME96 RCR T OUT  {
+			return 64000 
+		}
+		return  1 
+	case 3  return 96000 
+	case 4  return 88200 
+	case 5  return 48000 
+	case 6  return 44100 
+	case 7  return 32000 
+	default 
+		break 
+	}
+	return  1 
+}
+

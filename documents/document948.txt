@@ -1,0 +1,82 @@
+static int   devinit snd sonic probe struct pci dev  pci 
+				     const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct sonicvibes  sonic 
+	struct snd rawmidi  midi uart 
+	struct snd opl3  opl3 
+	int idx  err 
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+ 
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+	for  idx = 0  idx   5  idx++  {
+		if  pci resource start pci  idx  == 0 ||
+		      pci resource flags pci  idx    IORESOURCE IO   {
+			snd card free card  
+			return  ENODEV 
+		}
+	}
+	if   err = snd sonicvibes create card  pci 
+					 reverb dev  ? 1   0 
+					 mge dev  ? 1   0 
+					  sonic     0  {
+		snd card free card  
+		return err 
+	}
+
+	strcpy card driver   SonicVibes   
+	strcpy card shortname   S3 SonicVibes   
+	sprintf card longname    s rev  i at 0x llx  irq  i  
+		card shortname 
+		sonic revision 
+		 unsigned long long pci resource start pci  1  
+		sonic irq  
+
+	if   err = snd sonicvibes pcm sonic  0  NULL     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd sonicvibes mixer sonic     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd mpu401 uart new card  0  MPU401 HW SONICVIBES 
+				       sonic midi port  MPU401 INFO INTEGRATED 
+				       sonic irq  0 
+				        midi uart     0  {
+		snd card free card  
+		return err 
+	}
+	snd sonicvibes midi sonic  midi uart  
+	if   err = snd opl3 create card  sonic synth port 
+				   sonic synth port + 2 
+				   OPL3 HW OPL3 SV  1   opl3     0  {
+		snd card free card  
+		return err 
+	}
+	if   err = snd opl3 hwdep new opl3  0  1  NULL     0  {
+		snd card free card  
+		return err 
+	}
+
+	snd sonicvibes create gameport sonic  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

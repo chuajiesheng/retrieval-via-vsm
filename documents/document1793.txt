@@ -1,0 +1,39 @@
+static unsigned int snd fm801 tea575x 64pcr read struct snd tea575x  tea 
+{
+	struct fm801  chip = tea private data 
+	unsigned short reg 
+	unsigned int val = 0 
+	int i 
+	
+	spin lock irq  chip reg lock  
+	reg = inw FM801 REG chip  GPIO CTRL   
+	   use GPIO lines  set data direction to input   
+	reg |= FM801 GPIO GS TEA 64PCR DATA  |
+	       FM801 GPIO GS TEA 64PCR WRITE ENABLE  |
+	       FM801 GPIO GS TEA 64PCR BUS CLOCK  |
+	       FM801 GPIO GD TEA 64PCR DATA  |
+	       FM801 GPIO GP TEA 64PCR DATA  |
+	       FM801 GPIO GP TEA 64PCR WRITE ENABLE  
+	   all of lines are in the write direction  except data   
+	   clear data  write enable and clock lines   
+	reg  = ~ FM801 GPIO GD TEA 64PCR WRITE ENABLE  |
+	         FM801 GPIO GD TEA 64PCR BUS CLOCK  |
+	         FM801 GPIO GP TEA 64PCR BUS CLOCK   
+
+	for  i = 0  i   24  i++  {
+		reg  = ~FM801 GPIO GP TEA 64PCR BUS CLOCK  
+		outw reg  FM801 REG chip  GPIO CTRL   
+		udelay 1  
+		reg |= FM801 GPIO GP TEA 64PCR BUS CLOCK  
+		outw reg  FM801 REG chip  GPIO CTRL   
+		udelay 1  
+		val   = 1 
+		if  inw FM801 REG chip  GPIO CTRL     FM801 GPIO GP TEA 64PCR DATA  
+			val |= 1 
+	}
+
+	spin unlock irq  chip reg lock  
+
+	return val 
+}
+

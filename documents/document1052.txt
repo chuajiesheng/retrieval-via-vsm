@@ -1,0 +1,6 @@
+static int snd ensoniq dev free struct snd device  device 
+{
+	struct ensoniq  ensoniq = device device data 
+	return snd ensoniq free ensoniq  
+}
+

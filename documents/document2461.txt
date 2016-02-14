@@ -1,0 +1,15 @@
+   return largest index i such that fval  = lookup i  small    
+static inline u32 tfrc binsearch u32 fval  u8 small 
+{
+	u32 try  low = 0  high = TFRC CALC X ARRSIZE   1 
+
+	while  low   high  {
+		try =  low + high    2 
+		if  fval  = tfrc calc x lookup try  small  
+			high = try 
+		else
+			low  = try + 1 
+	}
+	return high 
+}
+

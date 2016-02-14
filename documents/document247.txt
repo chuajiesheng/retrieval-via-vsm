@@ -1,0 +1,36 @@
+static void snd pcm substream proc status read struct snd info entry  entry 
+					       struct snd info buffer  buffer 
+{
+	struct snd pcm substream  substream = entry private data 
+	struct snd pcm runtime  runtime 
+	struct snd pcm status status 
+	int err 
+
+	mutex lock  substream pcm open mutex  
+	runtime = substream runtime 
+	if   runtime  {
+		snd iprintf buffer   closed\n   
+		goto unlock 
+	}
+	memset  status  0  sizeof status   
+	err = snd pcm status substream   status  
+	if  err   0  {
+		snd iprintf buffer   error  d\n   err  
+		goto unlock 
+	}
+	snd iprintf buffer   state   s\n   snd pcm state name status state   
+	snd iprintf buffer   owner pid      d\n   pid vnr substream pid   
+	snd iprintf buffer   trigger time   ld  09ld\n  
+		status trigger tstamp tv sec  status trigger tstamp tv nsec  
+	snd iprintf buffer   tstamp         ld  09ld\n  
+		status tstamp tv sec  status tstamp tv nsec  
+	snd iprintf buffer   delay          ld\n   status delay  
+	snd iprintf buffer   avail          ld\n   status avail  
+	snd iprintf buffer   avail max      ld\n   status avail max  
+	snd iprintf buffer        \n   
+	snd iprintf buffer   hw ptr         ld\n   runtime status hw ptr  
+	snd iprintf buffer   appl ptr       ld\n   runtime control appl ptr  
+ unlock 
+	mutex unlock  substream pcm open mutex  
+}
+

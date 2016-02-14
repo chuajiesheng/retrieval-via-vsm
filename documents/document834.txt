@@ -1,0 +1,7 @@
+   start stop transfer over OUT DMA   
+static void atiixp out enable transfer struct atiixp  chip  int on 
+{
+	atiixp update chip  CMD  ATI REG CMD SEND EN 
+		      on ? ATI REG CMD SEND EN   0  
+}
+

@@ -1,0 +1,37 @@
+static int   init crypto gcm module init void 
+{
+	int err 
+
+	gcm zeroes = kzalloc 16  GFP KERNEL  
+	if   gcm zeroes 
+		return  ENOMEM 
+
+	err = crypto register template  crypto gcm base tmpl  
+	if  err 
+		goto out 
+
+	err = crypto register template  crypto gcm tmpl  
+	if  err 
+		goto out undo base 
+
+	err = crypto register template  crypto rfc4106 tmpl  
+	if  err 
+		goto out undo gcm 
+
+	err = crypto register template  crypto rfc4543 tmpl  
+	if  err 
+		goto out undo rfc4106 
+
+	return 0 
+
+out undo rfc4106 
+	crypto unregister template  crypto rfc4106 tmpl  
+out undo gcm 
+	crypto unregister template  crypto gcm tmpl  
+out undo base 
+	crypto unregister template  crypto gcm base tmpl  
+out 
+	kfree gcm zeroes  
+	return err 
+}
+

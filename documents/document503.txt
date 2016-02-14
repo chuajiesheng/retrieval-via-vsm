@@ -1,0 +1,2 @@
+static u8 mts64 read char struct parport  p  
+

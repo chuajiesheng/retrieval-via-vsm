@@ -1,0 +1,5 @@
+extern void drm encoder init struct drm device  dev 
+			     struct drm encoder  encoder 
+			     const struct drm encoder funcs  funcs 
+			     int encoder type  
+

@@ -1,0 +1,6 @@
+   
+   wiphy rfkill stop polling   stop polling rfkill
+   @wiphy  the wiphy
+   
+void wiphy rfkill stop polling struct wiphy  wiphy  
+

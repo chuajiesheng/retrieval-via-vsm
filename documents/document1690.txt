@@ -1,0 +1,15 @@
+snd m3 enable ints struct snd m3  chip 
+{
+	unsigned long io = chip iobase 
+	unsigned short val 
+
+	   TODO  MPU401 not supported yet   
+	val = ASSP INT ENABLE   | MPU401 INT ENABLE   
+	if  chip hv config   HV CTRL ENABLE 
+		val |= HV INT ENABLE 
+	outb val  chip iobase + HOST INT STATUS  
+	outw val  io + HOST INT CTRL  
+	outb inb io + ASSP CONTROL C  | ASSP HOST INT ENABLE 
+	     io + ASSP CONTROL C  
+}
+

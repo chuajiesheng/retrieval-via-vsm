@@ -1,0 +1,2 @@
+extern int gen pool add struct gen pool    unsigned long  size t  int  
+

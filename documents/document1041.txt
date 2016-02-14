@@ -1,0 +1,23 @@
+static int crypto rfc4543 setkey struct crypto aead  parent  const u8  key 
+				 unsigned int keylen 
+{
+	struct crypto rfc4543 ctx  ctx = crypto aead ctx parent  
+	struct crypto aead  child = ctx child 
+	int err 
+
+	if  keylen   4 
+		return  EINVAL 
+
+	keylen  = 4 
+	memcpy ctx nonce  key + keylen  4  
+
+	crypto aead clear flags child  CRYPTO TFM REQ MASK  
+	crypto aead set flags child  crypto aead get flags parent   
+				     CRYPTO TFM REQ MASK  
+	err = crypto aead setkey child  key  keylen  
+	crypto aead set flags parent  crypto aead get flags child   
+				      CRYPTO TFM RES MASK  
+
+	return err 
+}
+

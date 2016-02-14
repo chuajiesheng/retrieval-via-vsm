@@ -1,0 +1,20 @@
+static int   init snd mts64 module init void 
+{
+	int err 
+
+	if   err = platform driver register  snd mts64 driver     0 
+		return err 
+
+	if  parport register driver  mts64 parport driver   = 0  {
+		platform driver unregister  snd mts64 driver  
+		return  EIO 
+	}
+
+	if  device count == 0  {
+		snd mts64 unregister all   
+		return  ENODEV 
+	}
+
+	return 0 
+}
+

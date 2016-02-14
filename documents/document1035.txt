@@ -1,0 +1,19 @@
+static int snd es1373 rear put struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	unsigned int nval1 
+	int change 
+	
+	nval1 = ucontrol value integer value 0  ?
+		ES 1373 REAR BIT26    ES 1373 REAR BIT27|ES 1373 REAR BIT24  
+	spin lock irq  ensoniq reg lock  
+	change =  ensoniq cssr    ES 1373 REAR BIT27|
+				   ES 1373 REAR BIT26|ES 1373 REAR BIT24    = nval1 
+	ensoniq cssr  = ~ ES 1373 REAR BIT27|ES 1373 REAR BIT26|ES 1373 REAR BIT24  
+	ensoniq cssr |= nval1 
+	outl ensoniq cssr  ES REG ensoniq  STATUS   
+	spin unlock irq  ensoniq reg lock  
+	return change 
+}
+

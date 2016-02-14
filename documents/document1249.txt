@@ -1,0 +1,7 @@
+static inline void snd als4k iobase writeb unsigned long iobase 
+						enum als4k iobase t reg 
+						u8 val 
+{
+	outb val  iobase + reg  
+}
+

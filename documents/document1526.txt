@@ -1,0 +1,21 @@
+static int async chainiv schedule work struct async chainiv ctx  ctx 
+{
+	int queued 
+	int err = ctx err 
+
+	if   ctx queue qlen  {
+		smp mb  before clear bit   
+		clear bit CHAINIV STATE INUSE   ctx state  
+
+		if   ctx queue qlen ||
+		    test and set bit CHAINIV STATE INUSE   ctx state  
+			goto out 
+	}
+
+	queued = queue work kcrypto wq   ctx postponed  
+	BUG ON  queued  
+
+out 
+	return err 
+}
+

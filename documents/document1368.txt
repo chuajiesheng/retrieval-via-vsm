@@ -1,0 +1,11 @@
+static inline void aead request set crypt struct aead request  req 
+					  struct scatterlist  src 
+					  struct scatterlist  dst 
+					  unsigned int cryptlen  u8  iv 
+{
+	req src = src 
+	req dst = dst 
+	req cryptlen = cryptlen 
+	req iv = iv 
+}
+

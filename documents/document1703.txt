@@ -1,0 +1,8 @@
+  
+   lowlevel functions
+   
+static inline void snd m3 outw struct snd m3  chip  u16 value  unsigned long reg 
+{
+	outw value  chip iobase + reg  
+}
+

@@ -1,0 +1,6 @@
+static void snd cs4281 mixer free ac97 bus struct snd ac97 bus  bus 
+{
+	struct cs4281  chip = bus private data 
+	chip ac97 bus = NULL 
+}
+

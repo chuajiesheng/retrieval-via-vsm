@@ -1,0 +1,33 @@
+   recycle RX history records to continue loss detection if necessary   
+static void   three after loss struct tfrc rx hist  h 
+{
+	  
+	   At this stage we know already that there is a gap between S0 and S1
+	    since S0 was the highest sequence number received before detecting
+	   the loss   To recycle the loss record  it is	thus only necessary to
+	   check for other possible gaps between S1 S2 and between S2 S3 
+	   
+	u64 s1 = tfrc rx hist entry h  1  tfrchrx seqno 
+	    s2 = tfrc rx hist entry h  2  tfrchrx seqno 
+	    s3 = tfrc rx hist entry h  3  tfrchrx seqno 
+	u64 n2 = tfrc rx hist entry h  2  tfrchrx ndp 
+	    n3 = tfrc rx hist entry h  3  tfrchrx ndp 
+
+	if  dccp loss free s1  s2  n2   {
+
+		if  dccp loss free s2  s3  n3   {
+			   no gap between S2 and S3  entire hole is filled   
+			h loss start = tfrc rx hist index h  3  
+			h loss count = 0 
+		} else {
+			   gap between S2 and S3   
+			h loss start = tfrc rx hist index h  2  
+			h loss count = 1 
+		}
+
+	} else {	   gap between S1 and S2   
+		h loss start = tfrc rx hist index h  1  
+		h loss count = 2 
+	}
+}
+

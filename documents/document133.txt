@@ -1,0 +1,5 @@
+static inline void  aead request ctx struct aead request  req 
+{
+	return req   ctx 
+}
+

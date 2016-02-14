@@ -1,0 +1,6 @@
+ad1889 load wave interrupt count struct snd ad1889  chip  u32 count 
+{
+	ad1889 writel chip  AD DMA WAVIB  count  
+	ad1889 writel chip  AD DMA WAVIC  count  
+}
+

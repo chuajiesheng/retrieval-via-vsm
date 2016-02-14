@@ -1,0 +1,8 @@
+static efi status t virt efi get wakeup time efi bool t  enabled 
+					     efi bool t  pending 
+					     efi time t  tm 
+{
+	return efi call virt3 get wakeup time 
+			      enabled  pending  tm  
+}
+

@@ -1,0 +1,17 @@
+   
+   snd pcm rate to rate bit   converts sample rate to SNDRV PCM RATE xxx bit
+   @rate  the sample rate to convert
+  
+   Returns the SNDRV PCM RATE xxx flag that corresponds to the given rate  or
+   SNDRV PCM RATE KNOT for an unknown rate 
+   
+unsigned int snd pcm rate to rate bit unsigned int rate 
+{
+	unsigned int i 
+
+	for  i = 0  i   snd pcm known rates count  i++ 
+		if  snd pcm known rates list i  == rate 
+			return 1u    i 
+	return SNDRV PCM RATE KNOT 
+}
+

@@ -1,0 +1,8 @@
+   no spinlock   
+static void   maestro write struct es1968  chip  u16 reg  u16 data 
+{
+	outw reg  chip io port + ESM INDEX  
+	outw data  chip io port + ESM DATA  
+	chip maestro map reg  = data 
+}
+

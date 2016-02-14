@@ -1,0 +1,7 @@
+static void dummy hrtimer free struct snd pcm substream  substream 
+{
+	struct dummy hrtimer pcm  dpcm = substream runtime private data 
+	dummy hrtimer sync dpcm  
+	kfree dpcm  
+}
+

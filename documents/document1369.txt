@@ -1,0 +1,9 @@
+  
+   
+static void snd es1968 pcm free struct snd pcm  pcm 
+{
+	struct es1968  esm = pcm private data 
+	snd es1968 free dmabuf esm  
+	esm pcm = NULL 
+}
+

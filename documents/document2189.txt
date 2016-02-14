@@ -1,0 +1,5 @@
+static void   exit alsa card via82xx exit void 
+{
+	pci unregister driver  driver  
+}
+

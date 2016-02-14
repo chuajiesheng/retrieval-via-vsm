@@ -1,0 +1,6 @@
+static inline int drm mtrr add unsigned long offset  unsigned long size 
+			       unsigned int flags 
+{
+	return mtrr add offset  size  flags  1  
+}
+

@@ -1,0 +1,18 @@
+static long snd hwdep ioctl compat struct file   file  unsigned int cmd 
+				   unsigned long arg 
+{
+	struct snd hwdep  hw = file private data 
+	void   user  argp = compat ptr arg  
+	switch  cmd  {
+	case SNDRV HWDEP IOCTL PVERSION 
+	case SNDRV HWDEP IOCTL INFO 
+	case SNDRV HWDEP IOCTL DSP STATUS 
+		return snd hwdep ioctl file  cmd   unsigned long argp  
+	case SNDRV HWDEP IOCTL DSP LOAD32 
+		return snd hwdep dsp load compat hw  argp  
+	}
+	if  hw ops ioctl compat 
+		return hw ops ioctl compat hw  file  cmd  arg  
+	return  ENOIOCTLCMD 
+}
+

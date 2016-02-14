@@ -1,0 +1,16 @@
+static efi status t   init phys efi set virtual address map 
+	unsigned long memory map size 
+	unsigned long descriptor size 
+	u32 descriptor version 
+	efi memory desc t  virtual map 
+{
+	efi status t status 
+
+	efi call phys prelog   
+	status = efi call phys4 efi phys set virtual address map 
+				memory map size  descriptor size 
+				descriptor version  virtual map  
+	efi call phys epilog   
+	return status 
+}
+

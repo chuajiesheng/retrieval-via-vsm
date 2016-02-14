@@ -1,0 +1,70 @@
+static void snd card set id no lock struct snd card  card  const char  nid 
+{
+	int i  len  idx flag = 0  loops = SNDRV CARDS 
+	const char  spos   src 
+	char  id 
+	
+	if  nid == NULL  {
+		id = card shortname 
+		spos = src = id 
+		while   id  = '\0'  {
+			if   id == ' ' 
+				spos = id + 1 
+			id++ 
+		}
+	} else {
+		spos = src = nid 
+	}
+	id = card id 
+	while   spos  = '\0'     isalnum  spos  
+		spos++ 
+	if  isdigit  spos  
+		 id++ = isalpha src 0   ? src 0    'D' 
+	while   spos  = '\0'     size t  id   card id    sizeof card id    1  {
+		if  isalnum  spos  
+			 id++ =  spos 
+		spos++ 
+	}
+	 id = '\0' 
+
+	id = card id 
+	
+	if   id == '\0' 
+		strcpy id   default   
+
+	while  1  {
+	      	if  loops   == 0  {
+			snd printk KERN ERR  unable to set card id   s \n   id  
+      			strcpy card id  card proc root name  
+      			return 
+      		}
+	      	if   snd info check reserved words id  
+      			goto   change 
+		for  i = 0  i   snd ecards limit  i++  {
+			if  snd cards i      strcmp snd cards i  id  id  
+				goto   change 
+		}
+		break 
+
+	        change 
+		len = strlen id  
+		if  idx flag  {
+			if  id len 1   = '9' 
+				id len 1 ++ 
+			else
+				id len 1  = 'A' 
+		} else if   size t len  = sizeof card id    3  {
+			strcat id    1   
+			idx flag++ 
+		} else {
+			spos = id + len   2 
+			if   size t len  = sizeof card id    2 
+				spos++ 
+			  char   spos++ = ' ' 
+			  char   spos++ = '1' 
+			  char   spos++ = '\0' 
+			idx flag++ 
+		}
+	}
+}
+

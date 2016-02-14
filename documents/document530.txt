@@ -1,0 +1,5 @@
+static void snd mts64 detach struct parport  p 
+{
+	   nothing to do here   
+}
+

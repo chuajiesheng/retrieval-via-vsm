@@ -1,0 +1,2 @@
+void pci set master struct pci dev  dev  
+

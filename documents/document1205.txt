@@ -1,0 +1,15 @@
+   
+   Read an object from buffer that may be split to multiple parts  If object
+   is not split function just returns the pointer to object in buffer  But in
+   case of split object data is copied to given stack object that is suplied
+   by caller 
+  
+   The processing location of the buffer is also advanced to the next byte
+   after the object 
+  
+     objsize  The size of the objet in bytes 
+     stack obj  A pointer to a memory location where object can be copied 
+   
+extern void  drm buffer read object struct drm buffer  buf 
+		int objsize  void  stack obj  
+

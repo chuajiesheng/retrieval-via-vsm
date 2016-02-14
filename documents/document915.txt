@@ -1,0 +1,11 @@
+static snd pcm uframes t snd sonicvibes playback pointer struct snd pcm substream  substream 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+	size t ptr 
+
+	if    sonic enable   1  
+		return 0 
+	ptr = sonic p dma size   snd sonicvibes getdmaa sonic  
+	return bytes to frames substream runtime  ptr  
+}
+

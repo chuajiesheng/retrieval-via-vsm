@@ -1,0 +1,26 @@
+   
+   snd pcm lib free pages   release the allocated DMA buffer 
+   @substream  the substream to release the DMA buffer
+  
+   Releases the DMA buffer allocated via snd pcm lib malloc pages   
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm lib free pages struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime 
+
+	if  PCM RUNTIME CHECK substream  
+		return  EINVAL 
+	runtime = substream runtime 
+	if  runtime dma area == NULL 
+		return 0 
+	if  runtime dma buffer p  =  substream dma buffer  {
+		   it's a newly allocated buffer   release it now    
+		snd dma free pages runtime dma buffer p  
+		kfree runtime dma buffer p  
+	}
+	snd pcm set runtime buffer substream  NULL  
+	return 0 
+}
+

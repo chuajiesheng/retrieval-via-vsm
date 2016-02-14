@@ -1,0 +1,2 @@
+int drm fb helper single add all connectors struct drm fb helper  fb helper  
+

@@ -1,0 +1,25 @@
+static int snd cs4281 put volume struct snd kcontrol  kcontrol 
+				 struct snd ctl elem value  ucontrol 
+{
+	struct cs4281  chip = snd kcontrol chip kcontrol  
+	int change = 0 
+	int regL =  kcontrol private value    16    0xffff 
+	int regR = kcontrol private value   0xffff 
+	int volL  volR 
+
+	volL = CS VOL MASK    snd cs4281 peekBA0 chip  regL    CS VOL MASK  
+	volR = CS VOL MASK    snd cs4281 peekBA0 chip  regR    CS VOL MASK  
+
+	if  ucontrol value integer value 0   = volL  {
+		volL = CS VOL MASK    ucontrol value integer value 0    CS VOL MASK  
+		snd cs4281 pokeBA0 chip  regL  volL  
+		change = 1 
+	}
+	if  ucontrol value integer value 1   = volR  {
+		volR = CS VOL MASK    ucontrol value integer value 1    CS VOL MASK  
+		snd cs4281 pokeBA0 chip  regR  volR  
+		change = 1 
+	}
+	return change 
+}
+

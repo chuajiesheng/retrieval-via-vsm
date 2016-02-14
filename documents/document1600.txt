@@ -1,0 +1,9 @@
+static void async chainiv exit struct crypto tfm  tfm 
+{
+	struct async chainiv ctx  ctx = crypto tfm ctx tfm  
+
+	BUG ON test bit CHAINIV STATE INUSE   ctx state  || ctx queue qlen  
+
+	skcipher geniv exit tfm  
+}
+

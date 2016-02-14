@@ -1,0 +1,28 @@
+static const char  snd pcm oss format name int format 
+{
+	switch  format  {
+	case AFMT MU LAW 
+		return  MU LAW  
+	case AFMT A LAW 
+		return  A LAW  
+	case AFMT IMA ADPCM 
+		return  IMA ADPCM  
+	case AFMT U8 
+		return  U8  
+	case AFMT S16 LE 
+		return  S16 LE  
+	case AFMT S16 BE 
+		return  S16 BE  
+	case AFMT S8 
+		return  S8  
+	case AFMT U16 LE 
+		return  U16 LE  
+	case AFMT U16 BE 
+		return  U16 BE  
+	case AFMT MPEG 
+		return  MPEG  
+	default 
+		return  unknown  
+	}
+}
+

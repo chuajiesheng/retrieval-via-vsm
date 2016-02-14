@@ -1,0 +1,4 @@
+int snd register oss device int type  struct snd card  card  int dev 
+			    const struct file operations  f ops  void  private data 
+			    const char  name  
+

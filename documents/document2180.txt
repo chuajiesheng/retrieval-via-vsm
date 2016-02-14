@@ -1,0 +1,30 @@
+  
+   power management
+   
+static int snd via82xx suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct via82xx  chip = card private data 
+	int i 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	for  i = 0  i   2  i++ 
+		snd pcm suspend all chip pcms i   
+	for  i = 0  i   chip num devs  i++ 
+		snd via82xx channel reset chip   chip devs i   
+	synchronize irq chip irq  
+	snd ac97 suspend chip ac97  
+
+	   save misc values   
+	if  chip chip type  = TYPE VIA686  {
+		pci read config byte chip pci  VIA8233 SPDIF CTRL   chip spdif ctrl saved  
+		chip capture src saved 0  = inb chip port + VIA REG CAPTURE CHANNEL  
+		chip capture src saved 1  = inb chip port + VIA REG CAPTURE CHANNEL + 0x10  
+	}
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

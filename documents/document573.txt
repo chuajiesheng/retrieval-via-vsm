@@ -1,0 +1,10 @@
+static inline void snd uart16550 add timer struct snd uart16550  uart 
+{
+	if   uart timer running  {
+		   timer 38600bps   10bit   16byte   
+		uart buffer timer expires = jiffies +  HZ+255  256 
+		uart timer running = 1 
+		add timer  uart buffer timer  
+	}
+}
+

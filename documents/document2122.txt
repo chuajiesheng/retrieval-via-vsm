@@ -1,0 +1,12 @@
+static int clean via table struct viadev  dev  struct snd pcm substream  substream 
+			   struct pci dev  pci 
+{
+	if  dev table area  {
+		snd dma free pages  dev table  
+		dev table area = NULL 
+	}
+	kfree dev idx table  
+	dev idx table = NULL 
+	return 0 
+}
+

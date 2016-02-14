@@ -1,0 +1,6 @@
+  
+   Frees all stale memory blocks associated with the memory manager 
+   See idling above 
+   
+extern void drm sman cleanup struct drm sman   sman  
+

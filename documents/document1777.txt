@@ -1,0 +1,26 @@
+static int snd fm801 capture prepare struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	chip cap size = snd pcm lib buffer bytes substream  
+	chip cap count = snd pcm lib period bytes substream  
+	spin lock irq  chip reg lock  
+	chip cap ctrl  = ~ FM801 START | FM801 16BIT |
+			     FM801 STEREO | FM801 RATE MASK  
+	if  snd pcm format width runtime format  == 16 
+		chip cap ctrl |= FM801 16BIT 
+	if  runtime channels   1 
+		chip cap ctrl |= FM801 STEREO 
+	chip cap ctrl |= snd fm801 rate bits runtime rate     FM801 RATE SHIFT 
+	chip cap buf = 0 
+	outw chip cap ctrl  FM801 REG chip  CAP CTRL   
+	outw chip cap count   1  FM801 REG chip  CAP COUNT   
+	chip cap buffer = runtime dma addr 
+	chip cap pos = 0 
+	outl chip cap buffer  FM801 REG chip  CAP BUF1   
+	outl chip cap buffer +  chip cap count   chip cap size   FM801 REG chip  CAP BUF2   
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

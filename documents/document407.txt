@@ -1,0 +1,2 @@
+extern void platform device unregister struct platform device    
+

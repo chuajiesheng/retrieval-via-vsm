@@ -1,0 +1,21 @@
+snd rme96 setframelog struct rme96  rme96 
+		      int n channels 
+		      int is playback 
+{
+	int frlog 
+	
+	if  n channels == 2  {
+		frlog = 1 
+	} else {
+		   assume 8 channels   
+		frlog = 3 
+	}
+	if  is playback  {
+		frlog +=  rme96 wcreg   RME96 WCR MODE24  ? 2   1 
+		rme96 playback frlog = frlog 
+	} else {
+		frlog +=  rme96 wcreg   RME96 WCR MODE24 2  ? 2   1 
+		rme96 capture frlog = frlog 
+	}
+}
+

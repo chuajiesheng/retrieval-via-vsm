@@ -1,0 +1,30 @@
+static int   devinit snd card dummy pcm struct snd dummy  dummy  int device 
+					int substreams 
+{
+	struct snd pcm  pcm 
+	struct snd pcm ops  ops 
+	int err 
+
+	err = snd pcm new dummy card   Dummy PCM   device 
+			       substreams  substreams   pcm  
+	if  err   0 
+		return err 
+	dummy pcm = pcm 
+	if  fake buffer 
+		ops =  dummy pcm ops no buf 
+	else
+		ops =  dummy pcm ops 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK  ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE  ops  
+	pcm private data = dummy 
+	pcm info flags = 0 
+	strcpy pcm name   Dummy PCM   
+	if   fake buffer  {
+		snd pcm lib preallocate pages for all pcm 
+			SNDRV DMA TYPE CONTINUOUS 
+			snd dma continuous data GFP KERNEL  
+			0  64 1024  
+	}
+	return 0 
+}
+

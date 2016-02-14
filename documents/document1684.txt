@@ -1,0 +1,40 @@
+static int   devinit snd m3 mixer struct snd m3  chip 
+{
+	struct snd ac97 bus  pbus 
+	struct snd ac97 template ac97 
+#ifndef CONFIG SND MAESTRO3 INPUT
+	struct snd ctl elem id elem id 
+#endif
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd m3 ac97 write 
+		 read = snd m3 ac97 read 
+	} 
+
+	if   err = snd ac97 bus chip card  0   ops  NULL   pbus     0 
+		return err 
+	
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	if   err = snd ac97 mixer pbus   ac97   chip ac97     0 
+		return err 
+
+	   seems ac97 PCM needs initialization   hack hack     
+	snd ac97 write chip ac97  AC97 PCM  0x8000 |  15    8  | 15  
+	schedule timeout uninterruptible msecs to jiffies 100   
+	snd ac97 write chip ac97  AC97 PCM  0  
+
+#ifndef CONFIG SND MAESTRO3 INPUT
+	memset  elem id  0  sizeof elem id   
+	elem id iface = SNDRV CTL ELEM IFACE MIXER 
+	strcpy elem id name   Master Playback Switch   
+	chip master switch = snd ctl find id chip card   elem id  
+	memset  elem id  0  sizeof elem id   
+	elem id iface = SNDRV CTL ELEM IFACE MIXER 
+	strcpy elem id name   Master Playback Volume   
+	chip master volume = snd ctl find id chip card   elem id  
+#endif
+
+	return 0 
+}
+

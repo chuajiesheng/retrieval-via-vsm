@@ -1,0 +1,19 @@
+static int snd via8233 dxs3 spdif put struct snd kcontrol  kcontrol 
+				      struct snd ctl elem value  ucontrol 
+{
+	struct via82xx  chip = snd kcontrol chip kcontrol  
+	u8 val  oval 
+
+	pci read config byte chip pci  VIA8233 SPDIF CTRL   oval  
+	val = oval   ~VIA8233 SPDIF DX3 
+	if  ucontrol value integer value 0  
+		val |= VIA8233 SPDIF DX3 
+	   save the spdif flag for rate filtering   
+	chip spdif on = ucontrol value integer value 0  ? 1   0 
+	if  val  = oval  {
+		pci write config byte chip pci  VIA8233 SPDIF CTRL  val  
+		return 1 
+	}
+	return 0 
+}
+

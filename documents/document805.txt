@@ -1,0 +1,12 @@
+static int gcm hash final struct aead request  req 
+			  struct crypto gcm req priv ctx  pctx 
+{
+	struct ahash request  ahreq =  pctx u ahreq 
+
+	ahash request set callback ahreq  aead request flags req  
+				   gcm hash final done  req  
+	ahash request set crypt ahreq  NULL  pctx iauth tag  0  
+
+	return crypto ahash final ahreq  
+}
+

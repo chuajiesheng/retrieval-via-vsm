@@ -1,0 +1,34 @@
+static int   devinit snd fm801 mixer struct fm801  chip 
+{
+	struct snd ac97 template ac97 
+	unsigned int i 
+	int err 
+	static struct snd ac97 bus ops ops = {
+		 write = snd fm801 codec write 
+		 read = snd fm801 codec read 
+	} 
+
+	if   err = snd ac97 bus chip card  0   ops  chip   chip ac97 bus     0 
+		return err 
+	chip ac97 bus private free = snd fm801 mixer free ac97 bus 
+
+	memset  ac97  0  sizeof ac97   
+	ac97 private data = chip 
+	ac97 private free = snd fm801 mixer free ac97 
+	if   err = snd ac97 mixer chip ac97 bus   ac97   chip ac97     0 
+		return err 
+	if  chip secondary  {
+		ac97 num = 1 
+		ac97 addr = chip secondary addr 
+		if   err = snd ac97 mixer chip ac97 bus   ac97   chip ac97 sec     0 
+			return err 
+	}
+	for  i = 0  i   FM801 CONTROLS  i++ 
+		snd ctl add chip card  snd ctl new1  snd fm801 controls i   chip   
+	if  chip multichannel  {
+		for  i = 0  i   FM801 CONTROLS MULTI  i++ 
+			snd ctl add chip card  snd ctl new1  snd fm801 controls multi i   chip   
+	}
+	return 0 
+}
+

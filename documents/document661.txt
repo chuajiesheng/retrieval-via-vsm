@@ -1,0 +1,12 @@
+static void   devinit dummy proc init struct snd dummy  chip 
+{
+	struct snd info entry  entry 
+
+	if   snd card proc new chip card   dummy pcm    entry   {
+		snd info set text ops entry  chip  dummy proc read  
+		entry c text write = dummy proc write 
+		entry mode |= S IWUSR 
+		entry private data = chip 
+	}
+}
+

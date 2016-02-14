@@ -1,0 +1,19 @@
+static void snd m3 inc timer users struct snd m3  chip 
+{
+	chip timer users++ 
+	if  chip timer users  = 1  
+		return 
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  KDATA TIMER COUNT RELOAD 
+			  240  
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  KDATA TIMER COUNT CURRENT 
+			  240  
+
+	snd m3 outw chip 
+		    snd m3 inw chip  HOST INT CTRL  | CLKRUN GEN ENABLE 
+		    HOST INT CTRL  
+}
+

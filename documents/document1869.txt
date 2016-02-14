@@ -1,0 +1,68 @@
+static int   devinit snd bt87x create struct snd card  card 
+				      struct pci dev  pci 
+				      struct snd bt87x   rchip 
+{
+	struct snd bt87x  chip 
+	int err 
+	static struct snd device ops ops = {
+		 dev free = snd bt87x dev free
+	} 
+
+	 rchip = NULL 
+
+	err = pci enable device pci  
+	if  err   0 
+		return err 
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if   chip  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+	spin lock init  chip reg lock  
+
+	if   err = pci request regions pci   Bt87x audio      0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+	chip mmio = pci ioremap bar pci  0  
+	if   chip mmio  {
+		snd printk KERN ERR  cannot remap io memory\n   
+		err =  ENOMEM 
+		goto fail 
+	}
+
+	chip reg control = CTL A PWRDN | CTL DA ES2 |
+			    CTL PKTP 16 |  15    CTL DA SDR SHIFT  
+	chip interrupt mask = MY INTERRUPTS 
+	snd bt87x writel chip  REG GPIO DMA CTL  chip reg control  
+	snd bt87x writel chip  REG INT MASK  0  
+	snd bt87x writel chip  REG INT STAT  MY INTERRUPTS  
+
+	err = request irq pci irq  snd bt87x interrupt  IRQF SHARED 
+			   Bt87x audio   chip  
+	if  err   0  {
+		snd printk KERN ERR  cannot grab irq  d\n   pci irq  
+		goto fail 
+	}
+	chip irq = pci irq 
+	pci set master pci  
+	synchronize irq chip irq  
+
+	err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops  
+	if  err   0 
+		goto fail 
+
+	snd card set dev card   pci dev  
+	 rchip = chip 
+	return 0 
+
+fail 
+	snd bt87x free chip  
+	return err 
+}
+

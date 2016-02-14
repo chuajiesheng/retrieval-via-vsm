@@ -1,0 +1,41 @@
+snd rme96 put inputtype control struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change  items = 3 
+	
+	switch  rme96 pci device  {
+	case PCI DEVICE ID RME DIGI96 
+	case PCI DEVICE ID RME DIGI96 8 
+		items = 3 
+		break 
+	case PCI DEVICE ID RME DIGI96 8 PRO 
+		items = 4 
+		break 
+	case PCI DEVICE ID RME DIGI96 8 PAD OR PST 
+		if  rme96 rev   4  {
+			items = 4 
+		} else {
+			items = 5 
+		}
+		break 
+	default 
+		snd BUG   
+		break 
+	}
+	val = ucontrol value enumerated item 0    items 
+	
+	   special case for PST   
+	if  rme96 pci device == PCI DEVICE ID RME DIGI96 8 PAD OR PST    rme96 rev   4  {
+		if  val == RME96 INPUT XLR  {
+			val = RME96 INPUT ANALOG 
+		}
+	}
+	
+	spin lock irq  rme96 lock  
+	change =  int val  = snd rme96 getinputtype rme96  
+	snd rme96 setinputtype rme96  val  
+	spin unlock irq  rme96 lock  
+	return change 
+}
+

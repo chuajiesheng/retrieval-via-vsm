@@ -1,0 +1,5 @@
+snd azf3328 mixer outw const struct snd azf3328  chip  unsigned reg  u16 value 
+{
+	outw value  chip mixer io + reg  
+}
+

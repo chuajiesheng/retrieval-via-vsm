@@ -1,0 +1,2 @@
+void crypto init queue struct crypto queue  queue  unsigned int max qlen  
+

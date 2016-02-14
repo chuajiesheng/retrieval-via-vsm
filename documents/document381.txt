@@ -1,0 +1,14 @@
+static void snd portman midi input trigger struct snd rawmidi substream  substream 
+					   int up 
+{
+	struct portman  pm = substream rmidi private data 
+	unsigned long flags 
+
+	spin lock irqsave  pm reg lock  flags  
+	if  up 
+		pm mode substream number  |= PORTMAN2X4 MODE INPUT TRIGGERED 
+	else
+		pm mode substream number   = ~PORTMAN2X4 MODE INPUT TRIGGERED 
+	spin unlock irqrestore  pm reg lock  flags  
+}
+

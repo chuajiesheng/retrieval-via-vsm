@@ -1,0 +1,5 @@
+static int   init alsa card via82xx init void 
+{
+	return pci register driver  driver  
+}
+

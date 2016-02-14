@@ -1,0 +1,9 @@
+static unsigned char snd cs4281 gameport read struct gameport  gameport 
+{
+	struct cs4281  chip = gameport get port data gameport  
+
+	if  snd BUG ON  chip  
+		return 0 
+	return snd cs4281 peekBA0 chip  BA0 JSPT  
+}
+

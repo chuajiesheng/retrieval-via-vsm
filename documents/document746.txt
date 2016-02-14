@@ -1,0 +1,27 @@
+static int snd via82xx resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct via82xx modem  chip = card private data 
+	int i 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  via82xx modem  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd via82xx chip init chip  
+
+	snd ac97 resume chip ac97  
+
+	for  i = 0  i   chip num devs  i++ 
+		snd via82xx channel reset chip   chip devs i   
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

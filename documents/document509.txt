@@ -1,0 +1,12 @@
+static int snd mts64 ctl smpte switch get struct snd kcontrol  kctl 
+					  struct snd ctl elem value  uctl 
+{
+	struct mts64  mts = snd kcontrol chip kctl  
+
+	spin lock irq  mts lock  
+	uctl value integer value 0  = mts smpte switch 
+	spin unlock irq  mts lock  
+
+	return 0 
+}
+

@@ -1,0 +1,18 @@
+   
+   ttm tt create
+  
+   @bdev  pointer to a struct ttm bo device 
+   @size  Size of the data needed backing 
+   @page flags  Page flags as identified by TTM PAGE FLAG XX flags 
+   @dummy read page  See struct ttm bo device 
+  
+   Create a struct ttm tt to back data with system memory pages 
+   No pages are actually allocated 
+   Returns 
+   NULL  Out of memory 
+   
+extern struct ttm tt  ttm tt create struct ttm bo device  bdev 
+				    unsigned long size 
+				    uint32 t page flags 
+				    struct page  dummy read page  
+

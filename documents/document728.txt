@@ -1,0 +1,31 @@
+  
+   get the current pointer on via686
+   
+static snd pcm uframes t snd via686 pcm pointer struct snd pcm substream  substream 
+{
+	struct via82xx modem  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	unsigned int idx  ptr  count  res 
+
+	if  snd BUG ON  viadev tbl entries  
+		return 0 
+	if    inb VIADEV REG viadev  OFFSET STATUS     VIA REG STAT ACTIVE  
+		return 0 
+
+	spin lock  chip reg lock  
+	count = inl VIADEV REG viadev  OFFSET CURR COUNT     0xffffff 
+	   The via686a does not have the current index register 
+	   so we need to calculate the index from CURR PTR 
+	   
+	ptr = inl VIADEV REG viadev  OFFSET CURR PTR   
+	if  ptr  =  unsigned int viadev table addr 
+		idx = 0 
+	else    CURR PTR holds the address + 8   
+		idx =   ptr    unsigned int viadev table addr    8   1   
+			viadev tbl entries 
+	res = calc linear pos viadev  idx  count  
+	spin unlock  chip reg lock  
+
+	return bytes to frames substream runtime  res  
+}
+

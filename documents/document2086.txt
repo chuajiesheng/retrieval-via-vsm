@@ -1,0 +1,6 @@
+   set up slots and formats for analog IN   
+static int snd atiixp capture prepare struct snd pcm substream  substream 
+{
+	return 0 
+}
+

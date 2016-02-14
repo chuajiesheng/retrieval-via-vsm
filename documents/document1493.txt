@@ -1,0 +1,17 @@
+snd rme96 setmontracks struct rme96  rme96 
+		       int montracks 
+{
+	if  montracks   1  {
+		rme96 wcreg |= RME96 WCR MONITOR 0 
+	} else {
+		rme96 wcreg  = ~RME96 WCR MONITOR 0 
+	}
+	if  montracks   2  {
+		rme96 wcreg |= RME96 WCR MONITOR 1 
+	} else {
+		rme96 wcreg  = ~RME96 WCR MONITOR 1 
+	}
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	return 0 
+}
+

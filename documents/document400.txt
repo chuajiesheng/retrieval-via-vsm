@@ -1,0 +1,12 @@
+   parport register device declares that a device is connected to a
+   port  and tells the kernel all it needs to know 
+     pf is the preemption function  may be NULL for no callback 
+     kf is the wake up function  may be NULL for no callback 
+     irq func is the interrupt handler  may be NULL for no interrupts 
+     handle is a user pointer that gets handed to callback functions     
+struct pardevice  parport register device struct parport  port  
+			  const char  name 
+			  int   pf  void     void   kf  void    
+			  void   irq func  void     
+			  int flags  void  handle  
+

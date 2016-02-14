@@ -1,0 +1,5 @@
+static inline int ib copy from udata void  dest  struct ib udata  udata  size t len 
+{
+	return copy from user dest  udata inbuf  len  ?  EFAULT   0 
+}
+

@@ -1,0 +1,8 @@
+static unsigned int snd hwdep poll struct file   file  poll table   wait 
+{
+	struct snd hwdep  hw = file private data 
+	if  hw ops poll 
+		return hw ops poll hw  file  wait  
+	return 0 
+}
+

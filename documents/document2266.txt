@@ -1,0 +1,6 @@
+static int snd rme32 getclockmode struct rme32   rme32 
+{
+	return   rme32 wcreg    RME32 WCR BITPOS FREQ 0    1  +
+	       rme32 wcreg    RME32 WCR BITPOS FREQ 1    1     1  
+}
+

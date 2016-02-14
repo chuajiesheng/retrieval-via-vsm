@@ -1,0 +1,3 @@
+int snd ac97 pcm open struct ac97 pcm  pcm  unsigned int rate 
+		      enum ac97 pcm cfg cfg  unsigned short slots  
+

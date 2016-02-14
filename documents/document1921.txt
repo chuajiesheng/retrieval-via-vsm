@@ -1,0 +1,8 @@
+static int snd intel8x0 spdif open struct snd pcm substream  substream 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	int idx = chip device type == DEVICE NFORCE ? NVD SPBAR   ICHD SPBAR 
+
+	return snd intel8x0 pcm open substream   chip ichd idx   
+}
+

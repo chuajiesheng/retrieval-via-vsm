@@ -1,0 +1,22 @@
+static void snd es1371 dac2 rate struct ensoniq   ensoniq  unsigned int rate 
+{
+	unsigned int freq  r 
+
+	mutex lock  ensoniq src mutex  
+	freq =   rate    15  + 1500    3000 
+	r =  snd es1371 wait src ready ensoniq     ES 1371 SRC DISABLE |
+						   ES 1371 DIS P1 | ES 1371 DIS R1   |
+		ES 1371 DIS P2 
+	outl r  ES REG ensoniq  1371 SMPRATE   
+	snd es1371 src write ensoniq  ES SMPREG DAC2 + ES SMPREG INT REGS 
+			      snd es1371 src read ensoniq  ES SMPREG DAC2 +
+						  ES SMPREG INT REGS    0x00ff  |
+			       freq    5    0xfc00   
+	snd es1371 src write ensoniq  ES SMPREG DAC2 + ES SMPREG VFREQ FRAC 
+			     freq   0x7fff  
+	r =  snd es1371 wait src ready ensoniq     ES 1371 SRC DISABLE |
+						   ES 1371 DIS P1 | ES 1371 DIS R1   
+	outl r  ES REG ensoniq  1371 SMPRATE   
+	mutex unlock  ensoniq src mutex  
+}
+

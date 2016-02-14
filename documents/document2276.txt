@@ -1,0 +1,19 @@
+static irqreturn t snd rme32 interrupt int irq  void  dev id 
+{
+	struct rme32  rme32 =  struct rme32    dev id 
+
+	rme32 rcreg = readl rme32 iobase + RME32 IO CONTROL REGISTER  
+	if    rme32 rcreg   RME32 RCR IRQ   {
+		return IRQ NONE 
+	} else {
+		if  rme32 capture substream  {
+			snd pcm period elapsed rme32 capture substream  
+		}
+		if  rme32 playback substream  {
+			snd pcm period elapsed rme32 playback substream  
+		}
+		writel 0  rme32 iobase + RME32 IO CONFIRM ACTION IRQ  
+	}
+	return IRQ HANDLED 
+}
+

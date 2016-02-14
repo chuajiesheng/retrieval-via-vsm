@@ -1,0 +1,31 @@
+static void snd als4000 configure struct snd sb  chip 
+{
+	u8 tmp 
+	int i 
+
+	   do some more configuration   
+	spin lock irq  chip mixer lock  
+	tmp = snd als4 cr read chip  ALS4K CR0 SB CONFIG  
+	snd als4 cr write chip  ALS4K CR0 SB CONFIG 
+				tmp|ALS4K CR0 MX80 81 REG WRITE ENABLE  
+	   always select DMA channel 0  since we do not actually use DMA
+	   SPECS PAGE  19 20   
+	snd sbmixer write chip  SB DSP4 DMASETUP  SB DMASETUP DMA0  
+	snd als4 cr write chip  ALS4K CR0 SB CONFIG 
+				 tmp   ~ALS4K CR0 MX80 81 REG WRITE ENABLE  
+	spin unlock irq  chip mixer lock  
+	
+	spin lock irq  chip reg lock  
+	   enable interrupts   
+	snd als4k gcr write chip  ALS4K GCR8C MISC CTRL 
+					ALS4K GCR8C IRQ MASK CTRL ENABLE  
+
+	   SPECS PAGE  39   
+	for  i = ALS4K GCR91 DMA0 ADDR  i  = ALS4K GCR96 DMA3 MODE COUNT  ++i 
+		snd als4k gcr write chip  i  0  
+	   enable burst mode to prevent dropouts during high PCI bus usage   
+	snd als4k gcr write chip  ALS4K GCR99 DMA EMULATION CTRL 
+		 snd als4k gcr read chip  ALS4K GCR99 DMA EMULATION CTRL    ~0x07  | 0x04  
+	spin unlock irq  chip reg lock  
+}
+

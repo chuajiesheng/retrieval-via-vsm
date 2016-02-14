@@ -1,0 +1,3 @@
+void lib80211 crypt delayed deinit struct lib80211 crypt info  info 
+				    struct lib80211 crypt data   crypt  
+

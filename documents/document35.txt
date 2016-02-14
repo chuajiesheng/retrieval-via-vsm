@@ -1,0 +1,21 @@
+static int snd info entry mmap struct file  file  struct vm area struct  vma 
+{
+	struct inode  inode = file f path dentry d inode 
+	struct snd info private data  data 
+	struct snd info entry  entry 
+
+	data = file private data 
+	if  data == NULL 
+		return 0 
+	entry = data entry 
+	switch  entry content  {
+	case SNDRV INFO CONTENT DATA 
+		if  entry c ops mmap 
+			return entry c ops mmap entry 
+						  data file private data 
+						  inode  file  vma  
+		break 
+	}
+	return  ENXIO 
+}
+

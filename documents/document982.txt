@@ -1,0 +1,3 @@
+int snd opl3 hwdep new struct snd opl3   opl3  int device  int seq device 
+		       struct snd hwdep    rhwdep  
+

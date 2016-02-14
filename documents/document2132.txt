@@ -1,0 +1,7 @@
+static void   exit wp512 mod fini void 
+{
+	crypto unregister shash  wp512  
+	crypto unregister shash  wp384  
+	crypto unregister shash  wp256  
+}
+

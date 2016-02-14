@@ -1,0 +1,2 @@
+extern void drm sysfs connector remove struct drm connector  connector  
+

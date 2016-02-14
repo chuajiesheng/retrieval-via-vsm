@@ -1,0 +1,10 @@
+static int snd cmipci spdif mask get struct snd kcontrol  kcontrol 
+				     struct snd ctl elem value  ucontrol 
+{
+	ucontrol value iec958 status 0  = 0xff 
+	ucontrol value iec958 status 1  = 0xff 
+	ucontrol value iec958 status 2  = 0xff 
+	ucontrol value iec958 status 3  = 0xff 
+	return 0 
+}
+

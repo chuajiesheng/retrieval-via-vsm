@@ -1,0 +1,2 @@
+extern int register acpi notifier struct notifier block    
+

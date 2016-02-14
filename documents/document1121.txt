@@ -1,0 +1,9 @@
+static void   exit crypto gcm module exit void 
+{
+	kfree gcm zeroes  
+	crypto unregister template  crypto rfc4543 tmpl  
+	crypto unregister template  crypto rfc4106 tmpl  
+	crypto unregister template  crypto gcm tmpl  
+	crypto unregister template  crypto gcm base tmpl  
+}
+

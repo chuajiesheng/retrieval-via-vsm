@@ -1,0 +1,17 @@
+static int snd cs4281 midi output open struct snd rawmidi substream  substream 
+{
+	struct cs4281  chip = substream rmidi private data 
+
+	spin lock irq  chip reg lock  
+	chip uartm |= CS4281 MODE OUTPUT 
+	chip midcr |= BA0 MIDCR TXE 
+	chip midi output = substream 
+	if    chip uartm   CS4281 MODE INPUT   {
+		snd cs4281 midi reset chip  
+	} else {
+		snd cs4281 pokeBA0 chip  BA0 MIDCR  chip midcr  
+	}
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

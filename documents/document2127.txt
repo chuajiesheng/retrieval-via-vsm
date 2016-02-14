@@ -1,0 +1,26 @@
+static int   init wp512 mod init void 
+{
+	int ret = 0 
+
+	ret = crypto register shash  wp512  
+
+	if  ret   0 
+		goto out 
+
+	ret = crypto register shash  wp384  
+	if  ret   0 
+	{
+		crypto unregister shash  wp512  
+		goto out 
+	}
+
+	ret = crypto register shash  wp256  
+	if  ret   0 
+	{
+		crypto unregister shash  wp512  
+		crypto unregister shash  wp384  
+	}
+out 
+	return ret 
+}
+

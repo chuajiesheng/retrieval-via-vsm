@@ -1,0 +1,5 @@
+static inline unsigned int snd sonicvibes getdmaa struct sonicvibes   sonic 
+{
+	return  inl sonic dmaa port + SV DMA COUNT0    0xffffff  + 1 
+}
+

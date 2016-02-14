@@ -1,0 +1,9 @@
+static int chainiv init struct crypto tfm  tfm 
+{
+	struct chainiv ctx  ctx = crypto tfm ctx tfm  
+
+	spin lock init  ctx lock  
+
+	return chainiv init common tfm  
+}
+

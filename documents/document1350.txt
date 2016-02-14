@@ -1,0 +1,30 @@
+static int snd es1968 pcm trigger struct snd pcm substream  substream  int cmd 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct esschan  es = substream runtime private data 
+
+	spin lock  chip substream lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER RESUME 
+		if  es running 
+			break 
+		snd es1968 bob inc chip  es bob freq  
+		es count = 0 
+		es hwptr = 0 
+		snd es1968 pcm start chip  es  
+		es running = 1 
+		break 
+	case SNDRV PCM TRIGGER STOP 
+	case SNDRV PCM TRIGGER SUSPEND 
+		if    es running 
+			break 
+		snd es1968 pcm stop chip  es  
+		es running = 0 
+		snd es1968 bob dec chip  
+		break 
+	}
+	spin unlock  chip substream lock  
+	return 0 
+}
+

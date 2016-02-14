@@ -1,0 +1,12 @@
+   no spinlock   
+static void apu data set struct es1968  chip  u16 data 
+{
+	int i 
+	for  i = 0  i   1000  i++  {
+		if    maestro read chip  IDR0 DATA PORT  == data 
+			return 
+		  maestro write chip  IDR0 DATA PORT  data  
+	}
+	snd printd  es1968  APU register set probably failed  Timeout  \n   
+}
+

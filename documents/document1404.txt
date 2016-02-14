@@ -1,0 +1,5 @@
+static void   exit alsa card es1968 exit void 
+{
+	pci unregister driver  driver  
+}
+

@@ -1,0 +1,17 @@
+static int snd m3 pcm hw params struct snd pcm substream  substream 
+				struct snd pcm hw params  hw params 
+{
+	struct m3 dma  s = substream runtime private data 
+	int err 
+
+	if   err = snd pcm lib malloc pages substream  params buffer bytes hw params      0 
+		return err 
+	   set buffer address   
+	s buffer addr = substream runtime dma addr 
+	if  s buffer addr   0x3  {
+		snd printk KERN ERR  oh my  not aligned\n   
+		s buffer addr = s buffer addr   ~0x3 
+	}
+	return 0 
+}
+

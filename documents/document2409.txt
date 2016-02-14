@@ -1,0 +1,16 @@
+static struct crypto instance  pcrypt alloc struct rtattr   tb 
+{
+	struct crypto attr type  algt 
+
+	algt = crypto get attr type tb  
+	if  IS ERR algt  
+		return ERR CAST algt  
+
+	switch  algt type   algt mask   CRYPTO ALG TYPE MASK  {
+	case CRYPTO ALG TYPE AEAD 
+		return pcrypt alloc aead tb  algt type  algt mask  
+	}
+
+	return ERR PTR  EINVAL  
+}
+

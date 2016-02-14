@@ -1,0 +1,20 @@
+   
+   ieee80211 tx status ni   transmit status callback  in process context 
+  
+   Like ieee80211 tx status   but can be called in process context 
+  
+   Calls to this function  ieee80211 tx status   and
+   ieee80211 tx status irqsafe   may not be mixed
+   for a single hardware 
+  
+   @hw  the hardware the frame was transmitted by
+   @skb  the frame that was transmitted  owned by mac80211 after this call
+   
+static inline void ieee80211 tx status ni struct ieee80211 hw  hw 
+					  struct sk buff  skb 
+{
+	local bh disable   
+	ieee80211 tx status hw  skb  
+	local bh enable   
+}
+

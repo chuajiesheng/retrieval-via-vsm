@@ -1,0 +1,12 @@
+static u32 snd rme96 convert from aes struct snd aes iec958  aes 
+{
+	u32 val = 0 
+	val |=  aes status 0    IEC958 AES0 PROFESSIONAL  ? RME96 WCR PRO   0 
+	val |=  aes status 0    IEC958 AES0 NONAUDIO  ? RME96 WCR DOLBY   0 
+	if  val   RME96 WCR PRO 
+		val |=  aes status 0    IEC958 AES0 PRO EMPHASIS 5015  ? RME96 WCR EMP   0 
+	else
+		val |=  aes status 0    IEC958 AES0 CON EMPHASIS 5015  ? RME96 WCR EMP   0 
+	return val 
+}
+

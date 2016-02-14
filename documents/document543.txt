@@ -1,0 +1,48 @@
+  
+    this method probes  if an uart sits on given port
+    return 0 if found
+    return negative error if not found
+   
+static int   devinit snd uart16550 detect struct snd uart16550  uart 
+{
+	unsigned long io base = uart base 
+	int ok 
+	unsigned char c 
+
+	   Do some vague tests for the presence of the uart   
+	if  io base == 0 || io base == SNDRV AUTO PORT  {
+		return  ENODEV 	   Not configured   
+	}
+
+	uart res base = request region io base  8   Serial MIDI   
+	if  uart res base == NULL  {
+		snd printk KERN ERR  u16550  can't grab port 0x lx\n   io base  
+		return  EBUSY 
+	}
+
+	   uart detected unless one of the following tests should fail   
+	ok = 1 
+	   8 data bits  1 stop bit  parity off  DLAB = 0   
+	outb UART LCR WLEN8  io base + UART LCR      Line Control Register   
+	c = inb io base + UART IER  
+	   The top four bits of the IER should always == 0   
+	if   c   0xf0   = 0 
+		ok = 0 		   failed   
+
+	outb 0xaa  io base + UART SCR  
+	   Write arbitrary data into the scratch reg   
+	c = inb io base + UART SCR  
+	   If it comes back  it's OK   
+	if  c  = 0xaa 
+		ok = 0 		   failed   
+
+	outb 0x55  io base + UART SCR  
+	   Write arbitrary data into the scratch reg   
+	c = inb io base + UART SCR  
+	   If it comes back  it's OK   
+	if  c  = 0x55 
+		ok = 0 		   failed   
+
+	return ok 
+}
+

@@ -1,0 +1,7 @@
+static void gcm hash init done struct crypto async request  areq  int err 
+{
+	struct aead request  req = areq data 
+
+	  gcm hash init done req  err  
+}
+

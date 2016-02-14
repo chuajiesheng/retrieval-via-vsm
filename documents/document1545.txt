@@ -1,0 +1,26 @@
+snd rme96 free void  private data 
+{
+	struct rme96  rme96 =  struct rme96   private data 
+
+	if  rme96 == NULL  {
+	        return 
+	}
+	if  rme96 irq  = 0  {
+		snd rme96 playback stop rme96  
+		snd rme96 capture stop rme96  
+		rme96 areg  = ~RME96 AR DAC EN 
+		writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+		free irq rme96 irq   void   rme96  
+		rme96 irq =  1 
+	}
+	if  rme96 iobase  {
+		iounmap rme96 iobase  
+		rme96 iobase = NULL 
+	}
+	if  rme96 port  {
+		pci release regions rme96 pci  
+		rme96 port = 0 
+	}
+	pci disable device rme96 pci  
+}
+

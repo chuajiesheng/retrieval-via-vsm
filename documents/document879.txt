@@ -1,0 +1,2 @@
+module param spdif aclink  bool  0444  
+

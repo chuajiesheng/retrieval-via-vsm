@@ -1,0 +1,8 @@
+static inline int crypto ablkcipher setkey struct crypto ablkcipher  tfm 
+					   const u8  key  unsigned int keylen 
+{
+	struct ablkcipher tfm  crt = crypto ablkcipher crt tfm  
+
+	return crt setkey crt base  key  keylen  
+}
+

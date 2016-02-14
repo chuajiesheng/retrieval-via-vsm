@@ -1,0 +1,8 @@
+static unsigned long snd pcm timer resolution struct snd timer   timer 
+{
+	struct snd pcm substream  substream 
+	
+	substream = timer private data 
+	return substream runtime ? substream runtime timer resolution   0 
+}
+

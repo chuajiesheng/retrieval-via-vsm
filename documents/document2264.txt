@@ -1,0 +1,56 @@
+static int snd rme32 playback setrate struct rme32   rme32  int rate 
+{
+        int ds 
+
+        ds = rme32 wcreg   RME32 WCR DS BM 
+	switch  rate  {
+	case 32000 
+		rme32 wcreg  = ~RME32 WCR DS BM 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 0    
+			~RME32 WCR FREQ 1 
+		break 
+	case 44100 
+		rme32 wcreg  = ~RME32 WCR DS BM 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 1    
+			~RME32 WCR FREQ 0 
+		break 
+	case 48000 
+		rme32 wcreg  = ~RME32 WCR DS BM 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 0  | 
+			RME32 WCR FREQ 1 
+		break 
+	case 64000 
+		if  rme32 pci device  = PCI DEVICE ID RME DIGI32 PRO 
+			return  EINVAL 
+		rme32 wcreg |= RME32 WCR DS BM 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 0    
+			~RME32 WCR FREQ 1 
+		break 
+	case 88200 
+		if  rme32 pci device  = PCI DEVICE ID RME DIGI32 PRO 
+			return  EINVAL 
+		rme32 wcreg |= RME32 WCR DS BM 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 1    
+			~RME32 WCR FREQ 0 
+		break 
+	case 96000 
+		if  rme32 pci device  = PCI DEVICE ID RME DIGI32 PRO 
+			return  EINVAL 
+		rme32 wcreg |= RME32 WCR DS BM 
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 0  | 
+			RME32 WCR FREQ 1 
+		break 
+	default 
+		return  EINVAL 
+	}
+        if    ds    rme32 wcreg   RME32 WCR DS BM  ||
+             ds      rme32 wcreg   RME32 WCR DS BM   
+        {
+                   change to from double speed  reset the DAC  if available    
+                snd rme32 reset dac rme32  
+        } else {
+                writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	}
+	return 0 
+}
+

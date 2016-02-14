@@ -1,0 +1,8 @@
+   
+   Return number of bytes that is left to process
+   
+static inline int drm buffer unprocessed struct drm buffer  buf 
+{
+	return buf size   buf iterator 
+}
+

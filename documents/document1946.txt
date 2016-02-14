@@ -1,0 +1,213 @@
+static int   devinit snd intel8x0 create struct snd card  card 
+					 struct pci dev  pci 
+					 unsigned long device type 
+					 struct intel8x0    r intel8x0 
+{
+	struct intel8x0  chip 
+	int err 
+	unsigned int i 
+	unsigned int int sta masks 
+	struct ichdev  ichdev 
+	static struct snd device ops ops = {
+		 dev free =	snd intel8x0 dev free 
+	} 
+
+	static unsigned int bdbars   = {
+		3     DEVICE INTEL   
+		6     DEVICE INTEL ICH4   
+		3     DEVICE SIS   
+		6     DEVICE ALI   
+		4     DEVICE NFORCE   
+	} 
+	static struct ich reg info intel regs 6  = {
+		{ ICH PIINT  0 } 
+		{ ICH POINT  0x10 } 
+		{ ICH MCINT  0x20 } 
+		{ ICH M2INT  0x40 } 
+		{ ICH P2INT  0x50 } 
+		{ ICH SPINT  0x60 } 
+	} 
+	static struct ich reg info nforce regs 4  = {
+		{ ICH PIINT  0 } 
+		{ ICH POINT  0x10 } 
+		{ ICH MCINT  0x20 } 
+		{ ICH NVSPINT  0x70 } 
+	} 
+	static struct ich reg info ali regs 6  = {
+		{ ALI INT PCMIN  0x40 } 
+		{ ALI INT PCMOUT  0x50 } 
+		{ ALI INT MICIN  0x60 } 
+		{ ALI INT CODECSPDIFOUT  0x70 } 
+		{ ALI INT SPDIFIN  0xa0 } 
+		{ ALI INT SPDIFOUT  0xb0 } 
+	} 
+	struct ich reg info  tbl 
+
+	 r intel8x0 = NULL 
+
+	if   err = pci enable device pci     0 
+		return err 
+
+	chip = kzalloc sizeof  chip   GFP KERNEL  
+	if  chip == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+	spin lock init  chip reg lock  
+	chip device type = device type 
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+
+	   module parameters   
+	chip buggy irq = buggy irq 
+	chip buggy semaphore = buggy semaphore 
+	if  xbox 
+		chip xbox = 1 
+
+	if  pci vendor == PCI VENDOR ID INTEL   
+	    pci device == PCI DEVICE ID INTEL 440MX 
+		chip fix nocache = 1     enable workaround   
+
+	if   err = pci request regions pci  card shortname     0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+
+	if  device type == DEVICE ALI  {
+		   ALI5455 has no ac97 region   
+		chip bmaddr = pci iomap pci  0  0  
+		goto port inited 
+	}
+
+	if  pci resource flags pci  2    IORESOURCE MEM     ICH4 and Nforce   
+		chip addr = pci iomap pci  2  0  
+	else
+		chip addr = pci iomap pci  0  0  
+	if   chip addr  {
+		snd printk KERN ERR  AC'97 space ioremap problem\n   
+		snd intel8x0 free chip  
+		return  EIO 
+	}
+	if  pci resource flags pci  3    IORESOURCE MEM     ICH4   
+		chip bmaddr = pci iomap pci  3  0  
+	else
+		chip bmaddr = pci iomap pci  1  0  
+	if   chip bmaddr  {
+		snd printk KERN ERR  Controller space ioremap problem\n   
+		snd intel8x0 free chip  
+		return  EIO 
+	}
+
+ port inited 
+	chip bdbars count = bdbars device type  
+
+	   initialize offsets   
+	switch  device type  {
+	case DEVICE NFORCE 
+		tbl = nforce regs 
+		break 
+	case DEVICE ALI 
+		tbl = ali regs 
+		break 
+	default 
+		tbl = intel regs 
+		break 
+	}
+	for  i = 0  i   chip bdbars count  i++  {
+		ichdev =  chip ichd i  
+		ichdev ichd = i 
+		ichdev reg offset = tbl i  offset 
+		ichdev int sta mask = tbl i  int sta mask 
+		if  device type == DEVICE SIS  {
+			   SiS 7012 swaps the registers   
+			ichdev roff sr = ICH REG OFF PICB 
+			ichdev roff picb = ICH REG OFF SR 
+		} else {
+			ichdev roff sr = ICH REG OFF SR 
+			ichdev roff picb = ICH REG OFF PICB 
+		}
+		if  device type == DEVICE ALI 
+			ichdev ali slot =  ichdev reg offset   0x40    0x10 
+		   SIS7012 handles the pcm data in bytes  others are in samples   
+		ichdev pos shift =  device type == DEVICE SIS  ? 0   1 
+	}
+
+	   allocate buffer descriptor lists   
+	   the start of each lists must be aligned to 8 bytes   
+	if  snd dma alloc pages SNDRV DMA TYPE DEV  snd dma pci data pci  
+				chip bdbars count   sizeof u32    ICH MAX FRAGS   2 
+				 chip bdbars    0  {
+		snd intel8x0 free chip  
+		snd printk KERN ERR  intel8x0  cannot allocate buffer descriptors\n   
+		return  ENOMEM 
+	}
+	   tables must be aligned to 8 bytes here  but the kernel pages
+	   are much bigger  so we don't care  on i386    
+	   workaround for 440MX   
+	if  chip fix nocache 
+		fill nocache chip bdbars area  chip bdbars bytes  1  
+	int sta masks = 0 
+	for  i = 0  i   chip bdbars count  i++  {
+		ichdev =  chip ichd i  
+		ichdev bdbar =   u32   chip bdbars area  +
+			 i   ICH MAX FRAGS   2  
+		ichdev bdbar addr = chip bdbars addr +
+			 i   sizeof u32    ICH MAX FRAGS   2  
+		int sta masks |= ichdev int sta mask 
+	}
+	chip int sta reg = device type == DEVICE ALI ?
+		ICH REG ALI INTERRUPTSR   ICH REG GLOB STA 
+	chip int sta mask = int sta masks 
+
+	pci set master pci  
+
+	switch chip device type  {
+	case DEVICE INTEL ICH4 
+		   ICH4 can have three codecs   
+		chip max codecs = 3 
+		chip codec bit = ich codec bits 
+		chip codec ready bits = ICH PRI | ICH SRI | ICH TRI 
+		break 
+	case DEVICE SIS 
+		   recent SIS7012 can have three codecs   
+		chip max codecs = 3 
+		chip codec bit = sis codec bits 
+		chip codec ready bits = ICH PRI | ICH SRI | ICH SIS TRI 
+		break 
+	default 
+		   others up to two codecs   
+		chip max codecs = 2 
+		chip codec bit = ich codec bits 
+		chip codec ready bits = ICH PRI | ICH SRI 
+		break 
+	}
+	for  i = 0  i   chip max codecs  i++ 
+		chip codec isr bits |= chip codec bit i  
+
+	if   err = snd intel8x0 chip init chip  1     0  {
+		snd intel8x0 free chip  
+		return err 
+	}
+
+	   request irq after initializaing int sta mask  etc   
+	if  request irq pci irq  snd intel8x0 interrupt 
+			IRQF SHARED  card shortname  chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd intel8x0 free chip  
+		return  EBUSY 
+	}
+	chip irq = pci irq 
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd intel8x0 free chip  
+		return err 
+	}
+
+	snd card set dev card   pci dev  
+
+	 r intel8x0 = chip 
+	return 0 
+}
+

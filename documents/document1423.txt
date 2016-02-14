@@ -1,0 +1,35 @@
+static int chainiv givencrypt struct skcipher givcrypt request  req 
+{
+	struct crypto ablkcipher  geniv = skcipher givcrypt reqtfm req  
+	struct chainiv ctx  ctx = crypto ablkcipher ctx geniv  
+	struct ablkcipher request  subreq = skcipher givcrypt reqctx req  
+	unsigned int ivsize 
+	int err 
+
+	ablkcipher request set tfm subreq  skcipher geniv cipher geniv   
+	ablkcipher request set callback subreq  req creq base flags  
+						~CRYPTO TFM REQ MAY SLEEP 
+					req creq base complete 
+					req creq base data  
+	ablkcipher request set crypt subreq  req creq src  req creq dst 
+				     req creq nbytes  req creq info  
+
+	spin lock bh  ctx lock  
+
+	ivsize = crypto ablkcipher ivsize geniv  
+
+	memcpy req giv  ctx iv  ivsize  
+	memcpy subreq info  ctx iv  ivsize  
+
+	err = crypto ablkcipher encrypt subreq  
+	if  err 
+		goto unlock 
+
+	memcpy ctx iv  subreq info  ivsize  
+
+unlock 
+	spin unlock bh  ctx lock  
+
+	return err 
+}
+

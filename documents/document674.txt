@@ -1,0 +1,11 @@
+static void crypto gcm setkey done struct crypto async request  req  int err 
+{
+	struct crypto gcm setkey result  result = req data 
+
+	if  err ==  EINPROGRESS 
+		return 
+
+	result err = err 
+	complete  result completion  
+}
+

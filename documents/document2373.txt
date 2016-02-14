@@ -1,0 +1,5 @@
+static inline u16 igetword struct intel8x0m  chip  u32 offset 
+{
+	return ioread16 chip bmaddr + offset  
+}
+

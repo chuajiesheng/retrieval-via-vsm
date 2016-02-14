@@ -1,0 +1,7 @@
+static int crypto rfc4106 encrypt struct aead request  req 
+{
+	req = crypto rfc4106 crypt req  
+
+	return crypto aead encrypt req  
+}
+

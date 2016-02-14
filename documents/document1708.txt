@@ -1,0 +1,2 @@
+void    crypto dequeue request struct crypto queue  queue  unsigned int offset  
+

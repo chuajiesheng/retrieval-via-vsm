@@ -1,0 +1,70 @@
+static int loopback open struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct loopback  loopback = substream private data 
+	struct loopback pcm  dpcm 
+	struct loopback cable  cable 
+	int err = 0 
+	int dev = get cable index substream  
+
+	mutex lock  loopback cable lock  
+	dpcm = kzalloc sizeof  dpcm   GFP KERNEL  
+	if   dpcm  {
+		err =  ENOMEM 
+		goto unlock 
+	}
+	dpcm loopback = loopback 
+	dpcm substream = substream 
+	setup timer  dpcm timer  loopback timer function 
+		     unsigned long dpcm  
+
+	cable = loopback cables substream number  dev  
+	if   cable  {
+		cable = kzalloc sizeof  cable   GFP KERNEL  
+		if   cable  {
+			kfree dpcm  
+			err =  ENOMEM 
+			goto unlock 
+		}
+		spin lock init  cable lock  
+		cable hw = loopback pcm hardware 
+		loopback cables substream number  dev  = cable 
+	}
+	dpcm cable = cable 
+	cable streams substream stream  = dpcm 
+
+	snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS  
+
+	   use dynamic rules based on actual runtime hw values   
+	   note that the default rules created in the PCM midlevel code   
+	   are cached   they do not reflect the actual state   
+	err = snd pcm hw rule add runtime  0 
+				  SNDRV PCM HW PARAM FORMAT 
+				  rule format   runtime hw 
+				  SNDRV PCM HW PARAM FORMAT   1  
+	if  err   0 
+		goto unlock 
+	err = snd pcm hw rule add runtime  0 
+				  SNDRV PCM HW PARAM RATE 
+				  rule rate   runtime hw 
+				  SNDRV PCM HW PARAM RATE   1  
+	if  err   0 
+		goto unlock 
+	err = snd pcm hw rule add runtime  0 
+				  SNDRV PCM HW PARAM CHANNELS 
+				  rule channels   runtime hw 
+				  SNDRV PCM HW PARAM CHANNELS   1  
+	if  err   0 
+		goto unlock 
+
+	runtime private data = dpcm 
+	runtime private free = loopback runtime free 
+	if  get notify dpcm  
+		runtime hw = loopback pcm hardware 
+	else
+		runtime hw = cable hw 
+ unlock 
+	mutex unlock  loopback cable lock  
+	return err 
+}
+

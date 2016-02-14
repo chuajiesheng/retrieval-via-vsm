@@ -1,0 +1,24 @@
+static int   devinit snd mts64 create struct snd card  card  
+				      struct pardevice  pardev  
+				      struct mts64   rchip 
+{
+	struct mts64  mts 
+
+	 rchip = NULL 
+
+	mts = kzalloc sizeof struct mts64   GFP KERNEL  
+	if  mts == NULL  
+		return  ENOMEM 
+
+	   Init chip specific data   
+	spin lock init  mts lock  
+	mts card = card 
+	mts pardev = pardev 
+	mts current midi output port =  1 
+	mts current midi input port =  1 
+
+	 rchip = mts 
+
+	return 0 
+}
+

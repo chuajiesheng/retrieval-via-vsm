@@ -1,0 +1,19 @@
+static int dummy hrtimer prepare struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct dummy hrtimer pcm  dpcm = runtime private data 
+	unsigned int period  rate 
+	long sec 
+	unsigned long nsecs 
+
+	dummy hrtimer sync dpcm  
+	period = runtime period size 
+	rate = runtime rate 
+	sec = period   rate 
+	period  = rate 
+	nsecs = div u64  u64 period   1000000000UL + rate   1  rate  
+	dpcm period time = ktime set sec  nsecs  
+
+	return 0 
+}
+

@@ -1,0 +1,23 @@
+static int snd disconnect release struct inode  inode  struct file  file 
+{
+	struct snd monitor file  df = NULL    df 
+
+	spin lock  shutdown lock  
+	list for each entry  df   shutdown files  shutdown list  {
+		if   df file == file  {
+			df =  df 
+			list del init  df shutdown list  
+			break 
+		}
+	}
+	spin unlock  shutdown lock  
+
+	if  likely df   {
+		if   file f flags   FASYNC     df disconnected f op fasync 
+			df disconnected f op fasync  1  file  0  
+		return df disconnected f op release inode  file  
+	}
+
+	panic   s  p   p  failed      func    inode  file  
+}
+

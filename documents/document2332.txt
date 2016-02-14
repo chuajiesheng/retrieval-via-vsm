@@ -1,0 +1,8 @@
+static int pcrypt aead setauthsize struct crypto aead  parent 
+				   unsigned int authsize 
+{
+	struct pcrypt aead ctx  ctx = crypto aead ctx parent  
+
+	return crypto aead setauthsize ctx child  authsize  
+}
+

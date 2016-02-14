@@ -1,0 +1,8 @@
+static loff t snd hwdep llseek struct file   file  loff t offset  int orig 
+{
+	struct snd hwdep  hw = file private data 
+	if  hw ops llseek 
+		return hw ops llseek hw  file  offset  orig  
+	return  ENXIO 
+}
+

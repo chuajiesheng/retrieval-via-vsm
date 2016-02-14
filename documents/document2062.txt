@@ -1,0 +1,14 @@
+  
+   remove the ring buffer and release it if assigned
+   
+static void atiixp clear dma packets struct atiixp modem  chip 
+				     struct atiixp dma  dma 
+				     struct snd pcm substream  substream 
+{
+	if  dma desc buf area  {
+		writel 0  chip remap addr + dma ops llp offset  
+		snd dma free pages  dma desc buf  
+		dma desc buf area = NULL 
+	}
+}
+

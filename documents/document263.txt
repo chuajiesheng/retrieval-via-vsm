@@ -1,0 +1,23 @@
+  
+    Info interface
+   
+static void snd pcm proc read struct snd info entry  entry 
+			      struct snd info buffer  buffer 
+{
+	struct snd pcm  pcm 
+
+	mutex lock  register mutex  
+	list for each entry pcm   snd pcm devices  list  {
+		snd iprintf buffer    02i  02i   s    s  
+			    pcm card number  pcm device  pcm id  pcm name  
+		if  pcm streams SNDRV PCM STREAM PLAYBACK  substream 
+			snd iprintf buffer      playback  i  
+				    pcm streams SNDRV PCM STREAM PLAYBACK  substream count  
+		if  pcm streams SNDRV PCM STREAM CAPTURE  substream 
+			snd iprintf buffer      capture  i  
+				    pcm streams SNDRV PCM STREAM CAPTURE  substream count  
+		snd iprintf buffer   \n   
+	}
+	mutex unlock  register mutex  
+}
+

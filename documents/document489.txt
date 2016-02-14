@@ -1,0 +1,2 @@
+int match hex substring t    int  result  
+

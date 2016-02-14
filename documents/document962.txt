@@ -1,0 +1,6 @@
+static inline size t snd pcm lib period bytes struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	return frames to bytes runtime  runtime period size  
+}
+

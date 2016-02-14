@@ -1,0 +1,18 @@
+  
+   de register the card proc file
+   called from init c
+   
+void snd info card disconnect struct snd card  card 
+{
+	if   card 
+		return 
+	mutex lock  info mutex  
+	if  card proc root link  {
+		snd remove proc entry snd proc root  card proc root link  
+		card proc root link = NULL 
+	}
+	if  card proc root 
+		snd info disconnect card proc root  
+	mutex unlock  info mutex  
+}
+

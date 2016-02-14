@@ -1,0 +1,8 @@
+static int snd cs4281 capture close struct snd pcm substream  substream 
+{
+	struct cs4281 dma  dma = substream runtime private data 
+
+	dma substream = NULL 
+	return 0 
+}
+

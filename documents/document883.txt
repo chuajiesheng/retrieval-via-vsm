@@ -1,0 +1,2 @@
+int snd ac97 pcm close struct ac97 pcm  pcm  
+

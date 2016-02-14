@@ -1,0 +1,10 @@
+static int snd ak4531 free struct snd ak4531  ak4531 
+{
+	if  ak4531  {
+		if  ak4531 private free 
+			ak4531 private free ak4531  
+		kfree ak4531  
+	}
+	return 0 
+}
+

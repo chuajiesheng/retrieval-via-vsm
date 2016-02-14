@@ -1,0 +1,28 @@
+   smpte switch is not accessed from IRQ handler  so we just need
+   to protect the HW access   
+static int snd mts64 ctl smpte switch put struct snd kcontrol  kctl 
+					  struct snd ctl elem value  uctl 
+{
+	struct mts64  mts = snd kcontrol chip kctl  
+	int changed = 0 
+	int val =   uctl value integer value 0  
+
+	spin lock irq  mts lock  
+	if  mts smpte switch == val 
+		goto   out 
+
+	changed = 1 
+	mts smpte switch = val 
+	if  mts smpte switch  {
+		mts64 smpte start mts pardev port 
+				  mts time 0   mts time 1  
+				  mts time 2   mts time 3  
+				  mts fps  
+	} else {
+		mts64 smpte stop mts pardev port  
+	}
+  out 
+	spin unlock irq  mts lock  
+	return changed 
+}
+

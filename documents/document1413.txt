@@ -1,0 +1,2 @@
+static void snd ak4531 proc init struct snd card  card  struct snd ak4531  ak4531  
+

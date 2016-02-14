@@ -1,0 +1,12 @@
+static int snd sonicvibes playback open struct snd pcm substream  substream 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	sonic mode |= SV MODE PLAY 
+	sonic playback substream = substream 
+	runtime hw = snd sonicvibes playback 
+	snd pcm hw rule add runtime  0  SNDRV PCM HW PARAM RATE  snd sonicvibes hw constraint dac rate  NULL  SNDRV PCM HW PARAM RATE   1  
+	return 0 
+}
+

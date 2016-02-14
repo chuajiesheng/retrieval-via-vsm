@@ -1,0 +1,9 @@
+static int snd als4000 playback close struct snd pcm substream  substream 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+
+	chip playback substream = NULL 
+	snd pcm lib free pages substream  
+	return 0 
+}
+

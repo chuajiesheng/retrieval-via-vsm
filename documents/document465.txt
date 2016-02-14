@@ -1,0 +1,14 @@
+void gf128mul 4k lle be128  a  struct gf128mul 4k  t 
+{
+	u8  ap =  u8   a 
+	be128 r 1  
+	int i = 15 
+
+	 r = t t ap 15   
+	while  i    {
+		gf128mul x8 lle r  
+		be128 xor r  r   t t ap i    
+	}
+	 a =  r 
+}
+

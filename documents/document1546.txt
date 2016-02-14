@@ -1,0 +1,6 @@
+snd rme96 free spdif pcm struct snd pcm  pcm 
+{
+	struct rme96  rme96 = pcm private data 
+	rme96 spdif pcm = NULL 
+}
+

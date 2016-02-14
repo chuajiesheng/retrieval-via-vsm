@@ -1,0 +1,37 @@
+static int snd uart16550 output byte struct snd uart16550  uart 
+				     struct snd rawmidi substream  substream 
+				     unsigned char midi byte 
+{
+	if  uart buff in count == 0                       Buffer empty?   
+	         uart adaptor  = SNDRV SERIAL MS124W SA   
+	    uart adaptor  = SNDRV SERIAL GENERIC  ||
+		 uart fifo count == 0                     FIFO empty?   
+		     inb uart base + UART MSR    UART MSR CTS     {    CTS?   
+
+	           Tx Buffer Empty   try to write immediately   
+		if   inb uart base + UART LSR    UART LSR THRE   = 0  {
+		           Transmitter holding register  and Tx FIFO  empty   
+		        uart fifo count = 1 
+			outb midi byte  uart base + UART TX  
+		} else {
+		        if  uart fifo count   uart fifo limit  {
+			        uart fifo count++ 
+				outb midi byte  uart base + UART TX  
+			} else {
+			           Cannot write  buffer empty   
+				   put char in buffer   
+				snd uart16550 write buffer uart  midi byte  
+			}
+		}
+	} else {
+		if   snd uart16550 write buffer uart  midi byte   {
+			snd printk KERN WARNING
+				     s  Buffer overrun on device at 0x lx\n  
+				   uart rmidi name  uart base  
+			return 0 
+		}
+	}
+
+	return 1 
+}
+

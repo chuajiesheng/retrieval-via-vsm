@@ -1,0 +1,5 @@
+extern struct resource     request region struct resource   
+					resource size t start 
+					resource size t n 
+					const char  name  int flags  
+

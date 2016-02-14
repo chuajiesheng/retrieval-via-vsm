@@ -1,0 +1,14 @@
+static void snd sonicvibes set dac rate struct sonicvibes   sonic  unsigned int rate 
+{
+	unsigned int div 
+	unsigned long flags 
+
+	div =  rate   65536 + SV FULLRATE   2    SV FULLRATE 
+	if  div   65535 
+		div = 65535 
+	spin lock irqsave  sonic reg lock  flags  
+	snd sonicvibes out1 sonic  SV IREG PCM RATE HIGH  div    8  
+	snd sonicvibes out1 sonic  SV IREG PCM RATE LOW  div  
+	spin unlock irqrestore  sonic reg lock  flags  
+}
+

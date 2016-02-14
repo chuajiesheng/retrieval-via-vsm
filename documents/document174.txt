@@ -1,0 +1,25 @@
+static int snd hwdep dsp load compat struct snd hwdep  hw 
+				     struct snd hwdep dsp image32   user  src 
+{
+	struct snd hwdep dsp image   user  dst 
+	compat caddr t ptr 
+	u32 val 
+
+	dst = compat alloc user space sizeof  dst   
+
+	   index and name   
+	if  copy in user dst  src  4 + 64  
+		return  EFAULT 
+	if  get user ptr   src image  ||
+	    put user compat ptr ptr    dst image  
+		return  EFAULT 
+	if  get user val   src length  ||
+	    put user val   dst length  
+		return  EFAULT 
+	if  get user val   src driver data  ||
+	    put user val   dst driver data  
+		return  EFAULT 
+
+	return snd hwdep dsp load hw  dst  
+}
+

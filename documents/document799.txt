@@ -1,0 +1,40 @@
+static int   devinit snd cs5530 probe struct pci dev  pci 
+					const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct snd cs5530  chip = NULL 
+	int err 
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+
+	if  err   0 
+		return err 
+
+	err = snd cs5530 create card  pci   chip  
+	if  err   0  {
+		snd card free card  
+		return err 
+	}
+
+	strcpy card driver   CS5530   
+	strcpy card shortname   CS5530 Audio   
+	sprintf card longname    s at 0x lx   card shortname  chip pci base  
+
+	err = snd card register card  
+	if  err   0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

@@ -1,0 +1,15 @@
+snd rme96 put attenuation control struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change 
+	
+	val = ucontrol value enumerated item 0    4 
+	spin lock irq  rme96 lock  
+
+	change =  int val  = snd rme96 getattenuation rme96  
+	snd rme96 setattenuation rme96  val  
+	spin unlock irq  rme96 lock  
+	return change 
+}
+

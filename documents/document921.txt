@@ -1,0 +1,9 @@
+static int snd sonicvibes capture close struct snd pcm substream  substream 
+{
+	struct sonicvibes  sonic = snd pcm substream chip substream  
+
+	sonic capture substream = NULL 
+	sonic mode  = ~SV MODE CAPTURE 
+	return 0 
+}
+

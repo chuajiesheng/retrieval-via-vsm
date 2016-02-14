@@ -1,0 +1,19 @@
+static int snd via82xx free struct via82xx modem  chip 
+{
+	unsigned int i 
+
+	if  chip irq   0 
+		goto   end hw 
+	   disable interrupts   
+	for  i = 0  i   chip num devs  i++ 
+		snd via82xx channel reset chip   chip devs i   
+
+        end hw 
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

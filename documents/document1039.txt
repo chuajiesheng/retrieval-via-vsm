@@ -1,0 +1,13 @@
+static int es1371 quirk lookup struct ensoniq  ensoniq 
+				struct es1371 quirk  list 
+{
+	while  list vid  =  unsigned short PCI ANY ID  {
+		if  ensoniq pci vendor == list vid   
+		    ensoniq pci device == list did   
+		    ensoniq rev == list rev 
+			return 1 
+		list++ 
+	}
+	return 0 
+}
+

@@ -1,0 +1,8 @@
+static efi status t virt efi get next variable unsigned long  name size 
+					       efi char16 t  name 
+					       efi guid t  vendor 
+{
+	return efi call virt3 get next variable 
+			      name size  name  vendor  
+}
+

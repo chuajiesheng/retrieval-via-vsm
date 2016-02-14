@@ -1,0 +1,2 @@
+size t snd dma get reserved buf struct snd dma buffer  dmab  unsigned int id  
+

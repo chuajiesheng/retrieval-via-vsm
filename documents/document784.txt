@@ -1,0 +1,5 @@
+static inline void pci set drvdata struct pci dev  pdev  void  data 
+{
+	dev set drvdata  pdev dev  data  
+}
+

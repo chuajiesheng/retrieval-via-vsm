@@ -1,0 +1,3 @@
+extern long drm compat ioctl struct file  filp 
+			     unsigned int cmd  unsigned long arg  
+

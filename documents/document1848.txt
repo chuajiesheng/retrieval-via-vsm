@@ -1,0 +1,15 @@
+static int snd bt87x close struct snd pcm substream  substream 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+
+	spin lock irq  chip reg lock  
+	chip reg control |= CTL A PWRDN 
+	snd bt87x writel chip  REG GPIO DMA CTL  chip reg control  
+	spin unlock irq  chip reg lock  
+
+	chip substream = NULL 
+	clear bit 0   chip opened  
+	smp mb  after clear bit   
+	return 0 
+}
+

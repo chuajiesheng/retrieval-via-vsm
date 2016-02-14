@@ -1,0 +1,2 @@
+struct hash alg common  ahash attr alg struct rtattr  rta  u32 type  u32 mask  
+

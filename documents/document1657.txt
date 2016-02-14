@@ -1,0 +1,35 @@
+snd m3 playback setup struct snd m3  chip  struct m3 dma  s 
+		      struct snd pcm substream  subs 
+{
+	unsigned int i 
+
+	  
+	   some per client initializers
+	   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + SRC3 DIRECTION OFFSET + 12 
+			  s inst data + 40 + 8  
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + SRC3 DIRECTION OFFSET + 19 
+			  s inst code + MINISRC COEF LOC  
+
+	   enable or disable low pass filter?   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + SRC3 DIRECTION OFFSET + 22 
+			  subs runtime rate   45000 ? 0xff   0  
+    
+	   tell it which way dma is going?   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA DMA CONTROL 
+			  DMACONTROL AUTOREPEAT + DMAC PAGE3 SELECTOR + DMAC BLOCKF SELECTOR  
+
+	  
+	   set an armload of static initializers
+	   
+	for  i = 0  i   ARRAY SIZE pv   i++  
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  s inst data + pv i  addr  pv i  val  
+}
+

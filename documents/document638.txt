@@ -1,0 +1,43 @@
+static int dummy pcm open struct snd pcm substream  substream 
+{
+	struct snd dummy  dummy = snd pcm substream chip substream  
+	struct dummy model  model = dummy model 
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	dummy timer ops =  dummy systimer ops 
+#ifdef CONFIG HIGH RES TIMERS
+	if  hrtimer 
+		dummy timer ops =  dummy hrtimer ops 
+#endif
+
+	err = dummy timer ops create substream  
+	if  err   0 
+		return err 
+
+	runtime hw = dummy pcm hw 
+	if  substream pcm device   1  {
+		runtime hw info  = ~SNDRV PCM INFO INTERLEAVED 
+		runtime hw info |= SNDRV PCM INFO NONINTERLEAVED 
+	}
+	if  substream pcm device   2 
+		runtime hw info  = ~ SNDRV PCM INFO MMAP |
+				      SNDRV PCM INFO MMAP VALID  
+
+	if  model == NULL 
+		return 0 
+
+	if  substream stream == SNDRV PCM STREAM PLAYBACK  {
+		if  model playback constraints 
+			err = model playback constraints substream runtime  
+	} else {
+		if  model capture constraints 
+			err = model capture constraints substream runtime  
+	}
+	if  err   0  {
+		dummy timer ops free substream  
+		return err 
+	}
+	return 0 
+}
+

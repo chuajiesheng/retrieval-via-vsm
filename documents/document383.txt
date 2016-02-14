@@ -1,0 +1,49 @@
+   Create and initialize the rawmidi component   
+static int   devinit snd portman rawmidi create struct snd card  card 
+{
+	struct portman  pm = card private data 
+	struct snd rawmidi  rmidi 
+	struct snd rawmidi substream  substream 
+	int err 
+	
+	err = snd rawmidi new card  CARD NAME  0  
+			      PORTMAN NUM OUTPUT PORTS  
+			      PORTMAN NUM INPUT PORTS  
+			       rmidi  
+	if  err   0  
+		return err 
+
+	rmidi private data = pm 
+	strcpy rmidi name  CARD NAME  
+	rmidi info flags = SNDRV RAWMIDI INFO OUTPUT |
+		            SNDRV RAWMIDI INFO INPUT |
+                            SNDRV RAWMIDI INFO DUPLEX 
+
+	pm rmidi = rmidi 
+
+	   register rawmidi ops   
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM OUTPUT  
+			     snd portman midi output  
+	snd rawmidi set ops rmidi  SNDRV RAWMIDI STREAM INPUT  
+			     snd portman midi input  
+
+	   name substreams   
+	   output   
+	list for each entry substream 
+			     rmidi streams SNDRV RAWMIDI STREAM OUTPUT  substreams 
+			    list  {
+		sprintf substream name 
+			 Portman2x4  d   substream number+1  
+	}
+	   input   
+	list for each entry substream 
+			     rmidi streams SNDRV RAWMIDI STREAM INPUT  substreams 
+			    list  {
+		pm midi input substream number  = substream 
+		sprintf substream name 
+			 Portman2x4  d   substream number+1  
+	}
+
+	return err 
+}
+

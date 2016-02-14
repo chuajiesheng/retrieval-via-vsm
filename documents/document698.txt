@@ -1,0 +1,10 @@
+static irqreturn t snd mtpav irqh int irq  void  dev id 
+{
+	struct mtpav  mcard = dev id 
+
+	spin lock  mcard spinlock  
+	snd mtpav read bytes mcard  
+	spin unlock  mcard spinlock  
+	return IRQ HANDLED 
+}
+

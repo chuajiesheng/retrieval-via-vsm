@@ -1,0 +1,4 @@
+			          ATI PCIGART support  ati pcigart h    
+extern int drm ati pcigart init struct drm device  dev 
+				struct drm ati pcigart info   gart info  
+

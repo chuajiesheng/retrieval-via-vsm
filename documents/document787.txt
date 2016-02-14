@@ -1,0 +1,15 @@
+static int gcm hash remain struct aead request  req 
+			   struct crypto gcm req priv ctx  pctx 
+			   unsigned int remain 
+			   crypto completion t complete 
+{
+	struct ahash request  ahreq =  pctx u ahreq 
+
+	ahash request set callback ahreq  aead request flags req  
+				   complete  req  
+	sg init one pctx src  gcm zeroes  remain  
+	ahash request set crypt ahreq  pctx src  NULL  remain  
+
+	return crypto ahash update ahreq  
+}
+

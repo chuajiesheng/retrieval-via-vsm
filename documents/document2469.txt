@@ -1,0 +1,6 @@
+   implements LIFO semantics on the array   
+static inline u8 LIH INDEX const u8 ctr 
+{
+	return LIH SIZE   1    ctr   LIH SIZE  
+}
+

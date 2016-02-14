@@ -1,0 +1,20 @@
+static int snd es1373 line put struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	int changed 
+	unsigned int ctrl 
+	
+	spin lock irq  ensoniq reg lock  
+	ctrl = ensoniq ctrl 
+	if  ucontrol value integer value 0  
+		ensoniq ctrl |= ES 1371 GPIO OUT 4  	   switch line in   rear out   
+	else
+		ensoniq ctrl  = ~ES 1371 GPIO OUT 4  
+	changed =  ctrl  = ensoniq ctrl  
+	if  changed 
+		outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	spin unlock irq  ensoniq reg lock  
+	return changed 
+}
+

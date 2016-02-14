@@ -1,0 +1,2 @@
+void snd ak4531 resume struct snd ak4531  ak4531  
+

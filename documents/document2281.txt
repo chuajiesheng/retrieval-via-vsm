@@ -1,0 +1,33 @@
+snd rme32 capture adat open struct snd pcm substream  substream 
+{
+	int isadat  rate 
+	struct rme32  rme32 = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	if  rme32 fullduplex mode 
+		runtime hw = snd rme32 adat fd info 
+	else
+		runtime hw = snd rme32 adat info 
+	if   rate = snd rme32 capture getrate rme32   isadat     0  {
+		if   isadat  {
+			return  EIO 
+		}
+                runtime hw rates = snd pcm rate to rate bit rate  
+                runtime hw rate min = rate 
+                runtime hw rate max = rate 
+        }
+
+	snd pcm set sync substream  
+        
+	spin lock irq  rme32 lock  	
+	if  rme32 capture substream  = NULL  {
+		spin unlock irq  rme32 lock  
+		return  EBUSY 
+        }
+	rme32 capture substream = substream 
+	spin unlock irq  rme32 lock  
+
+	snd rme32 set buffer constraint rme32  runtime  
+	return 0 
+}
+

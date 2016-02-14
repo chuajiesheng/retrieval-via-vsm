@@ -1,0 +1,5 @@
+static int   init alsa card als4000 init void 
+{
+	return pci register driver  driver  
+}
+

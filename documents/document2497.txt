@@ -1,0 +1,153 @@
+void   init efi init void 
+{
+	efi config table t  config tables 
+	efi runtime services t  runtime 
+	efi char16 t  c16 
+	char vendor 100  =  unknown  
+	int i = 0 
+	void  tmp 
+
+#ifdef CONFIG X86 32
+	efi phys systab =  efi system table t   boot params efi info efi systab 
+#else
+	efi phys systab =  efi system table t   
+		 boot params efi info efi systab |
+		     u64 boot params efi info efi systab hi  32   
+#endif
+
+	efi systab = early ioremap  unsigned long efi phys systab 
+				   sizeof efi system table t   
+	if  efi systab == NULL 
+		printk KERN ERR  Couldn't map the EFI system table \n   
+	memcpy  efi systab  efi systab  sizeof efi system table t   
+	early iounmap efi systab  sizeof efi system table t   
+	efi systab =  efi systab 
+
+	  
+	   Verify the EFI Table
+	   
+	if  efi systab hdr signature  = EFI SYSTEM TABLE SIGNATURE 
+		printk KERN ERR  EFI system table signature incorrect \n   
+	if   efi systab hdr revision    16  == 0 
+		printk KERN ERR  Warning  EFI system table version  
+		         d  02d  expected 1 00 or greater \n  
+		       efi systab hdr revision    16 
+		       efi systab hdr revision   0xffff  
+
+	  
+	   Show what we know for posterity
+	   
+	c16 = tmp = early ioremap efi systab fw vendor  2  
+	if  c16  {
+		for  i = 0  i   sizeof vendor    1     c16  ++i 
+			vendor i  =  c16++ 
+		vendor i  = '\0' 
+	} else
+		printk KERN ERR PFX  Could not map the firmware vendor \n   
+	early iounmap tmp  2  
+
+	printk KERN INFO  EFI v u   02u by  s\n  
+	       efi systab hdr revision    16 
+	       efi systab hdr revision   0xffff  vendor  
+
+	  
+	   Let's see what config tables the firmware passed to us 
+	   
+	config tables = early ioremap 
+		efi systab tables 
+		efi systab nr tables   sizeof efi config table t   
+	if  config tables == NULL 
+		printk KERN ERR  Could not map EFI Configuration Table \n   
+
+	printk KERN INFO  
+	for  i = 0  i   efi systab nr tables  i++  {
+		if   efi guidcmp config tables i  guid  MPS TABLE GUID   {
+			efi mps = config tables i  table 
+			printk   MPS=0x lx    config tables i  table  
+		} else if   efi guidcmp config tables i  guid 
+					ACPI 20 TABLE GUID   {
+			efi acpi20 = config tables i  table 
+			printk   ACPI 2 0=0x lx    config tables i  table  
+		} else if   efi guidcmp config tables i  guid 
+					ACPI TABLE GUID   {
+			efi acpi = config tables i  table 
+			printk   ACPI=0x lx    config tables i  table  
+		} else if   efi guidcmp config tables i  guid 
+					SMBIOS TABLE GUID   {
+			efi smbios = config tables i  table 
+			printk   SMBIOS=0x lx    config tables i  table  
+#ifdef CONFIG X86 UV
+		} else if   efi guidcmp config tables i  guid 
+					UV SYSTEM TABLE GUID   {
+			efi uv systab = config tables i  table 
+			printk   UVsystab=0x lx    config tables i  table  
+#endif
+		} else if   efi guidcmp config tables i  guid 
+					HCDP TABLE GUID   {
+			efi hcdp = config tables i  table 
+			printk   HCDP=0x lx    config tables i  table  
+		} else if   efi guidcmp config tables i  guid 
+					UGA IO PROTOCOL GUID   {
+			efi uga = config tables i  table 
+			printk   UGA=0x lx    config tables i  table  
+		}
+	}
+	printk  \n   
+	early iounmap config tables 
+			  efi systab nr tables   sizeof efi config table t   
+
+	  
+	   Check out the runtime services table  We need to map
+	   the runtime services table so that we can grab the physical
+	   address of several of the EFI runtime functions  needed to
+	   set the firmware into virtual mode 
+	   
+	runtime = early ioremap  unsigned long efi systab runtime 
+				sizeof efi runtime services t   
+	if  runtime  = NULL  {
+		  
+		   We will only need  early  access to the following
+		   two EFI runtime services before set virtual address map
+		   is invoked 
+		   
+		efi phys get time =  efi get time t   runtime get time 
+		efi phys set virtual address map =
+			 efi set virtual address map t   
+			runtime set virtual address map 
+		  
+		   Make efi get time can be called before entering
+		   virtual mode 
+		   
+		efi get time = phys efi get time 
+	} else
+		printk KERN ERR  Could not map the EFI runtime service  
+		        table \n   
+	early iounmap runtime  sizeof efi runtime services t   
+
+	   Map the EFI memory map   
+	memmap map = early ioremap  unsigned long memmap phys map 
+				   memmap nr map   memmap desc size  
+	if  memmap map == NULL 
+		printk KERN ERR  Could not map the EFI memory map \n   
+	memmap map end = memmap map +  memmap nr map   memmap desc size  
+
+	if  memmap desc size  = sizeof efi memory desc t  
+		printk KERN WARNING
+		   Kernel defined memdesc doesn't match the one from EFI \n   
+
+	if  add efi memmap 
+		do add efi memmap   
+
+#ifdef CONFIG X86 32
+	x86 platform get wallclock = efi get time 
+	x86 platform set wallclock = efi set rtc mmss 
+#endif
+
+	   Setup for EFI runtime service   
+	reboot type = BOOT EFI 
+
+#if EFI DEBUG
+	print efi memmap   
+#endif
+}
+

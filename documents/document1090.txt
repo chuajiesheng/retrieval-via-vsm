@@ -1,0 +1,56 @@
+snd azf3328 mixer write volume gradually const struct snd azf3328  chip 
+					 unsigned reg 
+					 unsigned char dst vol left 
+					 unsigned char dst vol right 
+					 int chan sel  int delay
+ 
+{
+	unsigned long portbase = chip mixer io + reg 
+	unsigned char curr vol left = 0  curr vol right = 0 
+	int left change = 0  right change = 0 
+
+	snd azf3328 dbgcallenter   
+
+	if  chan sel   SET CHAN LEFT  {
+		curr vol left  = inb portbase + 1  
+
+		   take care of muting flag contained in left channel   
+		if  curr vol left   AZF MUTE BIT 
+			dst vol left |= AZF MUTE BIT 
+		else
+			dst vol left  = ~AZF MUTE BIT 
+
+		left change =  curr vol left   dst vol left  ?  1   1 
+	}
+
+	if  chan sel   SET CHAN RIGHT  {
+		curr vol right = inb portbase + 0  
+
+		right change =  curr vol right   dst vol right  ?  1   1 
+	}
+
+	do {
+		if  left change  {
+			if  curr vol left  = dst vol left  {
+				curr vol left += left change 
+				outb curr vol left  portbase + 1  
+			} else
+			    left change = 0 
+		}
+		if  right change  {
+			if  curr vol right  = dst vol right  {
+				curr vol right += right change 
+
+			   during volume change  the right channel is crackling
+			   somewhat more than the left channel  unfortunately 
+			   This seems to be a hardware issue    
+				outb curr vol right  portbase + 0  
+			} else
+			    right change = 0 
+		}
+		if  delay 
+			mdelay delay  
+	} while   left change  ||  right change   
+	snd azf3328 dbgcallleave   
+}
+

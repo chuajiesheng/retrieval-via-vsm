@@ -1,0 +1,7 @@
+static int dummy pcm copy struct snd pcm substream  substream 
+			  int channel  snd pcm uframes t pos 
+			  void   user  dst  snd pcm uframes t count 
+{
+	return 0     do nothing   
+}
+

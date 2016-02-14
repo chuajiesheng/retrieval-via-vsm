@@ -1,0 +1,37 @@
+snd rme96 info inputtype control struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	static char   texts 5  = {  Optical    Coaxial    Internal    XLR    Analog  } 
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	char  texts 5  = {  texts 0    texts 1    texts 2    texts 3    texts 4  } 
+	
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 1 
+	switch  rme96 pci device  {
+	case PCI DEVICE ID RME DIGI96 
+	case PCI DEVICE ID RME DIGI96 8 
+		uinfo value enumerated items = 3 
+		break 
+	case PCI DEVICE ID RME DIGI96 8 PRO 
+		uinfo value enumerated items = 4 
+		break 
+	case PCI DEVICE ID RME DIGI96 8 PAD OR PST 
+		if  rme96 rev   4  {
+			   PST   
+			uinfo value enumerated items = 4 
+			texts 3  =  texts 4      Analog instead of XLR   
+		} else {
+			   PAD   
+			uinfo value enumerated items = 5 
+		}
+		break 
+	default 
+		snd BUG   
+		break 
+	}
+	if  uinfo value enumerated item   uinfo value enumerated items   1  {
+		uinfo value enumerated item = uinfo value enumerated items   1 
+	}
+	strcpy uinfo value enumerated name  texts uinfo value enumerated item   
+	return 0 
+}
+

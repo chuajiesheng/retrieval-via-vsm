@@ -1,0 +1,9 @@
+static int snd uart16550 free struct snd uart16550  uart 
+{
+	if  uart irq  = 0 
+		free irq uart irq  uart  
+	release and free resource uart res base  
+	kfree uart  
+	return 0 
+}
+

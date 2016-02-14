@@ -1,0 +1,13 @@
+static int loopback suspend struct platform device  pdev 
+				pm message t state 
+{
+	struct snd card  card = platform get drvdata pdev  
+	struct loopback  loopback = card private data 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+
+	snd pcm suspend all loopback pcm 0   
+	snd pcm suspend all loopback pcm 1   
+	return 0 
+}
+

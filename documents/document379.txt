@@ -1,0 +1,8 @@
+                                                                      
+   Rawmidi
+                                                                       
+static int snd portman midi open struct snd rawmidi substream  substream 
+{
+	return 0 
+}
+

@@ -1,0 +1,5 @@
+extern bool drm crtc helper set mode struct drm crtc  crtc 
+				     struct drm display mode  mode 
+				     int x  int y 
+				     struct drm framebuffer  old fb  
+

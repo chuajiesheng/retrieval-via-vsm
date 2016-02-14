@@ -1,0 +1,21 @@
+int tfrc rx hist alloc struct tfrc rx hist  h 
+{
+	int i 
+
+	for  i = 0  i  = TFRC NDUPACK  i++  {
+		h ring i  = kmem cache alloc tfrc rx hist slab  GFP ATOMIC  
+		if  h ring i  == NULL 
+			goto out free 
+	}
+
+	h loss count = h loss start = 0 
+	return 0 
+
+out free 
+	while  i    = 0  {
+		kmem cache free tfrc rx hist slab  h ring i   
+		h ring i  = NULL 
+	}
+	return  ENOBUFS 
+}
+

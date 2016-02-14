@@ -1,0 +1,29 @@
+static int master put struct snd kcontrol  kcontrol 
+		      struct snd ctl elem value  ucontrol 
+{
+	struct link master  master = snd kcontrol chip kcontrol  
+	struct link slave  slave 
+	struct snd ctl elem value  uval 
+	int err  old val 
+
+	err = master init master  
+	if  err   0 
+		return err 
+	old val = master val 
+	if  ucontrol value integer value 0  == old val 
+		return 0 
+
+	uval = kmalloc sizeof  uval   GFP KERNEL  
+	if   uval 
+		return  ENOMEM 
+	list for each entry slave   master slaves  list  {
+		master val = old val 
+		uval id = slave slave id 
+		slave get val slave  uval  
+		master val = ucontrol value integer value 0  
+		slave put val slave  uval  
+	}
+	kfree uval  
+	return 1 
+}
+

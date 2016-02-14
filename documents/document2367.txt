@@ -1,0 +1,13 @@
+static void pcrypt aead enc struct padata priv  padata 
+{
+	struct pcrypt request  preq = pcrypt padata request padata  
+	struct aead request  req = pcrypt request ctx preq  
+
+	padata info = crypto aead encrypt req  
+
+	if  padata info ==  EINPROGRESS 
+		return 
+
+	padata do serial padata  
+}
+

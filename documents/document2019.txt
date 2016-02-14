@@ -1,0 +1,7 @@
+static void   exit tea mod fini void 
+{
+	crypto unregister alg  tea alg  
+	crypto unregister alg  xtea alg  
+	crypto unregister alg  xeta alg  
+}
+

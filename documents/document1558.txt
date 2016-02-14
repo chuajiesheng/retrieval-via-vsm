@@ -1,0 +1,14 @@
+snd rme96 info clockmode control struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	static char  texts 3  = {  AutoSync    Internal    Word  } 
+	
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 1 
+	uinfo value enumerated items = 3 
+	if  uinfo value enumerated item   2  {
+		uinfo value enumerated item = 2 
+	}
+	strcpy uinfo value enumerated name  texts uinfo value enumerated item   
+	return 0 
+}
+

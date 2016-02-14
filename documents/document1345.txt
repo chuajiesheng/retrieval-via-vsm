@@ -1,0 +1,21 @@
+   set the wavecache control reg   
+static void snd es1968 program wavecache struct es1968  chip  struct esschan  es 
+					 int channel  u32 addr  int capture 
+{
+	u32 tmpval =  addr   0x10    0xFFF8 
+
+	if    capture  {
+		if    es fmt   ESS FMT 16BIT  
+			tmpval |= 4 	   8bit   
+		if  es fmt   ESS FMT STEREO 
+			tmpval |= 2 	   stereo   
+	}
+
+	   set the wavecache control reg   
+	wave set register chip  es apu channel     3  tmpval  
+
+#ifdef CONFIG PM
+	es wc map channel  = tmpval 
+#endif
+}
+

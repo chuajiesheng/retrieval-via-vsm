@@ -1,0 +1,2 @@
+extern void wimax state change struct wimax dev    enum wimax st  
+

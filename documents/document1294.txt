@@ -1,0 +1,13 @@
+   
+   function ttm eu fence buffer objects 
+  
+   @list         thread private list of ttm validate buffer structs 
+   @sync obj     The new sync object for the buffers 
+  
+   This function should be called when command submission is complete  and
+   it will add a new sync object to bos pointed to by entries on @list 
+   It also unreserves all buffers  putting them on lru lists 
+  
+   
+extern void ttm eu fence buffer objects struct list head  list  void  sync obj  
+

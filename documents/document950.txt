@@ -1,0 +1,38 @@
+static int crypto gcm init tfm struct crypto tfm  tfm 
+{
+	struct crypto instance  inst =  void   tfm   crt alg 
+	struct gcm instance ctx  ictx = crypto instance ctx inst  
+	struct crypto gcm ctx  ctx = crypto tfm ctx tfm  
+	struct crypto ablkcipher  ctr 
+	struct crypto ahash  ghash 
+	unsigned long align 
+	int err 
+
+	ghash = crypto spawn ahash  ictx ghash  
+	if  IS ERR ghash  
+		return PTR ERR ghash  
+
+	ctr = crypto spawn skcipher  ictx ctr  
+	err = PTR ERR ctr  
+	if  IS ERR ctr  
+		goto err free hash 
+
+	ctx ctr = ctr 
+	ctx ghash = ghash 
+
+	align = crypto tfm alg alignmask tfm  
+	align  = ~ crypto tfm ctx alignment     1  
+	tfm crt aead reqsize = align +
+		offsetof struct crypto gcm req priv ctx  u  +
+		max sizeof struct ablkcipher request  +
+		    crypto ablkcipher reqsize ctr  
+		    sizeof struct ahash request  +
+		    crypto ahash reqsize ghash   
+
+	return 0 
+
+err free hash 
+	crypto free ahash ghash  
+	return err 
+}
+

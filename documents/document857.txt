@@ -1,0 +1,45 @@
+  
+   interrupt handler
+   
+static irqreturn t snd atiixp interrupt int irq  void  dev id 
+{
+	struct atiixp  chip = dev id 
+	unsigned int status 
+
+	status = atiixp read chip  ISR  
+
+	if    status 
+		return IRQ NONE 
+
+	   process audio DMA   
+	if  status   ATI REG ISR OUT XRUN 
+		snd atiixp xrun dma chip    chip dmas ATI DMA PLAYBACK   
+	else if  status   ATI REG ISR OUT STATUS 
+		snd atiixp update dma chip   chip dmas ATI DMA PLAYBACK   
+	if  status   ATI REG ISR IN XRUN 
+		snd atiixp xrun dma chip    chip dmas ATI DMA CAPTURE   
+	else if  status   ATI REG ISR IN STATUS 
+		snd atiixp update dma chip   chip dmas ATI DMA CAPTURE   
+	if    chip spdif over aclink  {
+		if  status   ATI REG ISR SPDF XRUN 
+			snd atiixp xrun dma chip    chip dmas ATI DMA SPDIF   
+		else if  status   ATI REG ISR SPDF STATUS 
+			snd atiixp update dma chip   chip dmas ATI DMA SPDIF   
+	}
+
+	   for codec detection   
+	if  status   CODEC CHECK BITS  {
+		unsigned int detected 
+		detected = status   CODEC CHECK BITS 
+		spin lock  chip reg lock  
+		chip codec not ready bits |= detected 
+		atiixp update chip  IER  detected  0      disable the detected irqs   
+		spin unlock  chip reg lock  
+	}
+
+	   ack   
+	atiixp write chip  ISR  status  
+
+	return IRQ HANDLED 
+}
+

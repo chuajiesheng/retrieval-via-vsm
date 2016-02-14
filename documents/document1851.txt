@@ -1,0 +1,17 @@
+static int snd bt87x prepare struct snd pcm substream  substream 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int decimation 
+
+	spin lock irq  chip reg lock  
+	chip reg control  = ~ CTL DA SDR MASK | CTL DA SBR  
+	decimation =  ANALOG CLOCK + runtime rate   4    runtime rate 
+	chip reg control |= decimation    CTL DA SDR SHIFT 
+	if  runtime format == SNDRV PCM FORMAT S8 
+		chip reg control |= CTL DA SBR 
+	snd bt87x writel chip  REG GPIO DMA CTL  chip reg control  
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

@@ -1,0 +1,11 @@
+   Enable IRQ's   
+static void snd es1968 start irq struct es1968  chip 
+{
+	unsigned short w 
+	w = ESM HIRQ DSIE | ESM HIRQ HW VOLUME 
+	if  chip rmidi 
+		w |= ESM HIRQ MPU401 
+	outb w  chip io port + 0x1A  
+	outw w  chip io port + ESM PORT HOST IRQ  
+}
+

@@ -1,0 +1,9 @@
+static void snd pcm xrun debug write struct snd info entry  entry 
+				     struct snd info buffer  buffer 
+{
+	struct snd pcm str  pstr = entry private data 
+	char line 64  
+	if   snd info get line buffer  line  sizeof line   
+		pstr xrun debug = simple strtoul line  NULL  10  
+}
+

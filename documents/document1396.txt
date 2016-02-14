@@ -1,0 +1,34 @@
+static int   devinit snd es1968 input register struct es1968  chip 
+{
+	struct input dev  input dev 
+	int err 
+
+	input dev = input allocate device   
+	if   input dev 
+		return  ENOMEM 
+
+	snprintf chip phys  sizeof chip phys    pci  s input0  
+		 pci name chip pci   
+
+	input dev name = chip card driver 
+	input dev phys = chip phys 
+	input dev id bustype = BUS PCI 
+	input dev id vendor  = chip pci vendor 
+	input dev id product = chip pci device 
+	input dev dev parent =  chip pci dev 
+
+	  set bit EV KEY  input dev evbit  
+	  set bit KEY MUTE  input dev keybit  
+	  set bit KEY VOLUMEDOWN  input dev keybit  
+	  set bit KEY VOLUMEUP  input dev keybit  
+
+	err = input register device input dev  
+	if  err  {
+		input free device input dev  
+		return err 
+	}
+
+	chip input dev = input dev 
+	return 0 
+}
+

@@ -1,0 +1,73 @@
+static int   devinit snd via686 init misc struct via82xx  chip 
+{
+	unsigned char legacy  legacy cfg 
+	int rev h = 0 
+
+	legacy = chip old legacy 
+	legacy cfg = chip old legacy cfg 
+	legacy |= VIA FUNC MIDI IRQMASK 	   FIXME  correct?  disable MIDI    
+	legacy  = ~VIA FUNC ENABLE GAME 	   disable joystick   
+	if  chip revision  = VIA REV 686 H  {
+		rev h = 1 
+		if  mpu port  = 0x200  {	   force MIDI   
+			mpu port  = 0xfffc 
+			pci write config dword chip pci  0x18  mpu port | 0x01  
+#ifdef CONFIG PM
+			chip mpu port saved = mpu port 
+#endif
+		} else {
+			mpu port = pci resource start chip pci  2  
+		}
+	} else {
+		switch  mpu port  {	   force MIDI   
+		case 0x300 
+		case 0x310 
+		case 0x320 
+		case 0x330 
+			legacy cfg  = ~ 3    2  
+			legacy cfg |=  mpu port   0x0030     2 
+			break 
+		default 			   no  use BIOS settings   
+			if  legacy   VIA FUNC ENABLE MIDI 
+				mpu port = 0x300 +   legacy cfg   0x000c     2  
+			break 
+		}
+	}
+	if  mpu port  = 0x200   
+	     chip mpu res = request region mpu port  2   VIA82xx MPU401   
+	     = NULL  {
+		if  rev h 
+			legacy |= VIA FUNC MIDI PNP 	   enable PCI I O 2   
+		legacy |= VIA FUNC ENABLE MIDI 
+	} else {
+		if  rev h 
+			legacy  = ~VIA FUNC MIDI PNP 	   disable PCI I O 2   
+		legacy  = ~VIA FUNC ENABLE MIDI 
+		mpu port = 0 
+	}
+
+	pci write config byte chip pci  VIA FUNC ENABLE  legacy  
+	pci write config byte chip pci  VIA PNP CONTROL  legacy cfg  
+	if  chip mpu res  {
+		if  snd mpu401 uart new chip card  0  MPU401 HW VIA686A 
+					mpu port  MPU401 INFO INTEGRATED 
+					chip irq  0   chip rmidi    0  {
+			printk KERN WARNING  unable to initialize MPU 401 
+			         at 0x lx  skipping\n   mpu port  
+			legacy  = ~VIA FUNC ENABLE MIDI 
+		} else {
+			legacy  = ~VIA FUNC MIDI IRQMASK 	   enable MIDI interrupt   
+		}
+		pci write config byte chip pci  VIA FUNC ENABLE  legacy  
+	}
+
+	snd via686 create gameport chip   legacy  
+
+#ifdef CONFIG PM
+	chip legacy saved = legacy 
+	chip legacy cfg saved = legacy cfg 
+#endif
+
+	return 0 
+}
+

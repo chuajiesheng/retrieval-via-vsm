@@ -1,0 +1,25 @@
+static int   devinit snd mts64 ctl create struct snd card  card  
+					  struct mts64  mts  
+{
+	int err  i 
+	static struct snd kcontrol new  control     devinitdata = {
+		 mts64 ctl smpte switch 
+		 mts64 ctl smpte time hours 
+		 mts64 ctl smpte time minutes 
+		 mts64 ctl smpte time seconds 
+		 mts64 ctl smpte time frames 
+		 mts64 ctl smpte fps 
+	        NULL  } 
+
+	for  i = 0  control i   ++i  {
+		err = snd ctl add card  snd ctl new1 control i   mts   
+		if  err   0  {
+			snd printd  Cannot create control   s\n   
+				   control i  name  
+			return err 
+		}
+	}
+
+	return 0 
+}
+

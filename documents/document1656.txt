@@ -1,0 +1,37 @@
+static void snd m3 pcm setup2 struct snd m3  chip  struct m3 dma  s 
+			      struct snd pcm runtime  runtime 
+{
+	u32 freq 
+
+	   
+	   put us in the lists if we're not already there
+	   
+	if    s in lists  {
+		s index 0  = snd m3 add list chip  s index list 0  
+					      s inst data    DP SHIFT COUNT  
+		s index 1  = snd m3 add list chip  s index list 1  
+					      s inst data    DP SHIFT COUNT  
+		s index 2  = snd m3 add list chip  s index list 2  
+					      s inst data    DP SHIFT COUNT  
+		s in lists = 1 
+	}
+
+	   write to 'mono' word   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + SRC3 DIRECTION OFFSET + 1  
+			  runtime channels == 2 ? 0   1  
+	   write to '8bit' word   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + SRC3 DIRECTION OFFSET + 2  
+			  snd pcm format width runtime format  == 16 ? 0   1  
+
+	   set up dac adc rate   
+	freq =   runtime rate    15  + 24000     48000 
+	if  freq  
+		freq   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  s inst data + CDATA FREQUENCY 
+			  freq  
+}
+

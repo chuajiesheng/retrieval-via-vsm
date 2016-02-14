@@ -1,0 +1,7 @@
+static void dummy hrtimer pcm elapsed unsigned long priv 
+{
+	struct dummy hrtimer pcm  dpcm =  struct dummy hrtimer pcm   priv 
+	if  atomic read  dpcm running  
+		snd pcm period elapsed dpcm substream  
+}
+

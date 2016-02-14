@@ -1,0 +1,6 @@
+static void snd pcm substream proc info read struct snd info entry  entry 
+					     struct snd info buffer  buffer 
+{
+	snd pcm proc info read entry private data  buffer  
+}
+

@@ -1,0 +1,21 @@
+static int snd es1371 spdif put struct snd kcontrol  kcontrol 
+				struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	unsigned int nval1  nval2 
+	int change 
+	
+	nval1 = ucontrol value integer value 0  ? ES 1373 SPDIF THRU   0 
+	nval2 = ucontrol value integer value 0  ? ES 1373 SPDIF EN   0 
+	spin lock irq  ensoniq reg lock  
+	change =  ensoniq ctrl   ES 1373 SPDIF THRU   = nval1 
+	ensoniq ctrl  = ~ES 1373 SPDIF THRU 
+	ensoniq ctrl |= nval1 
+	ensoniq cssr  = ~ES 1373 SPDIF EN 
+	ensoniq cssr |= nval2 
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	outl ensoniq cssr  ES REG ensoniq  STATUS   
+	spin unlock irq  ensoniq reg lock  
+	return change 
+}
+

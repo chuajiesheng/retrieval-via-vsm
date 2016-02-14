@@ -1,0 +1,2 @@
+extern void iowrite16 u16  void   iomem    
+

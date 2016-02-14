@@ -1,0 +1,8 @@
+static int pcrypt aead setkey struct crypto aead  parent 
+			      const u8  key  unsigned int keylen 
+{
+	struct pcrypt aead ctx  ctx = crypto aead ctx parent  
+
+	return crypto aead setkey ctx child  key  keylen  
+}
+

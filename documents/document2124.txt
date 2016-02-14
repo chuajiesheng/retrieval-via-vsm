@@ -1,0 +1,2 @@
+extern mmc pm flag t sdio get host pm caps struct sdio func  func  
+

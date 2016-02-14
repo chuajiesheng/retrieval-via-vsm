@@ -1,0 +1,8 @@
+  
+   
+static inline void snd mtpav mputreg struct mtpav  chip  u16 reg  u8 val 
+{
+	if  reg == DREG || reg == CREG 
+		outb val  chip port + reg  
+}
+

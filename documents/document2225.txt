@@ -1,0 +1,23 @@
+snd ad1889 ac97 xinit struct snd ad1889  chip 
+{
+	u16 reg 
+
+	reg = ad1889 readw chip  AD AC97 ACIC  
+	reg |= AD AC97 ACIC ACRD 		   Reset Disable   
+	ad1889 writew chip  AD AC97 ACIC  reg  
+	ad1889 readw chip  AD AC97 ACIC  	   flush posted write   
+	udelay 10  
+	   Interface Enable   
+	reg |= AD AC97 ACIC ACIE 
+	ad1889 writew chip  AD AC97 ACIC  reg  
+	
+	snd ad1889 ac97 ready chip  
+
+	   Audio Stream Output | Variable Sample Rate Mode   
+	reg = ad1889 readw chip  AD AC97 ACIC  
+	reg |= AD AC97 ACIC ASOE | AD AC97 ACIC VSRM 
+	ad1889 writew chip  AD AC97 ACIC  reg  
+	ad1889 readw chip  AD AC97 ACIC      flush posted write   
+
+}
+

@@ -1,0 +1,9 @@
+   
+   ttm ttm destroy 
+  
+   @ttm  The struct ttm tt 
+  
+   Unbind  unpopulate and destroy a struct ttm tt 
+   
+extern void ttm tt destroy struct ttm tt  ttm  
+

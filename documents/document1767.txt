@@ -1,0 +1,10 @@
+static inline struct crypto cipher  crypto alloc cipher const char  alg name 
+							u32 type  u32 mask 
+{
+	type  = ~CRYPTO ALG TYPE MASK 
+	type |= CRYPTO ALG TYPE CIPHER 
+	mask |= CRYPTO ALG TYPE MASK 
+
+	return   crypto cipher cast crypto alloc base alg name  type  mask   
+}
+

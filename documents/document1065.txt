@@ -1,0 +1,11 @@
+static int crypto rfc4543 setauthsize struct crypto aead  parent 
+				      unsigned int authsize 
+{
+	struct crypto rfc4543 ctx  ctx = crypto aead ctx parent  
+
+	if  authsize  = 16 
+		return  EINVAL 
+
+	return crypto aead setauthsize ctx child  authsize  
+}
+

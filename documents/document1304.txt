@@ -1,0 +1,27 @@
+static unsigned short snd es1968 ac97 read struct snd ac97  ac97  unsigned short reg 
+{
+	u16 data = 0 
+	struct es1968  chip = ac97 private data 
+#ifndef CONFIG SND ES1968 INPUT
+	unsigned long flags 
+#endif
+
+	snd es1968 ac97 wait chip  
+
+#ifndef CONFIG SND ES1968 INPUT
+	spin lock irqsave  chip ac97 lock  flags  
+#endif
+	outb reg | 0x80  chip io port + ESM AC97 INDEX  
+	  msleep 1    
+
+	if   snd es1968 ac97 wait poll chip   {
+		data = inw chip io port + ESM AC97 DATA  
+		  msleep 1    
+	}
+#ifndef CONFIG SND ES1968 INPUT
+	spin unlock irqrestore  chip ac97 lock  flags  
+#endif
+
+	return data 
+}
+

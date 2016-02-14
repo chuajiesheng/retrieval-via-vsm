@@ -1,0 +1,18 @@
+   
+   ieee80211 disable dyn ps   force mac80211 to temporarily disable dynamic psm
+  
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+  
+   Some hardware require full power save to manage simultaneous BT traffic
+   on the WLAN frequency  Full PSM is required periodically  whenever there are
+   burst of BT traffic  The hardware gets information of BT traffic via
+   hardware co existence lines  and consequentially requests mac80211 to
+    temporarily  enter full psm 
+   This function will only temporarily disable dynamic PS  not enable PSM if
+   it was not already enabled 
+   The driver must make sure to re enable dynamic PS using
+   ieee80211 enable dyn ps   if the driver has disabled it 
+  
+   
+void ieee80211 disable dyn ps struct ieee80211 vif  vif  
+

@@ -1,0 +1,23 @@
+static int snd sonicvibes put single struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct sonicvibes  sonic = snd kcontrol chip kcontrol  
+	int reg = kcontrol private value   0xff 
+	int shift =  kcontrol private value    8    0xff 
+	int mask =  kcontrol private value    16    0xff 
+	int invert =  kcontrol private value    24    0xff 
+	int change 
+	unsigned short val  oval 
+	
+	val =  ucontrol value integer value 0    mask  
+	if  invert 
+		val = mask   val 
+	val   = shift 
+	spin lock irq  sonic reg lock  
+	oval = snd sonicvibes in1 sonic  reg  
+	val =  oval   ~ mask    shift   | val 
+	change = val  = oval 
+	snd sonicvibes out1 sonic  reg  val  
+	spin unlock irq  sonic reg lock  
+	return change 
+}
+

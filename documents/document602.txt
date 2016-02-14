@@ -1,0 +1,15 @@
+static int crypto ecb init tfm struct crypto tfm  tfm 
+{
+	struct crypto instance  inst =  void   tfm   crt alg 
+	struct crypto spawn  spawn = crypto instance ctx inst  
+	struct crypto ecb ctx  ctx = crypto tfm ctx tfm  
+	struct crypto cipher  cipher 
+
+	cipher = crypto spawn cipher spawn  
+	if  IS ERR cipher  
+		return PTR ERR cipher  
+
+	ctx child = cipher 
+	return 0 
+}
+

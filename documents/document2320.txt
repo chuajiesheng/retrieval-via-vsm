@@ -1,0 +1,11 @@
+   
+   sign extend32   sign extend a 32 bit value using specified bit as sign bit
+   @value  value to sign extend
+   @index  0 based bit index  0 =index 32  to sign bit
+   
+static inline   s32 sign extend32   u32 value  int index 
+{
+	  u8 shift = 31   index 
+	return    s32  value    shift     shift 
+}
+

@@ -1,0 +1,69 @@
+   
+   snd pcm format set silence   set the silence data on the buffer
+   @format  the PCM format
+   @data  the buffer pointer
+   @samples  the number of samples to set silence
+  
+   Sets the silence data on the buffer for the given samples 
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm format set silence snd pcm format t format  void  data  unsigned int samples 
+{
+	int width 
+	unsigned char  dst   pat 
+
+	if  format   0 || format   SNDRV PCM FORMAT LAST 
+		return  EINVAL 
+	if  samples == 0 
+		return 0 
+	width = pcm formats format  phys     physical width   
+	pat = pcm formats format  silence 
+	if    width 
+		return  EINVAL 
+	   signed or 1 byte data   
+	if  pcm formats format  signd == 1 || width  = 8  {
+		unsigned int bytes = samples   width   8 
+		memset data   pat  bytes  
+		return 0 
+	}
+	   non zero samples  fill using a loop   
+	width  = 8 
+	dst = data 
+#if 0
+	while  samples    {
+		memcpy dst  pat  width  
+		dst += width 
+	}
+#else
+	   a bit optimization for constant width   
+	switch  width  {
+	case 2 
+		while  samples    {
+			memcpy dst  pat  2  
+			dst += 2 
+		}
+		break 
+	case 3 
+		while  samples    {
+			memcpy dst  pat  3  
+			dst += 3 
+		}
+		break 
+	case 4 
+		while  samples    {
+			memcpy dst  pat  4  
+			dst += 4 
+		}
+		break 
+	case 8 
+		while  samples    {
+			memcpy dst  pat  8  
+			dst += 8 
+		}
+		break 
+	}
+#endif
+	return 0 
+}
+

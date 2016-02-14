@@ -1,0 +1,8 @@
+static inline void snd uart16550 del timer struct snd uart16550  uart 
+{
+	if  uart timer running  {
+		del timer  uart buffer timer  
+		uart timer running = 0 
+	}
+}
+

@@ -1,0 +1,5 @@
+static void   exit alsa card intel8x0m exit void 
+{
+	pci unregister driver  driver  
+}
+

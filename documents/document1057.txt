@@ -1,0 +1,29 @@
+static int snd ensoniq suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct ensoniq  ensoniq = card private data 
+	
+	snd power change state card  SNDRV CTL POWER D3hot  
+
+	snd pcm suspend all ensoniq pcm1  
+	snd pcm suspend all ensoniq pcm2  
+	
+#ifdef CHIP1371	
+	snd ac97 suspend ensoniq u es1371 ac97  
+#else
+	   try to reset AK4531   
+	outw ES 1370 CODEC WRITE AK4531 RESET  0x02   ES REG ensoniq  1370 CODEC   
+	inw ES REG ensoniq  1370 CODEC   
+	udelay 100  
+	outw ES 1370 CODEC WRITE AK4531 RESET  0x03   ES REG ensoniq  1370 CODEC   
+	inw ES REG ensoniq  1370 CODEC   
+	udelay 100  
+	snd ak4531 suspend ensoniq u es1370 ak4531  
+#endif	
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

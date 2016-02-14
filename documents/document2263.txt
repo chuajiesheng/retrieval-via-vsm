@@ -1,0 +1,62 @@
+static int snd rme32 capture getrate struct rme32   rme32  int  is adat 
+{
+	int n 
+
+	 is adat = 0 
+	if  rme32 rcreg   RME32 RCR LOCK  { 
+                   ADAT rate   
+                 is adat = 1 
+	}
+	if  rme32 rcreg   RME32 RCR ERF  {
+		return  1 
+	}
+
+           S PDIF rate   
+	n =   rme32 rcreg    RME32 RCR BITPOS F0    1  +
+		   rme32 rcreg    RME32 RCR BITPOS F1    1     1  +
+		   rme32 rcreg    RME32 RCR BITPOS F2    1     2  
+
+	if  RME32 PRO WITH 8414 rme32  
+		switch  n  {	   supporting the CS8414   
+		case 0 
+		case 1 
+		case 2 
+			return  1 
+		case 3 
+			return 96000 
+		case 4 
+			return 88200 
+		case 5 
+			return 48000 
+		case 6 
+			return 44100 
+		case 7 
+			return 32000 
+		default 
+			return  1 
+			break 
+		} 
+	else
+		switch  n  {	   supporting the CS8412   
+		case 0 
+			return  1 
+		case 1 
+			return 48000 
+		case 2 
+			return 44100 
+		case 3 
+			return 32000 
+		case 4 
+			return 48000 
+		case 5 
+			return 44100 
+		case 6 
+			return 44056 
+		case 7 
+			return 32000 
+		default 
+			break 
+		}
+	return  1 
+}
+

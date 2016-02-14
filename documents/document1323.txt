@@ -1,0 +1,9 @@
+   
+   ttm bo unref
+  
+   @bo  The buffer object 
+  
+   Unreference and clear a pointer to a buffer object 
+   
+extern void ttm bo unref struct ttm buffer object   bo  
+

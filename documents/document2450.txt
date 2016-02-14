@@ -1,0 +1,9 @@
+   
+   tfrc rx hist last rcv   entry with highest received seqno so far
+   
+static inline struct tfrc rx hist entry  
+			tfrc rx hist last rcv const struct tfrc rx hist  h 
+{
+	return h ring tfrc rx hist index h  h loss count   
+}
+

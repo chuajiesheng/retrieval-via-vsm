@@ -1,0 +1,17 @@
+snd ad1889 capture pointer struct snd pcm substream  ss 
+{
+	size t ptr = 0 
+	struct snd ad1889  chip = snd pcm substream chip ss  
+
+	if  unlikely   chip ramc reg   AD DS RAMC ADEN   
+		return 0 
+
+	ptr = ad1889 readl chip  AD DMA ADCCA  
+	ptr  = chip ramc addr 
+
+	if  snd BUG ON ptr  = chip ramc size  
+		return 0 
+	
+	return bytes to frames ss runtime  ptr  
+}
+

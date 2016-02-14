@@ -1,0 +1,49 @@
+snd ad1889 playback prepare struct snd pcm substream  ss 
+{
+	struct snd ad1889  chip = snd pcm substream chip ss  
+	struct snd pcm runtime  rt = ss runtime 
+	unsigned int size = snd pcm lib buffer bytes ss  
+	unsigned int count = snd pcm lib period bytes ss  
+	u16 reg 
+
+	ad1889 channel reset chip  AD CHAN WAV  
+
+	reg = ad1889 readw chip  AD DS WSMC  
+	
+	   Mask out 16 bit   Stereo   
+	reg  = ~ AD DS WSMC WA16 | AD DS WSMC WAST  
+
+	if  snd pcm format width rt format  == 16 
+		reg |= AD DS WSMC WA16 
+
+	if  rt channels   1 
+		reg |= AD DS WSMC WAST 
+
+	   let's make sure we don't clobber ourselves   
+	spin lock irq  chip lock  
+	
+	chip wave size = size 
+	chip wave reg = reg 
+	chip wave addr = rt dma addr 
+
+	ad1889 writew chip  AD DS WSMC  chip wave reg  
+	
+	   Set sample rates on the codec   
+	ad1889 writew chip  AD DS WAS  rt rate  
+
+	   Set up DMA   
+	ad1889 load wave buffer address chip  chip wave addr  
+	ad1889 load wave buffer count chip  size  
+	ad1889 load wave interrupt count chip  count  
+
+	   writes flush   
+	ad1889 readw chip  AD DS WSMC  
+	
+	spin unlock irq  chip lock  
+	
+	ad1889 debug  prepare playback  addr = 0x x  count =  u   
+			 size =  u  reg = 0x x  rate =  u\n   chip wave addr 
+			count  size  reg  rt rate  
+	return 0 
+}
+

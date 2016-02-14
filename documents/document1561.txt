@@ -1,0 +1,14 @@
+snd rme96 put clockmode control struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct rme96  rme96 = snd kcontrol chip kcontrol  
+	unsigned int val 
+	int change 
+	
+	val = ucontrol value enumerated item 0    3 
+	spin lock irq  rme96 lock  
+	change =  int val  = snd rme96 getclockmode rme96  
+	snd rme96 setclockmode rme96  val  
+	spin unlock irq  rme96 lock  
+	return change 
+}
+

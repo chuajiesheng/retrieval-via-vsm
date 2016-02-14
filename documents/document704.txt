@@ -1,0 +1,57 @@
+  
+   
+static int   devinit snd mtpav probe struct platform device  dev 
+{
+	struct snd card  card 
+	int err 
+	struct mtpav  mtp card 
+
+	err = snd card create index  id  THIS MODULE  sizeof  mtp card    card  
+	if  err   0 
+		return err 
+
+	mtp card = card private data 
+	spin lock init  mtp card spinlock  
+	init timer  mtp card timer  
+	mtp card card = card 
+	mtp card irq =  1 
+	mtp card share irq = 0 
+	mtp card inmidistate = 0 
+	mtp card outmidihwport = 0xffffffff 
+	init timer  mtp card timer  
+	mtp card timer function = snd mtpav output timer 
+	mtp card timer data =  unsigned long  mtp card 
+
+	card private free = snd mtpav free 
+
+	err = snd mtpav get RAWMIDI mtp card  
+	if  err   0 
+		goto   error 
+
+	mtp card inmidiport = mtp card num ports + MTPAV PIDX BROADCAST 
+
+	err = snd mtpav get ISA mtp card  
+	if  err   0 
+		goto   error 
+
+	strcpy card driver   MTPAV   
+	strcpy card shortname   MTPAV on parallel port   
+	snprintf card longname  sizeof card longname  
+		  MTPAV on parallel port at 0x lx   port  
+
+	snd mtpav portscan mtp card  
+
+	snd card set dev card   dev dev  
+	err = snd card register mtp card card  
+	if  err   0 
+		goto   error 
+
+	platform set drvdata dev  card  
+	printk KERN INFO  Motu MidiTimePiece on parallel port irq   d ioport  0x lx\n   irq  port  
+	return 0 
+
+   error 
+	snd card free card  
+	return err 
+}
+

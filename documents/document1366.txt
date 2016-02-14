@@ -1,0 +1,19 @@
+static int snd es1968 capture close struct snd pcm substream  substream 
+{
+	struct es1968  chip = snd pcm substream chip substream  
+	struct esschan  es 
+
+	if  substream runtime private data == NULL 
+		return 0 
+	es = substream runtime private data 
+	spin lock irq  chip substream lock  
+	list del  es list  
+	spin unlock irq  chip substream lock  
+	snd es1968 free memory chip  es mixbuf  
+	snd es1968 free apu pair chip  es apu 0   
+	snd es1968 free apu pair chip  es apu 2   
+	kfree es  
+
+	return 0 
+}
+

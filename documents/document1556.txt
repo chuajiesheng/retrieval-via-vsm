@@ -1,0 +1,3 @@
+extern void drm core reclaim buffers struct drm device  dev 
+				     struct drm file  filp  
+

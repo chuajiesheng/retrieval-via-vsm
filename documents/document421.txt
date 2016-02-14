@@ -1,0 +1,26 @@
+static void loopback bytepos update struct loopback pcm  dpcm 
+				    unsigned int delta 
+				    unsigned int cmd 
+{
+	unsigned int count 
+	unsigned long last pos 
+
+	last pos = byte pos dpcm  dpcm irq pos  
+	dpcm irq pos += delta   dpcm pcm bps 
+	count = byte pos dpcm  dpcm irq pos    last pos 
+	if   count 
+		return 
+	if  cmd == BYTEPOS UPDATE CLEAR 
+		clear capture buf dpcm  count  
+	else if  cmd == BYTEPOS UPDATE COPY 
+		copy play buf dpcm cable streams SNDRV PCM STREAM PLAYBACK  
+			      dpcm cable streams SNDRV PCM STREAM CAPTURE  
+			      count  
+	dpcm buf pos += count 
+	dpcm buf pos  = dpcm pcm buffer size 
+	if  dpcm irq pos  = dpcm period size frac  {
+		dpcm irq pos  = dpcm period size frac 
+		dpcm period update pending = 1 
+	}
+}
+

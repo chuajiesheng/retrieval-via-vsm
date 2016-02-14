@@ -1,0 +1,8 @@
+static inline int crypto skcipher givencrypt 
+	struct skcipher givcrypt request  req 
+{
+	struct ablkcipher tfm  crt =
+		crypto ablkcipher crt skcipher givcrypt reqtfm req   
+	return crt givencrypt req  
+}
+

@@ -1,0 +1,2 @@
+int snd ac97 update bits struct snd ac97  ac97  unsigned short reg  unsigned short mask  unsigned short value  
+

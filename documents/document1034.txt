@@ -1,0 +1,15 @@
+static int snd es1373 rear get struct snd kcontrol  kcontrol 
+			       struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	int val = 0 
+	
+	spin lock irq  ensoniq reg lock  
+	if   ensoniq cssr    ES 1373 REAR BIT27|ES 1373 REAR BIT26|
+			      ES 1373 REAR BIT24   == ES 1373 REAR BIT26 
+	    	val = 1 
+	ucontrol value integer value 0  = val 
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

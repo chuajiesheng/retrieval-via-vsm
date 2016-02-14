@@ -1,0 +1,23 @@
+   
+   snd info create card entry   create an info entry for the given card
+   @card  the card instance
+   @name  the file name
+   @parent  the parent directory
+  
+   Creates a new info entry and assigns it to the given card 
+  
+   Returns the pointer of the new instance  or NULL on failure 
+   
+struct snd info entry  snd info create card entry struct snd card  card 
+					     const char  name 
+					     struct snd info entry   parent 
+{
+	struct snd info entry  entry = snd info create entry name  
+	if  entry  {
+		entry module = card module 
+		entry card = card 
+		entry parent = parent 
+	}
+	return entry 
+}
+

@@ -1,0 +1,10 @@
+static inline void snd als4000 set playback dma struct snd sb  chip 
+						dma addr t addr 
+						unsigned size 
+{
+	   SPECS PAGE  38   
+	snd als4k gcr write chip  ALS4K GCR91 DMA0 ADDR  addr  
+	snd als4k gcr write chip  ALS4K GCR92 DMA0 MODE COUNT 
+							 size 1 |0x180000  
+}
+

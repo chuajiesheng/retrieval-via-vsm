@@ -1,0 +1,18 @@
+static int crypto rfc4543 encrypt struct aead request  req 
+{
+	struct crypto aead  aead = crypto aead reqtfm req  
+	struct crypto rfc4543 req ctx  rctx = crypto rfc4543 reqctx req  
+	struct aead request  subreq 
+	int err 
+
+	subreq = crypto rfc4543 crypt req  1  
+	err = crypto aead encrypt subreq  
+	if  err 
+		return err 
+
+	scatterwalk map and copy rctx auth tag  req dst  req cryptlen 
+				 crypto aead authsize aead   1  
+
+	return 0 
+}
+

@@ -1,0 +1,15 @@
+  
+   
+static int snd atiixp playback open struct snd pcm substream  substream 
+{
+	struct atiixp modem  chip = snd pcm substream chip substream  
+	int err 
+
+	mutex lock  chip open mutex  
+	err = snd atiixp pcm open substream   chip dmas ATI DMA PLAYBACK   0  
+	mutex unlock  chip open mutex  
+	if  err   0 
+		return err 
+	return 0 
+}
+

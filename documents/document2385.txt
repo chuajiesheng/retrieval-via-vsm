@@ -1,0 +1,5 @@
+static inline int ac97 is modem struct snd ac97   ac97 
+{
+	return  ac97 scaps   AC97 SCAP MODEM  
+}
+

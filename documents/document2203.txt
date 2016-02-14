@@ -1,0 +1,3 @@
+unsigned int snd pcm sgbuf get chunk size struct snd pcm substream  substream 
+					  unsigned int ofs  unsigned int size  
+

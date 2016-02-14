@@ -1,0 +1,2 @@
+module param spdif aclink  int  0444  
+

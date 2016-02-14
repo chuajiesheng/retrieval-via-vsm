@@ -1,0 +1,26 @@
+  
+
+   
+static void snd ensoniq proc read struct snd info entry  entry  
+				  struct snd info buffer  buffer 
+{
+	struct ensoniq  ensoniq = entry private data 
+
+#ifdef CHIP1370
+	snd iprintf buffer   Ensoniq AudioPCI ES1370\n\n   
+#else
+	snd iprintf buffer   Ensoniq AudioPCI ES1371\n\n   
+#endif
+	snd iprintf buffer   Joystick enable     s\n  
+		    ensoniq ctrl   ES JYSTK EN ?  on     off   
+#ifdef CHIP1370
+	snd iprintf buffer   MIC +5V bias        s\n  
+		    ensoniq ctrl   ES 1370 XCTL1 ?  on     off   
+	snd iprintf buffer   Line In to AOUT     s\n  
+		    ensoniq ctrl   ES 1370 XCTL0 ?  on     off   
+#else
+	snd iprintf buffer   Joystick port      0x x\n  
+		     ES 1371 JOY ASELI ensoniq ctrl    8  + 0x200  
+#endif
+}
+

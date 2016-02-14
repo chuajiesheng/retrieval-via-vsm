@@ -1,0 +1,21 @@
+  
+    Mixer part
+   
+static int snd via8233 capture source info struct snd kcontrol  kcontrol 
+					   struct snd ctl elem info  uinfo 
+{
+	   formerly they were  Line  and  Mic   but it looks like that they
+	   have nothing to do with the actual physical connections   
+	   
+	static char  texts 2  = {
+		 Input1    Input2 
+	} 
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 1 
+	uinfo value enumerated items = 2 
+	if  uinfo value enumerated item  = 2 
+		uinfo value enumerated item = 1 
+	strcpy uinfo value enumerated name  texts uinfo value enumerated item   
+	return 0 
+}
+

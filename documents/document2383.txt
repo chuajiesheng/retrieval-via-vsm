@@ -1,0 +1,11 @@
+   
+   ieee80211 data from 8023   convert an 802 3 frame to 802 11
+   @skb  the 802 3 frame
+   @addr  the device MAC address
+   @iftype  the virtual interface type
+   @bssid  the network bssid  used only for iftype STATION and ADHOC 
+   @qos  build 802 11 QoS data frame
+   
+int ieee80211 data from 8023 struct sk buff  skb  const u8  addr 
+			     enum nl80211 iftype iftype  u8  bssid  bool qos  
+

@@ -1,0 +1,13 @@
+static void params change substream struct loopback pcm  dpcm 
+				    struct snd pcm runtime  runtime 
+{
+	struct snd pcm runtime  dst runtime 
+
+	if  dpcm == NULL || dpcm substream == NULL 
+		return 
+	dst runtime = dpcm substream runtime 
+	if  dst runtime == NULL 
+		return 
+	dst runtime hw = dpcm cable hw 
+}
+

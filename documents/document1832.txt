@@ -1,0 +1,6 @@
+static void snd ensoniq mixer free ak4531 struct snd ak4531  ak4531 
+{
+	struct ensoniq  ensoniq = ak4531 private data 
+	ensoniq u es1370 ak4531 = NULL 
+}
+

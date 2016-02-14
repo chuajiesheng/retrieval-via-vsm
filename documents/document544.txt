@@ -1,0 +1,92 @@
+static void snd uart16550 do open struct snd uart16550   uart 
+{
+	char byte 
+
+	   Initialize basic variables   
+	uart buff in count = 0 
+	uart buff in = 0 
+	uart buff out = 0 
+	uart fifo limit = 1 
+	uart fifo count = 0 
+	uart timer running = 0 
+
+	outb UART FCR ENABLE FIFO	   Enable FIFO's  if available    
+	     | UART FCR CLEAR RCVR	   Clear receiver FIFO   
+	     | UART FCR CLEAR XMIT	   Clear transmitter FIFO   
+	     | UART FCR TRIGGER 4	   Set FIFO trigger at 4 bytes   
+	   NOTE  interrupt generated after T= time 4 bytes
+	   if less than UART FCR TRIGGER bytes received
+	   
+	      uart base + UART FCR  	   FIFO Control Register   
+
+	if   inb uart base + UART IIR    0xf0  == 0xc0 
+		uart fifo limit = 16 
+	if  uart divisor  = 0  {
+		uart old line ctrl reg = inb uart base + UART LCR  
+		outb UART LCR DLAB	   Divisor latch access bit   
+		      uart base + UART LCR  	   Line Control Register   
+		uart old divisor lsb = inb uart base + UART DLL  
+		uart old divisor msb = inb uart base + UART DLM  
+
+		outb uart divisor
+		      uart base + UART DLL  	   Divisor Latch Low   
+		outb 0
+		      uart base + UART DLM  	   Divisor Latch High   
+		   DLAB is reset to 0 in next outb     
+	}
+	   Set serial parameters  parity off  etc    
+	outb UART LCR WLEN8	   8 data bits   
+	     | 0		   1 stop bit   
+	     | 0		   parity off   
+	     | 0		   DLAB = 0   
+	      uart base + UART LCR  	   Line Control Register   
+
+	switch  uart adaptor  {
+	default 
+		outb UART MCR RTS	   Set Request To Send line active   
+		     | UART MCR DTR	   Set Data Terminal Ready line active   
+		     | UART MCR OUT2	   Set OUT2   not always required  but when
+					   it is  it is ESSENTIAL for enabling interrupts
+				   
+		      uart base + UART MCR  	   Modem Control Register   
+		break 
+	case SNDRV SERIAL MS124W SA 
+	case SNDRV SERIAL MS124W MB 
+		   MS 124W can draw power from RTS and DTR if they
+		   are in opposite states     
+		outb UART MCR RTS |  0 UART MCR DTR  | UART MCR OUT2 
+		     uart base + UART MCR  
+		break 
+	case SNDRV SERIAL MS124T 
+		   MS 124T can draw power from RTS and or DTR  preferably
+		   both  if they are both asserted    
+		outb UART MCR RTS | UART MCR DTR | UART MCR OUT2 
+		     uart base + UART MCR  
+		break 
+	}
+
+	if  uart irq   0  {
+		byte =  0   UART IER RDI 	   Disable Receiver data interrupt   
+		    | 0   UART IER THRI 	   Disable Transmitter holding register empty interrupt   
+		     
+	} else if  uart adaptor == SNDRV SERIAL MS124W SA  {
+		byte = UART IER RDI	   Enable Receiver data interrupt   
+		    | UART IER MSI	   Enable Modem status interrupt   
+		     
+	} else if  uart adaptor == SNDRV SERIAL GENERIC  {
+		byte = UART IER RDI	   Enable Receiver data interrupt   
+		    | UART IER MSI	   Enable Modem status interrupt   
+		    | UART IER THRI	   Enable Transmitter holding register empty interrupt   
+		     
+	} else {
+		byte = UART IER RDI	   Enable Receiver data interrupt   
+		    | UART IER THRI	   Enable Transmitter holding register empty interrupt   
+		     
+	}
+	outb byte  uart base + UART IER  	   Interrupt enable Register   
+
+	inb uart base + UART LSR  	   Clear any pre existing overrun indication   
+	inb uart base + UART IIR  	   Clear any pre existing transmit interrupt   
+	inb uart base + UART RX  	   Clear any pre existing receive interrupt   
+}
+

@@ -1,0 +1,85 @@
+static int   devinit snd mts64 probe struct platform device  pdev 
+{
+	struct pardevice  pardev 
+	struct parport  p 
+	int dev = pdev id 
+	struct snd card  card = NULL 
+	struct mts64  mts = NULL 
+	int err 
+
+	p = platform get drvdata pdev  
+	platform set drvdata pdev  NULL  
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   
+		return  ENOENT 
+	if   err = snd mts64 probe port p     0 
+		return err 
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0  {
+		snd printd  Cannot create card\n   
+		return err 
+	}
+	strcpy card driver  DRIVER NAME  
+	strcpy card shortname   ESI   CARD NAME  
+	sprintf card longname     s at 0x lx  irq  i   
+		card shortname  p base  p irq  
+
+	pardev = parport register device p                       port   
+					 DRIVER NAME             name   
+					 NULL                    preempt   
+					 NULL                    wakeup   
+					 snd mts64 interrupt     ISR   
+					 PARPORT DEV EXCL        flags   
+					  void   card            private   
+	if  pardev == NULL  {
+		snd printd  Cannot register pardevice\n   
+		err =  EIO 
+		goto   err 
+	}
+
+	if   err = snd mts64 create card  pardev   mts     0  {
+		snd printd  Cannot create main component\n   
+		parport unregister device pardev  
+		goto   err 
+	}
+	card private data = mts 
+	card private free = snd mts64 card private free 
+	
+	if   err = snd mts64 rawmidi create card     0  {
+		snd printd  Creating Rawmidi component failed\n   
+		goto   err 
+	}
+
+	   claim parport   
+	if  parport claim pardev   {
+		snd printd  Cannot claim parport 0x lx\n   pardev port base  
+		err =  EIO 
+		goto   err 
+	}
+	mts pardev claimed = 1 
+
+	   init device   
+	if   err = mts64 device init p     0 
+		goto   err 
+
+	platform set drvdata pdev  card  
+
+	snd card set dev card   pdev dev  
+
+	   At this point card will be usable   
+	if   err = snd card register card     0  {
+		snd printd  Cannot register card\n   
+		goto   err 
+	}
+
+	snd printk KERN INFO  ESI Miditerminal 4140 on 0x lx\n   p base  
+	return 0 
+
+  err 
+	snd card free card  
+	return err 
+}
+

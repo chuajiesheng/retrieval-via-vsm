@@ -1,0 +1,40 @@
+static int setup spdif playback struct cmipci  cm  struct snd pcm substream  subs  int up  int do ac3 
+{
+	int rate  err 
+
+	rate = subs runtime rate 
+
+	if  up    do ac3 
+		if   err = save mixer state cm     0 
+			return err 
+
+	spin lock irq  cm reg lock  
+	cm spdif playback avail = up 
+	if  up  {
+		   they are controlled via  IEC958 Output Switch    
+		   snd cmipci set bit cm  CM REG LEGACY CTRL  CM ENSPDOUT     
+		   snd cmipci set bit cm  CM REG FUNCTRL1  CM SPDO2DAC     
+		if  cm spdif playback enabled 
+			snd cmipci set bit cm  CM REG FUNCTRL1  CM PLAYBACK SPDF  
+		setup ac3 cm  subs  do ac3  rate  
+
+		if  rate == 48000 || rate == 96000 
+			snd cmipci set bit cm  CM REG MISC CTRL  CM SPDIF48K | CM SPDF AC97  
+		else
+			snd cmipci clear bit cm  CM REG MISC CTRL  CM SPDIF48K | CM SPDF AC97  
+		if  rate   48000 
+			snd cmipci set bit cm  CM REG CHFORMAT  CM DBLSPDS  
+		else
+			snd cmipci clear bit cm  CM REG CHFORMAT  CM DBLSPDS  
+	} else {
+		   they are controlled via  IEC958 Output Switch    
+		   snd cmipci clear bit cm  CM REG LEGACY CTRL  CM ENSPDOUT     
+		   snd cmipci clear bit cm  CM REG FUNCTRL1  CM SPDO2DAC     
+		snd cmipci clear bit cm  CM REG CHFORMAT  CM DBLSPDS  
+		snd cmipci clear bit cm  CM REG FUNCTRL1  CM PLAYBACK SPDF  
+		setup ac3 cm  subs  0  0  
+	}
+	spin unlock irq  cm reg lock  
+	return 0 
+}
+

@@ -1,0 +1,25 @@
+  
+    Checks if any input data on the given channel is available
+    Checks RxAvail 
+   
+static int portman data avail struct portman  pm  int channel 
+{
+	int command = INT EN 
+	switch  channel  {
+	case 0 
+		command |= RXDATA0 
+		break 
+	case 1 
+		command |= RXDATA1 
+		break 
+	}
+	   Write hardware  assumme STROBE=0    
+	portman write command pm  command  
+	   Check multiplexed RxAvail signal   
+	if   portman read status pm    RXAVAIL  == RXAVAIL 
+		return 1 	   Data available   
+
+	   No Data available   
+	return 0 
+}
+

@@ -1,0 +1,11 @@
+  
+    ENTRY functions
+   
+static int   init alsa hwdep init void 
+{
+	snd hwdep proc init   
+	snd ctl register ioctl snd hwdep control ioctl  
+	snd ctl register ioctl compat snd hwdep control ioctl  
+	return 0 
+}
+

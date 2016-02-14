@@ -1,0 +1,5 @@
+static inline int pci write config word struct pci dev  dev  int where  u16 val 
+{
+	return pci bus write config word dev bus  dev devfn  where  val  
+}
+

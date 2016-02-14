@@ -1,0 +1,14 @@
+static void snd sonicvibes out struct sonicvibes   sonic 
+			       unsigned char reg 
+			       unsigned char value 
+{
+	unsigned long flags 
+
+	spin lock irqsave  sonic reg lock  flags  
+	outb reg  SV REG sonic  INDEX   
+	udelay 10  
+	outb value  SV REG sonic  DATA   
+	udelay 10  
+	spin unlock irqrestore  sonic reg lock  flags  
+}
+

@@ -1,0 +1,23 @@
+static int snd mem proc read struct seq file  seq  void  offset 
+{
+	long pages = snd allocated pages     PAGE SHIFT 12  
+	struct snd mem list  mem 
+	int devno 
+	static char  types   = {  UNKNOWN    CONT    DEV    DEV SG  } 
+
+	mutex lock  list mutex  
+	seq printf seq   pages     li bytes   li pages per  likB \n  
+		   pages   PAGE SIZE  pages  PAGE SIZE   1024  
+	devno = 0 
+	list for each entry mem   mem list head  list  {
+		devno++ 
+		seq printf seq   buffer  d   ID  08x   type  s\n  
+			   devno  mem id  types mem buffer dev type   
+		seq printf seq     addr = 0x lx  size =  d bytes\n  
+			    unsigned long mem buffer addr 
+			    int mem buffer bytes  
+	}
+	mutex unlock  list mutex  
+	return 0 
+}
+

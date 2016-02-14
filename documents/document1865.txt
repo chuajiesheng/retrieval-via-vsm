@@ -1,0 +1,14 @@
+static int snd bt87x free struct snd bt87x  chip 
+{
+	if  chip mmio 
+		snd bt87x stop chip  
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+	if  chip mmio 
+		iounmap chip mmio  
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

@@ -1,0 +1,6 @@
+static void xcbc exit tfm struct crypto tfm  tfm 
+{
+	struct xcbc tfm ctx  ctx = crypto tfm ctx tfm  
+	crypto free cipher ctx child  
+}
+

@@ -1,0 +1,15 @@
+static void snd als4000 free gameport struct snd card als4000  acard 
+{
+	if  acard gameport  {
+		struct resource  r = gameport get port data acard gameport  
+
+		gameport unregister port acard gameport  
+		acard gameport = NULL 
+
+		   disable joystick   
+		snd als4000 set addr acard iobase  0  0  0  0  
+
+		release and free resource r  
+	}
+}
+

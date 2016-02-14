@@ -1,0 +1,10 @@
+snd rme96 capture stop struct rme96  rme96 
+{
+	rme96 rcreg = readl rme96 iobase + RME96 IO CONTROL REGISTER  
+	if  rme96 rcreg   RME96 RCR IRQ 2  {
+		writel 0  rme96 iobase + RME96 IO CONFIRM REC IRQ  
+	}	
+	rme96 wcreg  = ~RME96 WCR START 2 
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+}
+

@@ -1,0 +1,45 @@
+  
+   
+static int snd m3 free struct snd m3  chip 
+{
+	struct m3 dma  s 
+	int i 
+
+#ifdef CONFIG SND MAESTRO3 INPUT
+	if  chip input dev 
+		input unregister device chip input dev  
+#endif
+
+	if  chip substreams  {
+		spin lock irq  chip reg lock  
+		for  i = 0  i   chip num substreams  i++  {
+			s =  chip substreams i  
+			   check surviving pcms  this should not happen though     
+			if  s substream    s running 
+				snd m3 pcm stop chip  s  s substream  
+		}
+		spin unlock irq  chip reg lock  
+		kfree chip substreams  
+	}
+	if  chip iobase  {
+		outw 0  chip iobase + HOST INT CTRL      disable ints   
+	}
+
+#ifdef CONFIG PM
+	vfree chip suspend mem  
+#endif
+
+	if  chip irq  = 0 
+		free irq chip irq  chip  
+
+	if  chip iobase 
+		pci release regions chip pci  
+
+	release firmware chip assp kernel image  
+	release firmware chip assp minisrc image  
+
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

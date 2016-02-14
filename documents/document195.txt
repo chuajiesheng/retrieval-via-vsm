@@ -1,0 +1,12 @@
+  
+   read callback for prealloc max proc file
+  
+   prints the maximum allowed size in kB 
+   
+static void snd pcm lib preallocate max proc read struct snd info entry  entry 
+						  struct snd info buffer  buffer 
+{
+	struct snd pcm substream  substream = entry private data 
+	snd iprintf buffer    lu\n    unsigned long  substream dma max   1024  
+}
+

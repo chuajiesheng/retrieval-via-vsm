@@ -1,0 +1,8 @@
+static void   devexit snd als300 remove struct pci dev  pci 
+{
+	snd als300 dbgcallenter   
+	snd card free pci get drvdata pci   
+	pci set drvdata pci  NULL  
+	snd als300 dbgcallleave   
+}
+

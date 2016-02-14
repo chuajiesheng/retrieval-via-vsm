@@ -1,0 +1,85 @@
+snd ad1889 create struct snd card  card 
+		  struct pci dev  pci 
+		  struct snd ad1889   rchip 
+{
+	int err 
+
+	struct snd ad1889  chip 
+	static struct snd device ops ops = {
+		 dev free = snd ad1889 dev free 
+	} 
+
+	 rchip = NULL 
+
+	if   err = pci enable device pci     0 
+		return err 
+
+	   check PCI availability  32bit DMA    
+	if  pci set dma mask pci  DMA BIT MASK 32     0 ||
+	    pci set consistent dma mask pci  DMA BIT MASK 32     0  {
+		printk KERN ERR PFX  error setting 32 bit DMA mask \n   
+		pci disable device pci  
+		return  ENXIO 
+	}
+
+	   allocate chip specific data with zero filled memory   
+	if   chip = kzalloc sizeof  chip   GFP KERNEL   == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	chip card = card 
+	card private data = chip 
+	chip pci = pci 
+	chip irq =  1 
+
+	    1  PCI resource allocation   
+	if   err = pci request regions pci  card driver     0 
+		goto free and ret 
+
+	chip bar = pci resource start pci  0  
+	chip iobase = pci ioremap bar pci  0  
+	if  chip iobase == NULL  {
+		printk KERN ERR PFX  unable to reserve region \n   
+		err =  EBUSY 
+		goto free and ret 
+	}
+	
+	pci set master pci  
+
+	spin lock init  chip lock  	   only now can we call ad1889 free   
+
+	if  request irq pci irq  snd ad1889 interrupt 
+			IRQF SHARED  card driver  chip   {
+		printk KERN ERR PFX  cannot obtain IRQ  d\n   pci irq  
+		snd ad1889 free chip  
+		return  EBUSY 
+	}
+
+	chip irq = pci irq 
+	synchronize irq chip irq  
+
+	    2  initialization of the chip hardware   
+	if   err = snd ad1889 init chip     0  {
+		snd ad1889 free chip  
+		return err 
+	}
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd ad1889 free chip  
+		return err 
+	}
+
+	snd card set dev card   pci dev  
+
+	 rchip = chip 
+
+	return 0 
+
+free and ret 
+	kfree chip  
+	pci disable device pci  
+
+	return err 
+}
+

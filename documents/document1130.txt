@@ -1,0 +1,5 @@
+snd azf3328 pcm capture open struct snd pcm substream  substream 
+{
+	return snd azf3328 pcm open substream  AZF CODEC CAPTURE  
+}
+

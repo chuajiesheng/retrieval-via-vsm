@@ -1,0 +1,59 @@
+  
+    Interrupt handler
+   
+static inline void snd intel8x0 update struct intel8x0  chip  struct ichdev  ichdev 
+{
+	unsigned long port = ichdev reg offset 
+	unsigned long flags 
+	int status  civ  i  step 
+	int ack = 0 
+
+	spin lock irqsave  chip reg lock  flags  
+	status = igetbyte chip  port + ichdev roff sr  
+	civ = igetbyte chip  port + ICH REG OFF CIV  
+	if    status   ICH BCIS   {
+		step = 0 
+	} else if  civ == ichdev civ  {
+		   snd printd  civ same  d\n   civ  
+		step = 1 
+		ichdev civ++ 
+		ichdev civ  = ICH REG LVI MASK 
+	} else {
+		step = civ   ichdev civ 
+		if  step   0 
+			step += ICH REG LVI MASK + 1 
+		   if  step  = 1 
+		  	snd printd  step =  d   d    d\n   step  ichdev civ  civ  
+		ichdev civ = civ 
+	}
+
+	ichdev position += step   ichdev fragsize1 
+	if    chip in measurement 
+		ichdev position  = ichdev size 
+	ichdev lvi += step 
+	ichdev lvi  = ICH REG LVI MASK 
+	iputbyte chip  port + ICH REG OFF LVI  ichdev lvi  
+	for  i = 0  i   step  i++  {
+		ichdev lvi frag++ 
+		ichdev lvi frag  = ichdev frags 
+		ichdev bdbar ichdev lvi   2  = cpu to le32 ichdev physbuf + ichdev lvi frag   ichdev fragsize1  
+#if 0
+	printk KERN DEBUG  new  bdbar  i  = 0x x  0x x   prefetch =  i   
+	        all = 0x x  0x x\n  
+	       ichdev lvi   2  ichdev bdbar ichdev lvi   2  
+	       ichdev bdbar ichdev lvi   2 + 1   inb ICH REG OFF PIV + port  
+	       inl port + 4   inb port + ICH REG OFF CR   
+#endif
+		if    ichdev ack == 0  {
+			ichdev ack = ichdev ack reload 
+			ack = 1 
+		}
+	}
+	spin unlock irqrestore  chip reg lock  flags  
+	if  ack    ichdev substream  {
+		snd pcm period elapsed ichdev substream  
+	}
+	iputbyte chip  port + ichdev roff sr 
+		 status    ICH FIFOE | ICH BCIS | ICH LVBCI   
+}
+

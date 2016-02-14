@@ -1,0 +1,17 @@
+snd ad1889 playback pointer struct snd pcm substream  ss 
+{
+	size t ptr = 0 
+	struct snd ad1889  chip = snd pcm substream chip ss  
+
+	if  unlikely   chip wave reg   AD DS WSMC WAEN   
+		return 0 
+
+	ptr = ad1889 readl chip  AD DMA WAVCA  
+	ptr  = chip wave addr 
+	
+	if  snd BUG ON ptr  = chip wave size  
+		return 0 
+	
+	return bytes to frames ss runtime  ptr  
+}
+

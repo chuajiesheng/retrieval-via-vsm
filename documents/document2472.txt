@@ -1,0 +1,8 @@
+   Determine if `new loss' does begin a new loss interval  RFC 4342  10 2    
+static inline u8 tfrc lh is new loss struct tfrc loss interval  cur 
+				     struct tfrc rx hist entry  new loss 
+{
+	return	dccp delta seqno cur li seqno  new loss tfrchrx seqno    0   
+		 cur li is closed || SUB16 new loss tfrchrx ccval  cur li ccval    4  
+}
+

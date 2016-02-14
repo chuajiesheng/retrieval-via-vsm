@@ -1,0 +1,5 @@
+static const char  snd pcm subformat name snd pcm subformat t subformat 
+{
+	return snd pcm subformat names subformat  
+}
+

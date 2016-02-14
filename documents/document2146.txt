@@ -1,0 +1,42 @@
+  
+   prepare callback for DSX playback on via823x
+   
+static int snd via8233 playback prepare struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	struct snd pcm runtime  runtime = substream runtime 
+	int ac97 rate = chip dxs src ? 48000   runtime rate 
+	int rate changed 
+	u32 rbits 
+
+	if   rate changed = via lock rate  chip rates 0   ac97 rate     0 
+		return rate changed 
+	if  rate changed 
+		snd ac97 set rate chip ac97  AC97 PCM FRONT DAC RATE 
+				  chip no vra ? 48000   runtime rate  
+	if  chip spdif on    viadev reg offset == 0x30 
+		snd ac97 set rate chip ac97  AC97 SPDIF  runtime rate  
+
+	if  runtime rate == 48000 
+		rbits = 0xfffff 
+	else
+		rbits =  0x100000   48000    runtime rate +
+			  0x100000   48000    runtime rate    48000 
+	snd BUG ON rbits   ~0xfffff  
+	snd via82xx channel reset chip  viadev  
+	snd via82xx set table ptr chip  viadev  
+	outb chip playback volume viadev reg offset   0x10  0  
+	     VIADEV REG viadev  OFS PLAYBACK VOLUME L   
+	outb chip playback volume viadev reg offset   0x10  1  
+	     VIADEV REG viadev  OFS PLAYBACK VOLUME R   
+	outl  runtime format == SNDRV PCM FORMAT S16 LE ? VIA8233 REG TYPE 16BIT   0  |    format   
+	      runtime channels   1 ? VIA8233 REG TYPE STEREO   0  |    stereo   
+	     rbits |    rate   
+	     0xff000000        STOP index is never reached   
+	     VIADEV REG viadev  OFFSET STOP IDX   
+	udelay 20  
+	snd via82xx codec ready chip  0  
+	return 0 
+}
+

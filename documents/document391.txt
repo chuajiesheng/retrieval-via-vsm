@@ -1,0 +1,17 @@
+                                                                      
+   module init stuff
+                                                                       
+static void snd portman unregister all void 
+{
+	int i 
+
+	for  i = 0  i   SNDRV CARDS  ++i  {
+		if  platform devices i   {
+			platform device unregister platform devices i   
+			platform devices i  = NULL 
+		}
+	}		
+	platform driver unregister  snd portman driver  
+	parport unregister driver  portman parport driver  
+}
+

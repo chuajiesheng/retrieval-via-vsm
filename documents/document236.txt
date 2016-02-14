@@ -1,0 +1,5 @@
+static const char  snd pcm access name snd pcm access t access 
+{
+	return snd pcm access names access  
+}
+

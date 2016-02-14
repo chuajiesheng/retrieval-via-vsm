@@ -1,0 +1,2 @@
+static void mts64 disable readout struct parport  p  
+

@@ -1,0 +1,2 @@
+const struct wl12xx platform data  wl12xx get platform data void  
+

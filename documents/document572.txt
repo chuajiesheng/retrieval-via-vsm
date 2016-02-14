@@ -1,0 +1,18 @@
+   
+   ib modify qp is ok   Check that the supplied attribute mask
+   contains all required attributes and no attributes not allowed for
+   the given QP state transition 
+   @cur state  Current QP state
+   @next state  Next QP state
+   @type  QP type
+   @mask  Mask of supplied QP attributes
+  
+   This function is a helper function that a low level driver's
+   modify qp method can use to validate the consumer's input   It
+   checks that cur state and next state are valid QP states  that a
+   transition from cur state to next state is allowed by the IB spec 
+   and that the attribute mask supplied is allowed for the transition 
+   
+int ib modify qp is ok enum ib qp state cur state  enum ib qp state next state 
+		       enum ib qp type type  enum ib qp attr mask mask  
+

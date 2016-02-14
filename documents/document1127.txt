@@ -1,0 +1,5 @@
+snd azf3328 pcm playback open struct snd pcm substream  substream 
+{
+	return snd azf3328 pcm open substream  AZF CODEC PLAYBACK  
+}
+

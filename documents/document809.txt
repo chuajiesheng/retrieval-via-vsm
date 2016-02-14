@@ -1,0 +1,13 @@
+static void   gcm hash len done struct aead request  req  int err 
+{
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+
+	if   err  {
+		err = gcm hash final req  pctx  
+		if  err ==  EINPROGRESS || err ==  EBUSY 
+			return 
+	}
+
+	  gcm hash final done req  err  
+}
+

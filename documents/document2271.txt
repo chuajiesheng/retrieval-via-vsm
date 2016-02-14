@@ -1,0 +1,54 @@
+snd rme32 playback hw params struct snd pcm substream  substream 
+			     struct snd pcm hw params  params 
+{
+	int err  rate  dummy 
+	struct rme32  rme32 = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	if  rme32 fullduplex mode  {
+		err = snd pcm lib malloc pages substream  params buffer bytes params   
+		if  err   0 
+			return err 
+	} else {
+		runtime dma area =  void   force    rme32 iobase +
+						     RME32 IO DATA BUFFER  
+		runtime dma addr = rme32 port + RME32 IO DATA BUFFER 
+		runtime dma bytes = RME32 BUFFER SIZE 
+	}
+
+	spin lock irq  rme32 lock  
+	if   rme32 rcreg   RME32 RCR KMODE    
+	     rate = snd rme32 capture getrate rme32   dummy     0  {
+		   AutoSync   
+		if   int params rate params   = rate  {
+			spin unlock irq  rme32 lock  
+			return  EIO 
+		}
+	} else if   err = snd rme32 playback setrate rme32  params rate params      0  {
+		spin unlock irq  rme32 lock  
+		return err 
+	}
+	if   err = snd rme32 setformat rme32  params format params      0  {
+		spin unlock irq  rme32 lock  
+		return err 
+	}
+
+	snd rme32 setframelog rme32  params channels params   1  
+	if  rme32 capture periodsize  = 0  {
+		if  params period size params     rme32 playback frlog  = rme32 capture periodsize  {
+			spin unlock irq  rme32 lock  
+			return  EBUSY 
+		}
+	}
+	rme32 playback periodsize = params period size params     rme32 playback frlog 
+	   S PDIF setup   
+	if   rme32 wcreg   RME32 WCR ADAT  == 0  {
+		rme32 wcreg  = ~ RME32 WCR PRO | RME32 WCR EMP  
+		rme32 wcreg |= rme32 wcreg spdif stream 
+		writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	}
+	spin unlock irq  rme32 lock  
+
+	return 0 
+}
+

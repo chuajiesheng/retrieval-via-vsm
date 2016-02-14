@@ -1,0 +1,10 @@
+   
+   ttm bo unreserve locked
+  
+   @bo  A pointer to a struct ttm buffer object 
+  
+   Unreserve a previous reservation of @bo 
+   Needs to be called with struct ttm bo global  lru lock held 
+   
+extern void ttm bo unreserve locked struct ttm buffer object  bo  
+

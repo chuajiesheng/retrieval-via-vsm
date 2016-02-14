@@ -1,0 +1,9 @@
+static int snd pcm timer stop struct snd timer   timer 
+{
+	struct snd pcm substream  substream 
+	
+	substream = snd timer chip timer  
+	substream timer running = 0 
+	return 0 
+}
+

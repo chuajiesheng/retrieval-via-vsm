@@ -1,0 +1,5 @@
+static int snd disconnect mmap struct file  file  struct vm area struct  vma 
+{
+	return  ENODEV 
+}
+

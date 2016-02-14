@@ -1,0 +1,6 @@
+ad1889 load wave buffer address struct snd ad1889  chip  u32 address 
+{
+	ad1889 writel chip  AD DMA WAVBA  address  
+	ad1889 writel chip  AD DMA WAVCA  address  
+}
+

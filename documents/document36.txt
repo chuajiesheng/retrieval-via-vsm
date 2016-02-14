@@ -1,0 +1,41 @@
+int   init snd info init void 
+{
+	struct proc dir entry  p 
+
+	p = create proc entry  asound   S IFDIR | S IRUGO | S IXUGO  NULL  
+	if  p == NULL 
+		return  ENOMEM 
+	snd proc root = p 
+#ifdef CONFIG SND OSSEMUL
+	{
+		struct snd info entry  entry 
+		if   entry = snd info create module entry THIS MODULE   oss   NULL   == NULL 
+			return  ENOMEM 
+		entry mode = S IFDIR | S IRUGO | S IXUGO 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			return  ENOMEM 
+		}
+		snd oss root = entry 
+	}
+#endif
+#if defined CONFIG SND SEQUENCER  || defined CONFIG SND SEQUENCER MODULE 
+	{
+		struct snd info entry  entry 
+		if   entry = snd info create module entry THIS MODULE   seq   NULL   == NULL 
+			return  ENOMEM 
+		entry mode = S IFDIR | S IRUGO | S IXUGO 
+		if  snd info register entry    0  {
+			snd info free entry entry  
+			return  ENOMEM 
+		}
+		snd seq root = entry 
+	}
+#endif
+	snd info version init   
+	snd minor info init   
+	snd minor info oss init   
+	snd card info init   
+	return 0 
+}
+

@@ -1,0 +1,80 @@
+static int   devinit snd dummy probe struct platform device  devptr 
+{
+	struct snd card  card 
+	struct snd dummy  dummy 
+	struct dummy model  m = NULL    mdl 
+	int idx  err 
+	int dev = devptr id 
+
+	err = snd card create index dev   id dev   THIS MODULE 
+			      sizeof struct snd dummy    card  
+	if  err   0 
+		return err 
+	dummy = card private data 
+	dummy card = card 
+	for  mdl = dummy models   mdl    model dev   mdl++  {
+		if  strcmp model dev     mdl  name  == 0  {
+			printk KERN INFO
+				 snd dummy  Using model ' s' for card  i\n  
+				  mdl  name  card number  
+			m = dummy model =  mdl 
+			break 
+		}
+	}
+	for  idx = 0  idx   MAX PCM DEVICES    idx   pcm devs dev   idx++  {
+		if  pcm substreams dev    1 
+			pcm substreams dev  = 1 
+		if  pcm substreams dev    MAX PCM SUBSTREAMS 
+			pcm substreams dev  = MAX PCM SUBSTREAMS 
+		err = snd card dummy pcm dummy  idx  pcm substreams dev   
+		if  err   0 
+			goto   nodev 
+	}
+
+	dummy pcm hw = dummy pcm hardware 
+	if  m  {
+		if  m formats 
+			dummy pcm hw formats = m formats 
+		if  m buffer bytes max 
+			dummy pcm hw buffer bytes max = m buffer bytes max 
+		if  m period bytes min 
+			dummy pcm hw period bytes min = m period bytes min 
+		if  m period bytes max 
+			dummy pcm hw period bytes max = m period bytes max 
+		if  m periods min 
+			dummy pcm hw periods min = m periods min 
+		if  m periods max 
+			dummy pcm hw periods max = m periods max 
+		if  m rates 
+			dummy pcm hw rates = m rates 
+		if  m rate min 
+			dummy pcm hw rate min = m rate min 
+		if  m rate max 
+			dummy pcm hw rate max = m rate max 
+		if  m channels min 
+			dummy pcm hw channels min = m channels min 
+		if  m channels max 
+			dummy pcm hw channels max = m channels max 
+	}
+
+	err = snd card dummy new mixer dummy  
+	if  err   0 
+		goto   nodev 
+	strcpy card driver   Dummy   
+	strcpy card shortname   Dummy   
+	sprintf card longname   Dummy  i   dev + 1  
+
+	dummy proc init dummy  
+
+	snd card set dev card   devptr dev  
+
+	err = snd card register card  
+	if  err == 0  {
+		platform set drvdata devptr  card  
+		return 0 
+	}
+        nodev 
+	snd card free card  
+	return err 
+}
+

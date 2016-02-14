@@ -1,0 +1,11 @@
+snd ad1889 capture open struct snd pcm substream  ss 
+{
+	struct snd ad1889  chip = snd pcm substream chip ss  
+	struct snd pcm runtime  rt = ss runtime 
+
+	chip csubs = ss 
+	rt hw = snd ad1889 capture hw 
+
+	return 0 
+}
+

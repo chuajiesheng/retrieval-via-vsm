@@ -1,0 +1,2 @@
+extern int	bchannel senddata struct bchannel    struct sk buff    
+

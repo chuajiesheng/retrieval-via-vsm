@@ -1,0 +1,5 @@
+static inline void snd sb ack 16bit struct snd sb  chip 
+{
+	inb SBP chip  DATA AVAIL 16   
+}
+

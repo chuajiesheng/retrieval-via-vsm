@@ -1,0 +1,21 @@
+static void snd mtpav send byte struct mtpav  chip  u8 byte 
+{
+	u8 tcbyt 
+	u8 clrwrite 
+	u8 setwrite 
+
+	snd mtpav wait rfdhi chip  
+
+	                 
+
+	tcbyt = snd mtpav getreg chip  CREG  
+	clrwrite = tcbyt    SIGC WRITE ^ 0xff  
+	setwrite = tcbyt | SIGC WRITE 
+
+	snd mtpav mputreg chip  DREG  byte  
+	snd mtpav mputreg chip  CREG  clrwrite  	   clear write bit
+
+	snd mtpav mputreg chip  CREG  setwrite  	   set write bit
+
+}
+

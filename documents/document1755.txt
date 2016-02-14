@@ -1,0 +1,15 @@
+   
+   ieee80211 generic frame duration   Calculate the duration field for a frame
+   @hw  pointer obtained from ieee80211 alloc hw   
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+   @frame len  the length of the frame 
+   @rate  the rate at which the frame is going to be transmitted 
+  
+   Calculate the duration field of some generic frame  given its
+   length and transmission rate  in 100kbps  
+   
+  le16 ieee80211 generic frame duration struct ieee80211 hw  hw 
+					struct ieee80211 vif  vif 
+					size t frame len 
+					struct ieee80211 rate  rate  
+

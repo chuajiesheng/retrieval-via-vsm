@@ -1,0 +1,17 @@
+static snd pcm uframes t snd fm801 capture pointer struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+	size t ptr 
+
+	if    chip cap ctrl   FM801 START  
+		return 0 
+	spin lock  chip reg lock  
+	ptr = chip cap pos +  chip cap count   1    inw FM801 REG chip  CAP COUNT   
+	if  inw FM801 REG chip  IRQ STATUS     FM801 IRQ CAPTURE  {
+		ptr += chip cap count 
+		ptr  = chip cap size 
+	}
+	spin unlock  chip reg lock  
+	return bytes to frames substream runtime  ptr  
+}
+

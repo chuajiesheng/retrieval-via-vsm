@@ -1,0 +1,7 @@
+static int snd intel8x0m playback open struct snd pcm substream  substream 
+{
+	struct intel8x0m  chip = snd pcm substream chip substream  
+
+	return snd intel8x0m pcm open substream   chip ichd ICHD MDMOUT   
+}
+

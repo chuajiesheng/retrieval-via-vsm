@@ -1,0 +1,26 @@
+   
+   snd pcm lib preallocate pages   pre allocation for the given DMA type
+   @substream  the pcm substream instance
+   @type  DMA type  SNDRV DMA TYPE   
+   @data  DMA type dependant data
+   @size  the requested pre allocation size in bytes
+   @max  the max  allowed pre allocation size
+  
+   Do pre allocation for the given DMA buffer type 
+  
+   When substream dma buf id is set  the function tries to look for
+   the reserved buffer  and the buffer is not freed but reserved at
+   destruction time   The dma buf id must be unique for all systems
+    in the same DMA buffer type  e g  using snd dma pci buf id   
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm lib preallocate pages struct snd pcm substream  substream 
+				  int type  struct device  data 
+				  size t size  size t max 
+{
+	substream dma buffer dev type = type 
+	substream dma buffer dev dev = data 
+	return snd pcm lib preallocate pages1 substream  size  max  
+}
+

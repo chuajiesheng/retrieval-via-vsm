@@ -1,0 +1,20 @@
+  
+   Private helper functions for loss detection 
+  
+   In the descriptions  `Si' refers to the sequence number of entry number i 
+   whose NDP count is `Ni'  lower case is used for variables  
+   Note  All   xxx loss functions expect that a test against duplicates has been
+         performed already  the seqno of the skb must not be less than the seqno
+         of loss prev  and it must not equal that of any valid history entry 
+   
+static void   do track loss struct tfrc rx hist  h  struct sk buff  skb  u64 n1 
+{
+	u64 s0 = tfrc rx hist loss prev h  tfrchrx seqno 
+	    s1 = DCCP SKB CB skb  dccpd seq 
+
+	if   dccp loss free s0  s1  n1   {	   gap between S0 and S1   
+		h loss count = 1 
+		tfrc rx hist entry from skb tfrc rx hist entry h  1   skb  n1  
+	}
+}
+

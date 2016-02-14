@@ -1,0 +1,36 @@
+static int snd ak4531 put double struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct snd ak4531  ak4531 = snd kcontrol chip kcontrol  
+	int left reg = kcontrol private value   0xff 
+	int right reg =  kcontrol private value    8    0xff 
+	int left shift =  kcontrol private value    16    0x07 
+	int right shift =  kcontrol private value    19    0x07 
+	int mask =  kcontrol private value    24    0xff 
+	int invert =  kcontrol private value    22    1 
+	int change 
+	int left  right 
+
+	left = ucontrol value integer value 0    mask 
+	right = ucontrol value integer value 1    mask 
+	if  invert  {
+		left = mask   left 
+		right = mask   right 
+	}
+	left   = left shift 
+	right   = right shift 
+	mutex lock  ak4531 reg mutex  
+	if  left reg == right reg  {
+		left =  ak4531 regs left reg    ~  mask    left shift  |  mask    right shift    | left | right 
+		change = left  = ak4531 regs left reg  
+		ak4531 write ak4531  left reg  ak4531 regs left reg  = left  
+	} else {
+		left =  ak4531 regs left reg    ~ mask    left shift   | left 
+		right =  ak4531 regs right reg    ~ mask    right shift   | right 
+		change = left  = ak4531 regs left reg  || right  = ak4531 regs right reg  
+		ak4531 write ak4531  left reg  ak4531 regs left reg  = left  
+		ak4531 write ak4531  right reg  ak4531 regs right reg  = right  
+	}
+	mutex unlock  ak4531 reg mutex  
+	return change 
+}
+

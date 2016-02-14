@@ -1,0 +1,50 @@
+static int loopback check format struct loopback cable  cable  int stream 
+{
+	struct snd pcm runtime  runtime   cruntime 
+	struct loopback setup  setup 
+	struct snd card  card 
+	int check 
+
+	if  cable valid  = CABLE VALID BOTH  {
+		if  stream == SNDRV PCM STREAM PLAYBACK 
+			goto   notify 
+		return 0 
+	}
+	runtime = cable streams SNDRV PCM STREAM PLAYBACK  
+							substream runtime 
+	cruntime = cable streams SNDRV PCM STREAM CAPTURE  
+							substream runtime 
+	check = runtime format  = cruntime format ||
+		runtime rate  = cruntime rate ||
+		runtime channels  = cruntime channels 
+	if   check 
+		return 0 
+	if  stream == SNDRV PCM STREAM CAPTURE  {
+		return  EIO 
+	} else {
+		snd pcm stop cable streams SNDRV PCM STREAM CAPTURE  
+					substream  SNDRV PCM STATE DRAINING  
+	        notify 
+		runtime = cable streams SNDRV PCM STREAM PLAYBACK  
+							substream runtime 
+		setup = get setup cable streams SNDRV PCM STREAM PLAYBACK   
+		card = cable streams SNDRV PCM STREAM PLAYBACK  loopback card 
+		if  setup format  = runtime format  {
+			snd ctl notify card  SNDRV CTL EVENT MASK VALUE 
+							 setup format id  
+			setup format = runtime format 
+		}
+		if  setup rate  = runtime rate  {
+			snd ctl notify card  SNDRV CTL EVENT MASK VALUE 
+							 setup rate id  
+			setup rate = runtime rate 
+		}
+		if  setup channels  = runtime channels  {
+			snd ctl notify card  SNDRV CTL EVENT MASK VALUE 
+							 setup channels id  
+			setup channels = runtime channels 
+		}
+	}
+	return 0 
+}
+

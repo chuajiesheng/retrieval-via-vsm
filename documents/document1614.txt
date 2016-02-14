@@ -1,0 +1,2 @@
+extern void wimax report rfkill sw struct wimax dev    enum wimax rf state  
+

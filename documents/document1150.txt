@@ -1,0 +1,7 @@
+alsa card azf3328 exit void 
+{
+	snd azf3328 dbgcallenter   
+	pci unregister driver  driver  
+	snd azf3328 dbgcallleave   
+}
+

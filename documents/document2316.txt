@@ -1,0 +1,55 @@
+snd rme32 probe struct pci dev  pci  const struct pci device id  pci id 
+{
+	static int dev 
+	struct rme32  rme32 
+	struct snd card  card 
+	int err 
+
+	if  dev  = SNDRV CARDS  {
+		return  ENODEV 
+	}
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE 
+			      sizeof struct rme32    card  
+	if  err   0 
+		return err 
+	card private free = snd rme32 card free 
+	rme32 =  struct rme32    card private data 
+	rme32 card = card 
+	rme32 pci = pci 
+	snd card set dev card   pci dev  
+        if  fullduplex dev  
+		rme32 fullduplex mode = 1 
+	if   err = snd rme32 create rme32     0  {
+		snd card free card  
+		return err 
+	}
+
+	strcpy card driver   Digi32   
+	switch  rme32 pci device  {
+	case PCI DEVICE ID RME DIGI32 
+		strcpy card shortname   RME Digi32   
+		break 
+	case PCI DEVICE ID RME DIGI32 8 
+		strcpy card shortname   RME Digi32 8   
+		break 
+	case PCI DEVICE ID RME DIGI32 PRO 
+		strcpy card shortname   RME Digi32 PRO   
+		break 
+	}
+	sprintf card longname    s  Rev   d  at 0x lx  irq  d  
+		card shortname  rme32 rev  rme32 port  rme32 irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

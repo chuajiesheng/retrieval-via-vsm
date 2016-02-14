@@ -1,0 +1,10 @@
+static int snd als4000 capture open struct snd pcm substream  substream 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+
+	chip capture substream = substream 
+	runtime hw = snd als4000 capture 
+	return 0 
+}
+

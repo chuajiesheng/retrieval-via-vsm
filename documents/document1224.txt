@@ -1,0 +1,9 @@
+static int snd als4000 capture close struct snd pcm substream  substream 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+
+	chip capture substream = NULL 
+	snd pcm lib free pages substream  
+	return 0 
+}
+

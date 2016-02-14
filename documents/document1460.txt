@@ -1,0 +1,10 @@
+   
+   ttm base object unref
+  
+   @p base  Pointer to a pointer referncing a struct ttm base object 
+  
+   Decrements the base object refcount and clears the pointer pointed to by
+   p base 
+   
+extern void ttm base object unref struct ttm base object   p base  
+

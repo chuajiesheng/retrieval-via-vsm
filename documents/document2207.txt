@@ -1,0 +1,6 @@
+snd ad1889 ac97 write struct snd ac97  ac97  unsigned short reg  unsigned short val 
+{
+	struct snd ad1889  chip = ac97 private data 
+	ad1889 writew chip  AD AC97 BASE + reg  val  
+}
+

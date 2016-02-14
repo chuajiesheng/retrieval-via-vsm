@@ -1,0 +1,15 @@
+static int snd bt87x hw params struct snd pcm substream  substream 
+			       struct snd pcm hw params  hw params 
+{
+	struct snd bt87x  chip = snd pcm substream chip substream  
+	int err 
+
+	err = snd pcm lib malloc pages substream 
+				       params buffer bytes hw params   
+	if  err   0 
+		return err 
+	return snd bt87x create risc chip  substream 
+				     params periods hw params  
+				     params period bytes hw params   
+}
+

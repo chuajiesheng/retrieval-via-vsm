@@ -1,0 +1,5 @@
+static unsigned int snd disconnect poll struct file   file  poll table   wait 
+{
+	return POLLERR | POLLNVAL 
+}
+

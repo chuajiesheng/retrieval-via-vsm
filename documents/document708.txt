@@ -1,0 +1,3 @@
+static int hwports = MTPAV MAX PORTS 	   use hardware ports 1 8   
+module param index  int  0444  
+

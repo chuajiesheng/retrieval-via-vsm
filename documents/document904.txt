@@ -1,0 +1,25 @@
+static int snd sonicvibes hw constraint dac rate struct snd pcm hw params  params 
+						 struct snd pcm hw rule  rule 
+{
+	unsigned int rate  div  r  m  n 
+
+	if  hw param interval params  SNDRV PCM HW PARAM RATE  min == 
+	    hw param interval params  SNDRV PCM HW PARAM RATE  max  {
+		rate = hw param interval params  SNDRV PCM HW PARAM RATE  min 
+		div = 48000   rate 
+		if  div   8 
+			div = 8 
+		if   48000   div  == rate  {
+			params rate num = rate 
+			params rate den = 1 
+		} else {
+			snd sonicvibes pll rate   r   m   n  
+			snd BUG ON SV REFFREQUENCY   16  
+			snd BUG ON SV ADCMULT   512  
+			params rate num =  SV REFFREQUENCY 16     n+2    r 
+			params rate den =  SV ADCMULT 512     m+2  
+		}
+	}
+	return 0 
+}
+

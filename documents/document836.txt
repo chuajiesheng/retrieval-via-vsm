@@ -1,0 +1,19 @@
+   start stop analog IN DMA   
+static void atiixp in enable transfer struct atiixp  chip  int on 
+{
+	if  on  {
+		unsigned int data = atiixp read chip  CMD  
+		if     data   ATI REG CMD RECEIVE EN   {
+			data |= ATI REG CMD RECEIVE EN 
+#if 0    FIXME  this causes the endless loop   
+			   wait until slot 3 4 are finished   
+			while   atiixp read chip  COUNTER   
+				ATI REG COUNTER SLOT   = 5 
+				 
+#endif
+			atiixp write chip  CMD  data  
+		}
+	} else
+		atiixp update chip  CMD  ATI REG CMD RECEIVE EN  0  
+}
+

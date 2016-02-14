@@ -1,0 +1,38 @@
+  
+    PCM part
+   
+static int snd fm801 playback trigger struct snd pcm substream  substream 
+				      int cmd 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+
+	spin lock  chip reg lock  
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		chip ply ctrl  = ~ FM801 BUF1 LAST |
+				     FM801 BUF2 LAST |
+				     FM801 PAUSE  
+		chip ply ctrl |= FM801 START |
+				   FM801 IMMED STOP 
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		chip ply ctrl  = ~ FM801 START | FM801 PAUSE  
+		break 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+	case SNDRV PCM TRIGGER SUSPEND 
+		chip ply ctrl |= FM801 PAUSE 
+		break 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+	case SNDRV PCM TRIGGER RESUME 
+		chip ply ctrl  = ~FM801 PAUSE 
+		break 
+	default 
+		spin unlock  chip reg lock  
+		snd BUG   
+		return  EINVAL 
+	}
+	outw chip ply ctrl  FM801 REG chip  PLY CTRL   
+	spin unlock  chip reg lock  
+	return 0 
+}
+

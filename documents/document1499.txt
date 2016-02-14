@@ -1,0 +1,12 @@
+   
+   ttm mem reg is pci
+  
+   @bdev  Pointer to a struct ttm bo device 
+   @mem  A valid struct ttm mem reg 
+  
+   Returns true if the memory described by @mem is PCI memory 
+   false otherwise 
+   
+extern bool ttm mem reg is pci struct ttm bo device  bdev 
+				   struct ttm mem reg  mem  
+

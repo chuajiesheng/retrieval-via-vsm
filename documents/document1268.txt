@@ -1,0 +1,3 @@
+   sb common c   
+int snd sbdsp command struct snd sb  chip  unsigned char val  
+

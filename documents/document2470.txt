@@ -1,0 +1,6 @@
+   the `counter' index always points at the next entry to be populated   
+static inline struct tfrc loss interval  tfrc lh peek struct tfrc loss hist  lh 
+{
+	return lh counter ? lh ring LIH INDEX lh counter   1     NULL 
+}
+

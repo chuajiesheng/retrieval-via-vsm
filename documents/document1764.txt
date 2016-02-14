@@ -1,0 +1,4 @@
+extern void print hex dump const char  level  const char  prefix str 
+			   int prefix type  int rowsize  int groupsize 
+			   const void  buf  size t len  bool ascii  
+

@@ -1,0 +1,22 @@
+snd azf3328 pcm pointer struct snd pcm substream  substream
+ 
+{
+	const struct snd azf3328 codec data  codec =
+		substream runtime private data 
+	unsigned long result 
+	snd pcm uframes t frmres 
+
+	result = snd azf3328 codec inl codec  IDX IO CODEC DMA CURRPOS  
+
+	   calculate offset   
+#ifdef QUERY HARDWARE
+	result  = snd azf3328 codec inl codec  IDX IO CODEC DMA START 1  
+#else
+	result  = codec dma base 
+#endif
+	frmres = bytes to frames  substream runtime  result  
+	snd azf3328 dbgcodec   08li  s @ 0x 8lx  frames  8ld\n  
+				jiffies  codec name  result  frmres  
+	return frmres 
+}
+

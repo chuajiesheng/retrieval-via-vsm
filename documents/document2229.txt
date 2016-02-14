@@ -1,0 +1,6 @@
+snd ad1889 ac97 free struct snd ac97  ac97 
+{
+	struct snd ad1889  chip = ac97 private data 
+	chip ac97 = NULL 
+}
+

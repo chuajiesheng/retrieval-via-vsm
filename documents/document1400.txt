@@ -1,0 +1,111 @@
+  
+   
+static int   devinit snd es1968 probe struct pci dev  pci 
+				      const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct es1968  chip 
+	unsigned int i 
+	int err 
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		dev++ 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+                
+	if  total bufsize dev    128 
+		total bufsize dev  = 128 
+	if  total bufsize dev    4096 
+		total bufsize dev  = 4096 
+	if   err = snd es1968 create card  pci 
+				     total bufsize dev    1024     in bytes   
+				     pcm substreams p dev   
+				     pcm substreams c dev  
+				     pci id driver data 
+				     use pm dev  
+				      chip     0  {
+		snd card free card  
+		return err 
+	}
+	card private data = chip 
+
+	switch  chip type  {
+	case TYPE MAESTRO2E 
+		strcpy card driver   ES1978   
+		strcpy card shortname   ESS ES1978  Maestro 2E    
+		break 
+	case TYPE MAESTRO2 
+		strcpy card driver   ES1968   
+		strcpy card shortname   ESS ES1968  Maestro 2    
+		break 
+	case TYPE MAESTRO 
+		strcpy card driver   ESM1   
+		strcpy card shortname   ESS Maestro 1   
+		break 
+	}
+
+	if   err = snd es1968 pcm chip  0     0  {
+		snd card free card  
+		return err 
+	}
+
+	if   err = snd es1968 mixer chip     0  {
+		snd card free card  
+		return err 
+	}
+
+	if  enable mpu dev  == 2  {
+		   check the black list   
+		unsigned short vend 
+		pci read config word chip pci  PCI SUBSYSTEM VENDOR ID   vend  
+		for  i = 0  i   ARRAY SIZE mpu blacklist   i++  {
+			if  chip type == mpu blacklist i  type   
+			    vend == mpu blacklist i  vendor  {
+				enable mpu dev  = 0 
+				break 
+			}
+		}
+	}
+	if  enable mpu dev   {
+		if   err = snd mpu401 uart new card  0  MPU401 HW MPU401 
+					       chip io port + ESM MPU401 PORT 
+					       MPU401 INFO INTEGRATED 
+					       chip irq  0   chip rmidi     0  {
+			printk KERN WARNING  es1968  skipping MPU 401 MIDI support  \n   
+		}
+	}
+
+	snd es1968 create gameport chip  dev  
+
+#ifdef CONFIG SND ES1968 INPUT
+	err = snd es1968 input register chip  
+	if  err 
+		snd printk KERN WARNING  Input device registration  
+			 failed with error  i   err  
+#endif
+
+	snd es1968 start irq chip  
+
+	chip clock = clock dev  
+	if    chip clock 
+		es1968 measure clock chip  
+
+	sprintf card longname    s at 0x lx  irq  i  
+		card shortname  chip io port  chip irq  
+
+	if   err = snd card register card     0  {
+		snd card free card  
+		return err 
+	}
+	pci set drvdata pci  card  
+	dev++ 
+	return 0 
+}
+

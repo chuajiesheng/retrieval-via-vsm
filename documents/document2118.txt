@@ -1,0 +1,4 @@
+extern int ssb bus pcmciabus register struct ssb bus  bus 
+				      struct pcmcia device  pcmcia dev 
+				      unsigned long baseaddr  
+

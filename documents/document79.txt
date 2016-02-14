@@ -1,0 +1,2 @@
+int snd timer global new char  id  int device  struct snd timer   rtimer  
+

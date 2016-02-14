@@ -1,0 +1,6 @@
+static int snd fm801 dev free struct snd device  device 
+{
+	struct fm801  chip = device device data 
+	return snd fm801 free chip  
+}
+

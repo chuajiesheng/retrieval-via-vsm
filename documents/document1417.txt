@@ -1,0 +1,19 @@
+static int snd ak4531 get single struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	struct snd ak4531  ak4531 = snd kcontrol chip kcontrol  
+	int reg = kcontrol private value   0xff 
+	int shift =  kcontrol private value    16    0x07 
+	int mask =  kcontrol private value    24    0xff 
+	int invert =  kcontrol private value    22    1 
+	int val 
+
+	mutex lock  ak4531 reg mutex  
+	val =  ak4531 regs reg     shift    mask 
+	mutex unlock  ak4531 reg mutex  
+	if  invert  {
+		val = mask   val 
+	}
+	ucontrol value integer value 0  = val 
+	return 0 
+}
+

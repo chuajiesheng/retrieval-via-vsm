@@ -1,0 +1,26 @@
+  
+   Free form messaging to from user space
+  
+   Sending a message 
+  
+     wimax msg wimax dev  pipe name  buf  buf size  GFP KERNEL  
+  
+   Broken up 
+  
+     skb = wimax msg alloc wimax dev  pipe name  buf size  GFP KERNEL  
+        fill up skb   
+     wimax msg send wimax dev  pipe name  skb  
+  
+   Be sure not to modify skb data in the middle  ie  don't use
+   skb push   skb pull   skb reserve   on the skb  
+  
+    pipe name  is any string  than can be interpreted as the name of
+   the pipe or destinatary  the interpretation of it is driver
+   specific  so the recipient can multiplex it as wished  It can be
+   NULL  it won't be used   an example is using a  diagnostics  tag to
+   send diagnostics information that a device specific diagnostics
+   tool would be interested in 
+   
+extern struct sk buff  wimax msg alloc struct wimax dev    const char   
+				       const void    size t  gfp t  
+

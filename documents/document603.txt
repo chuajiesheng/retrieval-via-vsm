@@ -1,0 +1,9 @@
+static int dummy systimer stop struct snd pcm substream  substream 
+{
+	struct dummy systimer pcm  dpcm = substream runtime private data 
+	spin lock  dpcm lock  
+	del timer  dpcm timer  
+	spin unlock  dpcm lock  
+	return 0 
+}
+

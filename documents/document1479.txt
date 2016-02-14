@@ -1,0 +1,12 @@
+static   inline   void  drm calloc large size t nmemb  size t size 
+{
+	if  size  = 0    nmemb   ULONG MAX   size 
+		return NULL 
+
+	if  size   nmemb  = PAGE SIZE 
+	    return kcalloc nmemb  size  GFP KERNEL  
+
+	return   vmalloc size   nmemb 
+			 GFP KERNEL |   GFP HIGHMEM |   GFP ZERO  PAGE KERNEL  
+}
+

@@ -1,0 +1,118 @@
+static void   devinit intel8x0 measure ac97 clock struct intel8x0  chip 
+{
+	struct snd pcm substream  subs 
+	struct ichdev  ichdev 
+	unsigned long port 
+	unsigned long pos  pos1  t 
+	int civ  timeout = 1000  attempt = 1 
+	struct timespec start time  stop time 
+
+	if  chip ac97 bus clock  = 48000 
+		return     specified in module option   
+
+        again 
+	subs = chip pcm 0  streams 0  substream 
+	if    subs || subs dma buffer bytes   INTEL8X0 TESTBUF SIZE  {
+		snd printk KERN WARNING  no playback buffer allocated   aborting measure ac97 clock\n   
+		return 
+	}
+	ichdev =  chip ichd ICHD PCMOUT  
+	ichdev physbuf = subs dma buffer addr 
+	ichdev size = ichdev fragsize = INTEL8X0 TESTBUF SIZE 
+	ichdev substream = NULL     don't process interrupts   
+
+	   set rate   
+	if  snd ac97 set rate chip ac97 0   AC97 PCM FRONT DAC RATE  48000    0  {
+		snd printk KERN ERR  cannot set ac97 rate  clock =  d\n   chip ac97 bus clock  
+		return 
+	}
+	snd intel8x0 setup periods chip  ichdev  
+	port = ichdev reg offset 
+	spin lock irq  chip reg lock  
+	chip in measurement = 1 
+	   trigger   
+	if  chip device type  = DEVICE ALI 
+		iputbyte chip  port + ICH REG OFF CR  ICH IOCE | ICH STARTBM  
+	else {
+		iputbyte chip  port + ICH REG OFF CR  ICH IOCE  
+		iputdword chip  ICHREG ALI DMACR   1    ichdev ali slot  
+	}
+	do posix clock monotonic gettime  start time  
+	spin unlock irq  chip reg lock  
+	msleep 50  
+	spin lock irq  chip reg lock  
+	   check the position   
+	do {
+		civ = igetbyte chip  ichdev reg offset + ICH REG OFF CIV  
+		pos1 = igetword chip  ichdev reg offset + ichdev roff picb  
+		if  pos1 == 0  {
+			udelay 10  
+			continue 
+		}
+		if  civ == igetbyte chip  ichdev reg offset + ICH REG OFF CIV    
+		    pos1 == igetword chip  ichdev reg offset + ichdev roff picb  
+			break 
+	} while  timeout    
+	if  pos1 == 0  {	   oops  this value is not reliable   
+		pos = 0 
+	} else {
+		pos = ichdev fragsize1 
+		pos  = pos1    ichdev pos shift 
+		pos += ichdev position 
+	}
+	chip in measurement = 0 
+	do posix clock monotonic gettime  stop time  
+	   stop   
+	if  chip device type == DEVICE ALI  {
+		iputdword chip  ICHREG ALI DMACR   1     ichdev ali slot + 16   
+		iputbyte chip  port + ICH REG OFF CR  0  
+		while  igetbyte chip  port + ICH REG OFF CR  
+			 
+	} else {
+		iputbyte chip  port + ICH REG OFF CR  0  
+		while    igetbyte chip  port + ichdev roff sr    ICH DCH  
+			 
+	}
+	iputbyte chip  port + ICH REG OFF CR  ICH RESETREGS  
+	spin unlock irq  chip reg lock  
+
+	if  pos == 0  {
+		snd printk KERN ERR  intel8x0  measure   unreliable DMA position  \n   
+	        retry 
+		if  attempt   3  {
+			msleep 300  
+			attempt++ 
+			goto   again 
+		}
+		goto   end 
+	}
+
+	pos  = 4 
+	t = stop time tv sec   start time tv sec 
+	t  = 1000000 
+	t +=  stop time tv nsec   start time tv nsec    1000 
+	printk KERN INFO   s  measured  lu usecs   lu samples \n     func    t  pos  
+	if  t == 0  {
+		snd printk KERN ERR  intel8x0  ?? calculation error  \n   
+		goto   retry 
+	}
+	pos  = 1000 
+	pos =  pos   t    1000 +   pos   t    1000    t 
+	if  pos   40000 || pos  = 60000  {
+		   abnormal value  hw problem?   
+		printk KERN INFO  intel8x0  measured clock  ld rejected\n   pos  
+		goto   retry 
+	} else if  pos   40500    pos   41500 
+		   first exception   41000Hz reference clock   
+		chip ac97 bus clock = 41000 
+	else if  pos   43600    pos   44600 
+		   second exception   44100HZ reference clock   
+		chip ac97 bus clock = 44100 
+	else if  pos   47500 || pos   48500 
+		   not 48000Hz  tuning the clock     
+		chip ac97 bus clock =  chip ac97 bus clock   48000    pos 
+        end 
+	printk KERN INFO  intel8x0  clocking to  d\n   chip ac97 bus clock  
+	snd ac97 update power chip ac97 0   AC97 PCM FRONT DAC RATE  0  
+}
+

@@ -1,0 +1,5 @@
+conf is ht40 struct ieee80211 conf  conf 
+{
+	return conf is ht40 minus conf  || conf is ht40 plus conf  
+}
+

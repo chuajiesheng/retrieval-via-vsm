@@ -1,0 +1,37 @@
+   call this with spin lock held   
+static void snd mtpav output port write struct mtpav  mtp card 
+					struct mtpav port  portp 
+					struct snd rawmidi substream  substream 
+{
+	u8 outbyte 
+
+	   Get the outbyte first  so we can emulate running status if
+	   necessary
+	if  snd rawmidi transmit substream   outbyte  1   = 1 
+		return 
+
+	   send port change command if necessary
+
+	if  portp hwport  = mtp card outmidihwport  {
+		mtp card outmidihwport = portp hwport 
+
+		snd mtpav send byte mtp card  0xf5  
+		snd mtpav send byte mtp card  portp hwport  
+		  
+		snd printk KERN DEBUG  new outport  0x x\n  
+			    unsigned int  portp hwport  
+		  
+		if    outbyte   0x80     portp running status 
+			snd mtpav send byte mtp card  portp running status  
+	}
+
+	   send data
+
+	do {
+		if  outbyte   0x80 
+			portp running status = outbyte 
+		
+		snd mtpav send byte mtp card  outbyte  
+	} while  snd rawmidi transmit substream   outbyte  1  == 1  
+}
+

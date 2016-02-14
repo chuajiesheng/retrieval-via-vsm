@@ -1,0 +1,9 @@
+static void snd es1371 codec wait struct snd ac97  ac97 
+{
+	msleep 750  
+	snd es1371 codec read ac97  AC97 RESET  
+	snd es1371 codec read ac97  AC97 VENDOR ID1  
+	snd es1371 codec read ac97  AC97 VENDOR ID2  
+	msleep 50  
+}
+

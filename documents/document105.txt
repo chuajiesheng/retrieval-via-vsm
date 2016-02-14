@@ -1,0 +1,17 @@
+   
+   snd pcm format little endian   Check the PCM format is little endian
+   @format  the format to check
+  
+   Returns 1 if the given PCM format is little endian  0 if
+   big endian  or a negative error code if endian not specified 
+   
+int snd pcm format little endian snd pcm format t format 
+{
+	int val 
+	if  format   0 || format   SNDRV PCM FORMAT LAST 
+		return  EINVAL 
+	if   val = pcm formats format  le    0 
+		return  EINVAL 
+	return val 
+}
+

@@ -1,0 +1,35 @@
+static int snd intel8x0 ali chip init struct intel8x0  chip  int probing 
+{
+	u32 reg 
+	int i = 0 
+
+	reg = igetdword chip  ICHREG ALI SCR   
+	if   reg   2  == 0 	   Cold required   
+		reg |= 2 
+	else
+		reg |= 1 	   Warm   
+	reg  = ~0x80000000 	   ACLink on   
+	iputdword chip  ICHREG ALI SCR   reg  
+
+	for  i = 0  i   HZ   2  i++  {
+		if     igetdword chip  ICHREG ALI INTERRUPTSR     ALI INT GPIO  
+			goto   ok 
+		schedule timeout uninterruptible 1  
+	}
+	snd printk KERN ERR  AC'97 reset failed \n   
+	if  probing 
+		return  EIO 
+
+   ok 
+	for  i = 0  i   HZ   2  i++  {
+		reg = igetdword chip  ICHREG ALI RTSR   
+		if  reg   0x80     primary codec   
+			break 
+		iputdword chip  ICHREG ALI RTSR   reg | 0x80  
+		schedule timeout uninterruptible 1  
+	}
+
+	do ali reset chip  
+	return 0 
+}
+

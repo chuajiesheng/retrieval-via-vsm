@@ -1,0 +1,90 @@
+static void snd m3 assp init struct snd m3  chip 
+{
+	unsigned int i 
+	const u16  data 
+
+	   zero kernel data   
+	for  i = 0  i    REV B DATA MEMORY UNIT LENGTH   NUM UNITS KERNEL DATA    2  i++ 
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA  
+				  KDATA BASE ADDR + i  0  
+
+	   zero mixer data?   
+	for  i = 0  i    REV B DATA MEMORY UNIT LENGTH   NUM UNITS KERNEL DATA    2  i++ 
+		snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+				  KDATA BASE ADDR2 + i  0  
+
+	   init dma pointer   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  KDATA CURRENT DMA 
+			  KDATA DMA XFER0  
+
+	   write kernel into code memory     
+	data =  const u16   chip assp kernel image data 
+	for  i = 0   i   2   chip assp kernel image size  i++  {
+		snd m3 assp write chip  MEMTYPE INTERNAL CODE  
+				  REV B CODE MEMORY BEGIN + i 
+				  le16 to cpu data i    
+	}
+
+	  
+	   We only have this one client and we know that 0x400
+	   is free in our kernel's mem map  so lets just
+	   drop it there   It seems that the minisrc doesn't
+	   need vectors  so we won't bother with them  
+	   
+	data =  const u16   chip assp minisrc image data 
+	for  i = 0  i   2   chip assp minisrc image size  i++  {
+		snd m3 assp write chip  MEMTYPE INTERNAL CODE  
+				  0x400 + i  le16 to cpu data i    
+	}
+
+	  
+	   write the coefficients for the low pass filter?
+	   
+	for  i = 0  i   MINISRC LPF LEN   i++  {
+		snd m3 assp write chip  MEMTYPE INTERNAL CODE 
+				  0x400 + MINISRC COEF LOC + i 
+				  minisrc lpf i   
+	}
+
+	snd m3 assp write chip  MEMTYPE INTERNAL CODE 
+			  0x400 + MINISRC COEF LOC + MINISRC LPF LEN 
+			  0x8000  
+
+	  
+	   the minisrc is the only thing on
+	   our task list  
+	   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA  
+			  KDATA TASK0 
+			  0x400  
+
+	  
+	   init the mixer number  
+	   
+
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  KDATA MIXER TASK NUMBER 0  
+
+	  
+	   EXTREME KERNEL MASTER VOLUME
+	   
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  KDATA DAC LEFT VOLUME  ARB VOLUME  
+	snd m3 assp write chip  MEMTYPE INTERNAL DATA 
+			  KDATA DAC RIGHT VOLUME  ARB VOLUME  
+
+	chip mixer list curlen = 0 
+	chip mixer list mem addr = KDATA MIXER XFER0 
+	chip mixer list max = MAX VIRTUAL MIXER CHANNELS 
+	chip adc1 list curlen = 0 
+	chip adc1 list mem addr = KDATA ADC1 XFER0 
+	chip adc1 list max = MAX VIRTUAL ADC1 CHANNELS 
+	chip dma list curlen = 0 
+	chip dma list mem addr = KDATA DMA XFER0 
+	chip dma list max = MAX VIRTUAL DMA CHANNELS 
+	chip msrc list curlen = 0 
+	chip msrc list mem addr = KDATA INSTANCE0 MINISRC 
+	chip msrc list max = MAX INSTANCE MINISRC 
+}
+

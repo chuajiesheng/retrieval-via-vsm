@@ -1,0 +1,2 @@
+int snd unregister oss device int type  struct snd card  card  int dev  
+

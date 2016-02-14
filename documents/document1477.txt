@@ -1,0 +1,3 @@
+snd rme96 create switches struct snd card  card 
+			  struct rme96  rme96  
+

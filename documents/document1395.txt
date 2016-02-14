@@ -1,0 +1,12 @@
+static void snd es1968 free gameport struct es1968  chip 
+{
+	if  chip gameport  {
+		struct resource  r = gameport get port data chip gameport  
+
+		gameport unregister port chip gameport  
+		chip gameport = NULL 
+
+		release and free resource r  
+	}
+}
+

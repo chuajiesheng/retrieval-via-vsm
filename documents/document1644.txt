@@ -1,0 +1,7 @@
+static void snd m3 assp write struct snd m3  chip  u16 region  u16 index  u16 data 
+{
+	snd m3 outw chip  region   MEMTYPE MASK  DSP PORT MEMORY TYPE  
+	snd m3 outw chip  index  DSP PORT MEMORY INDEX  
+	snd m3 outw chip  data  DSP PORT MEMORY DATA  
+}
+

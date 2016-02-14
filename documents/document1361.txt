@@ -1,0 +1,17 @@
+  
+   allocate APU pair
+   
+static int snd es1968 alloc apu pair struct es1968  chip  int type 
+{
+	int apu 
+
+	for  apu = 0  apu   NR APUS  apu += 2  {
+		if  chip apu apu  == ESM APU FREE   
+		    chip apu apu + 1  == ESM APU FREE  {
+			chip apu apu  = chip apu apu + 1  = type 
+			return apu 
+		}
+	}
+	return  EBUSY 
+}
+

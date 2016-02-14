@@ -1,0 +1,3 @@
+int pci bus read config word struct pci bus  bus  unsigned int devfn 
+			     int where  u16  val  
+

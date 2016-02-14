@@ -1,0 +1,6 @@
+int snd opl3 create struct snd card  card 
+		    unsigned long l port  unsigned long r port 
+		    unsigned short hardware 
+		    int integrated 
+		    struct snd opl3    opl3  
+

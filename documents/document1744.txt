@@ -1,0 +1,8 @@
+static int cprng get random struct crypto rng  tfm  u8  rdata 
+			    unsigned int dlen 
+{
+	struct prng context  prng = crypto rng ctx tfm  
+
+	return get prng bytes rdata  dlen  prng  0  
+}
+

@@ -1,0 +1,11 @@
+static void snd azf3328 mixer reg decode struct azf3328 mixer reg  r  unsigned long val 
+{
+	r reg = val   0xff 
+	r lchan shift =  val    8    0x0f 
+	r rchan shift =  val    12    0x0f 
+	r mask =  val    16    0xff 
+	r invert =  val    24    1 
+	r stereo =  val    25    1 
+	r enum c =  val    26    0x0f 
+}
+

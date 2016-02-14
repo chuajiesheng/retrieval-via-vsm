@@ -1,0 +1,3 @@
+   sb mixer c   
+void snd sbmixer write struct snd sb  chip  unsigned char reg  unsigned char data  
+

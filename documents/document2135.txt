@@ -1,0 +1,54 @@
+  
+    Interrupt handler
+   
+static irqreturn t snd via8233 interrupt int irq  void  dev id 
+{
+	struct via82xx  chip = dev id 
+	unsigned int status 
+	unsigned int i 
+	int irqreturn = 0 
+
+	   check status for each stream   
+	spin lock  chip reg lock  
+	status = inl VIAREG chip  SGD SHADOW   
+
+	for  i = 0  i   chip num devs  i++  {
+		struct viadev  viadev =  chip devs i  
+		struct snd pcm substream  substream 
+		unsigned char c status  shadow status 
+
+		shadow status =  status    viadev shadow shift   
+			 VIA8233 SHADOW STAT ACTIVE|VIA REG STAT EOL|
+			 VIA REG STAT FLAG  
+		c status = shadow status    VIA REG STAT EOL|VIA REG STAT FLAG  
+		if   c status 
+			continue 
+
+		substream = viadev substream 
+		if  substream    viadev running  {
+			  
+			   Update hwptr done based on 'period elapsed'
+			   interrupts  We'll use it  when the chip returns 0 
+			   for OFFSET CURR COUNT 
+			   
+			if  c status   VIA REG STAT EOL 
+				viadev hwptr done = 0 
+			else
+				viadev hwptr done += viadev fragsize 
+			viadev in interrupt = c status 
+			if  shadow status   VIA8233 SHADOW STAT ACTIVE 
+				viadev in interrupt |= VIA REG STAT ACTIVE 
+			spin unlock  chip reg lock  
+
+			snd pcm period elapsed substream  
+
+			spin lock  chip reg lock  
+			viadev in interrupt = 0 
+		}
+		outb c status  VIADEV REG viadev  OFFSET STATUS       ack   
+		irqreturn = 1 
+	}
+	spin unlock  chip reg lock  
+	return IRQ RETVAL irqreturn  
+}
+

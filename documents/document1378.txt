@@ -1,0 +1,3 @@
+extern int drm helper mode fill fb struct struct drm framebuffer  fb 
+					  struct drm mode fb cmd  mode cmd  
+

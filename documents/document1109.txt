@@ -1,0 +1,25 @@
+snd azf3328 pcm prepare struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct snd azf3328 codec data  codec = runtime private data 
+#if 0
+        unsigned int size = snd pcm lib buffer bytes substream  
+	unsigned int count = snd pcm lib period bytes substream  
+#endif
+
+	snd azf3328 dbgcallenter   
+
+	codec dma base = runtime dma addr 
+
+#if 0
+	snd azf3328 codec setfmt codec 
+		runtime rate 
+		snd pcm format width runtime format  
+		runtime channels  
+	snd azf3328 codec setdmaa codec 
+					runtime dma addr  count  size  
+#endif
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

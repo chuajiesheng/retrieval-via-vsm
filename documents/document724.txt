@@ -1,0 +1,27 @@
+static unsigned short snd via82xx codec read struct snd ac97  ac97  unsigned short reg 
+{
+	struct via82xx modem  chip = ac97 private data 
+	unsigned int xval  val = 0xffff 
+	int again = 0 
+
+	xval = ac97 num    VIA REG AC97 CODEC ID SHIFT 
+	xval |= ac97 num ? VIA REG AC97 SECONDARY VALID   VIA REG AC97 PRIMARY VALID 
+	xval |= VIA REG AC97 READ 
+	xval |=  reg   0x7f     VIA REG AC97 CMD SHIFT 
+      	while  1  {
+      		if  again++   3  {
+			snd printk KERN ERR  codec read  codec  i is not valid  0x x \n  
+				   ac97 num  snd via82xx codec xread chip   
+		      	return 0xffff 
+		}
+		snd via82xx codec xwrite chip  xval  
+		udelay  20  
+		if  snd via82xx codec valid chip  ac97 num   = 0  {
+			udelay 25  
+			val = snd via82xx codec xread chip  
+			break 
+		}
+	}
+	return val   0xffff 
+}
+

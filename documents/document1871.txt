@@ -1,0 +1,86 @@
+static int   devinit snd bt87x probe struct pci dev  pci 
+				     const struct pci device id  pci id 
+{
+	static int dev 
+	struct snd card  card 
+	struct snd bt87x  chip 
+	int err 
+	enum snd bt87x boardid boardid 
+
+	if   pci id driver data  {
+		err = snd bt87x detect card pci  
+		if  err   0 
+			return  ENODEV 
+		boardid = err 
+	} else
+		boardid = pci id driver data 
+
+	if  dev  = SNDRV CARDS 
+		return  ENODEV 
+	if   enable dev   {
+		++dev 
+		return  ENOENT 
+	}
+
+	err = snd card create index dev   id dev   THIS MODULE  0   card  
+	if  err   0 
+		return err 
+
+	err = snd bt87x create card  pci   chip  
+	if  err   0 
+		goto  error 
+
+	memcpy  chip board   snd bt87x boards boardid   sizeof chip board   
+
+	if   chip board no digital  {
+		if  digital rate dev    0 
+			chip board dig rate = digital rate dev  
+
+		chip reg control |= chip board digital fmt 
+
+		err = snd bt87x pcm chip  DEVICE DIGITAL   Bt87x Digital   
+		if  err   0 
+			goto  error 
+	}
+	if   chip board no analog  {
+		err = snd bt87x pcm chip  DEVICE ANALOG   Bt87x Analog   
+		if  err   0 
+			goto  error 
+		err = snd ctl add card  snd ctl new1 
+				   snd bt87x capture volume  chip   
+		if  err   0 
+			goto  error 
+		err = snd ctl add card  snd ctl new1 
+				   snd bt87x capture boost  chip   
+		if  err   0 
+			goto  error 
+		err = snd ctl add card  snd ctl new1 
+				   snd bt87x capture source  chip   
+		if  err   0 
+			goto  error 
+	}
+	snd printk KERN INFO  bt87x d  Using board  d   sanalog   sdigital  
+		     rate  d Hz \n   dev  boardid 
+		   chip board no analog ?  no        
+		   chip board no digital ?  no         chip board dig rate  
+
+	strcpy card driver   Bt87x   
+	sprintf card shortname   Brooktree Bt x   pci device  
+	sprintf card longname    s at  #llx  irq  i  
+		card shortname   unsigned long long pci resource start pci  0  
+		chip irq  
+	strcpy card mixername   Bt87x   
+
+	err = snd card register card  
+	if  err   0 
+		goto  error 
+
+	pci set drvdata pci  card  
+	++dev 
+	return 0 
+
+ error 
+	snd card free card  
+	return err 
+}
+

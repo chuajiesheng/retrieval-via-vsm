@@ -1,0 +1,8 @@
+static void deflate exit struct crypto tfm  tfm 
+{
+	struct deflate ctx  ctx = crypto tfm ctx tfm  
+
+	deflate comp exit ctx  
+	deflate decomp exit ctx  
+}
+

@@ -1,0 +1,5 @@
+static inline u64 mlx4 fw ver u64 major  u64 minor  u64 subminor 
+{
+	return  major    32  |  minor    16  | subminor 
+}
+

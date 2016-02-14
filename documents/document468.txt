@@ -1,0 +1,11 @@
+static inline unsigned int byte pos struct loopback pcm  dpcm  unsigned int x 
+{
+	if  dpcm pcm rate shift == NO PITCH  {
+		x  = HZ 
+	} else {
+		x = div u64 NO PITCH    unsigned long long x 
+			    HZ    unsigned long long dpcm pcm rate shift  
+	}
+	return x    x   dpcm pcm salign  
+}
+

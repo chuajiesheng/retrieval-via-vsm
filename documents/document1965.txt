@@ -1,0 +1,8 @@
+  
+    Lowlevel I O   busmaster
+   
+static inline u8 igetbyte struct intel8x0  chip  u32 offset 
+{
+	return ioread8 chip bmaddr + offset  
+}
+

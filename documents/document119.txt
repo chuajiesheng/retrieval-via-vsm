@@ -1,0 +1,21 @@
+   allocate the coherent DMA pages   
+static void  snd malloc dev pages struct device  dev  size t size  dma addr t  dma 
+{
+	int pg 
+	void  res 
+	gfp t gfp flags 
+
+	if  WARN ON  dma  
+		return NULL 
+	pg = get order size  
+	gfp flags = GFP KERNEL
+		|   GFP COMP	   compound page lets parts be mapped   
+		|   GFP NORETRY    don't trigger OOM killer   
+		|   GFP NOWARN     no stack trace print   this call is non critical   
+	res = dma alloc coherent dev  PAGE SIZE    pg  dma  gfp flags  
+	if  res  = NULL 
+		inc snd pages pg  
+
+	return res 
+}
+

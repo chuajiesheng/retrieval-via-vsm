@@ -1,0 +1,8 @@
+static inline u16 rdma get vlan id union ib gid  dgid 
+{
+	u16 vid 
+
+	vid = dgid raw 11     8 | dgid raw 12  
+	return vid   0x1000 ? vid   0xffff 
+}
+

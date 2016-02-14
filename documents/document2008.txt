@@ -1,0 +1,19 @@
+static int snd cs4281 playback open struct snd pcm substream  substream 
+{
+	struct cs4281  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct cs4281 dma  dma 
+
+	dma =  chip dma 0  
+	dma substream = substream 
+	dma left slot = 0 
+	dma right slot = 1 
+	runtime private data = dma 
+	runtime hw = snd cs4281 playback 
+	   should be detected from the AC'97 layer  but it seems
+	   that although CS4297A rev B reports 18 bit ADC resolution 
+	   samples are 20 bit   
+	snd pcm hw constraint msbits runtime  0  32  20  
+	return 0 
+}
+

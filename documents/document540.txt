@@ -1,0 +1,71 @@
+   This loop should be called with interrupts disabled
+   We don't want to interrupt this  
+   as we're already handling an interrupt 
+   
+static void snd uart16550 io loop struct snd uart16550   uart 
+{
+	unsigned char c  status 
+	int substream 
+
+	   recall previous stream   
+	substream = uart prev in 
+
+	   Read Loop   
+	while   status = inb uart base + UART LSR     UART LSR DR  {
+		   while receive data ready   
+		c = inb uart base + UART RX  
+
+		   keep track of last status byte   
+		if  c   0x80 
+			uart rstatus = c 
+
+		   handle stream switch   
+		if  uart adaptor == SNDRV SERIAL GENERIC  {
+			if  uart rstatus == 0xf5  {
+				if  c  = SNDRV SERIAL MAX INS    c   0 
+					substream = c   1 
+				if  c  = 0xf5 
+					   prevent future bytes from being
+					   interpreted as streams   
+					uart rstatus = 0 
+			} else if   uart filemode   SERIAL MODE INPUT OPEN 
+				      uart midi input substream  
+				snd rawmidi receive uart midi input substream  
+						     c  1  
+		} else if   uart filemode   SERIAL MODE INPUT OPEN    
+			   uart midi input substream  
+			snd rawmidi receive uart midi input substream    c  1  
+
+		if  status   UART LSR OE 
+			snd printk KERN WARNING
+				     s  Overrun on device at 0x lx\n  
+			       uart rmidi name  uart base  
+	}
+
+	   remember the last stream   
+	uart prev in = substream 
+
+	   no need of check SERIAL MODE OUTPUT OPEN because if not 
+	   buffer is never filled    
+	   Check write status   
+	if  status   UART LSR THRE 
+		uart fifo count = 0 
+	if  uart adaptor == SNDRV SERIAL MS124W SA
+	   || uart adaptor == SNDRV SERIAL GENERIC  {
+		   Can't use FIFO  must send only when CTS is true   
+		status = inb uart base + UART MSR  
+		while  uart fifo count == 0     status   UART MSR CTS    
+		       uart buff in count   0  {
+		       snd uart16550 buffer output uart  
+		       status = inb uart base + UART MSR  
+		}
+	} else {
+		   Write loop   
+		while  uart fifo count   uart fifo limit    Can we write ?   
+		          uart buff in count   0 	   Do we want to?   
+			snd uart16550 buffer output uart  
+	}
+	if  uart irq   0    uart buff in count   0 
+		snd uart16550 add timer uart  
+}
+

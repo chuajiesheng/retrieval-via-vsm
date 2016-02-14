@@ -1,0 +1,9 @@
+static void   exit prng mod fini void 
+{
+	crypto unregister alg  rng alg  
+#ifdef CONFIG CRYPTO FIPS
+	crypto unregister alg  fips rng alg  
+#endif
+	return 
+}
+

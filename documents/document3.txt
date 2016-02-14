@@ -1,0 +1,6 @@
+static inline int snd rawmidi ready struct snd rawmidi substream  substream 
+{
+	struct snd rawmidi runtime  runtime = substream runtime 
+	return runtime avail  = runtime avail min 
+}
+

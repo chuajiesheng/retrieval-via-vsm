@@ -1,0 +1,2 @@
+int snd opl3 timer new struct snd opl3   opl3  int timer1 dev  int timer2 dev  
+

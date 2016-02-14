@@ -1,0 +1,3 @@
+int snd pcm status struct snd pcm substream  substream 
+		   struct snd pcm status  status  
+

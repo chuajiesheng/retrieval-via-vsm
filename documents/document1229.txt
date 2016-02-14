@@ -1,0 +1,6 @@
+static inline unsigned int gcm remain unsigned int len 
+{
+	len  = 0xfU 
+	return len ? 16   len   0 
+}
+

@@ -1,0 +1,13 @@
+static int snd cmipci spdif stream get struct snd kcontrol  kcontrol 
+				       struct snd ctl elem value  ucontrol 
+{
+	struct cmipci  chip = snd kcontrol chip kcontrol  
+	int i 
+
+	spin lock irq  chip reg lock  
+	for  i = 0  i   4  i++ 
+		ucontrol value iec958 status i  =  chip dig pcm status     i   8     0xff 
+	spin unlock irq  chip reg lock  
+	return 0 
+}
+

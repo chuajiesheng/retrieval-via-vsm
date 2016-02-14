@@ -1,0 +1,6 @@
+static inline void ssb block write struct ssb device  dev  const void  buffer 
+				   size t count  u16 offset  u8 reg width 
+{
+	dev ops block write dev  buffer  count  offset  reg width  
+}
+

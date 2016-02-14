@@ -1,0 +1,2 @@
+int snd info card register struct snd card  card  
+

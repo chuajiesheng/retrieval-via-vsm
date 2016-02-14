@@ -1,0 +1,24 @@
+   
+   ttm base object init
+  
+   @tfile  Pointer to a struct ttm object file 
+   @base  The struct ttm base object to initialize 
+   @shareable  This object is shareable with other applcations 
+    different @tfile pointers  
+   @type  The object type 
+   @refcount release  See the struct ttm base object description 
+   @ref obj release  See the struct ttm base object description 
+  
+   Initializes a struct ttm base object 
+   
+extern int ttm base object init struct ttm object file  tfile 
+				struct ttm base object  base 
+				bool shareable 
+				enum ttm object type type 
+				void   refcount release   struct ttm base object
+							      
+				void   ref obj release   struct ttm base object
+							   
+							 enum ttm ref type
+							 ref type   
+

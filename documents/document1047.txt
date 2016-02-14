@@ -1,0 +1,8 @@
+static void   devinit snd ensoniq proc init struct ensoniq   ensoniq 
+{
+	struct snd info entry  entry 
+
+	if    snd card proc new ensoniq card   audiopci    entry  
+		snd info set text ops entry  ensoniq  snd ensoniq proc read  
+}
+

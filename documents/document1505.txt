@@ -1,0 +1,12 @@
+   
+   ttm mem init shrink   initialize a struct ttm mem shrink object
+  
+   @shrink  The object to initialize 
+   @func  The callback function 
+   
+static inline void ttm mem init shrink struct ttm mem shrink  shrink 
+				       int   func   struct ttm mem shrink    
+{
+	shrink do shrink = func 
+}
+

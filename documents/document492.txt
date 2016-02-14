@@ -1,0 +1,6 @@
+static int snd mts64 free struct mts64  mts 
+{
+	kfree mts  
+	return 0 
+}
+

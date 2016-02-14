@@ -1,0 +1,15 @@
+static int snd pcm substream proc done struct snd pcm substream  substream 
+{
+	snd info free entry substream proc info entry  
+	substream proc info entry = NULL 
+	snd info free entry substream proc hw params entry  
+	substream proc hw params entry = NULL 
+	snd info free entry substream proc sw params entry  
+	substream proc sw params entry = NULL 
+	snd info free entry substream proc status entry  
+	substream proc status entry = NULL 
+	snd info free entry substream proc root  
+	substream proc root = NULL 
+	return 0 
+}
+

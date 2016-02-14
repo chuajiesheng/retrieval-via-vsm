@@ -1,0 +1,77 @@
+static int   devinit snd via82xx create struct snd card  card 
+					struct pci dev  pci 
+					int chip type 
+					int revision 
+					unsigned int ac97 clock 
+					struct via82xx    r via 
+{
+	struct via82xx  chip 
+	int err 
+        static struct snd device ops ops = {
+		 dev free =	snd via82xx dev free 
+        } 
+
+	if   err = pci enable device pci     0 
+		return err 
+
+	if   chip = kzalloc sizeof  chip   GFP KERNEL   == NULL  {
+		pci disable device pci  
+		return  ENOMEM 
+	}
+
+	chip chip type = chip type 
+	chip revision = revision 
+
+	spin lock init  chip reg lock  
+	spin lock init  chip rates 0  lock  
+	spin lock init  chip rates 1  lock  
+	chip card = card 
+	chip pci = pci 
+	chip irq =  1 
+
+	pci read config byte pci  VIA FUNC ENABLE   chip old legacy  
+	pci read config byte pci  VIA PNP CONTROL   chip old legacy cfg  
+	pci write config byte chip pci  VIA FUNC ENABLE 
+			      chip old legacy   ~ VIA FUNC ENABLE SB|VIA FUNC ENABLE FM   
+
+	if   err = pci request regions pci  card driver     0  {
+		kfree chip  
+		pci disable device pci  
+		return err 
+	}
+	chip port = pci resource start pci  0  
+	if  request irq pci irq 
+			chip type == TYPE VIA8233 ?
+			snd via8233 interrupt  	snd via686 interrupt 
+			IRQF SHARED 
+			card driver  chip   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		snd via82xx free chip  
+		return  EBUSY 
+	}
+	chip irq = pci irq 
+	if  ac97 clock  = 8000    ac97 clock  = 48000 
+		chip ac97 clock = ac97 clock 
+	synchronize irq chip irq  
+
+	if   err = snd via82xx chip init chip     0  {
+		snd via82xx free chip  
+		return err 
+	}
+
+	if   err = snd device new card  SNDRV DEV LOWLEVEL  chip   ops     0  {
+		snd via82xx free chip  
+		return err 
+	}
+
+	   The 8233 ac97 controller does not implement the master bit
+	   in the pci command register  IMHO this is a violation of the PCI spec 
+	   We call pci set master here because it does not hurt    
+	pci set master pci  
+
+	snd card set dev card   pci dev  
+
+	 r via = chip 
+	return 0 
+}
+

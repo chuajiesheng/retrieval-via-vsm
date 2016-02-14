@@ -1,0 +1,2 @@
+int snd seq device new struct snd card  card  int device  char  id  int argsize  struct snd seq device   result  
+

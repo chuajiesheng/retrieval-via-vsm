@@ -1,0 +1,2 @@
+void snd ac97 suspend struct snd ac97  ac97  
+

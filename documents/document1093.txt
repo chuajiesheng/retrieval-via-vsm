@@ -1,0 +1,16 @@
+snd azf3328 info mixer struct snd kcontrol  kcontrol 
+		       struct snd ctl elem info  uinfo 
+{
+	struct azf3328 mixer reg reg 
+
+	snd azf3328 dbgcallenter   
+	snd azf3328 mixer reg decode  reg  kcontrol private value  
+	uinfo type = reg mask == 1 ?
+		SNDRV CTL ELEM TYPE BOOLEAN   SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count = reg stereo + 1 
+	uinfo value integer min = 0 
+	uinfo value integer max = reg mask 
+	snd azf3328 dbgcallleave   
+	return 0 
+}
+

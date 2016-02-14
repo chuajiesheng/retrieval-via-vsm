@@ -1,0 +1,5 @@
+static void   exit alsa card als4000 exit void 
+{
+	pci unregister driver  driver  
+}
+

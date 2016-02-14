@@ -1,0 +1,12 @@
+  
+   disable DMA and IRQs
+   
+static int snd atiixp chip stop struct atiixp  chip 
+{
+	   clear interrupt source   
+	atiixp write chip  ISR  atiixp read chip  ISR   
+	   disable irqs   
+	atiixp write chip  IER  0  
+	return 0 
+}
+

@@ -1,0 +1,4 @@
+   create new AC97 bus   
+int snd ac97 bus struct snd card  card  int num  struct snd ac97 bus ops  ops 
+		 void  private data  struct snd ac97 bus   rbus  
+

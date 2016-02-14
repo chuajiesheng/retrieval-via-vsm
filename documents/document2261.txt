@@ -1,0 +1,7 @@
+static void snd rme32 reset dac struct rme32  rme32 
+{
+        writel rme32 wcreg | RME32 WCR PD 
+               rme32 iobase + RME32 IO CONTROL REGISTER  
+        writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+}
+

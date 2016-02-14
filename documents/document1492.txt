@@ -1,0 +1,6 @@
+snd rme96 getmontracks struct rme96  rme96 
+{
+	return   rme96 wcreg    RME96 WCR BITPOS MONITOR 0    1  +
+		   rme96 wcreg    RME96 WCR BITPOS MONITOR 1    1     1  
+}
+

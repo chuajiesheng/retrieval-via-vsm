@@ -1,0 +1,11 @@
+static efi status t virt efi set variable efi char16 t  name 
+					  efi guid t  vendor 
+					  unsigned long attr 
+					  unsigned long data size 
+					  void  data 
+{
+	return efi call virt5 set variable 
+			      name  vendor  attr 
+			      data size  data  
+}
+

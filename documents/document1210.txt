@@ -1,0 +1,27 @@
+static int snd als4000 capture prepare struct snd pcm substream  substream 
+{
+	struct snd sb  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	unsigned long size 
+	unsigned count 
+
+	chip capture format = snd als4000 get format runtime  
+		
+	size = snd pcm lib buffer bytes substream  
+	count = snd pcm lib period bytes substream  
+	
+	if  chip capture format   ALS4000 FORMAT 16BIT 
+		count   = 1 
+	count   
+
+	spin lock irq  chip reg lock  
+	snd als4000 set rate chip  runtime rate  
+	snd als4000 set capture dma chip  runtime dma addr  size  
+	spin unlock irq  chip reg lock  
+	spin lock irq  chip mixer lock  
+	snd als4 cr write chip  ALS4K CR1C FIFO2 BLOCK LENGTH LO  count   0xff  
+	snd als4 cr write chip  ALS4K CR1D FIFO2 BLOCK LENGTH HI  count    8  
+	spin unlock irq  chip mixer lock  
+	return 0 
+}
+

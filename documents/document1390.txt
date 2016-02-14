@@ -1,0 +1,193 @@
+  
+   initialize maestro chip
+   
+static void snd es1968 chip init struct es1968  chip 
+{
+	struct pci dev  pci = chip pci 
+	int i 
+	unsigned long iobase  = chip io port 
+	u16 w 
+	u32 n 
+
+	   We used to muck around with pci config space that
+	   we had no business messing with   We don't know enough
+	   about the machine to know which DMA mode is appropriate  
+	   etc   We were guessing wrong on some machines and making
+	   them unhappy   We now trust in the BIOS to do things right 
+	   which almost certainly means a new host of problems will
+	   arise with broken BIOS implementations   screw 'em  
+	   We're already intolerant of machines that don't assign
+	   IRQs 
+	   
+	
+	   Config Reg A   
+	pci read config word pci  ESM CONFIG A   w  
+
+	w  = ~DMA CLEAR 	   Clear DMA bits   
+	w  = ~ PIC SNOOP1 | PIC SNOOP2  	   Clear Pic Snoop Mode Bits   
+	w  = ~SAFEGUARD 	   Safeguard off   
+	w |= POST WRITE 	   Posted write   
+	w |= PCI TIMING 	   PCI timing on   
+	   XXX huh?  claims to be reserved     
+	w  = ~SWAP LR 		   swap left right 
+				   seems to only have effect on SB
+				   Emulation   
+	w  = ~SUBTR DECODE 	   Subtractive decode off   
+
+	pci write config word pci  ESM CONFIG A  w  
+
+	   Config Reg B   
+
+	pci read config word pci  ESM CONFIG B   w  
+
+	w  = ~ 1    15  	   Turn off internal clock multiplier   
+	   XXX how do we know which to use?   
+	w  = ~ 1    14  	   External clock   
+
+	w  = ~SPDIF CONFB 	   disable S PDIF output   
+	w |= HWV CONFB 		   HWV on   
+	w |= DEBOUNCE 		   Debounce off  easier to push the HW buttons   
+	w  = ~GPIO CONFB 	   GPIO 4 5   
+	w |= CHI CONFB 		   Disconnect from the CHI   Enabling this made a dell 7500 work    
+	w  = ~IDMA CONFB 	   IDMA off  undocumented    
+	w  = ~MIDI FIX 		   MIDI fix off  undoc    
+	w  = ~ 1    1  		   reserved  always write 0   
+	w  = ~IRQ TO ISA 	   IRQ to ISA off  undoc    
+
+	pci write config word pci  ESM CONFIG B  w  
+
+	   DDMA off   
+
+	pci read config word pci  ESM DDMA   w  
+	w  = ~ 1    0  
+	pci write config word pci  ESM DDMA  w  
+
+	  
+	  	Legacy mode
+	   
+
+	pci read config word pci  ESM LEGACY AUDIO CONTROL   w  
+
+	w |= ESS DISABLE AUDIO 	   Disable Legacy Audio   
+	w  = ~ESS ENABLE SERIAL IRQ 	   Disable SIRQ   
+	w  = ~ 0x1f  		   disable mpu irq io  game port  fm  SB   
+
+	pci write config word pci  ESM LEGACY AUDIO CONTROL  w  
+
+	   Set up 978 docking control chip    
+	pci read config word pci  0x58   w  
+	w|=1  2 	   Enable 978    
+	w|=1  3 	   Turn on 978 hardware volume control    
+	w =~ 1  11  	   Turn on 978 mixer volume control    
+	pci write config word pci  0x58  w  
+	
+	   Sound Reset   
+
+	snd es1968 reset chip  
+
+	  
+	  	Ring Bus Setup
+	   
+
+	   setup usual 0x34 stuff   0x36 may be chip specific   
+	outw 0xC090  iobase + ESM RING BUS DEST      direct sound  stereo   
+	udelay 20  
+	outw 0x3000  iobase + ESM RING BUS CONTR A      enable ringbus serial   
+	udelay 20  
+
+	  
+	  	Reset the CODEC
+	   
+	 
+	snd es1968 ac97 reset chip  
+
+	   Ring Bus Control B   
+
+	n = inl iobase + ESM RING BUS CONTR B  
+	n  = ~RINGB EN SPDIF 	   SPDIF off   
+	  w |= RINGB EN 2CODEC 	   enable 2nd codec   
+	outl n  iobase + ESM RING BUS CONTR B  
+
+	   Set hardware volume control registers to midpoints 
+	   We can tell which button was pushed based on how they change    
+	outb 0x88  iobase+0x1c  
+	outb 0x88  iobase+0x1d  
+	outb 0x88  iobase+0x1e  
+	outb 0x88  iobase+0x1f  
+
+	   it appears some maestros  dell 7500  only work if these are set 
+	   regardless of wether we use the assp or not    
+
+	outb 0  iobase + ASSP CONTROL B  
+	outb 3  iobase + ASSP CONTROL A  	   M  Reserved bits      
+	outb 0  iobase + ASSP CONTROL C  	   M  Disable ASSP  ASSP IRQ's and FM Port   
+
+	  
+	   set up wavecache
+	   
+	for  i = 0  i   16  i++  {
+		   Write 0 into the buffer area 0x1E0 1EF   
+		outw 0x01E0 + i  iobase + WC INDEX  
+		outw 0x0000  iobase + WC DATA  
+
+		   The 1 10 test program seem to write 0 into the buffer area
+		   0x1D0 0x1DF too   
+		outw 0x01D0 + i  iobase + WC INDEX  
+		outw 0x0000  iobase + WC DATA  
+	}
+	wave set register chip  IDR7 WAVE ROMRAM 
+			   wave get register chip  IDR7 WAVE ROMRAM    0xFF00   
+	wave set register chip  IDR7 WAVE ROMRAM 
+			  wave get register chip  IDR7 WAVE ROMRAM  | 0x100  
+	wave set register chip  IDR7 WAVE ROMRAM 
+			  wave get register chip  IDR7 WAVE ROMRAM    ~0x200  
+	wave set register chip  IDR7 WAVE ROMRAM 
+			  wave get register chip  IDR7 WAVE ROMRAM  | ~0x400  
+
+
+	maestro write chip  IDR2 CRAM DATA  0x0000  
+	   Now back to the DirectSound stuff   
+	   audio serial configuration   ?   
+	maestro write chip  0x08  0xB004  
+	maestro write chip  0x09  0x001B  
+	maestro write chip  0x0A  0x8000  
+	maestro write chip  0x0B  0x3F37  
+	maestro write chip  0x0C  0x0098  
+
+	   parallel in  has something to do with recording      
+	maestro write chip  0x0C 
+		       maestro read chip  0x0C    ~0xF000  | 0x8000  
+	   parallel out   
+	maestro write chip  0x0C 
+		       maestro read chip  0x0C    ~0x0F00  | 0x0500  
+
+	maestro write chip  0x0D  0x7632  
+
+	   Wave cache control on   test off  sg off  
+	   enable  enable extra chans 1Mb   
+
+	w = inw iobase + WC CONTROL  
+
+	w  = ~0xFA00 		   Seems to be reserved? I don't know   
+	w |= 0xA000 		   reserved    I don't know   
+	w  = ~0x0200 		   Channels 56 57 58 59 as Extra Play Rec Channel enable
+				   Seems to crash the Computer if enabled      
+	w |= 0x0100 		   Wave Cache Operation Enabled   
+	w |= 0x0080 		   Channels 60 61 as Placback Record enabled   
+	w  = ~0x0060 		   Clear Wavtable Size   
+	w |= 0x0020 		   Wavetable Size   1MB   
+	   Bit 4 is reserved   
+	w  = ~0x000C 		   DMA Stuff? I don't understand what the datasheet means   
+	   Bit 1 is reserved   
+	w  = ~0x0001 		   Test Mode off   
+
+	outw w  iobase + WC CONTROL  
+
+	   Now clear the APU control ram   
+	for  i = 0  i   NR APUS  i++  {
+		for  w = 0  w   NR APU REGS  w++ 
+			apu set register chip  i  w  0  
+
+	}
+}
+

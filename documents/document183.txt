@@ -1,0 +1,8 @@
+void snd pcm timer done struct snd pcm substream  substream 
+{
+	if  substream timer  {
+		snd device free substream pcm card  substream timer  
+		substream timer = NULL 
+	}
+}
+

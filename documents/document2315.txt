@@ -1,0 +1,8 @@
+  
+   Card initialisation
+   
+static void snd rme32 card free struct snd card  card 
+{
+	snd rme32 free card private data  
+}
+

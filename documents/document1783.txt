@@ -1,0 +1,21 @@
+static int snd fm801 playback open struct snd pcm substream  substream 
+{
+	struct fm801  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	int err 
+
+	chip playback substream = substream 
+	runtime hw = snd fm801 playback 
+	snd pcm hw constraint list runtime  0  SNDRV PCM HW PARAM RATE 
+				    hw constraints rates  
+	if  chip multichannel  {
+		runtime hw channels max = 6 
+		snd pcm hw constraint list runtime  0 
+					   SNDRV PCM HW PARAM CHANNELS 
+					    hw constraints channels  
+	}
+	if   err = snd pcm hw constraint integer runtime  SNDRV PCM HW PARAM PERIODS     0 
+		return err 
+	return 0 
+}
+

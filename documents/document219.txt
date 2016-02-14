@@ -1,0 +1,26 @@
+int snd oss info register int dev  int num  char  string 
+{
+	char  x 
+
+	if  snd BUG ON dev   0 || dev  = SNDRV OSS INFO DEV COUNT  
+		return  ENXIO 
+	if  snd BUG ON num   0 || num  = SNDRV CARDS  
+		return  ENXIO 
+	mutex lock  strings  
+	if  string == NULL  {
+		if   x = snd sndstat strings num  dev    = NULL  {
+			kfree x  
+			x = NULL 
+		}
+	} else {
+		x = kstrdup string  GFP KERNEL  
+		if  x == NULL  {
+			mutex unlock  strings  
+			return  ENOMEM 
+		}
+	}
+	snd sndstat strings num  dev  = x 
+	mutex unlock  strings  
+	return 0 
+}
+

@@ -1,0 +1,6 @@
+static inline struct crypto ahash  crypto spawn ahash 
+	struct crypto ahash spawn  spawn 
+{
+	return crypto spawn tfm2  spawn base  
+}
+

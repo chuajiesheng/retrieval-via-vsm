@@ -1,0 +1,94 @@
+snd rme32 proc read struct snd info entry   entry  struct snd info buffer  buffer 
+{
+	int n 
+	struct rme32  rme32 =  struct rme32    entry private data 
+
+	rme32 rcreg = readl rme32 iobase + RME32 IO CONTROL REGISTER  
+
+	snd iprintf buffer  rme32 card longname  
+	snd iprintf buffer     index # d \n   rme32 card number + 1  
+
+	snd iprintf buffer   \nGeneral settings\n   
+	if  rme32 fullduplex mode 
+		snd iprintf buffer     Full duplex mode\n   
+	else
+		snd iprintf buffer     Half duplex mode\n   
+	if  RME32 PRO WITH 8414 rme32   {
+		snd iprintf buffer     receiver  CS8414\n   
+	} else {
+		snd iprintf buffer     receiver  CS8412\n   
+	}
+	if  rme32 wcreg   RME32 WCR MODE24  {
+		snd iprintf buffer     format  24 bit   
+	} else {
+		snd iprintf buffer     format  16 bit   
+	}
+	if  rme32 wcreg   RME32 WCR MONO  {
+		snd iprintf buffer     Mono\n   
+	} else {
+		snd iprintf buffer     Stereo\n   
+	}
+
+	snd iprintf buffer   \nInput settings\n   
+	switch  snd rme32 getinputtype rme32   {
+	case RME32 INPUT OPTICAL 
+		snd iprintf buffer     input  optical   
+		break 
+	case RME32 INPUT COAXIAL 
+		snd iprintf buffer     input  coaxial   
+		break 
+	case RME32 INPUT INTERNAL 
+		snd iprintf buffer     input  internal   
+		break 
+	case RME32 INPUT XLR 
+		snd iprintf buffer     input  XLR   
+		break 
+	}
+	if  snd rme32 capture getrate rme32   n    0  {
+		snd iprintf buffer   \n  sample rate  no valid signal\n   
+	} else {
+		if  n  {
+			snd iprintf buffer     8 channels \n   
+		} else {
+			snd iprintf buffer     2 channels \n   
+		}
+		snd iprintf buffer     sample rate   d Hz\n  
+			    snd rme32 capture getrate rme32   n   
+	}
+
+	snd iprintf buffer   \nOutput settings\n   
+	if  rme32 wcreg   RME32 WCR SEL  {
+		snd iprintf buffer     output signal  normal playback   
+	} else {
+		snd iprintf buffer     output signal  same as input   
+	}
+	if  rme32 wcreg   RME32 WCR MUTE  {
+		snd iprintf buffer     muted \n   
+	} else {
+		snd iprintf buffer   \n   
+	}
+
+	   master output frequency   
+	if   
+	        rme32 wcreg   RME32 WCR FREQ 0  
+	           rme32 wcreg   RME32 WCR FREQ 1     {
+		snd iprintf buffer     sample rate   d Hz\n  
+			    snd rme32 playback getrate rme32   
+	}
+	if  rme32 rcreg   RME32 RCR KMODE  {
+		snd iprintf buffer     sample clock source  AutoSync\n   
+	} else {
+		snd iprintf buffer     sample clock source  Internal\n   
+	}
+	if  rme32 wcreg   RME32 WCR PRO  {
+		snd iprintf buffer     format  AES EBU  professional \n   
+	} else {
+		snd iprintf buffer     format  IEC958  consumer \n   
+	}
+	if  rme32 wcreg   RME32 WCR EMP  {
+		snd iprintf buffer     emphasis  on\n   
+	} else {
+		snd iprintf buffer     emphasis  off\n   
+	}
+}
+

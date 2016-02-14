@@ -1,0 +1,5 @@
+static inline unsigned int snd cs4281 peekBA0 struct cs4281  chip  unsigned long offset 
+{
+        return readl chip ba0 + offset  
+}
+

@@ -1,0 +1,7 @@
+snd rme32 capture fd pointer struct snd pcm substream  substream 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	return snd pcm indirect capture pointer substream   rme32 capture pcm 
+						snd rme32 pcm byteptr rme32   
+}
+

@@ -1,0 +1,5 @@
+static inline int ib copy to udata struct ib udata  udata  void  src  size t len 
+{
+	return copy to user udata outbuf  src  len  ?  EFAULT   0 
+}
+

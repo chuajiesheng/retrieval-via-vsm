@@ -1,0 +1,14 @@
+snd rme96 info montracks control struct snd kcontrol  kcontrol  struct snd ctl elem info  uinfo 
+{
+	static char  texts 4  = {  1+2    3+4    5+6    7+8  } 
+	
+	uinfo type = SNDRV CTL ELEM TYPE ENUMERATED 
+	uinfo count = 1 
+	uinfo value enumerated items = 4 
+	if  uinfo value enumerated item   3  {
+		uinfo value enumerated item = 3 
+	}
+	strcpy uinfo value enumerated name  texts uinfo value enumerated item   
+	return 0 
+}
+

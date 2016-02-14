@@ -1,0 +1,8 @@
+extern struct drm mm node  drm mm get block range generic 
+						struct drm mm node  node 
+						unsigned long size 
+						unsigned alignment 
+						unsigned long start 
+						unsigned long end 
+						int atomic  
+

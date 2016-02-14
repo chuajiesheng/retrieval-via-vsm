@@ -1,0 +1,14 @@
+static int snd ensoniq playback2 close struct snd pcm substream  substream 
+{
+	struct ensoniq  ensoniq = snd pcm substream chip substream  
+
+	ensoniq playback2 substream = NULL 
+	spin lock irq  ensoniq reg lock  
+#ifdef CHIP1370
+	ensoniq u es1370 pclkdiv lock  = ~ES MODE PLAY2 
+#endif
+	ensoniq mode  = ~ES MODE PLAY2 
+	spin unlock irq  ensoniq reg lock  
+	return 0 
+}
+

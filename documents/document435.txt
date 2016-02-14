@@ -1,0 +1,25 @@
+static int   devinit loopback pcm new struct loopback  loopback 
+				      int device  int substreams 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	err = snd pcm new loopback card   Loopback PCM   device 
+			  substreams  substreams   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   loopback playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   loopback capture ops  
+
+	pcm private data = loopback 
+	pcm info flags = 0 
+	strcpy pcm name   Loopback PCM   
+
+	loopback pcm device  = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE CONTINUOUS 
+			snd dma continuous data GFP KERNEL  
+			0  2   1024   1024  
+	return 0 
+}
+

@@ -1,0 +1,8 @@
+  
+   returns 1 iff there are no stale memory blocks associated with this owner 
+   Typically called to determine if we need to idle the hardware and call
+   drm sman owner cleanup  If there are no stale memory blocks  it removes all
+   resources associated with owner 
+   
+extern int drm sman owner clean struct drm sman   sman  unsigned long owner  
+

@@ -1,0 +1,12 @@
+static inline void   list cut position struct list head  list 
+		struct list head  head  struct list head  entry 
+{
+	struct list head  new first = entry next 
+	list next = head next 
+	list next prev = list 
+	list prev = entry 
+	entry next = list 
+	head next = new first 
+	new first prev = head 
+}
+

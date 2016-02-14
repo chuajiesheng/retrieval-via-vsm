@@ -1,0 +1,73 @@
+static int intel8x0 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct intel8x0  chip = card private data 
+	int i 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  intel8x0  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+	snd intel8x0 chip init chip  0  
+	if  request irq pci irq  snd intel8x0 interrupt 
+			IRQF SHARED  card shortname  chip   {
+		printk KERN ERR  intel8x0  unable to grab IRQ  d   
+		        disabling device\n   pci irq  
+		snd card disconnect card  
+		return  EIO 
+	}
+	chip irq = pci irq 
+	synchronize irq chip irq  
+
+	   re initialize mixer stuff   
+	if  chip device type == DEVICE INTEL ICH4     spdif aclink  {
+		   enable separate SDINs for ICH4   
+		iputbyte chip  ICHREG SDM   chip sdm saved  
+		   use slot 10 11 for SPDIF   
+		iputdword chip  ICHREG GLOB CNT  
+			   igetdword chip  ICHREG GLOB CNT     ~ICH PCM SPDIF MASK  |
+			  ICH PCM SPDIF 1011  
+	}
+
+	   refill nocache   
+	if  chip fix nocache 
+		fill nocache chip bdbars area  chip bdbars bytes  1  
+
+	for  i = 0  i   chip ncodecs  i++ 
+		snd ac97 resume chip ac97 i   
+
+	   refill nocache   
+	if  chip fix nocache  {
+		for  i = 0  i   chip bdbars count  i++  {
+			struct ichdev  ichdev =  chip ichd i  
+			if  ichdev substream    ichdev page attr changed  {
+				struct snd pcm runtime  runtime = ichdev substream runtime 
+				if  runtime dma area 
+					fill nocache runtime dma area  runtime dma bytes  1  
+			}
+		}
+	}
+
+	   resume status   
+	for  i = 0  i   chip bdbars count  i++  {
+		struct ichdev  ichdev =  chip ichd i  
+		unsigned long port = ichdev reg offset 
+		if    ichdev substream ||   ichdev suspended 
+			continue 
+		if  ichdev ichd == ICHD PCMOUT 
+			snd intel8x0 setup pcm out chip  ichdev substream runtime  
+		iputdword chip  port + ICH REG OFF BDBAR  ichdev bdbar addr  
+		iputbyte chip  port + ICH REG OFF LVI  ichdev lvi  
+		iputbyte chip  port + ICH REG OFF CIV  ichdev civ  
+		iputbyte chip  port + ichdev roff sr  ICH FIFOE | ICH BCIS | ICH LVBCI  
+	}
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

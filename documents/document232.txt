@@ -1,0 +1,78 @@
+static int snd pcm control ioctl struct snd card  card 
+				 struct snd ctl file  control 
+				 unsigned int cmd  unsigned long arg 
+{
+	switch  cmd  {
+	case SNDRV CTL IOCTL PCM NEXT DEVICE 
+		{
+			int device 
+
+			if  get user device   int   user   arg  
+				return  EFAULT 
+			mutex lock  register mutex  
+			device = snd pcm next card  device  
+			mutex unlock  register mutex  
+			if  put user device   int   user   arg  
+				return  EFAULT 
+			return 0 
+		}
+	case SNDRV CTL IOCTL PCM INFO 
+		{
+			struct snd pcm info   user  info 
+			unsigned int device  subdevice 
+			int stream 
+			struct snd pcm  pcm 
+			struct snd pcm str  pstr 
+			struct snd pcm substream  substream 
+			int err 
+
+			info =  struct snd pcm info   user   arg 
+			if  get user device   info device  
+				return  EFAULT 
+			if  get user stream   info stream  
+				return  EFAULT 
+			if  stream   0 || stream   1 
+				return  EINVAL 
+			if  get user subdevice   info subdevice  
+				return  EFAULT 
+			mutex lock  register mutex  
+			pcm = snd pcm get card  device  
+			if  pcm == NULL  {
+				err =  ENXIO 
+				goto  error 
+			}
+			pstr =  pcm streams stream  
+			if  pstr substream count == 0  {
+				err =  ENOENT 
+				goto  error 
+			}
+			if  subdevice  = pstr substream count  {
+				err =  ENXIO 
+				goto  error 
+			}
+			for  substream = pstr substream  substream 
+			     substream = substream next 
+				if  substream number ==  int subdevice 
+					break 
+			if  substream == NULL  {
+				err =  ENXIO 
+				goto  error 
+			}
+			err = snd pcm info user substream  info  
+		 error 
+			mutex unlock  register mutex  
+			return err 
+		}
+	case SNDRV CTL IOCTL PCM PREFER SUBDEVICE 
+		{
+			int val 
+			
+			if  get user val   int   user   arg  
+				return  EFAULT 
+			control prefer pcm subdevice = val 
+			return 0 
+		}
+	}
+	return  ENOIOCTLCMD 
+}
+

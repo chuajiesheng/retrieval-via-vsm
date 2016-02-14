@@ -1,0 +1,9 @@
+static void snd via82xx codec wait struct snd ac97  ac97 
+{
+	struct via82xx modem  chip = ac97 private data 
+	int err 
+	err = snd via82xx codec ready chip  ac97 num  
+	   here we need to wait fairly for long time     
+	msleep 500  
+}
+

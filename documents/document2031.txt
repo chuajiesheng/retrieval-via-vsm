@@ -1,0 +1,6 @@
+static int snd cs4281 dev free struct snd device  device 
+{
+	struct cs4281  chip = device device data 
+	return snd cs4281 free chip  
+}
+

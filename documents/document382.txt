@@ -1,0 +1,15 @@
+static void snd portman midi output trigger struct snd rawmidi substream  substream 
+					    int up 
+{
+	struct portman  pm = substream rmidi private data 
+	unsigned long flags 
+	unsigned char byte 
+
+	spin lock irqsave  pm reg lock  flags  
+	if  up  {
+		while   snd rawmidi transmit substream   byte  1  == 1  
+			portman write midi pm  substream number  byte  
+	}
+	spin unlock irqrestore  pm reg lock  flags  
+}
+

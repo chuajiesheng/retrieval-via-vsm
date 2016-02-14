@@ -1,0 +1,44 @@
+static void snd fm801 tea575x 256pcs write struct snd tea575x  tea  unsigned int val 
+{
+	struct fm801  chip = tea private data 
+	unsigned short reg 
+	int i = 25 
+
+	spin lock irq  chip reg lock  
+	reg = inw FM801 REG chip  GPIO CTRL   
+	   use GPIO lines and set write enable bit   
+	reg |= FM801 GPIO GS TEA 256PCS DATA  |
+	       FM801 GPIO GS TEA 256PCS WRITE ENABLE  |
+	       FM801 GPIO GS TEA 256PCS BUS CLOCK  
+	   all of lines are in the write direction   
+	   clear data and clock lines   
+	reg  = ~ FM801 GPIO GD TEA 256PCS DATA  |
+	         FM801 GPIO GD TEA 256PCS WRITE ENABLE  |
+	         FM801 GPIO GD TEA 256PCS BUS CLOCK  |
+	         FM801 GPIO GP TEA 256PCS DATA  |
+	         FM801 GPIO GP TEA 256PCS BUS CLOCK  |
+		 FM801 GPIO GP TEA 256PCS WRITE ENABLE   
+	outw reg  FM801 REG chip  GPIO CTRL   
+	udelay 1  
+
+	while  i    {
+		if  val    1    i  
+			reg |= FM801 GPIO GP TEA 256PCS DATA  
+		else
+			reg  = ~FM801 GPIO GP TEA 256PCS DATA  
+		outw reg  FM801 REG chip  GPIO CTRL   
+		udelay 1  
+		reg |= FM801 GPIO GP TEA 256PCS BUS CLOCK  
+		outw reg  FM801 REG chip  GPIO CTRL   
+		reg  = ~FM801 GPIO GP TEA 256PCS BUS CLOCK  
+		outw reg  FM801 REG chip  GPIO CTRL   
+		udelay 1  
+	}
+
+	   and reset the write enable bit   
+	reg |= FM801 GPIO GP TEA 256PCS WRITE ENABLE  |
+	       FM801 GPIO GP TEA 256PCS DATA  
+	outw reg  FM801 REG chip  GPIO CTRL   
+	spin unlock irq  chip reg lock  
+}
+

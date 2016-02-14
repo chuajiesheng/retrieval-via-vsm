@@ -1,0 +1,14 @@
+   
+   ib post srq recv   Posts a list of work requests to the specified SRQ 
+   @srq  The SRQ to post the work request on 
+   @recv wr  A list of work requests to post on the receive queue 
+   @bad recv wr  On an immediate failure  this parameter will reference
+     the work request that failed to be posted on the QP 
+   
+static inline int ib post srq recv struct ib srq  srq 
+				   struct ib recv wr  recv wr 
+				   struct ib recv wr   bad recv wr 
+{
+	return srq device post srq recv srq  recv wr  bad recv wr  
+}
+

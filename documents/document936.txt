@@ -1,0 +1,8 @@
+static void   devinit snd sonicvibes proc init struct sonicvibes   sonic 
+{
+	struct snd info entry  entry 
+
+	if    snd card proc new sonic card   sonicvibes    entry  
+		snd info set text ops entry  sonic  snd sonicvibes proc read  
+}
+

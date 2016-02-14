@@ -1,0 +1,12 @@
+  
+   XRUN detected  and stop the PCM substream
+   
+static void snd atiixp xrun dma struct atiixp modem  chip 
+				struct atiixp dma  dma 
+{
+	if    dma substream ||   dma running 
+		return 
+	snd printdd  atiixp modem  XRUN detected  DMA  d \n   dma ops type  
+	snd pcm stop dma substream  SNDRV PCM STATE XRUN  
+}
+

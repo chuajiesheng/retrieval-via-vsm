@@ -1,0 +1,6 @@
+snd azf3328 dev free struct snd device  device 
+{
+	struct snd azf3328  chip = device device data 
+	return snd azf3328 free chip  
+}
+

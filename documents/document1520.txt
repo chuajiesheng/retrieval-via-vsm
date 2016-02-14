@@ -1,0 +1,60 @@
+snd rme96 setinputtype struct rme96  rme96 
+		       int type 
+{
+	int n 
+
+	switch  type  {
+	case RME96 INPUT OPTICAL 
+		rme96 wcreg =  rme96 wcreg   ~RME96 WCR INP 0   
+			~RME96 WCR INP 1 
+		break 
+	case RME96 INPUT COAXIAL 
+		rme96 wcreg =  rme96 wcreg | RME96 WCR INP 0   
+			~RME96 WCR INP 1 
+		break 
+	case RME96 INPUT INTERNAL 
+		rme96 wcreg =  rme96 wcreg   ~RME96 WCR INP 0  |
+			RME96 WCR INP 1 
+		break 
+	case RME96 INPUT XLR 
+		if   rme96 pci device  = PCI DEVICE ID RME DIGI96 8 PAD OR PST   
+		     rme96 pci device  = PCI DEVICE ID RME DIGI96 8 PRO  ||
+		     rme96 pci device == PCI DEVICE ID RME DIGI96 8 PAD OR PST   
+		     rme96 rev   4  
+		{
+			   Only Digi96 8 PRO and Digi96 8 PAD supports XLR   
+			return  EINVAL 
+		}
+		rme96 wcreg =  rme96 wcreg | RME96 WCR INP 0  |
+			RME96 WCR INP 1 
+		break 
+	case RME96 INPUT ANALOG 
+		if   RME96 HAS ANALOG IN rme96   {
+			return  EINVAL 
+		}
+		rme96 areg |= RME96 AR ANALOG 
+		writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+		if  rme96 rev   4  {
+			  
+			   Revision less than 004 does not support 64 and
+			   88 2 kHz
+			   
+			if  snd rme96 capture getrate rme96   n  == 88200  {
+				snd rme96 capture analog setrate rme96  44100  
+			}
+			if  snd rme96 capture getrate rme96   n  == 64000  {
+				snd rme96 capture analog setrate rme96  32000  
+			}
+		}
+		return 0 
+	default 
+		return  EINVAL 
+	}
+	if  type  = RME96 INPUT ANALOG    RME96 HAS ANALOG IN rme96   {
+		rme96 areg  = ~RME96 AR ANALOG 
+		writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+	}
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	return 0 
+}
+

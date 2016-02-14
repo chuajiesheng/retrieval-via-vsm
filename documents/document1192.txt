@@ -1,0 +1,7 @@
+snd azf3328 gameport axis circuit enable struct snd azf3328  chip  bool enable 
+{
+	snd azf3328 ctrl reg 6AH update 
+		chip  IO 6A SOMETHING2 GAMEPORT  enable
+	  
+}
+

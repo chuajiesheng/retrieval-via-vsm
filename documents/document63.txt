@@ -1,0 +1,40 @@
+   
+   snd device free   release the device from the card
+   @card  the card instance
+   @device data  the data pointer to release
+  
+   Removes the device from the list on the card and invokes the
+   callbacks  dev disconnect and dev free  corresponding to the state 
+   Then release the device 
+  
+   Returns zero if successful  or a negative error code on failure or if the
+   device not found 
+   
+int snd device free struct snd card  card  void  device data 
+{
+	struct snd device  dev 
+	
+	if  snd BUG ON  card ||  device data  
+		return  ENXIO 
+	list for each entry dev   card devices  list  {
+		if  dev device data  = device data 
+			continue 
+		   unlink   
+		list del  dev list  
+		if  dev state == SNDRV DEV REGISTERED   
+		    dev ops dev disconnect 
+			if  dev ops dev disconnect dev  
+				snd printk KERN ERR
+					    device disconnect failure\n   
+		if  dev ops dev free  {
+			if  dev ops dev free dev  
+				snd printk KERN ERR  device free failure\n   
+		}
+		kfree dev  
+		return 0 
+	}
+	snd printd  device free  p  from  pF   not found\n   device data 
+		     builtin return address 0   
+	return  ENXIO 
+}
+

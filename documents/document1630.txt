@@ -1,0 +1,8 @@
+  
+   WiMAX stack public API for device drivers
+                                            
+  
+   These functions are not exported to user space 
+   
+extern void wimax dev init struct wimax dev    
+

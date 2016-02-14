@@ -1,0 +1,10 @@
+  
+   ctl callbacks for slaves
+   
+static int slave info struct snd kcontrol  kcontrol 
+		      struct snd ctl elem info  uinfo 
+{
+	struct link slave  slave = snd kcontrol chip kcontrol  
+	return slave slave info  slave slave  uinfo  
+}
+

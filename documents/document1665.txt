@@ -1,0 +1,36 @@
+   spinlock held    
+static void snd m3 update ptr struct snd m3  chip  struct m3 dma  s 
+{
+	struct snd pcm substream  subs = s substream 
+	unsigned int hwptr 
+	int diff 
+
+	if    s running 
+		return 
+
+	hwptr = snd m3 get pointer chip  s  subs  
+
+	   try to avoid expensive modulo divisions   
+	if  hwptr  = s dma size 
+		hwptr  = s dma size 
+
+	diff = s dma size + hwptr   s hwptr 
+	if  diff  = s dma size 
+		diff  = s dma size 
+
+	s hwptr = hwptr 
+	s count += diff 
+
+	if  s count  =  signed s period size  {
+
+		if  s count   2    signed s period size 
+			s count  =  signed s period size 
+		else
+			s count  = s period size 
+
+		spin unlock  chip reg lock  
+		snd pcm period elapsed subs  
+		spin lock  chip reg lock  
+	}
+}
+

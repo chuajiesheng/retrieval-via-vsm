@@ -1,0 +1,28 @@
+static int   devinit snd cs4281 pcm struct cs4281   chip  int device 
+				    struct snd pcm    rpcm 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	if  rpcm 
+		 rpcm = NULL 
+	err = snd pcm new chip card   CS4281   device  1  1   pcm  
+	if  err   0 
+		return err 
+
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd cs4281 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd cs4281 capture ops  
+
+	pcm private data = chip 
+	pcm info flags = 0 
+	strcpy pcm name   CS4281   
+	chip pcm = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data chip pci   64 1024  512 1024  
+
+	if  rpcm 
+		 rpcm = pcm 
+	return 0 
+}
+

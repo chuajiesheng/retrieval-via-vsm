@@ -1,0 +1,11 @@
+  
+  	On demand allocation and de allocation of entries
+   
+static struct tfrc loss interval  tfrc lh demand next struct tfrc loss hist  lh 
+{
+	if  lh ring LIH INDEX lh counter   == NULL 
+		lh ring LIH INDEX lh counter   = kmem cache alloc tfrc lh slab 
+								    GFP ATOMIC  
+	return lh ring LIH INDEX lh counter   
+}
+

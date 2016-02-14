@@ -1,0 +1,13 @@
+static void snd atiixp codec write struct atiixp  chip  unsigned short codec 
+				   unsigned short reg  unsigned short val 
+{
+	unsigned int data 
+    
+	if  snd atiixp acquire codec chip    0 
+		return 
+	data =   unsigned int val    ATI REG PHYS OUT DATA SHIFT  |
+		  unsigned int reg    ATI REG PHYS OUT ADDR SHIFT  |
+		ATI REG PHYS OUT ADDR EN | codec 
+	atiixp write chip  PHYS OUT ADDR  data  
+}
+

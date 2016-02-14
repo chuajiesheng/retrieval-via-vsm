@@ -1,0 +1,17 @@
+static int snd hwdep dsp status struct snd hwdep  hw 
+				struct snd hwdep dsp status   user   info 
+{
+	struct snd hwdep dsp status info 
+	int err 
+	
+	if    hw ops dsp status 
+		return  ENXIO 
+	memset  info  0  sizeof info   
+	info dsp loaded = hw dsp loaded 
+	if   err = hw ops dsp status hw   info     0 
+		return err 
+	if  copy to user  info   info  sizeof info   
+		return  EFAULT 
+	return 0 
+}
+

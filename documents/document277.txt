@@ -1,0 +1,3 @@
+int snd add device sysfs file int type  struct snd card  card  int dev 
+			      struct device attribute  attr  
+

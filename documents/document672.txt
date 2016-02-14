@@ -1,0 +1,6 @@
+static inline s64 ktime to us const ktime t kt 
+{
+	struct timeval tv = ktime to timeval kt  
+	return  s64  tv tv sec   USEC PER SEC + tv tv usec 
+}
+

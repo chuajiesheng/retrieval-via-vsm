@@ -1,0 +1,33 @@
+static irqreturn t snd intel8x0 interrupt int irq  void  dev id 
+{
+	struct intel8x0m  chip = dev id 
+	struct ichdev  ichdev 
+	unsigned int status 
+	unsigned int i 
+
+	spin lock  chip reg lock  
+	status = igetdword chip  chip int sta reg  
+	if  status == 0xffffffff  {    we are not yet resumed   
+		spin unlock  chip reg lock  
+		return IRQ NONE 
+	}
+	if   status   chip int sta mask  == 0  {
+		if  status 
+			iputdword chip  chip int sta reg  status  
+		spin unlock  chip reg lock  
+		return IRQ NONE 
+	}
+
+	for  i = 0  i   chip bdbars count  i++  {
+		ichdev =  chip ichd i  
+		if  status   ichdev int sta mask 
+			snd intel8x0 update chip  ichdev  
+	}
+
+	   ack them   
+	iputdword chip  chip int sta reg  status   chip int sta mask  
+	spin unlock  chip reg lock  
+	
+	return IRQ HANDLED 
+}
+

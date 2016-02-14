@@ -1,0 +1,10 @@
+static struct snd hwdep  snd hwdep search struct snd card  card  int device 
+{
+	struct snd hwdep  hwdep 
+
+	list for each entry hwdep   snd hwdep devices  list 
+		if  hwdep card == card    hwdep device == device 
+			return hwdep 
+	return NULL 
+}
+

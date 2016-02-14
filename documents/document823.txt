@@ -1,0 +1,29 @@
+  
+   enable DMA and irqs
+   
+static int snd atiixp chip start struct atiixp  chip 
+{
+	unsigned int reg 
+
+	   set up spdif  enable burst mode   
+	reg = atiixp read chip  CMD  
+	reg |= 0x02    ATI REG CMD SPDF THRESHOLD SHIFT 
+	reg |= ATI REG CMD BURST EN 
+	atiixp write chip  CMD  reg  
+
+	reg = atiixp read chip  SPDF CMD  
+	reg  = ~ ATI REG SPDF CMD LFSR|ATI REG SPDF CMD SINGLE CH  
+	atiixp write chip  SPDF CMD  reg  
+
+	   clear all interrupt source   
+	atiixp write chip  ISR  0xffffffff  
+	   enable irqs   
+	atiixp write chip  IER 
+		     ATI REG IER IO STATUS EN |
+		     ATI REG IER IN XRUN EN |
+		     ATI REG IER OUT XRUN EN |
+		     ATI REG IER SPDF XRUN EN |
+		     ATI REG IER SPDF STATUS EN  
+	return 0 
+}
+

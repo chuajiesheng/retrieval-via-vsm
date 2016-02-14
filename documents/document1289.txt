@@ -1,0 +1,5 @@
+extern void drm connector init struct drm device  dev 
+			    struct drm connector  connector 
+			    const struct drm connector funcs  funcs 
+			    int connector type  
+

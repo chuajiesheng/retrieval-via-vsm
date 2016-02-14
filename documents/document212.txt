@@ -1,0 +1,4 @@
+   allocate release a buffer   
+int snd dma alloc pages int type  struct device  dev  size t size 
+			struct snd dma buffer  dmab  
+

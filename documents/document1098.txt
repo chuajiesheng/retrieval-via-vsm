@@ -1,0 +1,21 @@
+snd azf3328 get mixer enum struct snd kcontrol  kcontrol 
+			   struct snd ctl elem value  ucontrol 
+{
+        struct snd azf3328  chip = snd kcontrol chip kcontrol  
+	struct azf3328 mixer reg reg 
+        unsigned short val 
+
+	snd azf3328 mixer reg decode  reg  kcontrol private value  
+	val = snd azf3328 mixer inw chip  reg reg  
+	if  reg reg == IDX MIXER REC SELECT  {
+        	ucontrol value enumerated item 0  =  val    8     reg enum c   1  
+        	ucontrol value enumerated item 1  =  val    0     reg enum c   1  
+	} else
+        	ucontrol value enumerated item 0  =  val    reg lchan shift     reg enum c   1  
+
+	snd azf3328 dbgmixer  get enum   02x is  04x    d| d  shift  02d  enum c  d \n  
+		reg reg  val  ucontrol value enumerated item 0   ucontrol value enumerated item 1  
+		reg lchan shift  reg enum c  
+        return 0 
+}
+

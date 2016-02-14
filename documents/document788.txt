@@ -1,0 +1,8 @@
+static int snd cs5530 free struct snd cs5530  chip 
+{
+	pci release regions chip pci  
+	pci disable device chip pci  
+	kfree chip  
+	return 0 
+}
+

@@ -1,0 +1,10 @@
+static int snd mts64 ctl smpte time f info struct snd kcontrol  kctl 
+					   struct snd ctl elem info  uinfo 
+{
+	uinfo type = SNDRV CTL ELEM TYPE INTEGER 
+	uinfo count = 1 
+	uinfo value integer min = 0 
+	uinfo value integer max = 99 
+	return 0 
+}
+

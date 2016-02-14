@@ -1,0 +1,26 @@
+   
+   ttm bo mem space
+  
+   @bo  Pointer to a struct ttm buffer object  the data of which
+   we want to allocate space for 
+   @proposed placement  Proposed new placement for the buffer object 
+   @mem  A struct ttm mem reg 
+   @interruptible  Sleep interruptible when sliping 
+   @no wait reserve  Return immediately if other buffers are busy 
+   @no wait gpu  Return immediately if the GPU is busy 
+  
+   Allocate memory space for the buffer object pointed to by @bo  using
+   the placement flags in @mem  potentially evicting other idle buffer objects 
+   This function may sleep while waiting for space to become available 
+   Returns 
+    EBUSY  No space available  only if no wait == 1  
+    ENOMEM  Could not allocate memory for the buffer object  either due to
+   fragmentation or concurrent allocators 
+    ERESTARTSYS  An interruptible sleep was interrupted by a signal 
+   
+extern int ttm bo mem space struct ttm buffer object  bo 
+				struct ttm placement  placement 
+				struct ttm mem reg  mem 
+				bool interruptible 
+				bool no wait reserve  bool no wait gpu  
+

@@ -1,0 +1,30 @@
+static int snd rme32 setclockmode struct rme32   rme32  int mode 
+{
+	switch  mode  {
+	case RME32 CLOCKMODE SLAVE 
+		   AutoSync   
+		rme32 wcreg =  rme32 wcreg   ~RME32 WCR FREQ 0    
+			~RME32 WCR FREQ 1 
+		break 
+	case RME32 CLOCKMODE MASTER 32 
+		   Internal 32 0kHz   
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 0    
+			~RME32 WCR FREQ 1 
+		break 
+	case RME32 CLOCKMODE MASTER 44 
+		   Internal 44 1kHz   
+		rme32 wcreg =  rme32 wcreg   ~RME32 WCR FREQ 0  | 
+			RME32 WCR FREQ 1 
+		break 
+	case RME32 CLOCKMODE MASTER 48 
+		   Internal 48 0kHz   
+		rme32 wcreg =  rme32 wcreg | RME32 WCR FREQ 0  | 
+			RME32 WCR FREQ 1 
+		break 
+	default 
+		return  EINVAL 
+	}
+	writel rme32 wcreg  rme32 iobase + RME32 IO CONTROL REGISTER  
+	return 0 
+}
+

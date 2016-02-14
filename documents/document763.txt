@@ -1,0 +1,6 @@
+snd pcm sgbuf get addr struct snd pcm substream  substream  unsigned int ofs 
+{
+	struct snd sg buf  sg = snd pcm substream sgbuf substream  
+	return snd sgbuf get addr sg  ofs  
+}
+

@@ -1,0 +1,11 @@
+snd azf3328 gameport irq enable struct snd azf3328  chip 
+				bool enable
+ 
+{
+	snd azf3328 io reg setb 
+		chip game io+IDX GAME HWCONFIG 
+		GAME HWCFG IRQ ENABLE 
+		enable
+	  
+}
+

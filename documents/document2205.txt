@@ -1,0 +1,45 @@
+ad1889 channel reset struct snd ad1889  chip  unsigned int channel 
+{
+	u16 reg 
+	
+	if  channel   AD CHAN WAV  {
+		   Disable wave channel   
+		reg = ad1889 readw chip  AD DS WSMC    ~AD DS WSMC WAEN 
+		ad1889 writew chip  AD DS WSMC  reg  
+		chip wave reg = reg 
+		
+		   disable IRQs   
+		reg = ad1889 readw chip  AD DMA WAV  
+		reg  = AD DMA IM DIS 
+		reg  = ~AD DMA LOOP 
+		ad1889 writew chip  AD DMA WAV  reg  
+
+		   clear IRQ and address counters and pointers   
+		ad1889 load wave buffer address chip  0x0  
+		ad1889 load wave buffer count chip  0x0  
+		ad1889 load wave interrupt count chip  0x0  
+
+		   flush   
+		ad1889 readw chip  AD DMA WAV  
+	}
+	
+	if  channel   AD CHAN ADC  {
+		   Disable ADC channel   
+		reg = ad1889 readw chip  AD DS RAMC    ~AD DS RAMC ADEN 
+		ad1889 writew chip  AD DS RAMC  reg  
+		chip ramc reg = reg 
+
+		reg = ad1889 readw chip  AD DMA ADC  
+		reg  = AD DMA IM DIS 
+		reg  = ~AD DMA LOOP 
+		ad1889 writew chip  AD DMA ADC  reg  
+	
+		ad1889 load adc buffer address chip  0x0  
+		ad1889 load adc buffer count chip  0x0  
+		ad1889 load adc interrupt count chip  0x0  
+
+		   flush   
+		ad1889 readw chip  AD DMA ADC  
+	}
+}
+

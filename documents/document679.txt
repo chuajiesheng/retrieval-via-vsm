@@ -1,0 +1,14 @@
+  
+   
+static void snd mtpav wait rfdhi struct mtpav  chip 
+{
+	int counts = 10000 
+	u8 sbyte 
+
+	sbyte = snd mtpav getreg chip  SREG  
+	while    sbyte   SIGS RFD     counts    {
+		sbyte = snd mtpav getreg chip  SREG  
+		udelay 10  
+	}
+}
+

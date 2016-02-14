@@ -1,0 +1,8 @@
+  
+  
+   
+static inline void snd sb ack 8bit struct snd sb  chip 
+{
+	inb SBP chip  DATA AVAIL   
+}
+

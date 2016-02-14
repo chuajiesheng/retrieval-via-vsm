@@ -1,0 +1,35 @@
+   
+   snd device disconnect   disconnect the device
+   @card  the card instance
+   @device data  the data pointer to disconnect
+  
+   Turns the device into the disconnection state  invoking
+   dev disconnect callback  if the device was already registered 
+  
+   Usually called from snd card disconnect   
+  
+   Returns zero if successful  or a negative error code on failure or if the
+   device not found 
+   
+int snd device disconnect struct snd card  card  void  device data 
+{
+	struct snd device  dev 
+
+	if  snd BUG ON  card ||  device data  
+		return  ENXIO 
+	list for each entry dev   card devices  list  {
+		if  dev device data  = device data 
+			continue 
+		if  dev state == SNDRV DEV REGISTERED   
+		    dev ops dev disconnect  {
+			if  dev ops dev disconnect dev  
+				snd printk KERN ERR  device disconnect failure\n   
+			dev state = SNDRV DEV DISCONNECTED 
+		}
+		return 0 
+	}
+	snd printd  device disconnect  p  from  pF   not found\n   device data 
+		     builtin return address 0   
+	return  ENXIO 
+}
+

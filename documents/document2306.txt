@@ -1,0 +1,9 @@
+static void snd rme32 convert to aes struct snd aes iec958   aes  u32 val 
+{
+	aes status 0  =   val   RME32 WCR PRO  ? IEC958 AES0 PROFESSIONAL   0  
+	if  val   RME32 WCR PRO 
+		aes status 0  |=  val   RME32 WCR EMP  ? IEC958 AES0 PRO EMPHASIS 5015   0 
+	else
+		aes status 0  |=  val   RME32 WCR EMP  ? IEC958 AES0 CON EMPHASIS 5015   0 
+}
+

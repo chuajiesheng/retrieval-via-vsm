@@ -1,0 +1,37 @@
+static int   devinit snd via686 create gameport struct via82xx  chip  unsigned char  legacy 
+{
+	struct gameport  gp 
+	struct resource  r 
+
+	if   joystick 
+		return  ENODEV 
+
+	r = request region JOYSTICK ADDR  8   VIA686 gameport   
+	if   r  {
+		printk KERN WARNING  via82xx  cannot reserve joystick port 0x #x\n  
+		       JOYSTICK ADDR  
+		return  EBUSY 
+	}
+
+	chip gameport = gp = gameport allocate port   
+	if   gp  {
+		printk KERN ERR  via82xx  cannot allocate memory for gameport\n   
+		release and free resource r  
+		return  ENOMEM 
+	}
+
+	gameport set name gp   VIA686 Gameport   
+	gameport set phys gp   pci s gameport0   pci name chip pci   
+	gameport set dev parent gp   chip pci dev  
+	gp io = JOYSTICK ADDR 
+	gameport set port data gp  r  
+
+	   Enable legacy joystick port   
+	 legacy |= VIA FUNC ENABLE GAME 
+	pci write config byte chip pci  VIA FUNC ENABLE   legacy  
+
+	gameport register port chip gameport  
+
+	return 0 
+}
+

@@ -1,0 +1,39 @@
+snd pcm indirect capture transfer struct snd pcm substream  substream 
+				  struct snd pcm indirect  rec 
+				  snd pcm indirect copy t copy 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	snd pcm uframes t appl ptr = runtime control appl ptr 
+	snd pcm sframes t diff = appl ptr   rec appl ptr 
+
+	if  diff  {
+		if  diff     snd pcm sframes t   runtime boundary   2  
+			diff += runtime boundary 
+		rec sw ready  = frames to bytes runtime  diff  
+		rec appl ptr = appl ptr 
+	}
+	while  rec hw ready   0    
+	       rec sw ready    int rec sw buffer size  {
+		size t hw to end = rec hw buffer size   rec hw data 
+		size t sw to end = rec sw buffer size   rec sw data 
+		size t bytes = rec sw buffer size   rec sw ready 
+		if  rec hw ready    int bytes 
+			bytes = rec hw ready 
+		if  hw to end   bytes 
+			bytes = hw to end 
+		if  sw to end   bytes 
+			bytes = sw to end 
+		if    bytes 
+			break 
+		copy substream  rec  bytes  
+		rec hw data += bytes 
+		if   int rec hw data == rec hw buffer size 
+			rec hw data = 0 
+		rec sw data += bytes 
+		if  rec sw data == rec sw buffer size 
+			rec sw data = 0 
+		rec hw ready  = bytes 
+		rec sw ready += bytes 
+	}
+}
+

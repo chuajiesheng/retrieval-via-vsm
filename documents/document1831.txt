@@ -1,0 +1,18 @@
+static int snd ensoniq control put struct snd kcontrol  kcontrol 
+				   struct snd ctl elem value  ucontrol 
+{
+	struct ensoniq  ensoniq = snd kcontrol chip kcontrol  
+	int mask = kcontrol private value 
+	unsigned int nval 
+	int change 
+	
+	nval = ucontrol value integer value 0  ? mask   0 
+	spin lock irq  ensoniq reg lock  
+	change =  ensoniq ctrl   mask   = nval 
+	ensoniq ctrl  = ~mask 
+	ensoniq ctrl |= nval 
+	outl ensoniq ctrl  ES REG ensoniq  CONTROL   
+	spin unlock irq  ensoniq reg lock  
+	return change 
+}
+

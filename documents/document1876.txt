@@ -1,0 +1,12 @@
+   
+   ieee80211 enable dyn ps   restore dynamic psm after being disabled
+  
+   @vif   struct ieee80211 vif pointer from the add interface callback 
+  
+   This function restores dynamic PS after being temporarily disabled via
+   ieee80211 disable dyn ps    Each ieee80211 disable dyn ps   call must
+   be coupled with an eventual call to this function 
+  
+   
+void ieee80211 enable dyn ps struct ieee80211 vif  vif  
+

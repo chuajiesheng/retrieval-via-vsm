@@ -1,0 +1,45 @@
+static loff t snd info entry llseek struct file  file  loff t offset  int orig 
+{
+	struct snd info private data  data 
+	struct snd info entry  entry 
+	loff t ret =  EINVAL  size 
+
+	data = file private data 
+	entry = data entry 
+	mutex lock  entry access  
+	if  entry content == SNDRV INFO CONTENT DATA   
+	    entry c ops llseek  {
+		offset = entry c ops llseek entry 
+					      data file private data 
+					      file  offset  orig  
+		goto out 
+	}
+	if  entry content == SNDRV INFO CONTENT DATA 
+		size = entry size 
+	else
+		size = 0 
+	switch  orig  {
+	case SEEK SET 
+		break 
+	case SEEK CUR 
+		offset += file f pos 
+		break 
+	case SEEK END 
+		if   size 
+			goto out 
+		offset += size 
+		break 
+	default 
+		goto out 
+	}
+	if  offset   0 
+		goto out 
+	if  size    offset   size 
+		offset = size 
+	file f pos = offset 
+	ret = offset 
+ out 
+	mutex unlock  entry access  
+	return ret 
+}
+

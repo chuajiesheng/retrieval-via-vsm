@@ -1,0 +1,111 @@
+   
+    snd card create   create and initialize a soundcard structure
+    @idx  card index  address   0      SNDRV CARDS 1  
+    @xid  card identification  ASCII string 
+    @module  top level module for locking
+    @extra size  allocate this extra size after the main soundcard structure
+    @card ret  the pointer to store the created card instance
+  
+    Creates and initializes a soundcard structure 
+  
+    The function allocates snd card instance via kzalloc with the given
+    space for the driver to use freely   The allocated struct is stored
+    in the given card ret pointer 
+  
+    Returns zero if successful or a negative error code 
+   
+int snd card create int idx  const char  xid 
+		    struct module  module  int extra size 
+		    struct snd card   card ret 
+{
+	struct snd card  card 
+	int err  idx2 
+
+	if  snd BUG ON  card ret  
+		return  EINVAL 
+	 card ret = NULL 
+
+	if  extra size   0 
+		extra size = 0 
+	card = kzalloc sizeof  card  + extra size  GFP KERNEL  
+	if   card 
+		return  ENOMEM 
+	if  xid 
+		strlcpy card id  xid  sizeof card id   
+	err = 0 
+	mutex lock  snd card mutex  
+	if  idx   0  {
+		for  idx2 = 0  idx2   SNDRV CARDS  idx2++ 
+			   idx ==  1 == 0xffff means  take any free slot   
+			if  ~snd cards lock   idx   1  idx2  {
+				if  module slot match module  idx2   {
+					idx = idx2 
+					break 
+				}
+			}
+	}
+	if  idx   0  {
+		for  idx2 = 0  idx2   SNDRV CARDS  idx2++ 
+			   idx ==  1 == 0xffff means  take any free slot   
+			if  ~snd cards lock   idx   1  idx2  {
+				if   slots idx2  ||   slots idx2   {
+					idx = idx2 
+					break 
+				}
+			}
+	}
+	if  idx   0 
+		err =  ENODEV 
+	else if  idx   snd ecards limit  {
+		if  snd cards lock    1    idx  
+			err =  EBUSY 	   invalid   
+	} else if  idx  = SNDRV CARDS 
+		err =  ENODEV 
+	if  err   0  {
+		mutex unlock  snd card mutex  
+		snd printk KERN ERR  cannot find the slot for index  d  range 0  i   error   d\n  
+			 idx  snd ecards limit   1  err  
+		goto   error 
+	}
+	snd cards lock |= 1    idx 		   lock it   
+	if  idx  = snd ecards limit 
+		snd ecards limit = idx + 1     increase the limit   
+	mutex unlock  snd card mutex  
+	card number = idx 
+	card module = module 
+	INIT LIST HEAD  card devices  
+	init rwsem  card controls rwsem  
+	rwlock init  card ctl files rwlock  
+	INIT LIST HEAD  card controls  
+	INIT LIST HEAD  card ctl files  
+	spin lock init  card files lock  
+	INIT LIST HEAD  card files list  
+	init waitqueue head  card shutdown sleep  
+#ifdef CONFIG PM
+	mutex init  card power lock  
+	init waitqueue head  card power sleep  
+#endif
+	   the control interface cannot be accessed from the user space until   
+	   snd cards bitmask and snd cards are set with snd card register   
+	err = snd ctl create card  
+	if  err   0  {
+		snd printk KERN ERR  unable to register control minors\n   
+		goto   error 
+	}
+	err = snd info card create card  
+	if  err   0  {
+		snd printk KERN ERR  unable to create card info\n   
+		goto   error ctl 
+	}
+	if  extra size   0 
+		card private data =  char   card + sizeof struct snd card  
+	 card ret = card 
+	return 0 
+
+        error ctl 
+	snd device free all card  SNDRV DEV CMD PRE  
+        error 
+	kfree card  
+  	return err 
+}
+

@@ -1,0 +1,6 @@
+static int snd rme96 control spdif mask get struct snd kcontrol  kcontrol  struct snd ctl elem value  ucontrol 
+{
+	ucontrol value iec958 status 0  = kcontrol private value 
+	return 0 
+}
+

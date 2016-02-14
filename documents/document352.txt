@@ -1,0 +1,44 @@
+   
+    snd card file remove   remove the file from the file list
+    @card  soundcard structure
+    @file  file pointer
+  
+    This function removes the file formerly added to the card via
+    snd card file add   function 
+    If all files are removed and snd card free when closed   was
+    called beforehand  it processes the pending release of
+    resources 
+  
+    Returns zero or a negative error code 
+   
+int snd card file remove struct snd card  card  struct file  file 
+{
+	struct snd monitor file  mfile   found = NULL 
+	int last close = 0 
+
+	spin lock  card files lock  
+	list for each entry mfile   card files list  list  {
+		if  mfile file == file  {
+			list del  mfile list  
+			if  mfile disconnected f op 
+				fops put mfile disconnected f op  
+			found = mfile 
+			break 
+		}
+	}
+	if  list empty  card files list  
+		last close = 1 
+	spin unlock  card files lock  
+	if  last close  {
+		wake up  card shutdown sleep  
+		if  card free on last close 
+			snd card do free card  
+	}
+	if   found  {
+		snd printk KERN ERR  ALSA card file remove problem   p \n   file  
+		return  ENOENT 
+	}
+	kfree found  
+	return 0 
+}
+

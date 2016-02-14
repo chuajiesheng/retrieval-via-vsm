@@ -1,0 +1,58 @@
+  
+   get the current pointer on via823x
+   
+static snd pcm uframes t snd via8233 pcm pointer struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev = substream runtime private data 
+	unsigned int idx  count  res 
+	int status 
+	
+	if  snd BUG ON  viadev tbl entries  
+		return 0 
+
+	spin lock  chip reg lock  
+	count = inl VIADEV REG viadev  OFFSET CURR COUNT   
+	status = viadev in interrupt 
+	if   status 
+		status = inb VIADEV REG viadev  OFFSET STATUS   
+
+	   An apparent bug in the 8251 is worked around by sending a 
+	   REG CTRL START    
+	if  chip revision == VIA REV 8251     status   VIA REG STAT EOL  
+		snd via82xx pcm trigger substream  SNDRV PCM TRIGGER START  
+
+	if    status   VIA REG STAT ACTIVE   {
+		res = 0 
+		goto unlock 
+	}
+	if  count   0xffffff  {
+		idx = count    24 
+		if  idx  = viadev tbl entries  {
+#ifdef POINTER DEBUG
+			printk KERN DEBUG  fail  invalid idx =  i  i\n   idx 
+			       viadev tbl entries  
+#endif
+			res = viadev lastpos 
+		} else {
+			count  = 0xffffff 
+			res = calc linear pos viadev  idx  count  
+		}
+	} else {
+		res = viadev hwptr done 
+		if   viadev in interrupt  {
+			if  status   VIA REG STAT EOL  {
+				res = 0 
+			} else
+				if  status   VIA REG STAT FLAG  {
+					res += viadev fragsize 
+				}
+		}
+	}			    
+unlock 
+	viadev lastpos = res 
+	spin unlock  chip reg lock  
+
+	return bytes to frames substream runtime  res  
+}
+

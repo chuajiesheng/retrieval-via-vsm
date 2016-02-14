@@ -1,0 +1,2 @@
+extern struct gen pool  gen pool create int  int  
+

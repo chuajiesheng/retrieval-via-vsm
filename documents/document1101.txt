@@ -1,0 +1,10 @@
+snd azf3328 hw params struct snd pcm substream  substream 
+				 struct snd pcm hw params  hw params 
+{
+	int res 
+	snd azf3328 dbgcallenter   
+	res = snd pcm lib malloc pages substream  params buffer bytes hw params   
+	snd azf3328 dbgcallleave   
+	return res 
+}
+

@@ -1,0 +1,5 @@
+static inline u32 snd als4k gcr read struct snd sb  sb  enum als4k gcr t reg 
+{
+	return snd als4k gcr read addr sb alt port  reg  
+}
+

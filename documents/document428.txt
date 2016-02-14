@@ -1,0 +1,12 @@
+static int loopback hw free struct snd pcm substream  substream 
+{
+	struct snd pcm runtime  runtime = substream runtime 
+	struct loopback pcm  dpcm = runtime private data 
+	struct loopback cable  cable = dpcm cable 
+
+	mutex lock  dpcm loopback cable lock  
+	cable valid  = ~ 1    substream stream  
+	mutex unlock  dpcm loopback cable lock  
+	return snd pcm lib free pages substream  
+}
+

@@ -1,0 +1,5 @@
+static inline void dummy hrtimer sync struct dummy hrtimer pcm  dpcm 
+{
+	tasklet kill  dpcm tasklet  
+}
+

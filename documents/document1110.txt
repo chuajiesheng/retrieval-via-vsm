@@ -1,0 +1,158 @@
+snd azf3328 pcm trigger struct snd pcm substream  substream  int cmd 
+{
+	struct snd azf3328  chip = snd pcm substream chip substream  
+	struct snd pcm runtime  runtime = substream runtime 
+	struct snd azf3328 codec data  codec = runtime private data 
+	int result = 0 
+	u16 flags1 
+	bool previously muted = 0 
+	bool is main mixer playback codec =  AZF CODEC PLAYBACK == codec type  
+
+	snd azf3328 dbgcalls  snd azf3328 pcm trigger cmd  d\n   cmd  
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		snd azf3328 dbgcodec  START  s\n   codec name  
+
+		if  is main mixer playback codec  {
+			   mute WaveOut  avoid clicking during setup    
+			previously muted =
+				snd azf3328 mixer set mute 
+						chip  IDX MIXER WAVEOUT  1
+				  
+		}
+
+		snd azf3328 codec setfmt codec 
+			runtime rate 
+			snd pcm format width runtime format  
+			runtime channels  
+
+		spin lock codec lock  
+		   first  remember current value    
+		flags1 = snd azf3328 codec inw codec  IDX IO CODEC DMA FLAGS  
+
+		   stop transfer   
+		flags1  = ~DMA RESUME 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS  flags1  
+
+		   FIXME  clear interrupts or what???   
+		snd azf3328 codec outw codec  IDX IO CODEC IRQTYPE  0xffff  
+		spin unlock codec lock  
+
+		snd azf3328 codec setdmaa codec  runtime dma addr 
+			snd pcm lib period bytes substream  
+			snd pcm lib buffer bytes substream 
+		  
+
+		spin lock codec lock  
+#ifdef WIN9X
+		   FIXME  enable playback recording???   
+		flags1 |= DMA RUN SOMETHING1 | DMA RUN SOMETHING2 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS  flags1  
+
+		   start transfer again   
+		   FIXME  what is this value  0x0010 ???   
+		flags1 |= DMA RESUME | DMA EPILOGUE SOMETHING 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS  flags1  
+#else    NT4   
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+			0x0000  
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+			DMA RUN SOMETHING1  
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+			DMA RUN SOMETHING1 |
+			DMA RUN SOMETHING2  
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+			DMA RESUME |
+			SOMETHING ALMOST ALWAYS SET |
+			DMA EPILOGUE SOMETHING |
+			DMA SOMETHING ELSE  
+#endif
+		spin unlock codec lock  
+		snd azf3328 ctrl codec activity chip  codec type  1  
+
+		if  is main mixer playback codec  {
+			   now unmute WaveOut   
+			if   previously muted 
+				snd azf3328 mixer set mute 
+						chip  IDX MIXER WAVEOUT  0
+				  
+		}
+
+		snd azf3328 dbgcodec  STARTED  s\n   codec name  
+		break 
+	case SNDRV PCM TRIGGER RESUME 
+		snd azf3328 dbgcodec  RESUME  s\n   codec name  
+		   resume codec if we were active   
+		spin lock codec lock  
+		if  codec running 
+			snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+				snd azf3328 codec inw 
+					codec  IDX IO CODEC DMA FLAGS
+				  | DMA RESUME
+			  
+		spin unlock codec lock  
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		snd azf3328 dbgcodec  STOP  s\n   codec name  
+
+		if  is main mixer playback codec  {
+			   mute WaveOut  avoid clicking during setup    
+			previously muted =
+				snd azf3328 mixer set mute 
+						chip  IDX MIXER WAVEOUT  1
+				  
+		}
+
+		spin lock codec lock  
+		   first  remember current value    
+		flags1 = snd azf3328 codec inw codec  IDX IO CODEC DMA FLAGS  
+
+		   stop transfer   
+		flags1  = ~DMA RESUME 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS  flags1  
+
+		   hmm  is this really required? we're resetting the same bit
+		   immediately thereafter      
+		flags1 |= DMA RUN SOMETHING1 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS  flags1  
+
+		flags1  = ~DMA RUN SOMETHING1 
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS  flags1  
+		spin unlock codec lock  
+		snd azf3328 ctrl codec activity chip  codec type  0  
+
+		if  is main mixer playback codec  {
+			   now unmute WaveOut   
+			if   previously muted 
+				snd azf3328 mixer set mute 
+						chip  IDX MIXER WAVEOUT  0
+				  
+		}
+
+		snd azf3328 dbgcodec  STOPPED  s\n   codec name  
+		break 
+	case SNDRV PCM TRIGGER SUSPEND 
+		snd azf3328 dbgcodec  SUSPEND  s\n   codec name  
+		   make sure codec is stopped   
+		snd azf3328 codec outw codec  IDX IO CODEC DMA FLAGS 
+			snd azf3328 codec inw 
+				codec  IDX IO CODEC DMA FLAGS
+			    ~DMA RESUME
+		  
+		break 
+        case SNDRV PCM TRIGGER PAUSE PUSH 
+		snd printk KERN ERR  FIXME  SNDRV PCM TRIGGER PAUSE PUSH NIY \n   
+                break 
+        case SNDRV PCM TRIGGER PAUSE RELEASE 
+		snd printk KERN ERR  FIXME  SNDRV PCM TRIGGER PAUSE RELEASE NIY \n   
+                break 
+        default 
+		snd printk KERN ERR  FIXME  unknown trigger mode \n   
+                return  EINVAL 
+	}
+
+	snd azf3328 dbgcallleave   
+	return result 
+}
+

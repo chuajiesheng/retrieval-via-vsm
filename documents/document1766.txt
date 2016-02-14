@@ -1,0 +1,3 @@
+NORET TYPE void panic const char   fmt      
+	  attribute     NORET AND format  printf  1  2      cold 
+

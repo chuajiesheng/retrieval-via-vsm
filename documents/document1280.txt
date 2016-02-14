@@ -1,0 +1,2 @@
+void snd sbmixer suspend struct snd sb  chip  
+

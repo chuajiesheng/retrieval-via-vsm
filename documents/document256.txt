@@ -1,0 +1,60 @@
+   
+   snd pcm new   create a new PCM instance
+   @card  the card instance
+   @id  the id string
+   @device  the device index  zero based 
+   @playback count  the number of substreams for playback
+   @capture count  the number of substreams for capture
+   @rpcm  the pointer to store the new pcm instance
+  
+   Creates a new PCM instance 
+  
+   The pcm operators have to be set afterwards to the new instance
+   via snd pcm set ops   
+  
+   Returns zero if successful  or a negative error code on failure 
+   
+int snd pcm new struct snd card  card  const char  id  int device 
+		int playback count  int capture count 
+	        struct snd pcm    rpcm 
+{
+	struct snd pcm  pcm 
+	int err 
+	static struct snd device ops ops = {
+		 dev free = snd pcm dev free 
+		 dev register =	snd pcm dev register 
+		 dev disconnect = snd pcm dev disconnect 
+	} 
+
+	if  snd BUG ON  card  
+		return  ENXIO 
+	if  rpcm 
+		 rpcm = NULL 
+	pcm = kzalloc sizeof  pcm   GFP KERNEL  
+	if  pcm == NULL  {
+		snd printk KERN ERR  Cannot allocate PCM\n   
+		return  ENOMEM 
+	}
+	pcm card = card 
+	pcm device = device 
+	if  id 
+		strlcpy pcm id  id  sizeof pcm id   
+	if   err = snd pcm new stream pcm  SNDRV PCM STREAM PLAYBACK  playback count     0  {
+		snd pcm free pcm  
+		return err 
+	}
+	if   err = snd pcm new stream pcm  SNDRV PCM STREAM CAPTURE  capture count     0  {
+		snd pcm free pcm  
+		return err 
+	}
+	mutex init  pcm open mutex  
+	init waitqueue head  pcm open wait  
+	if   err = snd device new card  SNDRV DEV PCM  pcm   ops     0  {
+		snd pcm free pcm  
+		return err 
+	}
+	if  rpcm 
+		 rpcm = pcm 
+	return 0 
+}
+

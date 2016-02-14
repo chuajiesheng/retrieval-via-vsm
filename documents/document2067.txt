@@ -1,0 +1,12 @@
+static void snd atiixp ac97 write struct snd ac97  ac97  unsigned short reg 
+				  unsigned short val 
+{
+	struct atiixp modem  chip = ac97 private data 
+	if  reg == AC97 GPIO STATUS  {
+		atiixp write chip  MODEM OUT GPIO 
+			 val    ATI REG MODEM OUT GPIO DATA SHIFT  | ATI REG MODEM OUT GPIO EN  
+		return 
+	}
+	snd atiixp codec write chip  ac97 num  reg  val  
+}
+

@@ -1,0 +1,15 @@
+                      
+     Bob the Timer    
+                       
+static void snd es1968 bob stop struct es1968  chip 
+{
+	u16 reg 
+
+	reg =   maestro read chip  0x11  
+	reg  = ~ESM BOB ENABLE 
+	  maestro write chip  0x11  reg  
+	reg =   maestro read chip  0x17  
+	reg  = ~ESM BOB START 
+	  maestro write chip  0x17  reg  
+}
+

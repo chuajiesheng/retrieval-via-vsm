@@ -1,0 +1,53 @@
+snd azf3328 debug show ports const struct snd azf3328  chip 
+{
+#if DEBUG MISC
+	u16 tmp 
+
+	snd azf3328 dbgmisc 
+		 ctrl io 0x lx  game io 0x lx  mpu io 0x lx   
+		 opl3 io 0x lx  mixer io 0x lx  irq  d\n  
+		chip ctrl io  chip game io  chip mpu io 
+		chip opl3 io  chip mixer io  chip irq
+	  
+
+	snd azf3328 dbgmisc  game  02x  02x  02x  02x  02x  02x\n  
+		snd azf3328 game inb chip  0  
+		snd azf3328 game inb chip  1  
+		snd azf3328 game inb chip  2  
+		snd azf3328 game inb chip  3  
+		snd azf3328 game inb chip  4  
+		snd azf3328 game inb chip  5 
+	  
+
+	for  tmp = 0  tmp   0x07  tmp += 1 
+		snd azf3328 dbgmisc  mpu io 0x 04x\n   inb chip mpu io + tmp   
+
+	for  tmp = 0  tmp  = 0x07  tmp += 1 
+		snd azf3328 dbgmisc  0x 02x  game200 0x 04x  game208 0x 04x\n  
+			tmp  inb 0x200 + tmp   inb 0x208 + tmp   
+
+	for  tmp = 0  tmp  = 0x01  tmp += 1 
+		snd azf3328 dbgmisc 
+			 0x 02x  mpu300 0x 04x  mpu310 0x 04x  mpu320 0x 04x   
+			 mpu330 0x 04x opl388 0x 04x opl38c 0x 04x\n  
+				tmp 
+				inb 0x300 + tmp  
+				inb 0x310 + tmp  
+				inb 0x320 + tmp  
+				inb 0x330 + tmp  
+				inb 0x388 + tmp  
+				inb 0x38c + tmp 
+		  
+
+	for  tmp = 0  tmp   AZF IO SIZE CTRL  tmp += 2 
+		snd azf3328 dbgmisc  ctrl 0x 02x  0x 04x\n  
+			tmp  snd azf3328 ctrl inw chip  tmp 
+		  
+
+	for  tmp = 0  tmp   AZF IO SIZE MIXER  tmp += 2 
+		snd azf3328 dbgmisc  mixer 0x 02x  0x 04x\n  
+			tmp  snd azf3328 mixer inw chip  tmp 
+		  
+#endif    DEBUG MISC   
+}
+

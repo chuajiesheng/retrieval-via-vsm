@@ -1,0 +1,4 @@
+int snd pcm lib preallocate pages for all struct snd pcm  pcm 
+					  int type  void  data 
+					  size t size  size t max  
+

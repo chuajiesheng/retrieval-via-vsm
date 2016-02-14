@@ -1,0 +1,12 @@
+static void snd m3 remote codec config int io  int isremote 
+{
+	isremote = isremote ? 1   0 
+
+	outw  inw io + RING BUS CTRL B    ~SECOND CODEC ID MASK  | isremote 
+	     io + RING BUS CTRL B  
+	outw  inw io + SDO OUT DEST CTRL    ~COMMAND ADDR OUT  | isremote 
+	     io + SDO OUT DEST CTRL  
+	outw  inw io + SDO IN DEST CTRL    ~STATUS ADDR IN  | isremote 
+	     io + SDO IN DEST CTRL  
+}
+

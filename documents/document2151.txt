@@ -1,0 +1,28 @@
+  
+   open callback for playback on via823x DXS
+   
+static int snd via8233 playback open struct snd pcm substream  substream 
+{
+	struct via82xx  chip = snd pcm substream chip substream  
+	struct viadev  viadev 
+	unsigned int stream 
+	int err 
+
+	viadev =  chip devs chip playback devno + substream number  
+	if   err = snd via82xx pcm open chip  viadev  substream     0 
+		return err 
+	stream = viadev reg offset   0x10 
+	if  chip dxs controls stream   {
+		chip playback volume stream  0  =
+				VIA DXS MAX VOLUME    dxs init volume   31  
+		chip playback volume stream  1  =
+				VIA DXS MAX VOLUME    dxs init volume   31  
+		chip dxs controls stream  vd 0  access  =
+			~SNDRV CTL ELEM ACCESS INACTIVE 
+		snd ctl notify chip card  SNDRV CTL EVENT MASK VALUE |
+			       SNDRV CTL EVENT MASK INFO 
+			        chip dxs controls stream  id  
+	}
+	return 0 
+}
+

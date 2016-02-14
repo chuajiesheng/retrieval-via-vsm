@@ -1,0 +1,18 @@
+void snd card info read oss struct snd info buffer  buffer 
+{
+	int idx  count 
+	struct snd card  card 
+
+	for  idx = count = 0  idx   SNDRV CARDS  idx++  {
+		mutex lock  snd card mutex  
+		if   card = snd cards idx    = NULL  {
+			count++ 
+			snd iprintf buffer    s\n   card longname  
+		}
+		mutex unlock  snd card mutex  
+	}
+	if   count  {
+		snd iprintf buffer       no soundcards    \n   
+	}
+}
+

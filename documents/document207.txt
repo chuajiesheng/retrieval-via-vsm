@@ -1,0 +1,14 @@
+   
+   snd pcm lib get vmalloc page   map vmalloc buffer offset to page struct
+   @substream  the substream with a buffer allocated by
+  	snd pcm lib alloc vmalloc buffer  
+   @offset  offset in the buffer
+  
+   This function is to be used as the page callback in the PCM ops 
+   
+struct page  snd pcm lib get vmalloc page struct snd pcm substream  substream 
+					  unsigned long offset 
+{
+	return vmalloc to page substream runtime dma area + offset  
+}
+

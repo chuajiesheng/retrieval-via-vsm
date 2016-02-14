@@ -1,0 +1,3 @@
+void drm fb helper fill var struct fb info  info  struct drm fb helper  fb helper 
+			    uint32 t fb width  uint32 t fb height  
+

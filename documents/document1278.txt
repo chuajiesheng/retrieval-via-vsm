@@ -1,0 +1,3 @@
+   Modesetting support   
+extern void drm vblank pre modeset struct drm device  dev  int crtc  
+

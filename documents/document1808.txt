@@ -1,0 +1,20 @@
+  
+    initialization routines
+   
+static int wait for codec struct fm801  chip  unsigned int codec id 
+			  unsigned short reg  unsigned long waits 
+{
+	unsigned long timeout = jiffies + waits 
+
+	outw FM801 AC97 READ |  codec id    FM801 AC97 ADDR SHIFT  | reg 
+	     FM801 REG chip  AC97 CMD   
+	udelay 5  
+	do {
+		if   inw FM801 REG chip  AC97 CMD      FM801 AC97 VALID|FM801 AC97 BUSY  
+		    == FM801 AC97 VALID 
+			return 0 
+		schedule timeout uninterruptible 1  
+	} while  time after timeout  jiffies   
+	return  EIO 
+}
+

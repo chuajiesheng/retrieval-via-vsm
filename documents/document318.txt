@@ -1,0 +1,2 @@
+int snd info minor unregister void  
+

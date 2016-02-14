@@ -1,0 +1,5 @@
+static void dummy systimer free struct snd pcm substream  substream 
+{
+	kfree substream runtime private data  
+}
+

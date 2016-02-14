@@ -1,0 +1,6 @@
+static int snd uart16550 dev free struct snd device  device 
+{
+	struct snd uart16550  uart = device device data 
+	return snd uart16550 free uart  
+}
+

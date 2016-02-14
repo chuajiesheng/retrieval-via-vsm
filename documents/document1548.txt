@@ -1,0 +1,114 @@
+snd rme96 create struct rme96  rme96 
+{
+	struct pci dev  pci = rme96 pci 
+	int err 
+
+	rme96 irq =  1 
+	spin lock init  rme96 lock  
+
+	if   err = pci enable device pci     0 
+		return err 
+
+	if   err = pci request regions pci   RME96      0 
+		return err 
+	rme96 port = pci resource start rme96 pci  0  
+
+	rme96 iobase = ioremap nocache rme96 port  RME96 IO SIZE  
+	if   rme96 iobase  {
+		snd printk KERN ERR  unable to remap memory region 0x lx 0x lx\n   rme96 port  rme96 port + RME96 IO SIZE   1  
+		return  ENOMEM 
+	}
+
+	if  request irq pci irq  snd rme96 interrupt  IRQF SHARED 
+			 RME96   rme96   {
+		snd printk KERN ERR  unable to grab IRQ  d\n   pci irq  
+		return  EBUSY 
+	}
+	rme96 irq = pci irq 
+
+	   read the card's revision number   
+	pci read config byte pci  8   rme96 rev  	
+	
+	   set up ALSA pcm device for S PDIF   
+	if   err = snd pcm new rme96 card   Digi96 IEC958   0 
+			       1  1   rme96 spdif pcm     0 
+	{
+		return err 
+	}
+	rme96 spdif pcm private data = rme96 
+	rme96 spdif pcm private free = snd rme96 free spdif pcm 
+	strcpy rme96 spdif pcm name   Digi96 IEC958   
+	snd pcm set ops rme96 spdif pcm  SNDRV PCM STREAM PLAYBACK   snd rme96 playback spdif ops  
+	snd pcm set ops rme96 spdif pcm  SNDRV PCM STREAM CAPTURE   snd rme96 capture spdif ops  
+
+	rme96 spdif pcm info flags = 0 
+
+	   set up ALSA pcm device for ADAT   
+	if  pci device == PCI DEVICE ID RME DIGI96  {
+		   ADAT is not available on the base model   
+		rme96 adat pcm = NULL 
+	} else {
+		if   err = snd pcm new rme96 card   Digi96 ADAT   1 
+				       1  1   rme96 adat pcm     0 
+		{
+			return err 
+		}		
+		rme96 adat pcm private data = rme96 
+		rme96 adat pcm private free = snd rme96 free adat pcm 
+		strcpy rme96 adat pcm name   Digi96 ADAT   
+		snd pcm set ops rme96 adat pcm  SNDRV PCM STREAM PLAYBACK   snd rme96 playback adat ops  
+		snd pcm set ops rme96 adat pcm  SNDRV PCM STREAM CAPTURE   snd rme96 capture adat ops  
+		
+		rme96 adat pcm info flags = 0 
+	}
+
+	rme96 playback periodsize = 0 
+	rme96 capture periodsize = 0 
+	
+	   make sure playback capture is stopped  if by some reason active   
+	snd rme96 playback stop rme96  
+	snd rme96 capture stop rme96  
+	
+	   set default values in registers   
+	rme96 wcreg =
+		RME96 WCR FREQ 1 |    set 44 1 kHz playback   
+		RME96 WCR SEL |       normal playback   
+		RME96 WCR MASTER |    set to master clock mode   
+		RME96 WCR INP 0       set coaxial input   
+
+	rme96 areg = RME96 AR FREQPAD 1     set 44 1 kHz analog capture   
+
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+	writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+	
+	   reset the ADC   
+	writel rme96 areg | RME96 AR PD2 
+	       rme96 iobase + RME96 IO ADDITIONAL REG  
+	writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  	
+
+	   reset and enable the DAC  order is important     
+	snd rme96 reset dac rme96  
+	rme96 areg |= RME96 AR DAC EN 
+	writel rme96 areg  rme96 iobase + RME96 IO ADDITIONAL REG  
+
+	   reset playback and record buffer pointers   
+	writel 0  rme96 iobase + RME96 IO RESET PLAY POS  
+	writel 0  rme96 iobase + RME96 IO RESET REC POS  
+
+	   reset volume   
+	rme96 vol 0  = rme96 vol 1  = 0 
+	if  RME96 HAS ANALOG OUT rme96   {
+		snd rme96 apply dac volume rme96  
+	}
+	
+	   init switch interface   
+	if   err = snd rme96 create switches rme96 card  rme96     0  {
+		return err 
+	}
+
+           init proc interface   
+	snd rme96 proc init rme96  
+	
+	return 0 
+}
+

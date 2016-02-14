@@ -1,0 +1,23 @@
+static void   gcm hash assoc remain done struct aead request  req  int err 
+{
+	struct crypto gcm req priv ctx  pctx = crypto gcm reqctx req  
+	struct crypto gcm ghash ctx  gctx =  pctx ghash ctx 
+	crypto completion t complete 
+	unsigned int remain = 0 
+
+	if   err    gctx cryptlen  {
+		remain = gcm remain gctx cryptlen  
+		complete = remain ? gcm hash crypt done  
+			gcm hash crypt remain done 
+		err = gcm hash update req  pctx  complete 
+				      gctx src  gctx cryptlen  
+		if  err ==  EINPROGRESS || err ==  EBUSY 
+			return 
+	}
+
+	if  remain 
+		  gcm hash crypt done req  err  
+	else
+		  gcm hash crypt remain done req  err  
+}
+

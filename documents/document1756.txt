@@ -1,0 +1,9 @@
+static inline struct ieee80211 rate  
+ieee80211 get rts cts rate const struct ieee80211 hw  hw 
+			   const struct ieee80211 tx info  c 
+{
+	if  c control rts cts rate idx   0 
+		return NULL 
+	return  hw wiphy bands c band  bitrates c control rts cts rate idx  
+}
+

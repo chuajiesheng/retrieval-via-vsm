@@ -1,0 +1,4 @@
+extern void drm crtc init struct drm device  dev 
+			  struct drm crtc  crtc 
+			  const struct drm crtc funcs  funcs  
+

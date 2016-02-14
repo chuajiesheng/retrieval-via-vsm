@@ -1,0 +1,22 @@
+static int snd als300 resume struct pci dev  pci 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct snd als300  chip = card private data 
+
+	pci set power state pci  PCI D0  
+	pci restore state pci  
+	if  pci enable device pci    0  {
+		printk KERN ERR  als300  pci enable device failed   
+		        disabling device\n   
+		snd card disconnect card  
+		return  EIO 
+	}
+	pci set master pci  
+
+	snd als300 init chip  
+	snd ac97 resume chip ac97  
+
+	snd power change state card  SNDRV CTL POWER D0  
+	return 0 
+}
+

@@ -1,0 +1,8 @@
+static void snd info version read struct snd info entry  entry  struct snd info buffer  buffer 
+{
+	snd iprintf buffer 
+		     Advanced Linux Sound Architecture Driver Version  
+		    CONFIG SND VERSION CONFIG SND DATE   \n 
+		     
+}
+

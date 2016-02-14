@@ -1,0 +1,4 @@
+   create mixer controls   
+int snd ac97 mixer struct snd ac97 bus  bus  struct snd ac97 template  template 
+		   struct snd ac97   rac97  
+

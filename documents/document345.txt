@@ -1,0 +1,54 @@
+   
+    snd card register   register the soundcard
+    @card  soundcard structure
+  
+    This function registers all the devices assigned to the soundcard 
+    Until calling this  the ALSA control interface is blocked from the
+    external accesses   Thus  you should call this function at the end
+    of the initialization of the card 
+  
+    Returns zero otherwise a negative error code if the registration failed 
+   
+int snd card register struct snd card  card 
+{
+	int err 
+
+	if  snd BUG ON  card  
+		return  EINVAL 
+
+	if   card card dev  {
+		card card dev = device create sound class  card dev 
+					       MKDEV 0  0   card 
+					        card i   card number  
+		if  IS ERR card card dev  
+			card card dev = NULL 
+	}
+
+	if   err = snd device register all card     0 
+		return err 
+	mutex lock  snd card mutex  
+	if  snd cards card number   {
+		   already registered   
+		mutex unlock  snd card mutex  
+		return 0 
+	}
+	snd card set id no lock card  card id 0  == '\0' ? NULL   card id  
+	snd cards card number  = card 
+	mutex unlock  snd card mutex  
+	init info for card card  
+#if defined CONFIG SND MIXER OSS  || defined CONFIG SND MIXER OSS MODULE 
+	if  snd mixer oss notify callback 
+		snd mixer oss notify callback card  SND MIXER OSS NOTIFY REGISTER  
+#endif
+	if  card card dev  {
+		err = device create file card card dev   card id attrs  
+		if  err   0 
+			return err 
+		err = device create file card card dev   card number attrs  
+		if  err   0 
+			return err 
+	}
+
+	return 0 
+}
+

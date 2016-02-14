@@ -1,0 +1,3 @@
+void vga switcheroo client fb set struct pci dev  dev 
+				  struct fb info  info  
+

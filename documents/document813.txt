@@ -1,0 +1,17 @@
+  
+   AC97 interface
+   
+static int snd atiixp acquire codec struct atiixp  chip 
+{
+	int timeout = 1000 
+
+	while  atiixp read chip  PHYS OUT ADDR    ATI REG PHYS OUT ADDR EN  {
+		if    timeout    {
+			snd printk KERN WARNING  atiixp  codec acquire timeout\n   
+			return  EBUSY 
+		}
+		udelay 1  
+	}
+	return 0 
+}
+

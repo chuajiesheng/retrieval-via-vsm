@@ -1,0 +1,26 @@
+static int   devinit snd sonicvibes pcm struct sonicvibes   sonic  int device  struct snd pcm    rpcm 
+{
+	struct snd pcm  pcm 
+	int err 
+
+	if   err = snd pcm new sonic card   s3 86c617   device  1  1   pcm     0 
+		return err 
+	if  snd BUG ON  pcm  
+		return  EINVAL 
+
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd sonicvibes playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd sonicvibes capture ops  
+
+	pcm private data = sonic 
+	pcm info flags = 0 
+	strcpy pcm name   S3 SonicVibes   
+	sonic pcm = pcm 
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV 
+					      snd dma pci data sonic pci   64 1024  128 1024  
+
+	if  rpcm 
+		 rpcm = pcm 
+	return 0 
+}
+

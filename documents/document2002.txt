@@ -1,0 +1,9 @@
+   
+   ieee80211 has morefrags   check if IEEE80211 FCTL MOREFRAGS is set
+   @fc  frame control bytes in little endian byteorder
+   
+static inline int ieee80211 has morefrags   le16 fc 
+{
+	return  fc   cpu to le16 IEEE80211 FCTL MOREFRAGS    = 0 
+}
+

@@ -1,0 +1,14 @@
+  
+   release the preallocated buffer if not yet done 
+   
+static void snd pcm lib preallocate dma free struct snd pcm substream  substream 
+{
+	if  substream dma buffer area == NULL 
+		return 
+	if  substream dma buf id 
+		snd dma reserve buf  substream dma buffer  substream dma buf id  
+	else
+		snd dma free pages  substream dma buffer  
+	substream dma buffer area = NULL 
+}
+

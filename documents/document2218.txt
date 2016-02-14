@@ -1,0 +1,33 @@
+snd ad1889 capture trigger struct snd pcm substream  ss  int cmd 
+{
+	u16 ramc 
+	struct snd ad1889  chip = snd pcm substream chip ss  
+
+	ramc = ad1889 readw chip  AD DS RAMC  
+	
+	switch  cmd  {
+	case SNDRV PCM TRIGGER START 
+		   enable DMA loop   interrupts   
+		ad1889 writew chip  AD DMA ADC  AD DMA LOOP | AD DMA IM CNT  
+		ramc |= AD DS RAMC ADEN 
+		   1 to clear CHSS bit   
+		ad1889 writel chip  AD DMA CHSS  AD DMA CHSS ADCS  
+		break 
+	case SNDRV PCM TRIGGER STOP 
+		ramc  = ~AD DS RAMC ADEN 
+		break 
+	default 
+		return  EINVAL 
+	}
+	
+	chip ramc reg = ramc 
+	ad1889 writew chip  AD DS RAMC  ramc  	
+	ad1889 readw chip  AD DS RAMC  	   flush   
+	
+	   reset the chip when STOP   will disable IRQs   
+	if  cmd == SNDRV PCM TRIGGER STOP 
+		ad1889 channel reset chip  AD CHAN ADC  
+		
+	return 0 
+}
+

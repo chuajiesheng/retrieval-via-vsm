@@ -1,0 +1,3 @@
+int pci bus read config byte struct pci bus  bus  unsigned int devfn 
+			     int where  u8  val  
+

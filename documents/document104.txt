@@ -1,0 +1,11 @@
+   
+   snd pcm format linear   Check the PCM format is linear
+   @format  the format to check
+  
+   Returns 1 if the given PCM format is linear  0 if not 
+   
+int snd pcm format linear snd pcm format t format 
+{
+	return snd pcm format signed format   = 0 
+}
+

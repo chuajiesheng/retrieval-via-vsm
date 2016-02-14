@@ -1,0 +1,21 @@
+static int crypto xcbc digest setkey struct crypto shash  parent 
+				     const u8  inkey  unsigned int keylen 
+{
+	unsigned long alignmask = crypto shash alignmask parent  
+	struct xcbc tfm ctx  ctx = crypto shash ctx parent  
+	int bs = crypto shash blocksize parent  
+	u8  consts = PTR ALIGN  ctx ctx 0   alignmask + 1  
+	int err = 0 
+	u8 key1 bs  
+
+	if   err = crypto cipher setkey ctx child  inkey  keylen   
+		return err 
+
+	crypto cipher encrypt one ctx child  consts   u8   ks + bs  
+	crypto cipher encrypt one ctx child  consts + bs   u8   ks + bs   2  
+	crypto cipher encrypt one ctx child  key1   u8   ks  
+
+	return crypto cipher setkey ctx child  key1  bs  
+
+}
+

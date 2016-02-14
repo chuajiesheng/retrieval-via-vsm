@@ -1,0 +1,18 @@
+snd rme96 set period properties struct rme96  rme96 
+				size t period bytes 
+{
+	switch  period bytes  {
+	case RME96 LARGE BLOCK SIZE 
+		rme96 wcreg  = ~RME96 WCR ISEL 
+		break 
+	case RME96 SMALL BLOCK SIZE 
+		rme96 wcreg |= RME96 WCR ISEL 
+		break 
+	default 
+		snd BUG   
+		break 
+	}
+	rme96 wcreg  = ~RME96 WCR IDIS 
+	writel rme96 wcreg  rme96 iobase + RME96 IO CONTROL REGISTER  
+}
+

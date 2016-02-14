@@ -1,0 +1,5 @@
+static inline unsigned int get rate shift struct loopback pcm  dpcm 
+{
+	return get setup dpcm  rate shift 
+}
+

@@ -1,0 +1,5 @@
+static inline   u16   be16 to cpup const   be16  p 
+{
+	return   swab16p    u16   p  
+}
+

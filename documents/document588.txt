@@ -1,0 +1,3 @@
+int mlx4 fmr alloc struct mlx4 dev  dev  u32 pd  u32 access  int max pages 
+		   int max maps  u8 page shift  struct mlx4 fmr  fmr  
+

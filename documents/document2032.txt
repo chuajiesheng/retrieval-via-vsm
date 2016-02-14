@@ -1,0 +1,2 @@
+static int snd cs4281 chip init struct cs4281  chip      defined below   
+

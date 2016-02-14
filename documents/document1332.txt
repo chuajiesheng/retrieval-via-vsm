@@ -1,0 +1,3 @@
+void drm fb helper fill fix struct fb info  info  uint32 t pitch 
+			    uint32 t depth  
+

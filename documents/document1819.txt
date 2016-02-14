@@ -1,0 +1,5 @@
+static int   init alsa card fm801 init void 
+{
+	return pci register driver  driver  
+}
+

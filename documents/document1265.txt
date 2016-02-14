@@ -1,0 +1,3 @@
+extern int drm mode connector attach encoder struct drm connector  connector 
+					     struct drm encoder  encoder  
+

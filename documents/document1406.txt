@@ -1,0 +1,10 @@
+static inline u16 maestro read struct es1968  chip  u16 reg 
+{
+	unsigned long flags 
+	u16 result 
+	spin lock irqsave  chip reg lock  flags  
+	result =   maestro read chip  reg  
+	spin unlock irqrestore  chip reg lock  flags  
+	return result 
+}
+

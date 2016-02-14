@@ -1,0 +1,41 @@
+  
+    PCM part
+   
+static int snd intel8x0 pcm trigger struct snd pcm substream  substream  int cmd 
+{
+	struct intel8x0  chip = snd pcm substream chip substream  
+	struct ichdev  ichdev = get ichdev substream  
+	unsigned char val = 0 
+	unsigned long port = ichdev reg offset 
+
+	switch  cmd  {
+	case SNDRV PCM TRIGGER RESUME 
+		ichdev suspended = 0 
+		   fallthru   
+	case SNDRV PCM TRIGGER START 
+	case SNDRV PCM TRIGGER PAUSE RELEASE 
+		val = ICH IOCE | ICH STARTBM 
+		ichdev last pos = ichdev position 
+		break 
+	case SNDRV PCM TRIGGER SUSPEND 
+		ichdev suspended = 1 
+		   fallthru   
+	case SNDRV PCM TRIGGER STOP 
+		val = 0 
+		break 
+	case SNDRV PCM TRIGGER PAUSE PUSH 
+		val = ICH IOCE 
+		break 
+	default 
+		return  EINVAL 
+	}
+	iputbyte chip  port + ICH REG OFF CR  val  
+	if  cmd == SNDRV PCM TRIGGER STOP  {
+		   wait until DMA stopped   
+		while    igetbyte chip  port + ichdev roff sr    ICH DCH    
+		   reset whole DMA things   
+		iputbyte chip  port + ICH REG OFF CR  ICH RESETREGS  
+	}
+	return 0 
+}
+

@@ -1,0 +1,35 @@
+static irqreturn t snd bt87x interrupt int irq  void  dev id 
+{
+	struct snd bt87x  chip = dev id 
+	unsigned int status  irq status 
+
+	status = snd bt87x readl chip  REG INT STAT  
+	irq status = status   chip interrupt mask 
+	if   irq status 
+		return IRQ NONE 
+	snd bt87x writel chip  REG INT STAT  irq status  
+
+	if  irq status   ERROR INTERRUPTS  {
+		if  irq status    INT FBUS | INT FTRGT  
+			snd printk KERN WARNING  FIFO overrun  status  #08x\n   status  
+		if  irq status   INT OCERR 
+			snd printk KERN ERR  internal RISC error  status  #08x\n   status  
+		if  irq status    INT PPERR | INT RIPERR | INT PABORT  
+			snd bt87x pci error chip  irq status  
+	}
+	if   irq status   INT RISCI      chip reg control   CTL ACAP EN   {
+		int current block  irq block 
+
+		   assume that exactly one line has been recorded   
+		chip current line =  chip current line + 1    chip lines 
+		   but check if some interrupts have been skipped   
+		current block = chip current line   16   chip lines 
+		irq block = status    INT RISCS SHIFT 
+		if  current block  = irq block 
+			chip current line =  irq block   chip lines + 15    16 
+
+		snd pcm period elapsed chip substream  
+	}
+	return IRQ HANDLED 
+}
+

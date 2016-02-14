@@ -1,0 +1,47 @@
+   
+   ttm bo init
+  
+   @bdev  Pointer to a ttm bo device struct 
+   @bo  Pointer to a ttm buffer object to be initialized 
+   @size  Requested size of buffer object 
+   @type  Requested type of buffer object 
+   @flags  Initial placement flags 
+   @page alignment  Data alignment in pages 
+   @buffer start  Virtual address of user space data backing a
+   user buffer object 
+   @interruptible  If needing to sleep to wait for GPU resources 
+   sleep interruptible 
+   @persistant swap storage  Usually the swap storage is deleted for buffers
+   pinned in physical memory  If this behaviour is not desired  this member
+   holds a pointer to a persistant shmem object  Typically  this would
+   point to the shmem object backing a GEM object if TTM is used to back a
+   GEM user interface 
+   @acc size  Accounted size for this object 
+   @destroy  Destroy function  Use NULL for kfree   
+  
+   This function initializes a pre allocated struct ttm buffer object 
+   As this object may be part of a larger structure  this function 
+   together with the @destroy function 
+   enables driver specific objects derived from a ttm buffer object 
+   On successful return  the object kref and list kref are set to 1 
+   If a failure occurs  the function will call the @destroy function  or
+   kfree   if @destroy is NULL  Thus  after a failure  dereferencing @bo is
+   illegal and will likely cause memory corruption 
+  
+   Returns
+    ENOMEM  Out of memory 
+    EINVAL  Invalid placement flags 
+    ERESTARTSYS  Interrupted by signal while sleeping waiting for resources 
+   
+extern int ttm bo init struct ttm bo device  bdev 
+			struct ttm buffer object  bo 
+			unsigned long size 
+			enum ttm bo type type 
+			struct ttm placement  placement 
+			uint32 t page alignment 
+			unsigned long buffer start 
+			bool interrubtible 
+			struct file  persistant swap storage 
+			size t acc size 
+			void   destroy   struct ttm buffer object     
+

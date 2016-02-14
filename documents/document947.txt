@@ -1,0 +1,19 @@
+static int   devinit snd sonicvibes midi struct sonicvibes   sonic 
+					 struct snd rawmidi  rmidi 
+{
+	struct snd mpu401   mpu = rmidi private data 
+	struct snd card  card = sonic card 
+	struct snd rawmidi str  dir 
+	unsigned int idx 
+	int err 
+
+	mpu private data = sonic 
+	mpu open input = snd sonicvibes midi input open 
+	mpu close input = snd sonicvibes midi input close 
+	dir =  rmidi streams SNDRV RAWMIDI STREAM OUTPUT  
+	for  idx = 0  idx   ARRAY SIZE snd sonicvibes midi controls   idx++ 
+		if   err = snd ctl add card  snd ctl new1  snd sonicvibes midi controls idx   sonic      0 
+			return err 
+	return 0 
+}
+

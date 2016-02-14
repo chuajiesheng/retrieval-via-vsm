@@ -1,0 +1,3 @@
+   sb16 init c   
+int snd sb16dsp pcm struct snd sb  chip  int device  struct snd pcm    rpcm  
+

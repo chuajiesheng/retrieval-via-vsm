@@ -1,0 +1,9 @@
+static inline void  mlx4 buf offset struct mlx4 buf  buf  int offset 
+{
+	if  BITS PER LONG == 64 || buf nbufs == 1 
+		return buf direct buf + offset 
+	else
+		return buf page list offset    PAGE SHIFT  buf +
+			 offset    PAGE SIZE   1   
+}
+

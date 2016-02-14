@@ -1,0 +1,5 @@
+snd azf3328 codec inw const struct snd azf3328 codec data  codec  unsigned reg 
+{
+	return inw codec io base + reg  
+}
+

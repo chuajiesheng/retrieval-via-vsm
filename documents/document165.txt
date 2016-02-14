@@ -1,0 +1,17 @@
+static inline const unsigned short  tvaudio addrs void 
+{
+	static const unsigned short addrs   = {
+		I2C ADDR TDA8425      1 
+		I2C ADDR TEA6300      1 
+		I2C ADDR TEA6420      1 
+		I2C ADDR TDA9840      1 
+		I2C ADDR TDA985x L    1 
+		I2C ADDR TDA985x H    1 
+		I2C ADDR TDA9874      1 
+		I2C ADDR PIC16C54     1 
+		I2C CLIENT END
+	} 
+
+	return addrs 
+}
+

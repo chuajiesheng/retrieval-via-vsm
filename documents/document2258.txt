@@ -1,0 +1,12 @@
+   silence callback for halfduplex mode   
+static int snd rme32 playback silence struct snd pcm substream  substream  int channel 	   not used  interleaved data    
+				      snd pcm uframes t pos 
+				      snd pcm uframes t count 
+{
+	struct rme32  rme32 = snd pcm substream chip substream  
+	count   = rme32 playback frlog 
+	pos   = rme32 playback frlog 
+	memset io rme32 iobase + RME32 IO DATA BUFFER + pos  0  count  
+	return 0 
+}
+

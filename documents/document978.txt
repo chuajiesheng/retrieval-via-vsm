@@ -1,0 +1,24 @@
+static struct crypto instance  crypto gcm base alloc struct rtattr   tb 
+{
+	int err 
+	const char  ctr name 
+	const char  ghash name 
+	char full name CRYPTO MAX ALG NAME  
+
+	ctr name = crypto attr alg name tb 1   
+	err = PTR ERR ctr name  
+	if  IS ERR ctr name  
+		return ERR PTR err  
+
+	ghash name = crypto attr alg name tb 2   
+	err = PTR ERR ghash name  
+	if  IS ERR ghash name  
+		return ERR PTR err  
+
+	if  snprintf full name  CRYPTO MAX ALG NAME   gcm base  s  s   
+		     ctr name  ghash name   = CRYPTO MAX ALG NAME 
+		return ERR PTR  ENAMETOOLONG  
+
+	return crypto gcm alloc common tb  full name  ctr name  ghash name  
+}
+

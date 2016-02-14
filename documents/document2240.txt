@@ -1,0 +1,5 @@
+ad1889 readw struct snd ad1889  chip  unsigned reg 
+{
+	return readw chip iobase + reg  
+}
+

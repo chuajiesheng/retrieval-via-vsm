@@ -1,0 +1,14 @@
+static void snd als300 ac97 write struct snd ac97  ac97 
+				unsigned short reg  unsigned short val 
+{
+	int i 
+	struct snd als300  chip = ac97 private data 
+
+	for  i = 0  i   1000  i++  {
+		if   inb chip port+AC97 STATUS     AC97 BUSY   == 0 
+			break 
+		udelay 10  
+	}
+	outl  reg    24  | val  chip port+AC97 ACCESS  
+}
+

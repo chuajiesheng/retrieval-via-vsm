@@ -1,0 +1,21 @@
+static void snd fm801 tea575x 64pcr mute struct snd tea575x  tea 
+					  unsigned int mute 
+{
+	struct fm801  chip = tea private data 
+	unsigned short reg 
+
+	spin lock irq  chip reg lock  
+
+	reg = inw FM801 REG chip  GPIO CTRL   
+	if  mute 
+		   0xf800  mute    
+		reg  = ~FM801 GPIO GP TEA 64PCR WRITE ENABLE  
+	else
+		   0xf802  unmute    
+		reg |= FM801 GPIO GP TEA 64PCR WRITE ENABLE  
+	outw reg  FM801 REG chip  GPIO CTRL   
+	udelay 1  
+
+	spin unlock irq  chip reg lock  
+}
+

@@ -1,0 +1,7 @@
+void tfrc lib exit void 
+{
+	tfrc rx packet history exit   
+	tfrc tx packet history exit   
+	tfrc li exit   
+}
+

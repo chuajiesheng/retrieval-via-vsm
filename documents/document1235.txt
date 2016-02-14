@@ -1,0 +1,17 @@
+static int snd als4000 suspend struct pci dev  pci  pm message t state 
+{
+	struct snd card  card = pci get drvdata pci  
+	struct snd card als4000  acard = card private data 
+	struct snd sb  chip = acard chip 
+
+	snd power change state card  SNDRV CTL POWER D3hot  
+	
+	snd pcm suspend all chip pcm  
+	snd sbmixer suspend chip  
+
+	pci disable device pci  
+	pci save state pci  
+	pci set power state pci  pci choose state pci  state   
+	return 0 
+}
+

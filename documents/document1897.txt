@@ -1,0 +1,53 @@
+  
+   DMA I O
+   
+static void snd intel8x0 setup periods struct intel8x0  chip  struct ichdev  ichdev  
+{
+	int idx 
+	u32  bdbar = ichdev bdbar 
+	unsigned long port = ichdev reg offset 
+
+	iputdword chip  port + ICH REG OFF BDBAR  ichdev bdbar addr  
+	if  ichdev size == ichdev fragsize  {
+		ichdev ack reload = ichdev ack = 2 
+		ichdev fragsize1 = ichdev fragsize    1 
+		for  idx = 0  idx    ICH REG LVI MASK + 1    2  idx += 4  {
+			bdbar idx + 0  = cpu to le32 ichdev physbuf  
+			bdbar idx + 1  = cpu to le32 0x80000000 |    interrupt on completion   
+						     ichdev fragsize1    ichdev pos shift  
+			bdbar idx + 2  = cpu to le32 ichdev physbuf +  ichdev size    1   
+			bdbar idx + 3  = cpu to le32 0x80000000 |    interrupt on completion   
+						     ichdev fragsize1    ichdev pos shift  
+		}
+		ichdev frags = 2 
+	} else {
+		ichdev ack reload = ichdev ack = 1 
+		ichdev fragsize1 = ichdev fragsize 
+		for  idx = 0  idx    ICH REG LVI MASK + 1    2  idx += 2  {
+			bdbar idx + 0  = cpu to le32 ichdev physbuf +
+						        idx    1    ichdev fragsize   
+						      ichdev size   
+			bdbar idx + 1  = cpu to le32 0x80000000 |    interrupt on completion   
+						     ichdev fragsize    ichdev pos shift  
+#if 0
+			printk KERN DEBUG  bdbar  i  = 0x x  0x x \n  
+			       idx + 0  bdbar idx + 0   bdbar idx + 1   
+#endif
+		}
+		ichdev frags = ichdev size   ichdev fragsize 
+	}
+	iputbyte chip  port + ICH REG OFF LVI  ichdev lvi = ICH REG LVI MASK  
+	ichdev civ = 0 
+	iputbyte chip  port + ICH REG OFF CIV  0  
+	ichdev lvi frag = ICH REG LVI MASK   ichdev frags 
+	ichdev position = 0 
+#if 0
+	printk KERN DEBUG  lvi frag =  i  frags =  i  period size = 0x x   
+	        period size1 = 0x x\n  
+	       ichdev lvi frag  ichdev frags  ichdev fragsize 
+	       ichdev fragsize1  
+#endif
+	   clear interrupts   
+	iputbyte chip  port + ichdev roff sr  ICH FIFOE | ICH BCIS | ICH LVBCI  
+}
+

@@ -1,0 +1,9 @@
+void snd ak4531 suspend struct snd ak4531  ak4531 
+{
+	   mute   
+	ak4531 write ak4531  AK4531 LMASTER  0x9f  
+	ak4531 write ak4531  AK4531 RMASTER  0x9f  
+	   powerdown   
+	ak4531 write ak4531  AK4531 RESET  0x01  
+}
+

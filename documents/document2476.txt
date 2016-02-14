@@ -1,0 +1,6 @@
+static int   init setup noefi char  arg 
+{
+	efi enabled = 0 
+	return 0 
+}
+

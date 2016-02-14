@@ -1,0 +1,2 @@
+static int mts64 probe struct parport  p  
+

@@ -1,0 +1,53 @@
+  
+   create pcm instances for VIA8233  8233C and 8235  not 8233A 
+   
+static int   devinit snd via8233 pcm new struct via82xx  chip 
+{
+	struct snd pcm  pcm 
+	int i  err 
+
+	chip playback devno = 0 	   x 4   
+	chip multi devno = 4 		   x 1   
+	chip capture devno = 5 	   x 2   
+	chip num devs = 7 
+	chip intr mask = 0x33033333     FLAG|EOL for rec0 1  mc  sdx0 3   
+
+	   PCM #0   4 DSX playbacks and 1 capture   
+	err = snd pcm new chip card  chip card shortname  0  4  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd via8233 playback ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd via8233 capture ops  
+	pcm private data = chip 
+	strcpy pcm name  chip card shortname  
+	chip pcms 0  = pcm 
+	   set up playbacks   
+	for  i = 0  i   4  i++ 
+		init viadev chip  i  0x10   i  i  0  
+	   capture   
+	init viadev chip  chip capture devno  VIA REG CAPTURE 8233 STATUS  6  1  
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV SG 
+					      snd dma pci data chip pci  
+					      64 1024  VIA MAX BUFSIZE  
+
+	   PCM #1   multi channel playback and 2nd capture   
+	err = snd pcm new chip card  chip card shortname  1  1  1   pcm  
+	if  err   0 
+		return err 
+	snd pcm set ops pcm  SNDRV PCM STREAM PLAYBACK   snd via8233 multi ops  
+	snd pcm set ops pcm  SNDRV PCM STREAM CAPTURE   snd via8233 capture ops  
+	pcm private data = chip 
+	strcpy pcm name  chip card shortname  
+	chip pcms 1  = pcm 
+	   set up playback   
+	init viadev chip  chip multi devno  VIA REG MULTPLAY STATUS  4  0  
+	   set up capture   
+	init viadev chip  chip capture devno + 1  VIA REG CAPTURE 8233 STATUS + 0x10  7  1  
+
+	snd pcm lib preallocate pages for all pcm  SNDRV DMA TYPE DEV SG 
+					      snd dma pci data chip pci  
+					      64 1024  VIA MAX BUFSIZE  
+	return 0 
+}
+

@@ -1,0 +1,3 @@
+int request firmware const struct firmware   fw  const char  name 
+		     struct device  device  
+

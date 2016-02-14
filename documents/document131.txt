@@ -1,0 +1,12 @@
+  
+   module entry
+   
+static int   init snd mem init void 
+{
+#ifdef CONFIG PROC FS
+	snd mem proc = proc create SND MEM PROC FILE  0644  NULL 
+				    snd mem proc fops  
+#endif
+	return 0 
+}
+

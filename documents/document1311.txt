@@ -1,0 +1,10 @@
+static u16 apu get register struct es1968  chip  u16 channel  u8 reg 
+{
+	unsigned long flags 
+	u16 v 
+	spin lock irqsave  chip reg lock  flags  
+	v =   apu get register chip  channel  reg  
+	spin unlock irqrestore  chip reg lock  flags  
+	return v 
+}
+
