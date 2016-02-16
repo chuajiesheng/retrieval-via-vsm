@@ -39,7 +39,10 @@ def valid_word(word):
 
 
 def add_one(dictionary, word):
-    dictionary[word] = 1
+    if word in dictionary:
+        dictionary[word] += 1
+    else:
+        dictionary[word] = 1
 
 
 def get_idf(total_documents, occurrences):
